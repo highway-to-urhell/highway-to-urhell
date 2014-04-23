@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: Scun
+Build-Jdk: 1.7.0_51
+Main-Class: io.highway.to.urlhell.agent.H2hellAgent
+Agent-Class: io.highway.to.urlhell.agent.H2hellAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: io.highway.to.urlhell.agent.H2hellAgent
+

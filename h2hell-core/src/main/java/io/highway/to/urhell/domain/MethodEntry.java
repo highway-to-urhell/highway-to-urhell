@@ -1,6 +1,6 @@
 package io.highway.to.urhell.domain;
 
 public enum MethodEntry {
-    GET, POST, UNKNOW
+    GET, POST, DELETE, PATCH, PUT, UNKNOWN
 
 }

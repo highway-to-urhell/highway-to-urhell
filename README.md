@@ -4,7 +4,7 @@
 
 ## Build
 
-RESTX requires Java 7.
+highway-to-urhell requires Java 7.
 
 You can build it using either Maven 3+. 
 

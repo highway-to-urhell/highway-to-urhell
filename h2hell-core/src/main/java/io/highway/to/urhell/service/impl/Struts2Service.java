@@ -25,81 +25,81 @@ import com.opensymphony.xwork2.config.entities.ResultConfig;
 
 public class Struts2Service implements LeechService {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(Struts2Service.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(Struts2Service.class);
 
-	private static List<EntryPathData> listData;
-	private static Struts2Service instance;
-	private final static String highwaytourhell = "highwaytourhell";
+    private List<EntryPathData> listData;
+    private static Struts2Service instance;
+    private final static String highwaytourhell = "highwaytourhell";
 
-	private Struts2Service() {
-		// Nothing
-	}
+    private Struts2Service() {
+        // Nothing
+    }
 
-	public static Struts2Service getInstance() {
-		if (instance == null) {
-			synchronized (highwaytourhell) {
-				if (instance == null) {
-					instance = new Struts2Service();
-				}
-			}
-		}
-		return instance;
-	}
+    public static Struts2Service getInstance() {
+        if (instance == null) {
+            synchronized (highwaytourhell) {
+                if (instance == null) {
+                    instance = new Struts2Service();
+                }
+            }
+        }
+        return instance;
+    }
 
-	@Override
-	public String addMethodAndLogic() {
-		return ("Struts2Service.getInstance().receiveData(configurationManager)");
-	}
+    @Override
+    public String addMethodAndLogic() {
+        return ("Struts2Service.getInstance().receiveData(configurationManager)");
+    }
 
-	private List<EntryPathParam> findParam(Map<String, String> map) {
-		List<EntryPathParam> res = new ArrayList<EntryPathParam>();
+    private List<EntryPathParam> findParam(Map<String, String> map) {
+        List<EntryPathParam> res = new ArrayList<EntryPathParam>();
 
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			EntryPathParam entryData = new EntryPathParam();
-			entryData.setKey(entry.getKey());
-			entryData.setValue(entry.getValue());
-			entryData.setTypeParam(TypeParam.PARAM_DATA);
-			res.add(entryData);
-		}
-		return res;
-	}
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            EntryPathParam entryData = new EntryPathParam();
+            entryData.setKey(entry.getKey());
+            entryData.setValue(entry.getValue());
+            entryData.setTypeParam(TypeParam.PARAM_DATA);
+            res.add(entryData);
+        }
+        return res;
+    }
 
-	@Override
-	public void receiveData(Object dataIncoming) {
-		ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
-		Configuration config = configurationManager.getConfiguration();
-		listData = new ArrayList<EntryPathData>();
-		Collection<PackageConfig> colPackages = config.getPackageConfigs()
-				.values();
-		if (colPackages != null) {
-			for (PackageConfig value : colPackages) {
-				Collection<ActionConfig> colActionConfigs = value
-						.getActionConfigs().values();
-				for (ActionConfig action : colActionConfigs) {
-					for (ResultConfig resultConfig : action.getResults()
-							.values()) {
-						EntryPathData entry = new EntryPathData();
-						entry.setTypePath(TypePath.DYNAMIC);
-						entry.setMethodEntry(MethodEntry.GET);
-						entry.setUri(action.getName());
-						entry.setListEntryPathData(findParam(resultConfig
-								.getParams()));
-						listData.add(entry);
-					}
-				}
-			}
-		}
+    @Override
+    public void receiveData(Object dataIncoming) {
+        ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
+        Configuration config = configurationManager.getConfiguration();
+        listData = new ArrayList<EntryPathData>();
+        Collection<PackageConfig> colPackages = config.getPackageConfigs()
+                .values();
+        if (colPackages != null) {
+            for (PackageConfig value : colPackages) {
+                Collection<ActionConfig> colActionConfigs = value
+                        .getActionConfigs().values();
+                for (ActionConfig action : colActionConfigs) {
+                    for (ResultConfig resultConfig : action.getResults()
+                            .values()) {
+                        EntryPathData entry = new EntryPathData();
+                        entry.setTypePath(TypePath.DYNAMIC);
+                        entry.setMethodEntry(MethodEntry.GET);
+                        entry.setUri(action.getName());
+                        entry.setListEntryPathData(findParam(resultConfig
+                                .getParams()));
+                        listData.add(entry);
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
-	@Override
-	public FrameworkInformations getFrameworkInformations() {
-		FrameworkInformations fwk = new FrameworkInformations();
-		fwk.setFrameworkEnum(FrameworkEnum.STRUTS_2_X);
-		fwk.setVersion("OPENJAR");
-		fwk.setDetails("openjar");
-		fwk.setListEntryPath(listData);
-		return fwk;
-	}
+    @Override
+    public FrameworkInformations getFrameworkInformations() {
+        FrameworkInformations fwk = new FrameworkInformations();
+        fwk.setFrameworkEnum(FrameworkEnum.STRUTS_2_X);
+        fwk.setVersion("OPENJAR");
+        fwk.setDetails("openjar");
+        fwk.setListEntryPath(listData);
+        return fwk;
+    }
 }

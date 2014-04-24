@@ -19,7 +19,7 @@ public class Struts1Service implements LeechService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(Struts1Service.class);
 
-	private static List<EntryPathData> listData;
+	private List<EntryPathData> listData;
 	private static Struts1Service instance;
 	private final static String highwaytourhell = "highwaytourhell";
 

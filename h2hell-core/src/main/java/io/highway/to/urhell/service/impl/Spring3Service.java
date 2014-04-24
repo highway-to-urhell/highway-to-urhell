@@ -16,7 +16,7 @@ public class Spring3Service implements LeechService {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(Struts2Service.class);
-	private static List<EntryPathData> listData;
+	private List<EntryPathData> listData;
 	private static Spring3Service instance;
 	private final static String highwaytourhell = "highwaytourhell";
 
@@ -44,7 +44,7 @@ public class Spring3Service implements LeechService {
 
 	@Override
 	public void receiveData(Object dataIncoming) {
-		// Faut récupérer ce bordel pour SpringMVC
+		// Faut rï¿½cupï¿½rer ce bordel pour SpringMVC
 		RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) dataIncoming;
 
 		

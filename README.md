@@ -6,9 +6,7 @@
 
 highway-to-urhell requires Java 7.
 
-You can build it using either Maven 3+. 
-
-With Maven:
+You can build it using Maven 3+ : 
 
 `mvn install`
 

@@ -41,4 +41,11 @@ public class FrameworkInformations {
         this.listEntryPath = listEntryPath;
     }
 
+	@Override
+	public String toString() {
+		return "FrameworkInformations [frameworkEnum=" + frameworkEnum
+				+ ", version=" + version + ", details=" + details
+				+ ", listEntryPath=" + listEntryPath + "]";
+	}
+
 }

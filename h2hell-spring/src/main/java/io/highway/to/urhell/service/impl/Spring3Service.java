@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class Spring3Service implements LeechService {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(Struts2Service.class);
+			.getLogger(Spring3Service.class);
 	private List<EntryPathData> listData;
 	private static Spring3Service instance;
 	private final static String highwaytourhell = "highwaytourhell";

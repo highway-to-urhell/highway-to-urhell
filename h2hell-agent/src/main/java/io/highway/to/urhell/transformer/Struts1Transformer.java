@@ -24,10 +24,10 @@ public class Struts1Transformer implements ClassFileTransformer {
 				CtClass cc = cp
 						.get("org.apache.struts.action.ActionServlet");
 				cp.importPackage("io.highway.to.urlhell.*");
-				CtMethod m = cc.getDeclaredMethod("initModuleConfig");
-				m.insertAfter("{");
-				m.insertAfter("Struts1Service.getInstance().receiveData(configDigester);");
-				m.insertAfter("LOG.error(\"PASSAGE DANS LE TRANSFORMER\");}");
+				CtMethod m = cc.getDeclaredMethod("destroyConfigDigester");
+				m.insertBefore("{");
+				m.insertBefore("Struts1Service.getInstance().receiveData(configDigester);");
+				m.insertBefore("LOG.error(\"PASSAGE DANS LE TRANSFORMER\");}");
 				
 				byteCode = cc.toBytecode();
 				cc.detach();

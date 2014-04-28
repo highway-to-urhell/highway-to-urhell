@@ -6,6 +6,7 @@ import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.domain.MethodEntry;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.RegistryService;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class Struts1Service implements LeechService {
 	}
 
 	@Override
-	public String addMethodAndLogic() {
-		return ("Struts1Service.getInstance().receiveData(configDigester)");
+	public void registry() {
+		RegistryService.getInstance().addServiceRegistry(this);
 	}
 
 	@Override

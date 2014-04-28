@@ -28,6 +28,7 @@
         <module>h2hell-spring</module>
         <module>h2hell-struts1</module>
         <module>h2hell-struts2</module>
+		<module>h2hell-servlet3</module>
         <module>h2hell-agent</module>
     </modules>
 
@@ -152,6 +153,11 @@
                 <version>3.1.0</version>
                 <scope>provided</scope>
             </dependency>
+			<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version>
+		</dependency>
             <!-- ~~~~ -->
             <!-- TEST -->
             <!-- ~~~~ -->

@@ -1,5 +1,9 @@
 package io.highway.to.urhell.transformer;
 
+
+
+import io.highway.to.urhell.service.impl.Spring3Service;
+
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
@@ -33,6 +37,7 @@ public class Spring3Transformer implements ClassFileTransformer {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+			Spring3Service.getInstance().registry();
 		}
 
 		return byteCode;

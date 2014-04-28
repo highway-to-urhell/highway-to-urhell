@@ -1,5 +1,7 @@
 package io.highway.to.urhell.transformer;
 
+import io.highway.to.urhell.service.impl.Struts2Service;
+
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
@@ -33,6 +35,7 @@ public class Struts2Transformer implements ClassFileTransformer {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+			Struts2Service.getInstance().registry();
 		}
 
 		return byteCode;

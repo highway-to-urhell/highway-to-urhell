@@ -10,9 +10,9 @@ import io.highway.to.urhell.domain.FrameworkInformations;
 public interface LeechService {
 
     /**
-     * AddMethodAndLogic into Framework target
+     * Registry 
      */
-    String addMethodAndLogic();
+    void registry();
 
     /**
      * Receive incoming Data to analyze

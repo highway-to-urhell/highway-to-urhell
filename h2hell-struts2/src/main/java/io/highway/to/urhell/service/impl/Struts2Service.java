@@ -8,6 +8,7 @@ import io.highway.to.urhell.domain.MethodEntry;
 import io.highway.to.urhell.domain.TypeParam;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.RegistryService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,9 +49,9 @@ public class Struts2Service implements LeechService {
     }
 
     @Override
-    public String addMethodAndLogic() {
-        return ("Struts2Service.getInstance().receiveData(configurationManager)");
-    }
+	public void registry() {
+		RegistryService.getInstance().addServiceRegistry(this);
+	}
 
     private List<EntryPathParam> findParam(Map<String, String> map) {
         List<EntryPathParam> res = new ArrayList<EntryPathParam>();

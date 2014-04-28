@@ -4,6 +4,7 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.RegistryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,8 @@ public class ServletService implements LeechService {
 	}
 
 	@Override
-	public String addMethodAndLogic() {
-		//register
-		return null;
+	public void registry() {
+		RegistryService.getInstance().addServiceRegistry(this);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class ServletService implements LeechService {
 		}
 		
 		// If servlet3 is ok then addMethodAndLogic
-		addMethodAndLogic();
+		registry();
 
 	}
 

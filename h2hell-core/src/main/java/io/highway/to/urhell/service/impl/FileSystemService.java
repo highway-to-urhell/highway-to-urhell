@@ -4,6 +4,7 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.RegistryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,8 @@ public class FileSystemService implements LeechService {
 	}
 
 	@Override
-	public String addMethodAndLogic() {
-		// TODO Auto-generated method stub
-		return null;
+	public void registry() {
+		RegistryService.getInstance().addServiceRegistry(this);
 	}
 
 	@Override

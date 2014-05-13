@@ -35,7 +35,6 @@ public class Struts2Transformer implements ClassFileTransformer {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			Struts2Service.getInstance().registry();
 		}
 
 		return byteCode;

@@ -1,7 +1,5 @@
 package io.highway.to.urhell.servlet;
 
-import io.highway.to.urhell.service.RegistryService;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,7 +20,7 @@ public class H2hellServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
-		out.println(RegistryService.getInstance().executeServiceRegistry());
+//		out.println(RegistryService.getInstance().executeServiceRegistry());
 		out.close();
 	}
 

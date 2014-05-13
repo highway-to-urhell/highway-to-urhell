@@ -4,7 +4,6 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.service.LeechService;
-import io.highway.to.urhell.service.RegistryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +36,6 @@ public class ServletService implements LeechService {
 		}
 		return instance;
 	}
-
-	@Override
-	public void registry() {
-		RegistryService.getInstance().addServiceRegistry(this);
-	}
-
 	@Override
 	public void receiveData(Object incoming) {
 		listData = new ArrayList<EntryPathData>();
@@ -50,10 +43,6 @@ public class ServletService implements LeechService {
 		for (String key : map.keySet()) {
 			LOG.error("Registered Servlet: " + map.get(key).getName());
 		}
-		
-		// If servlet3 is ok then addMethodAndLogic
-		registry();
-
 	}
 
 	@Override

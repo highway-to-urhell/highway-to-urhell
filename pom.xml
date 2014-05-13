@@ -28,7 +28,7 @@
         <module>h2hell-spring</module>
         <module>h2hell-struts1</module>
         <module>h2hell-struts2</module>
-		<module>h2hell-servlet3</module>
+        <module>h2hell-servlet3</module>
         <module>h2hell-agent</module>
     </modules>
 
@@ -110,6 +110,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.9.8</version>
+            </dependency>
             <!-- ~~~~~~ -->
             <!-- SPRING -->
             <!-- ~~~~~~ -->
@@ -153,11 +158,11 @@
                 <version>3.1.0</version>
                 <scope>provided</scope>
             </dependency>
-			<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
-		</dependency>
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-web-api</artifactId>
+                <version>7.0</version>
+            </dependency>
             <!-- ~~~~ -->
             <!-- TEST -->
             <!-- ~~~~ -->

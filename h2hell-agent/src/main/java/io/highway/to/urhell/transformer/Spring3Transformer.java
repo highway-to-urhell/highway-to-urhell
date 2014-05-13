@@ -37,7 +37,6 @@ public class Spring3Transformer implements ClassFileTransformer {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			Spring3Service.getInstance().registry();
 		}
 
 		return byteCode;

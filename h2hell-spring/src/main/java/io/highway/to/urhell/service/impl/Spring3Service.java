@@ -4,7 +4,6 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.service.LeechService;
-import io.highway.to.urhell.service.RegistryService;
 
 import java.util.List;
 
@@ -34,11 +33,6 @@ public class Spring3Service implements LeechService {
 			}
 		}
 		return instance;
-	}
-
-	@Override
-	public void registry() {
-		RegistryService.getInstance().addServiceRegistry(this);
 	}
 
 	@Override

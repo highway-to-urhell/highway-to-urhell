@@ -10,11 +10,6 @@ import io.highway.to.urhell.domain.FrameworkInformations;
 public interface LeechService {
 
     /**
-     * Registry 
-     */
-    void registry();
-
-    /**
      * Receive incoming Data to analyze
      * 
      *

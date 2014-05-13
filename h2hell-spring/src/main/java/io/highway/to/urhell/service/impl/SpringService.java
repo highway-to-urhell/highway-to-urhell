@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-public class Spring3Service implements LeechService {
+public class SpringService implements LeechService {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(Spring3Service.class);
+			.getLogger(SpringService.class);
 	private List<EntryPathData> listData;
 
 	@Override
@@ -41,7 +41,7 @@ public class Spring3Service implements LeechService {
 	@Override
 	public FrameworkInformations getFrameworkInformations() {
 		FrameworkInformations fwk = new FrameworkInformations();
-		fwk.setFrameworkEnum(FrameworkEnum.SPRING_3X);
+		fwk.setFrameworkEnum(FrameworkEnum.SPRING);
 		fwk.setVersion("OPENJAR");
 		fwk.setDetails("openjar");
 		fwk.setListEntryPath(listData);

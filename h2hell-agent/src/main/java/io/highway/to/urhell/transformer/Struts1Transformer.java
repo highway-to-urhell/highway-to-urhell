@@ -1,8 +1,7 @@
 package io.highway.to.urhell.transformer;
 
-import io.highway.to.urhell.service.impl.Struts1Service;
+import io.highway.to.urhell.domain.FrameworkEnum;
 
-import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
@@ -10,7 +9,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 
-public class Struts1Transformer implements ClassFileTransformer {
+public class Struts1Transformer implements LeechTransformer {
 
 	
 	public byte[] transform(ClassLoader loader, String className,
@@ -28,8 +27,8 @@ public class Struts1Transformer implements ClassFileTransformer {
 				cp.importPackage("io.highway.to.urlhell.*");
 				CtMethod m = cc.getDeclaredMethod("destroyConfigDigester");
 				m.insertBefore("{");
-				m.insertBefore("Struts1Service.getInstance().receiveData(configDigester);");
-				m.insertBefore("LOG.error(\"PASSAGE DANS LE TRANSFORMER\");}");
+				m.insertBefore("CoreEngine.getInstance().getFramework(FrameworkEnum.STRUTS_1_X).receiveData(configDigester);");
+				m.insertBefore("}");
 				
 				byteCode = cc.toBytecode();
 				cc.detach();

@@ -1,8 +1,7 @@
 package io.highway.to.urhell.transformer;
 
-import io.highway.to.urhell.service.impl.Struts2Service;
+import io.highway.to.urhell.domain.FrameworkEnum;
 
-import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
@@ -10,7 +9,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 
-public class Struts2Transformer implements ClassFileTransformer {
+public class Struts2Transformer implements LeechTransformer{
 
 	public byte[] transform(ClassLoader loader, String className,
 			Class classBeingRedefined, ProtectionDomain protectionDomain,
@@ -27,8 +26,8 @@ public class Struts2Transformer implements ClassFileTransformer {
 				cp.importPackage("io.highway.to.urlhell.*");
 				CtMethod m = cc.getDeclaredMethod("init");
 				m.insertAfter("{");
-				m.insertAfter("Struts2Service.getInstance().receiveData(configurationManager);");
-				m.insertAfter("LOG.error(\"PASSAGE DANS LE TRANSFORMER\");}");
+                m.insertAfter("CoreEngine.getInstance().getFramework(FrameworkEnum.STRUTS_2_X).receiveData(configurationManager);");
+				m.insertAfter("}");
 				
 				byteCode = cc.toBytecode();
 				cc.detach();

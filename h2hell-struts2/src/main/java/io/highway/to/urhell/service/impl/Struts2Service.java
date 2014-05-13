@@ -29,23 +29,6 @@ public class Struts2Service implements LeechService {
             .getLogger(Struts2Service.class);
 
     private List<EntryPathData> listData;
-    private static Struts2Service instance;
-    private final static String highwaytourhell = "highwaytourhell";
-
-    private Struts2Service() {
-        // Nothing
-    }
-
-    public static Struts2Service getInstance() {
-        if (instance == null) {
-            synchronized (highwaytourhell) {
-                if (instance == null) {
-                    instance = new Struts2Service();
-                }
-            }
-        }
-        return instance;
-    }
 
     private List<EntryPathParam> findParam(Map<String, String> map) {
         List<EntryPathParam> res = new ArrayList<EntryPathParam>();

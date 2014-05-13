@@ -19,23 +19,7 @@ public class ServletService implements LeechService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ServletService.class);
 	private List<EntryPathData> listData;
-	private static ServletService instance;
-	private final static String highwaytourhell = "highwaytourhell";
 
-	private ServletService() {
-		// Nothing
-	}
-
-	public static ServletService getInstance() {
-		if (instance == null) {
-			synchronized (highwaytourhell) {
-				if (instance == null) {
-					instance = new ServletService();
-				}
-			}
-		}
-		return instance;
-	}
 	@Override
 	public void receiveData(Object incoming) {
 		listData = new ArrayList<EntryPathData>();

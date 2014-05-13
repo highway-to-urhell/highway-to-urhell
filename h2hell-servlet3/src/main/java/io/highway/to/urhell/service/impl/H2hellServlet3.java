@@ -15,7 +15,7 @@ public class H2hellServlet3 implements ServletContextListener {
     public void contextInitialized(final ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
         Map<String, ? extends ServletRegistration> map = servletContext.getServletRegistrations();
-        ServletService.getInstance().receiveData(map);
+//        ServletService.getInstance().receiveData(map);
     }
 
     @Override

@@ -16,23 +16,6 @@ public class FileSystemService implements LeechService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(FileSystemService.class);
 	private List<EntryPathData> listData;
-	private static FileSystemService instance;
-	private final static String highwaytourhell = "highwaytourhell";
-	
-	private FileSystemService() {
-		// Nothing
-	}
-
-	public static FileSystemService getInstance() {
-		if (instance == null) {
-			synchronized (highwaytourhell) {
-				if (instance == null) {
-					instance = new FileSystemService();
-				}
-			}
-		}
-		return instance;
-	}
 
 	@Override
 	public void receiveData(Object incoming) {

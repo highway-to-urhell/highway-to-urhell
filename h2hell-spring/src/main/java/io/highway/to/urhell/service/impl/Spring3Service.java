@@ -17,27 +17,9 @@ public class Spring3Service implements LeechService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(Spring3Service.class);
 	private List<EntryPathData> listData;
-	private static Spring3Service instance;
-	private final static String highwaytourhell = "highwaytourhell";
-
-	private Spring3Service() {
-		// Nothing
-	}
-
-	public static Spring3Service getInstance() {
-		if (instance == null) {
-			synchronized (highwaytourhell) {
-				if (instance == null) {
-					instance = new Spring3Service();
-				}
-			}
-		}
-		return instance;
-	}
 
 	@Override
 	public void receiveData(Object dataIncoming) {
-		// Faut r�cup�rer ce bordel pour SpringMVC
 		RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) dataIncoming;
 
 		

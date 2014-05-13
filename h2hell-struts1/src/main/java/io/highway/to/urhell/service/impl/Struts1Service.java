@@ -21,24 +21,6 @@ public class Struts1Service implements LeechService {
 			.getLogger(Struts1Service.class);
 
 	private List<EntryPathData> listData;
-	private static Struts1Service instance;
-	private final static String highwaytourhell = "highwaytourhell";
-
-	private Struts1Service() {
-		// Nothing
-	}
-
-	public static Struts1Service getInstance() {
-		if (instance == null) {
-			synchronized (highwaytourhell) {
-				if (instance == null) {
-					instance = new Struts1Service();
-				}
-			}
-		}
-		return instance;
-	}
-
 	@Override
 	public void receiveData(Object dataIncoming) {
 		Digester configDigester = (Digester) dataIncoming;

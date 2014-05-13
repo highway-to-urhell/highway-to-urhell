@@ -33,10 +33,15 @@ public class CoreEngine {
                 if (instance == null) {
                     instance = new CoreEngine();
                     instance.registerPlugins();
+                    instance.collectSystemData();
                 }
             }
         }
         return instance;
+    }
+
+    private void collectSystemData() {
+        getFramework(FrameworkEnum.SYSTEM).receiveData(null);
     }
 
     public void leech() {

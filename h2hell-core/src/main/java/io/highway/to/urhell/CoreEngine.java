@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class CoreEngine {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(CoreEngine.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoreEngine.class);
 
     private static CoreEngine instance;
 
@@ -50,8 +49,7 @@ public class CoreEngine {
                 reporterService.report(leechService.getFrameworkInformations());
                 // FIXME: extract to consoleReporter?
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(leechService.getFrameworkInformations()
-                            .toString());
+                    LOGGER.debug(leechService.getFrameworkInformations().toString());
                 }
             }
         }
@@ -67,43 +65,32 @@ public class CoreEngine {
     }
 
     private void autoDiscoverLeechPlugins() {
-        Reflections reflections = new Reflections();
-        Set<Class<? extends LeechService>> pluginsAvailable = reflections
-                .getSubTypesOf(LeechService.class);
+        Reflections reflections = new Reflections("io.highway.to.urhell");
+        Set<Class<? extends LeechService>> pluginsAvailable = reflections.getSubTypesOf(LeechService.class);
         for (Class<? extends LeechService> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering leech plugin {}",
-                        plugin.getCanonicalName());
+                LOGGER.info("registering leech plugin {}", plugin.getCanonicalName());
                 LeechService leechService = plugin.newInstance();
-                leechPluginRegistry.put(leechService.getFrameworkInformations()
-                        .getFrameworkEnum(), leechService);
+                leechPluginRegistry.put(leechService.getFrameworkInformations().getFrameworkEnum(), leechService);
             } catch (InstantiationException e) {
-                LOGGER.error("An error occured while registering leech plugin "
-                        + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {
-                LOGGER.error("An error occured while registering leech plugin "
-                        + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
             }
         }
     }
 
     private void autoDiscoverReporterPlugins() {
         Reflections reflections = new Reflections();
-        Set<Class<? extends ReporterService>> pluginsAvailable = reflections
-                .getSubTypesOf(ReporterService.class);
+        Set<Class<? extends ReporterService>> pluginsAvailable = reflections.getSubTypesOf(ReporterService.class);
         for (Class<? extends ReporterService> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering reporter plugin {}",
-                        plugin.getCanonicalName());
+                LOGGER.info("registering reporter plugin {}", plugin.getCanonicalName());
                 reporterPluginRegistry.add(plugin.newInstance());
             } catch (InstantiationException e) {
-                LOGGER.error(
-                        "An error occured while registering reporter plugin "
-                                + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering reporter plugin " + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {
-                LOGGER.error(
-                        "An error occured while registering reporter plugin "
-                                + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering reporter plugin " + plugin.getCanonicalName(), e);
             }
         }
     }

@@ -1,6 +1,6 @@
 # highway-to-urhell
 
-
+[![Build Status](https://travis-ci.org/highway-to-urhell/highway-to-urhell.svg)](https://travis-ci.org/highway-to-urhell/highway-to-urhell)
 
 ## Build
 

@@ -1,70 +1,59 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.highway.to.urhell</groupId>
-        <artifactId>h2hell-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>io.highway.to.urhell</groupId>
+		<artifactId>h2hell-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>h2hell-agent</artifactId>
-    <name>h2hell-agent</name>
+	<artifactId>h2hell-agent</artifactId>
+	<name>h2hell-agent</name>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Premain-Class>io.highway.to.urlhell.agent.H2hellAgent</Premain-Class>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <!-- <goals> <goal>attached</goal> </goals> -->
-                    </execution>
-                </executions>
-                <!-- <configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
-                    </descriptorRefs> <archive> <manifest> <mainClass>io.highway.to.urlhell.agent.H2hellAgent</mainClass> 
-                    </manifest> <manifestEntries> <Premain-Class>io.highway.to.urlhell.agent.H2hellAgent</Premain-Class> 
-                    <Agent-Class>io.highway.to.urlhell.agent.H2hellAgent</Agent-Class> <Can-Redefine-Classes>true</Can-Redefine-Classes> 
-                    <Can-Retransform-Classes>true</Can-Retransform-Classes> </manifestEntries> </archive> </configuration> -->
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Premain-Class>io.highway.to.urlhell.agent.H2hellAgent</Premain-Class>
+							<Can-Redefine-Classes>true</Can-Redefine-Classes>
+							<Can-Retransform-Classes>true</Can-Retransform-Classes>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-struts1</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-struts2</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-spring</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.highway.to.urhell</groupId>
+			<artifactId>h2hell-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.highway.to.urhell</groupId>
+			<artifactId>h2hell-struts1</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.highway.to.urhell</groupId>
+			<artifactId>h2hell-struts2</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.highway.to.urhell</groupId>
+			<artifactId>h2hell-spring</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

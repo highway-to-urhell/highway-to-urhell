@@ -15,14 +15,14 @@ You can build it using Maven 3+ :
  * Unzip highway-to-url distribution in a directory of your choice
  * Configure agent in JAVA_OPTS (see above)
 
-### Configuring agent on Windows machines :  
-```
-set JAVA_OPTS=%JAVA_OPTS -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h
-```
-
 ### Configuring agent on  Unix machines : 
 ```
 export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h
+```
+
+### Configuring agent on Windows machines :  
+```
+set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h
 ```
 
 ## Contributing

@@ -55,6 +55,14 @@ public class CoreEngine {
         }
     }
 
+    public String dumpLeechResult() {
+        StringBuilder sb = new StringBuilder();
+        for (LeechService leechService : leechPluginRegistry.values()) {
+            sb.append(leechService.getFrameworkInformations().toString());
+        }
+        return sb.toString();
+    }
+
     private void registerPlugins() {
         autoDiscoverLeechPlugins();
         autoDiscoverReporterPlugins();

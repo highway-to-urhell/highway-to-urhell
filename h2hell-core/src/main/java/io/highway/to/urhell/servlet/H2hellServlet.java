@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet add in your web.xml
  * 
  */
-@WebServlet(value="/hello", name="hello-servlet")
+@WebServlet(value="/h2h", name="h2h-servlet")
 public class H2hellServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

@@ -58,7 +58,7 @@ public class CoreEngine {
     public String dumpLeechResult() {
         StringBuilder sb = new StringBuilder();
         for (LeechService leechService : leechPluginRegistry.values()) {
-            sb.append(leechService.getFrameworkInformations().toString());
+            sb.append(leechService.getFrameworkInformations().toString()+"\n");
         }
         return sb.toString();
     }
@@ -78,18 +78,20 @@ public class CoreEngine {
         for (Class<? extends LeechService> plugin : pluginsAvailable) {
             try {
                 LOGGER.info("registering leech plugin {}", plugin.getCanonicalName());
-                LeechService leechService = plugin.newInstance();
+                LeechService leechService = (LeechService) plugin.newInstance();
                 leechPluginRegistry.put(leechService.getFrameworkInformations().getFrameworkEnum(), leechService);
             } catch (InstantiationException e) {
                 LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {
                 LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
+            } catch (Exception e){
+            	e.printStackTrace();
             }
         }
     }
 
     private void autoDiscoverReporterPlugins() {
-        Reflections reflections = new Reflections();
+        Reflections reflections = new Reflections("io.highway.to.urhell");
         Set<Class<? extends ReporterService>> pluginsAvailable = reflections.getSubTypesOf(ReporterService.class);
         for (Class<? extends ReporterService> plugin : pluginsAvailable) {
             try {

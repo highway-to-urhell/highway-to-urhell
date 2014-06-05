@@ -20,7 +20,7 @@ public class H2hellAgent {
     }
 
     private static Set<LeechTransformer> autoDiscoverTransformer() {
-        Reflections reflections = new Reflections();
+        Reflections reflections = new Reflections("io.highway.to.urhell");
         Set<LeechTransformer> leechPluginRegistry = new HashSet<LeechTransformer>();
 
         Set<Class<? extends LeechTransformer>> pluginsAvailable = reflections.getSubTypesOf(LeechTransformer.class);
@@ -29,6 +29,7 @@ public class H2hellAgent {
                 LOGGER.info("registering leech transformer {}", plugin.getCanonicalName());
                 LeechTransformer transformer = plugin.newInstance();
                 leechPluginRegistry.add(transformer);
+                LOGGER.info("registering leech transformer complete {}", plugin.getCanonicalName());
             } catch (InstantiationException e) {
                 LOGGER.error("An error occured while registering leech transformer " + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {

@@ -25,10 +25,6 @@
     </properties>
     <modules>
         <module>h2hell-core</module>
-        <module>h2hell-spring</module>
-        <module>h2hell-struts1</module>
-        <module>h2hell-struts2</module>
-        <module>h2hell-servlet3</module>
         <module>h2hell-agent</module>
         <module>h2hell-distribution</module>
     </modules>

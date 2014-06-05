@@ -21,6 +21,11 @@ public class Struts1Service implements LeechService {
 			.getLogger(Struts1Service.class);
 
 	private List<EntryPathData> listData;
+
+	public Struts1Service() {
+		LOG.info("Constructor Struts1Service");
+	}
+
 	@Override
 	public void receiveData(Object dataIncoming) {
 		Digester configDigester = (Digester) dataIncoming;
@@ -37,7 +42,7 @@ public class Struts1Service implements LeechService {
 			}
 
 		} catch (Exception e) {
-			//TODO a gérer
+			// TODO a gérer
 			e.printStackTrace();
 		}
 	}

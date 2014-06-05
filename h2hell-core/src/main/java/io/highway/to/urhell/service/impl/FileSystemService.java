@@ -12,6 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileSystemService implements LeechService {
+	
+	public FileSystemService(){
+		LOG.info("Constructor FileSystemService");
+	}
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(FileSystemService.class);

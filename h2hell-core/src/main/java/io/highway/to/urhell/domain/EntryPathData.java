@@ -8,8 +8,17 @@ public class EntryPathData {
     private TypePath typePath;
     private MethodEntry methodEntry;
     private List<EntryPathParam> listEntryPathData;
+    private String methodName;
 
-    public String getUri() {
+    public String getMethodName() {
+		return methodName;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public String getUri() {
         return uri;
     }
 

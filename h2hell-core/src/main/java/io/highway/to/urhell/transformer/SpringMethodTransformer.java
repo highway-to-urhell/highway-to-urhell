@@ -37,7 +37,8 @@ public class SpringMethodTransformer implements LeechTransformer {
 			try {
 				ClassPool cp = ClassPool.getDefault();
 				cp.appendClassPath(new LoaderClassPath(loader));
-				cp.importPackage("io.highway.to.urlhell.CoreEngine");
+				cp.importPackage("io.highway.to.urhell");
+				cp.importPackage("io.highway.to.urhell.domain");
 				CtClass cc = cp
 						.get("org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping");
 				CtMethod m = cc.getMethod("registerHandlerMethod","(Ljava/lang/Object;Ljava/lang/reflect/Method;Ljava/lang/Object;)V");

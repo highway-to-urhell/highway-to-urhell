@@ -28,8 +28,8 @@ public class Struts1Transformer implements LeechTransformer {
 				ClassPool cp = ClassPool.getDefault();
 				cp.appendClassPath(new LoaderClassPath(loader));
 				CtClass cc = cp.get("org.apache.struts.action.ActionServlet");
-				cp.importPackage("io.highway.to.urlhell.CoreEngine");
-				cp.importPackage("io.highway.to.urlhell.domain.FrameworkEnum");
+				cp.importPackage("io.highway.to.urhell");
+				cp.importPackage("io.highway.to.urhell.domain");
 				CtMethod m = cc.getDeclaredMethod("destroyConfigDigester");
 				m.insertBefore("CoreEngine.getInstance().getFramework(FrameworkEnum.STRUTS_1_X).receiveData(configDigester);");
 

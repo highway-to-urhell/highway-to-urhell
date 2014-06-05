@@ -25,8 +25,8 @@ public class Struts2Transformer implements LeechTransformer {
             	ClassPool cp = ClassPool.getDefault();
 				cp.appendClassPath(new LoaderClassPath(loader));
                 CtClass cc = cp.get("org.apache.struts2.dispatcher.Dispatcher");
-                cp.importPackage("io.highway.to.urlhell.CoreEngine");
-				cp.importPackage("io.highway.to.urlhell.domain.FrameworkEnum");
+                cp.importPackage("io.highway.to.urhell");
+				cp.importPackage("io.highway.to.urhell.domain");
                 CtMethod m = cc.getDeclaredMethod("init");
                 m.insertAfter("CoreEngine.getInstance().getFramework(FrameworkEnum.STRUTS_2_X).receiveData(configurationManager);");
                 classfileBuffer = cc.toBytecode();

@@ -19,22 +19,7 @@
         </dependency>
         <dependency>
             <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-spring</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-struts1</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-struts2</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-servlet3</artifactId>
+            <artifactId>h2hell-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

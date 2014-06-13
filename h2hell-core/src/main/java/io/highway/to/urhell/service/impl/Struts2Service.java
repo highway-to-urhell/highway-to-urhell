@@ -17,6 +17,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
@@ -48,6 +49,8 @@ public class Struts2Service implements LeechService {
 
 	@Override
 	public void receiveData(Object dataIncoming) {
+		LOG.info("receive dataIncoming for : "
+				+ Struts2Service.class.getCanonicalName());
 		ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
 		Configuration config = configurationManager.getConfiguration();
 		listData = new ArrayList<EntryPathData>();
@@ -62,7 +65,7 @@ public class Struts2Service implements LeechService {
 							.values()) {
 						EntryPathData entry = new EntryPathData();
 						entry.setTypePath(TypePath.DYNAMIC);
-						entry.setMethodEntry(MethodEntry.GET);
+						entry.setMethodEntry(MethodEntry.GET.toString());
 						entry.setUri(action.getName());
 						entry.setListEntryPathData(findParam(resultConfig
 								.getParams()));
@@ -70,6 +73,13 @@ public class Struts2Service implements LeechService {
 					}
 				}
 			}
+		}
+		LOG.info("complete data for : "
+				+ Struts2Service.class.getCanonicalName()
+				+ "number elements loaded " + listData.size());
+		if(LOG.isDebugEnabled()){
+			Gson gson = new Gson();
+			LOG.debug(" JSON elements :"+gson.toJson(listData));
 		}
 
 	}

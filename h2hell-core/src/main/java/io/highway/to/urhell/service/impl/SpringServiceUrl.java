@@ -34,7 +34,7 @@ public class SpringServiceUrl  implements LeechService {
 			entry.setTypePath(TypePath.DYNAMIC);
 			entry.setUri(element);
 			entry.setMethodName(mapUrl.get(element).getClass().toString());
-			entry.setMethodEntry(MethodEntry.UNKNOWN);
+			entry.setMethodEntry(MethodEntry.UNKNOWN.toString());
 			entry.setListEntryPathData(new ArrayList<EntryPathParam>());
 			listData.add(entry);
 		}

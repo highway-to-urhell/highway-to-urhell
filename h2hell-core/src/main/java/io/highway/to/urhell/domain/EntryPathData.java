@@ -6,7 +6,7 @@ public class EntryPathData {
 
     private String uri;
     private TypePath typePath;
-    private MethodEntry methodEntry;
+    private String methodEntry;
     private List<EntryPathParam> listEntryPathData;
     private String methodName;
 
@@ -34,15 +34,17 @@ public class EntryPathData {
         this.typePath = typePath;
     }
 
-    public MethodEntry getMethodEntry() {
-        return methodEntry;
-    }
+  
 
-    public void setMethodEntry(MethodEntry methodEntry) {
-        this.methodEntry = methodEntry;
-    }
+    public String getMethodEntry() {
+		return methodEntry;
+	}
 
-    public List<EntryPathParam> getListEntryPathData() {
+	public void setMethodEntry(String methodEntry) {
+		this.methodEntry = methodEntry;
+	}
+
+	public List<EntryPathParam> getListEntryPathData() {
         return listEntryPathData;
     }
 

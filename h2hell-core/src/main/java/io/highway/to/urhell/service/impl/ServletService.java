@@ -39,7 +39,7 @@ public class ServletService implements LeechService {
 						EntryPathData entry = new EntryPathData();
 						entry.setMethodName(sv.getName());
 						entry.setUri(mapping);
-						entry.setMethodEntry(MethodEntry.UNKNOWN);
+						entry.setMethodEntry(MethodEntry.UNKNOWN.toString());
 						if (sv.getInitParameters() != null) {
 							List<EntryPathParam> listEntryPathParams = new ArrayList<EntryPathParam>();
 							for (String key : sv.getInitParameters().keySet()) {

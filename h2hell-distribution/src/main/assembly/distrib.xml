@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
     <id>distrib</id>
     <formats>
-        <format>zip</format>
-    </formats>
+        <format>dir</format>
+    </formats> 
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>

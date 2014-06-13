@@ -31,7 +31,7 @@ public class SpringUrlTransformer implements LeechTransformer {
 				cp.appendClassPath(new LoaderClassPath(loader));
 				CtClass cc = cp
 						.get("org.springframework.web.servlet.mvc.support.ControllerBeanNameHandlerMapping");
-				cp.importPackage("io.highway.to.urlhell.CoreEngine");
+				cp.importPackage("io.highway.to.urhell.CoreEngine");
 				CtMethod m = cc.getMethod("registerHandlerMethod","(Ljava/lang/String,Ljava.kang.Object;)V");
 				m.insertAfter("CoreEngine.getInstance().getFramework(FrameworkEnum.SPRING_URL).receiveData(handlerMap);");
 

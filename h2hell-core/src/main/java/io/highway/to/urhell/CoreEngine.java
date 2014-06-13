@@ -4,6 +4,7 @@ import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -12,6 +13,8 @@ import java.util.Set;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 public class CoreEngine {
 
@@ -55,13 +58,16 @@ public class CoreEngine {
         }
     }
 
-    public String dumpLeechResult() {
-        StringBuilder sb = new StringBuilder();
-        for (LeechService leechService : leechPluginRegistry.values()) {
-            sb.append(leechService.getFrameworkInformations().toString()+"\n");
-        }
-        return sb.toString();
-    }
+    
+    public String dumpLeechResult(){
+    	Gson gson = new Gson();
+    	Collection<LeechService> collectionService= leechPluginRegistry.values();
+    	if(collectionService!=null){
+    		return gson.toJson(collectionService);
+    	}else{
+    		return gson.toJson("");
+    	}
+     }
 
     private void registerPlugins() {
         autoDiscoverLeechPlugins();

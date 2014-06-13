@@ -18,6 +18,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.NameValueExpression;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
+import com.google.gson.Gson;
+
 public class SpringServiceMethod implements LeechService {
 
 	private static final Logger LOG = LoggerFactory
@@ -37,8 +39,9 @@ public class SpringServiceMethod implements LeechService {
 			EntryPathData entry = new EntryPathData();
 			entry.setTypePath(TypePath.DYNAMIC);
 			entry.setUri(element.getPatternsCondition().toString());
-			entry.setMethodEntry(MethodEntry.valueOf(element
-					.getMethodsCondition().toString()));
+			
+			entry.setMethodEntry(element
+					.getMethodsCondition().toString());
 			if (element.getParamsCondition().getExpressions() != null) {
 				List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
 				for (NameValueExpression<String> nv : element
@@ -57,6 +60,10 @@ public class SpringServiceMethod implements LeechService {
 		LOG.info("complete data for : "
 				+ SpringServiceMethod.class.getCanonicalName()
 				+ "number elements loaded " + listData.size());
+		if(LOG.isDebugEnabled()){
+			Gson gson = new Gson();
+			LOG.debug(" JSON elements :"+gson.toJson(listData));
+		}
 
 	}
 

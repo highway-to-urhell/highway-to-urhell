@@ -25,6 +25,9 @@ export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs
 set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h
 ```
 
+### Configuration Location Root Application :
+set PATH_H2H=/home/myapplication/
+
 ## Contributing
 
 Contributions are welcome, fork the repo, push your changes to a branch and send a Pull Request, or create an issue on GitHub to initiate the discussion.

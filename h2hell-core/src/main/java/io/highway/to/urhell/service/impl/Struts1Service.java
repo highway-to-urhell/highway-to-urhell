@@ -3,6 +3,7 @@ package io.highway.to.urhell.service.impl;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
+import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.LeechService;
 
 import java.lang.reflect.Field;
@@ -14,6 +15,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.impl.ModuleConfigImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 public class Struts1Service implements LeechService {
 
@@ -28,6 +31,7 @@ public class Struts1Service implements LeechService {
 
 	@Override
 	public void receiveData(Object dataIncoming) {
+		listData = new ArrayList<EntryPathData>();
 		Digester configDigester = (Digester) dataIncoming;
 		ModuleConfigImpl m = (ModuleConfigImpl) configDigester.getRoot();
 		Field f;
@@ -37,13 +41,28 @@ public class Struts1Service implements LeechService {
 			List<ActionMapping> res = (ArrayList) f.get(m);
 			if (res != null) {
 				for (ActionMapping action : res) {
-					LOG.error("action" + action.toString());
+					EntryPathData entry = new EntryPathData();
+					entry.setMethodName(action.getName());
+					if(action.getPrefix()!=null){
+					entry.setUri(action.getPrefix()+action.getPath());
+					}else{
+						entry.setUri(action.getPath());
+					}
+					entry.setTypePath(TypePath.DYNAMIC);
+					entry.setMethodEntry(action.getInput());
+					listData.add(entry);
 				}
 			}
 
 		} catch (Exception e) {
-			// TODO a gérer
-			e.printStackTrace();
+			LOG.error("Exception in "+Struts1Service.class.getCanonicalName()+" receiveData "+dataIncoming+" msg :"+e.getMessage());
+		}
+		LOG.info("complete data for : "
+				+ Struts1Service.class.getCanonicalName()
+				+ "number elements loaded " + listData.size());
+		if(LOG.isDebugEnabled()){
+			Gson gson = new Gson();
+			LOG.debug(" JSON elements :"+gson.toJson(listData));
 		}
 	}
 

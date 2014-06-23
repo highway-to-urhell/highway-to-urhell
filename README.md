@@ -26,7 +26,22 @@ set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/
 ```
 
 ### Configuration Location Root Application :
+```
 set PATH_H2H=/home/myapplication/
+```
+### Visualisation Paths with Browser
+Configuration servlet, add code into web.xml
+'''
+    <servlet>
+        <servlet-name>h2h</servlet-name>
+        <servlet-class>io.highway.to.urhell.servlet.H2hellServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>h2h</servlet-name>
+        <url-pattern>/h2h/</url-pattern>
+    </servlet-mapping>
+'''
 
 ## Contributing
 

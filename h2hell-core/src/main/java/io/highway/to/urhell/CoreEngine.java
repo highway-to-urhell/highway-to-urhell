@@ -58,8 +58,12 @@ public class CoreEngine {
         }
     }
 
+    public Collection<LeechService> dumpLeechResult(){
+    	return leechPluginRegistry.values();
+     }
     
-    public String dumpLeechResult(){
+    
+    public String dumpLeechResultString(){
     	Gson gson = new Gson();
     	Collection<LeechService> collectionService= leechPluginRegistry.values();
     	if(collectionService!=null){

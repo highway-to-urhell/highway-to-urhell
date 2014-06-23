@@ -43,8 +43,8 @@ public class Struts1Service implements LeechService {
 				for (ActionMapping action : res) {
 					EntryPathData entry = new EntryPathData();
 					entry.setMethodName(action.getName());
-					if(action.getPrefix()!=null){
-					entry.setUri(action.getPrefix()+action.getPath());
+					if(action.getPrefix()!=null && !"null".equals(action.getPrefix())){
+						entry.setUri(action.getPrefix()+action.getPath());
 					}else{
 						entry.setUri(action.getPath());
 					}

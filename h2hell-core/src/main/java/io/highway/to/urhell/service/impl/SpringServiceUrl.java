@@ -41,8 +41,6 @@ public class SpringServiceUrl  implements LeechService {
 	public FrameworkInformations getFrameworkInformations() {
 		FrameworkInformations fwk = new FrameworkInformations();
 		fwk.setFrameworkEnum(FrameworkEnum.SPRING_URL);
-		fwk.setVersion("OPENJAR");
-		fwk.setDetails("openjar");
 		fwk.setListEntryPath(listData);
 		return fwk;
 	}

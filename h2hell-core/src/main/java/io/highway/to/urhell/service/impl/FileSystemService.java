@@ -244,8 +244,6 @@ public class FileSystemService implements LeechService {
 	public FrameworkInformations getFrameworkInformations() {
 		FrameworkInformations fwk = new FrameworkInformations();
 		fwk.setFrameworkEnum(FrameworkEnum.SYSTEM);
-		fwk.setVersion("OPENJAR");
-		fwk.setDetails("openjar");
 		fwk.setListEntryPath(listData);
 		return fwk;
 	}

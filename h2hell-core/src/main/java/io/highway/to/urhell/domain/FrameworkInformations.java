@@ -5,7 +5,7 @@ import java.util.List;
 public class FrameworkInformations {
 
     private FrameworkEnum frameworkEnum;
-    private String version;
+    private String version = "UNKNOWN";
     private String details;
     private List<EntryPathData> listEntryPath;
 
@@ -41,11 +41,11 @@ public class FrameworkInformations {
         this.listEntryPath = listEntryPath;
     }
 
-	@Override
-	public String toString() {
-		return "FrameworkInformations [frameworkEnum=" + frameworkEnum
-				+ ", version=" + version + ", details=" + details
-				+ ", listEntryPath=" + listEntryPath + "]";
-	}
+    @Override
+    public String toString() {
+        return "FrameworkInformations [frameworkEnum=" + frameworkEnum
+                + ", version=" + version + ", details=" + details
+                + ", listEntryPath=" + listEntryPath + "]";
+    }
 
 }

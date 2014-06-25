@@ -84,8 +84,6 @@ public class Struts2Service implements LeechService {
 	public FrameworkInformations getFrameworkInformations() {
 		FrameworkInformations fwk = new FrameworkInformations();
 		fwk.setFrameworkEnum(FrameworkEnum.STRUTS_2_X);
-		fwk.setVersion("OPENJAR");
-		fwk.setDetails("openjar");
 		fwk.setListEntryPath(listData);
 		return fwk;
 	}

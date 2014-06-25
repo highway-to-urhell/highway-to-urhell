@@ -66,8 +66,6 @@ public class SpringServiceMethod implements LeechService {
 	public FrameworkInformations getFrameworkInformations() {
 		FrameworkInformations fwk = new FrameworkInformations();
 		fwk.setFrameworkEnum(FrameworkEnum.SPRING_METHOD);
-		fwk.setVersion("OPENJAR");
-		fwk.setDetails("openjar");
 		fwk.setListEntryPath(listData);
 		return fwk;
 	}

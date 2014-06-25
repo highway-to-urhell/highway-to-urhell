@@ -12,7 +12,7 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class H2hellServlet3 implements ServletContextListener {
+public class Servlet3Service implements ServletContextListener {
 	
     @Override
     public void contextInitialized(final ServletContextEvent sce) {

@@ -50,10 +50,6 @@ public class CoreEngine {
         for (LeechService leechService : leechPluginRegistry.values()) {
             for (ReporterService reporterService : reporterPluginRegistry) {
                 reporterService.report(leechService.getFrameworkInformations());
-                // FIXME: extract to consoleReporter?
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(leechService.getFrameworkInformations().toString());
-                }
             }
         }
     }

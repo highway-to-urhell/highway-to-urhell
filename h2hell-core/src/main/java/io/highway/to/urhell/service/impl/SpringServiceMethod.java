@@ -25,10 +25,6 @@ public class SpringServiceMethod implements LeechService {
 			.getLogger(SpringServiceMethod.class);
 	private List<EntryPathData> listData = new ArrayList<EntryPathData>();
 
-	public SpringServiceMethod() {
-		LOG.info("Constructor SpringServiceMethod");
-	}
-
 	@Override
 	public void receiveData(Object dataIncoming) {
 		LOG.info("receive dataIncoming for : "

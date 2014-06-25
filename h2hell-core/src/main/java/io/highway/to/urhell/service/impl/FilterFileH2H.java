@@ -10,7 +10,6 @@ public class FilterFileH2H implements FileFilter {
 	private List<String> listExtentions;
 
 	public FilterFileH2H() {
-		super();
 		listExtentions = new ArrayList<String>();
 		listExtentions.add("html");
 		listExtentions.add("xhtml");

@@ -25,10 +25,6 @@ public class Struts1Service implements LeechService {
 
 	private List<EntryPathData> listData;
 
-	public Struts1Service() {
-		LOG.info("Constructor Struts1Service");
-	}
-
 	@Override
 	public void receiveData(Object dataIncoming) {
 		listData = new ArrayList<EntryPathData>();

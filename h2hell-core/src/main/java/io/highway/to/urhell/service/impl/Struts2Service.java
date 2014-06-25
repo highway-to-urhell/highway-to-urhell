@@ -28,11 +28,7 @@ public class Struts2Service implements LeechService {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(Struts2Service.class);
 
-	private List<EntryPathData> listData = new ArrayList<>();
-
-	public Struts2Service() {
-		LOG.info("Constructor Struts2Service");
-	}
+	private List<EntryPathData> listData = new ArrayList<EntryPathData>();
 
 	private List<EntryPathParam> findParam(Map<String, String> map) {
 		List<EntryPathParam> res = new ArrayList<EntryPathParam>();

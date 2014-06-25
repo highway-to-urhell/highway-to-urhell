@@ -18,10 +18,6 @@ import org.slf4j.LoggerFactory;
 
 public class ServletService implements LeechService {
 
-	public ServletService() {
-		LOG.info("Constructor ServletService");
-	}
-
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ServletService.class);
 	private List<EntryPathData> listData;

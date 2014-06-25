@@ -21,10 +21,6 @@ public class SpringServiceUrl  implements LeechService {
 			.getLogger(SpringServiceUrl.class);
 	private List<EntryPathData> listData = new ArrayList<EntryPathData>();
 
-	public SpringServiceUrl() {
-		LOG.info("Constructor SpringServiceUrl");
-	}
-	
 	@Override
 	public void receiveData(Object dataIncoming) {
 		LOG.info("receive dataIncoming for : "+SpringServiceMethod.class.getCanonicalName());

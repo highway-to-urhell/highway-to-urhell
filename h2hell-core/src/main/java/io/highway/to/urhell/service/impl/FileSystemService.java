@@ -31,9 +31,6 @@ public class FileSystemService implements LeechService {
 	private final static String PATHH2H = "PATH_H2H";
 	private final static String WEBXML = "web.xml";
 
-	public FileSystemService() {
-		LOG.info("Constructor FileSystemService");
-	}
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(FileSystemService.class);

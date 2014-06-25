@@ -4,7 +4,6 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
-import io.highway.to.urhell.domain.MethodEntry;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.LeechService;
 

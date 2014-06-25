@@ -4,7 +4,7 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
-import io.highway.to.urhell.domain.MethodEntry;
+import io.highway.to.urhell.domain.HttpMethod;
 import io.highway.to.urhell.domain.TypeParam;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.LeechService;
@@ -61,7 +61,7 @@ public class Struts2Service implements LeechService {
 							.values()) {
 						EntryPathData entry = new EntryPathData();
 						entry.setTypePath(TypePath.DYNAMIC);
-						entry.setMethodEntry(MethodEntry.GET.toString());
+						entry.setMethodEntry(HttpMethod.GET.toString());
 						entry.setUri(action.getName());
 						entry.setListEntryPathData(findParam(resultConfig
 								.getParams()));

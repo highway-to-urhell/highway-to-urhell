@@ -7,9 +7,10 @@ public class EntryPathData {
     private String uri;
     private TypePath typePath;
     private String methodEntry;
-    private List<EntryPathParam> listEntryPathData;
     private String methodName;
-
+    private List<EntryPathParam> listEntryPathData;
+    private HttpMethod httpMethod= HttpMethod.UNKNOWN;
+    
     public String getMethodName() {
 		return methodName;
 	}

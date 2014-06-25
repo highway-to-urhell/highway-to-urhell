@@ -4,7 +4,7 @@ import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
-import io.highway.to.urhell.domain.MethodEntry;
+import io.highway.to.urhell.domain.HttpMethod;
 import io.highway.to.urhell.service.LeechService;
 
 import java.util.ArrayList;
@@ -35,7 +35,6 @@ public class ServletService implements LeechService {
 						EntryPathData entry = new EntryPathData();
 						entry.setMethodName(sv.getName());
 						entry.setUri(mapping);
-						entry.setMethodEntry(MethodEntry.UNKNOWN.toString());
 						if (sv.getInitParameters() != null) {
 							List<EntryPathParam> listEntryPathParams = new ArrayList<EntryPathParam>();
 							for (String key : sv.getInitParameters().keySet()) {

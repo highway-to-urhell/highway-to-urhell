@@ -31,7 +31,7 @@ set PATH_H2H=/home/myapplication/
 ```
 ### Visualisation Paths with Browser
 Configuration servlet, add code into web.xml
-'''
+```
     <servlet>
         <servlet-name>h2h</servlet-name>
         <servlet-class>io.highway.to.urhell.servlet.H2hellServlet</servlet-class>
@@ -41,7 +41,7 @@ Configuration servlet, add code into web.xml
         <servlet-name>h2h</servlet-name>
         <url-pattern>/h2h/</url-pattern>
     </servlet-mapping>
-'''
+```
 
 ## Contributing
 

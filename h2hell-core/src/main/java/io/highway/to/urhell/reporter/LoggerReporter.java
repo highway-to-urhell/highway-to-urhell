@@ -14,7 +14,7 @@ public class LoggerReporter implements ReporterService {
 
     @Override
     public void report(FrameworkInformations frameworkInformations) {
-        if (!frameworkInformations.getListEntryPath().isEmpty()) {
+        if (frameworkInformations.hasEntryPaths()) {
             LOG.info("framework {} version {}",
                     frameworkInformations.getFrameworkEnum(),
                     frameworkInformations.getVersion());

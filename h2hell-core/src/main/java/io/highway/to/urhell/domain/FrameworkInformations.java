@@ -40,6 +40,10 @@ public class FrameworkInformations {
     public void setListEntryPath(List<EntryPathData> listEntryPath) {
         this.listEntryPath = listEntryPath;
     }
+    
+    public boolean hasEntryPaths() {
+        return !listEntryPath.isEmpty();
+    }
 
     @Override
     public String toString() {

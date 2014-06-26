@@ -34,6 +34,8 @@ public class H2hellServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         Collection<LeechService> leechServiceRegistered = CoreEngine
                 .getInstance().getLeechServiceRegistered();
+        
+        CoreEngine.getInstance().leech();
 
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();

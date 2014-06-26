@@ -53,10 +53,22 @@ public class EntryPathData {
         this.listEntryPathData = listEntryPathData;
     }
 
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
     @Override
     public String toString() {
-        return "EntryPathData [uri=" + uri + ", typePath=" + typePath + ", methodEntry=" + methodEntry
-                + ", listEntryPathData=" + listEntryPathData + "]";
+        return "EntryPathData [uri=" + uri + ", typePath=" + typePath
+                + ", methodEntry=" + methodEntry + ", methodName=" + methodName
+                + ", listEntryPathData=" + listEntryPathData + ", httpMethod="
+                + httpMethod + "]";
     }
+
+    
 
 }

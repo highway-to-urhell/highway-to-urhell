@@ -54,21 +54,10 @@ public class CoreEngine {
         }
     }
 
-    public Collection<LeechService> dumpLeechResult(){
+    public Collection<LeechService> getLeechServiceRegistered(){
     	return leechPluginRegistry.values();
      }
     
-    
-    public String dumpLeechResultString(){
-    	Gson gson = new Gson();
-    	Collection<LeechService> collectionService= leechPluginRegistry.values();
-    	if(collectionService!=null){
-    		return gson.toJson(collectionService);
-    	}else{
-    		return gson.toJson("");
-    	}
-     }
-
     private void registerPlugins() {
         autoDiscoverLeechPlugins();
         autoDiscoverReporterPlugins();

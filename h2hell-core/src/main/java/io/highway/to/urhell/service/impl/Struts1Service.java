@@ -1,5 +1,6 @@
 package io.highway.to.urhell.service.impl;
 
+import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
@@ -67,6 +68,7 @@ public class Struts1Service implements LeechService {
 		FrameworkInformations fwk = new FrameworkInformations();
 		fwk.setFrameworkEnum(FrameworkEnum.STRUTS_1_X);
 		fwk.setListEntryPath(listData);
+		fwk.setVersion(VersionUtils.getVersion(ModuleConfigImpl.class, "struts", "struts"));
 		return fwk;
 	}
 

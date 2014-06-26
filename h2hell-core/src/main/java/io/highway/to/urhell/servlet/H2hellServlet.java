@@ -46,7 +46,7 @@ public class H2hellServlet extends HttpServlet {
             if (data != null && !"".equals(data)) {
                 LOG.debug("HTML Response");
                 response.setContentType("text/html");
-                out.println(GeneratorResult.getInstance().createPage(
+                out.println(ResultGeneratorUtils.generatePage(
                         leechServiceRegistered));
             } else {
                 LOG.debug("JSON Response");

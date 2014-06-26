@@ -11,16 +11,13 @@ import java.util.Collection;
  * Be careful, code 3v1l and D1rty
  *
  */
-public class GeneratorResult {
+public class ResultGeneratorUtils {
 	
-	private static GeneratorResult instance;
-	private static final String H2H="H2H";
-	
-	private GeneratorResult(){
+	private ResultGeneratorUtils(){
 		//Nothing ?
 	}
 	
-	public String createPage(Collection<LeechService> collectionService){
+	public static String generatePage(Collection<LeechService> collectionService){
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html><head><meta charset=\"utf-8\"></head><style type=\"text/css\">body{ font-size:18px; color:#FFF; }");
 		sb.append(".classh2h {text-shadow:5px 1px 11px #1a45f0}.classname { border:solid 1px #2d2d2d;  text-align:center; background:#575757; padding:50px 10px 20px 20px;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}table.gridtable {	font-family: verdana,arial,sans-serif;	font-size:11px;	color:#333333;	border-width: 1px;	border-color: #666666;	border-collapse: collapse;} table.gridtable tr{	border-width: 1px;	padding: 8px;	border-style: solid;	border-color: #666666;	background-color: #dedede ;} table.gridtable td {	border-width: 1px;	padding: 8px;	border-style: solid;	border-color: #666666;	background-color: #ffffff;}</style><body>)");		
@@ -68,17 +65,6 @@ public class GeneratorResult {
 		}
 		sb.append("</body></html>");
 		return sb.toString();
-	}
-	
-	public static GeneratorResult getInstance(){
-		if(instance==null){
-			synchronized (H2H) {
-				if(instance==null){
-					instance = new GeneratorResult();
-				}
-			}	
-		}
-		return instance;
 	}
 
 }

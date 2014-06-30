@@ -14,8 +14,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts.config.impl.ModuleConfigImpl;
-
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
@@ -26,7 +24,7 @@ public class Struts2Service extends AbstractLeechService {
 
     public Struts2Service() {
         super(FrameworkEnum.STRUTS_2_X, VersionUtils.getVersion(
-                ModuleConfigImpl.class, "org.apache.struts", "struts2-CORE"));
+                ConfigurationManager.class, "org.apache.struts", "struts2-CORE"));
     }
 
     private List<EntryPathParam> findParam(Map<String, String> map) {

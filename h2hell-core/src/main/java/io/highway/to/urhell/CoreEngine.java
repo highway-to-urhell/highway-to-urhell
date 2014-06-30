@@ -18,7 +18,8 @@ import com.google.gson.Gson;
 
 public class CoreEngine {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CoreEngine.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(CoreEngine.class);
 
     private static CoreEngine instance;
 
@@ -47,17 +48,17 @@ public class CoreEngine {
     }
 
     public void leech() {
-        for (LeechService leechService : leechPluginRegistry.values()) {
-            for (ReporterService reporterService : reporterPluginRegistry) {
+        for (ReporterService reporterService : reporterPluginRegistry) {
+            for (LeechService leechService : leechPluginRegistry.values()) {
                 reporterService.report(leechService.getFrameworkInformations());
             }
         }
     }
 
-    public Collection<LeechService> getLeechServiceRegistered(){
-    	return leechPluginRegistry.values();
-     }
-    
+    public Collection<LeechService> getLeechServiceRegistered() {
+        return leechPluginRegistry.values();
+    }
+
     private void registerPlugins() {
         autoDiscoverLeechPlugins();
         autoDiscoverReporterPlugins();
@@ -69,33 +70,44 @@ public class CoreEngine {
 
     private void autoDiscoverLeechPlugins() {
         Reflections reflections = new Reflections("io.highway.to.urhell");
-        Set<Class<? extends LeechService>> pluginsAvailable = reflections.getSubTypesOf(LeechService.class);
+        Set<Class<? extends LeechService>> pluginsAvailable = reflections
+                .getSubTypesOf(LeechService.class);
         for (Class<? extends LeechService> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering leech plugin {}", plugin.getCanonicalName());
+                LOGGER.info("registering leech plugin {}",
+                        plugin.getCanonicalName());
                 LeechService leechService = (LeechService) plugin.newInstance();
-                leechPluginRegistry.put(leechService.getFrameworkInformations().getFrameworkEnum(), leechService);
+                leechPluginRegistry.put(leechService.getFrameworkInformations()
+                        .getFrameworkEnum(), leechService);
             } catch (InstantiationException e) {
-                LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering leech plugin "
+                        + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {
-                LOGGER.error("An error occured while registering leech plugin " + plugin.getCanonicalName(), e);
-            } catch (Exception e){
-            	e.printStackTrace();
+                LOGGER.error("An error occured while registering leech plugin "
+                        + plugin.getCanonicalName(), e);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
     private void autoDiscoverReporterPlugins() {
         Reflections reflections = new Reflections("io.highway.to.urhell");
-        Set<Class<? extends ReporterService>> pluginsAvailable = reflections.getSubTypesOf(ReporterService.class);
+        Set<Class<? extends ReporterService>> pluginsAvailable = reflections
+                .getSubTypesOf(ReporterService.class);
         for (Class<? extends ReporterService> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering reporter plugin {}", plugin.getCanonicalName());
+                LOGGER.info("registering reporter plugin {}",
+                        plugin.getCanonicalName());
                 reporterPluginRegistry.add(plugin.newInstance());
             } catch (InstantiationException e) {
-                LOGGER.error("An error occured while registering reporter plugin " + plugin.getCanonicalName(), e);
+                LOGGER.error(
+                        "An error occured while registering reporter plugin "
+                                + plugin.getCanonicalName(), e);
             } catch (IllegalAccessException e) {
-                LOGGER.error("An error occured while registering reporter plugin " + plugin.getCanonicalName(), e);
+                LOGGER.error(
+                        "An error occured while registering reporter plugin "
+                                + plugin.getCanonicalName(), e);
             }
         }
     }

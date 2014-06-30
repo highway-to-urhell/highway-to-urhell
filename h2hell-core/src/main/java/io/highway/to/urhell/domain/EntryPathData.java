@@ -1,5 +1,6 @@
 package io.highway.to.urhell.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntryPathData {
@@ -8,7 +9,7 @@ public class EntryPathData {
     private TypePath typePath;
     private String methodEntry;
     private String methodName;
-    private List<EntryPathParam> listEntryPathData;
+    private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
     private HttpMethod httpMethod= HttpMethod.UNKNOWN;
     
     public String getMethodName() {

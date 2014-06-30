@@ -28,7 +28,6 @@ public class SpringServiceUrl  extends AbstractLeechService{
 			entry.setTypePath(TypePath.DYNAMIC);
 			entry.setUri(element.getKey());
 			entry.setMethodName(element.getValue().getClass().toString());
-			entry.setListEntryPathData(new ArrayList<EntryPathParam>());
 			addEntryPath(entry);
 		}
 	}

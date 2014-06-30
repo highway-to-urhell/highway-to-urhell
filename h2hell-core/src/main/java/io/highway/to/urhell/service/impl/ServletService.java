@@ -8,6 +8,7 @@ import io.highway.to.urhell.service.AbstractLeechService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletRegistration;
 
@@ -28,10 +29,10 @@ public class ServletService extends AbstractLeechService {
 						entry.setUri(mapping);
 						if (sv.getInitParameters() != null) {
 							List<EntryPathParam> listEntryPathParams = new ArrayList<EntryPathParam>();
-							for (String key : sv.getInitParameters().keySet()) {
+							for (Entry<String, String> initParameter: sv.getInitParameters().entrySet()) {
 								EntryPathParam en = new EntryPathParam();
-								en.setKey(key);
-								en.setValue(sv.getInitParameter(key));
+								en.setKey(initParameter.getKey());
+								en.setValue(initParameter.getValue());
 							}
 							entry.setListEntryPathData(listEntryPathParams);
 						}

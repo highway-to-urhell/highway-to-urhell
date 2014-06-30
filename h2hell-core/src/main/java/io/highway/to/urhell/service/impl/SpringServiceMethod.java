@@ -10,6 +10,7 @@ import io.highway.to.urhell.service.AbstractLeechService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.NameValueExpression;
@@ -25,26 +26,26 @@ public class SpringServiceMethod extends AbstractLeechService {
 
     public void gatherData(Object dataIncoming) {
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = (Map<RequestMappingInfo, HandlerMethod>) dataIncoming;
-        for (RequestMappingInfo element : handlerMethods.keySet()) {
-            EntryPathData entry = new EntryPathData();
-            entry.setTypePath(TypePath.DYNAMIC);
-            entry.setUri(element.getPatternsCondition().toString());
+        for (Entry<RequestMappingInfo, HandlerMethod> element : handlerMethods.entrySet()) {
+            RequestMappingInfo requestMappingInfo = element.getKey();
+            EntryPathData entrypath = new EntryPathData();
+            entrypath.setTypePath(TypePath.DYNAMIC);
+            entrypath.setUri(requestMappingInfo.getPatternsCondition().toString());
 
-            entry.setMethodEntry(element.getMethodsCondition().toString());
-            if (element.getParamsCondition().getExpressions() != null) {
+            entrypath.setMethodEntry(requestMappingInfo.getMethodsCondition().toString());
+            if (requestMappingInfo.getParamsCondition().getExpressions() != null) {
                 List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
-                for (NameValueExpression<String> nv : element
-                        .getParamsCondition().getExpressions()) {
+                for (NameValueExpression<String> nv : requestMappingInfo.getParamsCondition().getExpressions()) {
                     EntryPathParam param = new EntryPathParam();
                     param.setKey(nv.getName());
                     param.setValue(nv.getValue());
                     listEntryPathData.add(param);
                 }
-                entry.setListEntryPathData(listEntryPathData);
+                entrypath.setListEntryPathData(listEntryPathData);
 
             }
-            entry.setMethodName(handlerMethods.get(element).toString());
-            addEntryPath(entry);
+            entrypath.setMethodName(element.getValue().toString());
+            addEntryPath(entrypath);
         }
 
     }

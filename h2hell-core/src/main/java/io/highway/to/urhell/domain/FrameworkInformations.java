@@ -1,5 +1,6 @@
 package io.highway.to.urhell.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FrameworkInformations {
@@ -7,7 +8,7 @@ public class FrameworkInformations {
     private FrameworkEnum frameworkEnum;
     private String version = "UNKNOWN";
     private String details;
-    private List<EntryPathData> listEntryPath;
+    private List<EntryPathData> listEntryPath = new ArrayList<EntryPathData>();
 
     public FrameworkEnum getFrameworkEnum() {
         return frameworkEnum;

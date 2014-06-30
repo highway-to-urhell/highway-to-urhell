@@ -1,28 +1,26 @@
 package io.highway.to.urhell.service.impl;
 
+import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkEnum;
-import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.domain.TypePath;
-import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
-public class SpringServiceUrl  implements LeechService {
+public class SpringServiceUrl  extends AbstractLeechService{
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(SpringServiceUrl.class);
-	private List<EntryPathData> listData = new ArrayList<EntryPathData>();
+	public SpringServiceUrl() {
+        super(FrameworkEnum.SPRING_URL, VersionUtils.getVersion(
+                RequestMappingInfo.class, "org.springframework",
+                "spring-webmvc"));
+    }
 
-	@Override
-	public void receiveData(Object dataIncoming) {
-		LOG.info("receive dataIncoming for : "+SpringServiceMethod.class.getCanonicalName());
+	public void gatherData(Object dataIncoming) {
 		Map<String, Object> mapUrl = (Map<String, Object>) dataIncoming;
 		for (String element : mapUrl.keySet()) {
 			EntryPathData entry = new EntryPathData();
@@ -30,18 +28,10 @@ public class SpringServiceUrl  implements LeechService {
 			entry.setUri(element);
 			entry.setMethodName(mapUrl.get(element).getClass().toString());
 			entry.setListEntryPathData(new ArrayList<EntryPathParam>());
-			listData.add(entry);
+			addEntryPath(entry);
 		}
-		LOG.info("complete data for : "+SpringServiceUrl.class.getCanonicalName()+ "number elements loaded "+listData.size());
 	}
 	
-	@Override
-	public FrameworkInformations getFrameworkInformations() {
-		FrameworkInformations fwk = new FrameworkInformations();
-		fwk.setFrameworkEnum(FrameworkEnum.SPRING_URL);
-		fwk.setListEntryPath(listData);
-		return fwk;
-	}
 
 
 }

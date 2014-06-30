@@ -3,8 +3,7 @@ package io.highway.to.urhell.service.impl;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkEnum;
-import io.highway.to.urhell.domain.FrameworkInformations;
-import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +11,13 @@ import java.util.Map;
 
 import javax.servlet.ServletRegistration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class ServletService extends AbstractLeechService {
 
-public class ServletService implements LeechService {
+	public ServletService() {
+        super(FrameworkEnum.SERVLET_3);
+    }
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ServletService.class);
-	private List<EntryPathData> listData;
-
-	@Override
-	public void receiveData(Object incoming) {
-		listData = new ArrayList<EntryPathData>();
-		LOG.info("receive dataIncoming for : "
-				+ ServletService.class.getCanonicalName());
+	public void gatherData(Object incoming) {
 		Map<String, ? extends ServletRegistration> map = (Map<String, ? extends ServletRegistration>) incoming;
 		if (map.values() != null) {
 			for (ServletRegistration sv : map.values()) {
@@ -43,23 +35,11 @@ public class ServletService implements LeechService {
 							}
 							entry.setListEntryPathData(listEntryPathParams);
 						}
-						listData.add(entry);
+						addEntryPath(entry);
 					}
 				}
 			}
 
 		}
-		LOG.info("complete data for : "
-				+ ServletService.class.getCanonicalName()
-				+ "number elements loaded " + listData.size());
 	}
-
-	@Override
-	public FrameworkInformations getFrameworkInformations() {
-		FrameworkInformations fwk = new FrameworkInformations();
-		fwk.setFrameworkEnum(FrameworkEnum.SERVLET_3);
-		fwk.setListEntryPath(listData);
-		return fwk;
-	}
-
 }

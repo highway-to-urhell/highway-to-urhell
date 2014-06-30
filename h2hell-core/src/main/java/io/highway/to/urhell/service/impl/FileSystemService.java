@@ -2,45 +2,40 @@ package io.highway.to.urhell.service.impl;
 
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
-import io.highway.to.urhell.domain.FrameworkInformations;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.exception.H2HException;
-import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.google.gson.Gson;
+public class FileSystemService extends AbstractLeechService {
 
-public class FileSystemService implements LeechService {
-
-	private final static String PATHH2H = "PATH_H2H";
+    private final static String PATHH2H = "PATH_H2H";
 	private final static String WEBXML = "web.xml";
 
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(FileSystemService.class);
-	private List<EntryPathData> listData;
 	private String pathWebXml;
 
+
+    public FileSystemService() {
+        super(FrameworkEnum.SYSTEM);
+    }
+
+	
 	@Override
-	public void receiveData(Object incoming) {
+    protected void gatherData(Object incoming) {
 		String rootPath = System.getProperty(PATHH2H);
-		listData = new ArrayList<EntryPathData>();
 		try {
 			if (rootPath == null) {
 				throw new H2HException("Unknow Variable Path H2h. Please Set "
@@ -57,16 +52,8 @@ public class FileSystemService implements LeechService {
 			searchStaticFiles(rootPath);
 
 		} catch (H2HException e) {
-			LOG.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
-		LOG.info("complete data for : "
-				+ FileSystemService.class.getCanonicalName()
-				+ "number elements loaded " + listData.size());
-		if (LOG.isDebugEnabled()) {
-			Gson gson = new Gson();
-			LOG.info(" JSON elements :" + gson.toJson(listData));
-		}
-
 	}
 
 	private void searchStaticFiles(String rootPath) {
@@ -84,7 +71,7 @@ public class FileSystemService implements LeechService {
 						EntryPathData entry = new EntryPathData();
 						entry.setTypePath(TypePath.STATIC);
 						entry.setUri(tempFile.getPath());
-						listData.add(entry);
+						addEntryPath(entry);
 					}
 				}
 			}
@@ -92,7 +79,7 @@ public class FileSystemService implements LeechService {
 			EntryPathData entry = new EntryPathData();
 			entry.setTypePath(TypePath.STATIC);
 			entry.setUri(file.getPath());
-			listData.add(entry);
+			addEntryPath(entry);
 		}
 
 	}
@@ -100,7 +87,7 @@ public class FileSystemService implements LeechService {
 	private void searchAndParseWebXML(String rootPath) {
 		File fileRoot = new File(rootPath);
 		searchWebXML(fileRoot);
-		LOG.info("pathWebXml : " + pathWebXml);
+		LOGGER.info("pathWebXml : " + pathWebXml);
 		if (pathWebXml != null && !"".equals(pathWebXml)) {
 			parseWebXml(pathWebXml);
 		}
@@ -117,11 +104,11 @@ public class FileSystemService implements LeechService {
 			extractFilter(document);
 			extractListener(document);
 		} catch (ParserConfigurationException e) {
-			LOG.error("Parse error :"+e.getMessage());
+			LOGGER.error("Parse error :"+e.getMessage());
 		} catch (SAXException e) {
-			LOG.error("Parse error "+e.getMessage());
+			LOGGER.error("Parse error "+e.getMessage());
 		} catch (IOException e) {
-			LOG.error("Parse error "+e.getMessage());
+			LOGGER.error("Parse error "+e.getMessage());
 		}
 	}
 
@@ -158,7 +145,7 @@ public class FileSystemService implements LeechService {
 				web.setMethodEntry(elem.getElementsByTagName("listener-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setTypePath(TypePath.LISTENER);
-				listData.add(web);
+				addEntryPath(web);
 			}
 		}
 		
@@ -202,7 +189,7 @@ public class FileSystemService implements LeechService {
 						}
 					}
 				}
-				listData.add(web);
+				addEntryPath(web);
 			}
 		}
 		
@@ -234,18 +221,10 @@ public class FileSystemService implements LeechService {
 								.getChildNodes().item(0).getNodeValue());
 					}
 				}
-				listData.add(web);
+				addEntryPath(web);
 			}
 		}
 		
-	}
-
-	@Override
-	public FrameworkInformations getFrameworkInformations() {
-		FrameworkInformations fwk = new FrameworkInformations();
-		fwk.setFrameworkEnum(FrameworkEnum.SYSTEM);
-		fwk.setListEntryPath(listData);
-		return fwk;
 	}
 
 }

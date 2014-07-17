@@ -22,47 +22,51 @@ import com.opensymphony.xwork2.config.entities.ResultConfig;
 
 public class Struts2Service extends AbstractLeechService {
 
-    public Struts2Service() {
-        super(FrameworkEnum.STRUTS_2_X, VersionUtils.getVersion(
-                ConfigurationManager.class, "org.apache.struts", "struts2-CORE"));
-    }
+	public Struts2Service() {
+		super(FrameworkEnum.STRUTS_2_X, VersionUtils.getVersion(
+				"com.opensymphony.xwork2.config.ConfigurationManager",
+				"org.apache.struts", "struts2-CORE"));
+	}
 
-    private List<EntryPathParam> findParam(Map<String, String> map) {
-        List<EntryPathParam> res = new ArrayList<EntryPathParam>();
+	private List<EntryPathParam> findParam(Map<String, String> map) {
+		List<EntryPathParam> res = new ArrayList<EntryPathParam>();
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            EntryPathParam entryData = new EntryPathParam();
-            entryData.setKey(entry.getKey());
-            entryData.setValue(entry.getValue());
-            entryData.setTypeParam(TypeParam.PARAM_DATA);
-            res.add(entryData);
-        }
-        return res;
-    }
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			EntryPathParam entryData = new EntryPathParam();
+			entryData.setKey(entry.getKey());
+			entryData.setValue(entry.getValue());
+			entryData.setTypeParam(TypeParam.PARAM_DATA);
+			res.add(entryData);
+		}
+		return res;
+	}
 
-    public void gatherData(Object dataIncoming) {
-        ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
-        Configuration config = configurationManager.getConfiguration();
-        Collection<PackageConfig> colPackages = config.getPackageConfigs()
-                .values();
-        if (colPackages != null) {
-            for (PackageConfig value : colPackages) {
-                Collection<ActionConfig> colActionConfigs = value
-                        .getActionConfigs().values();
-                for (ActionConfig action : colActionConfigs) {
-                    for (ResultConfig resultConfig : action.getResults()
-                            .values()) {
-                        EntryPathData entry = new EntryPathData();
-                        entry.setTypePath(TypePath.DYNAMIC);
-                        entry.setMethodEntry(HttpMethod.GET.toString());
-                        entry.setUri(action.getName());
-                        entry.setListEntryPathData(findParam(resultConfig
-                                .getParams()));
-                        addEntryPath(entry);
-                    }
-                }
-            }
-        }
-    }
+	public void gatherData(Object dataIncoming) {
+		if (!getFrameworkInformations().getVersion().equals(
+				VersionUtils.NO_FRAMEWORK)) {
+			ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
+			Configuration config = configurationManager.getConfiguration();
+			Collection<PackageConfig> colPackages = config.getPackageConfigs()
+					.values();
+			if (colPackages != null) {
+				for (PackageConfig value : colPackages) {
+					Collection<ActionConfig> colActionConfigs = value
+							.getActionConfigs().values();
+					for (ActionConfig action : colActionConfigs) {
+						for (ResultConfig resultConfig : action.getResults()
+								.values()) {
+							EntryPathData entry = new EntryPathData();
+							entry.setTypePath(TypePath.DYNAMIC);
+							entry.setMethodEntry(HttpMethod.GET.toString());
+							entry.setUri(action.getName());
+							entry.setListEntryPathData(findParam(resultConfig
+									.getParams()));
+							addEntryPath(entry);
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

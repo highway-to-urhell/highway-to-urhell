@@ -18,36 +18,45 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
 public class SpringServiceMethod extends AbstractLeechService {
 
-    public SpringServiceMethod() {
-        super(FrameworkEnum.SPRING_METHOD, VersionUtils.getVersion(
-                RequestMappingInfo.class, "org.springframework",
-                "spring-webmvc"));
-    }
+	public SpringServiceMethod() {
+		super(
+				FrameworkEnum.SPRING_METHOD,
+				VersionUtils
+						.getVersion(
+								"org.springframework.web.servlet.mvc.method.RequestMappingInfo",
+								"org.springframework", "spring-webmvc"));
+	}
 
-    public void gatherData(Object dataIncoming) {
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = (Map<RequestMappingInfo, HandlerMethod>) dataIncoming;
-        for (Entry<RequestMappingInfo, HandlerMethod> element : handlerMethods.entrySet()) {
-            RequestMappingInfo requestMappingInfo = element.getKey();
-            EntryPathData entrypath = new EntryPathData();
-            entrypath.setTypePath(TypePath.DYNAMIC);
-            entrypath.setUri(requestMappingInfo.getPatternsCondition().toString());
+	public void gatherData(Object dataIncoming) {
+		if (!getFrameworkInformations().getVersion().equals(
+				VersionUtils.NO_FRAMEWORK)) {
+			Map<RequestMappingInfo, HandlerMethod> handlerMethods = (Map<RequestMappingInfo, HandlerMethod>) dataIncoming;
+			for (Entry<RequestMappingInfo, HandlerMethod> element : handlerMethods
+					.entrySet()) {
+				RequestMappingInfo requestMappingInfo = element.getKey();
+				EntryPathData entrypath = new EntryPathData();
+				entrypath.setTypePath(TypePath.DYNAMIC);
+				entrypath.setUri(requestMappingInfo.getPatternsCondition()
+						.toString());
 
-            entrypath.setMethodEntry(requestMappingInfo.getMethodsCondition().toString());
-            if (requestMappingInfo.getParamsCondition().getExpressions() != null) {
-                List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
-                for (NameValueExpression<String> nv : requestMappingInfo.getParamsCondition().getExpressions()) {
-                    EntryPathParam param = new EntryPathParam();
-                    param.setKey(nv.getName());
-                    param.setValue(nv.getValue());
-                    listEntryPathData.add(param);
-                }
-                entrypath.setListEntryPathData(listEntryPathData);
+				entrypath.setMethodEntry(requestMappingInfo
+						.getMethodsCondition().toString());
+				if (requestMappingInfo.getParamsCondition().getExpressions() != null) {
+					List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
+					for (NameValueExpression<String> nv : requestMappingInfo
+							.getParamsCondition().getExpressions()) {
+						EntryPathParam param = new EntryPathParam();
+						param.setKey(nv.getName());
+						param.setValue(nv.getValue());
+						listEntryPathData.add(param);
+					}
+					entrypath.setListEntryPathData(listEntryPathData);
 
-            }
-            entrypath.setMethodName(element.getValue().toString());
-            addEntryPath(entrypath);
-        }
-
-    }
+				}
+				entrypath.setMethodName(element.getValue().toString());
+				addEntryPath(entrypath);
+			}
+		}
+	}
 
 }

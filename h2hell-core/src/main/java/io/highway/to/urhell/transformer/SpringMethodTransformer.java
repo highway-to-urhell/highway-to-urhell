@@ -1,13 +1,8 @@
 package io.highway.to.urhell.transformer;
 
-import java.io.InputStream;
 import java.lang.instrument.IllegalClassFormatException;
-import java.net.URL;
 import java.security.ProtectionDomain;
-import java.util.Iterator;
 
-import javassist.ClassClassPath;
-import javassist.ClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;

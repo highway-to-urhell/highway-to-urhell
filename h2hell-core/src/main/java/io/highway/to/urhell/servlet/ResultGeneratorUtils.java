@@ -30,6 +30,7 @@ public class ResultGeneratorUtils {
 				sb.append("<div id=\"gibson"+i+"\" class=\"classname\">");
 				sb.append("<ul>");
 				sb.append("<p>Framework Informations "+fwk.getFrameworkEnum().toString()+"</p><br>");
+				sb.append("<p>Framework Version "+fwk.getVersion().toString()+"</p><br>");
 				sb.append("<p>Entries Path : </p><br>");
 				if(fwk.getListEntryPath()!=null && !fwk.getListEntryPath().isEmpty()){
 					sb.append("<table class=\"gridtable\">");

@@ -1,6 +1,7 @@
 package io.highway.to.urhell;
 
 import io.highway.to.urhell.domain.FrameworkEnum;
+import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
 
@@ -14,8 +15,6 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 public class CoreEngine {
 
     private static final Logger LOGGER = LoggerFactory
@@ -26,7 +25,7 @@ public class CoreEngine {
     private Map<FrameworkEnum, LeechService> leechPluginRegistry = new HashMap<FrameworkEnum, LeechService>();
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
 
-    private CoreEngine() {
+	private CoreEngine() {
         // nothing
     }
 
@@ -37,12 +36,17 @@ public class CoreEngine {
                     instance = new CoreEngine();
                     instance.registerPlugins();
                     instance.collectSystemData();
+                    instance.collectGwtData();
                 }
             }
         }
         return instance;
     }
 
+    private void collectGwtData(){
+        getFramework(FrameworkEnum.GWT).receiveData(null);
+    }
+    
     private void collectSystemData() {
         getFramework(FrameworkEnum.SYSTEM).receiveData(null);
     }
@@ -70,8 +74,8 @@ public class CoreEngine {
 
     private void autoDiscoverLeechPlugins() {
         Reflections reflections = new Reflections("io.highway.to.urhell");
-        Set<Class<? extends LeechService>> pluginsAvailable = reflections
-                .getSubTypesOf(LeechService.class);
+        Set<Class<? extends AbstractLeechService>> pluginsAvailable = reflections
+                .getSubTypesOf(AbstractLeechService.class);
         for (Class<? extends LeechService> plugin : pluginsAvailable) {
             try {
                 LOGGER.info("registering leech plugin {}",

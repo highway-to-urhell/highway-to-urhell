@@ -16,8 +16,8 @@ public abstract class AbstractLeechService implements LeechService {
     }
 
     public AbstractLeechService(FrameworkEnum framework, String version) {
-        this(framework);
-        frameworkInformations.setVersion(version);
+    	this(framework);
+    	frameworkInformations.setVersion(version);
     }
 
     public void receiveData(Object incoming) {

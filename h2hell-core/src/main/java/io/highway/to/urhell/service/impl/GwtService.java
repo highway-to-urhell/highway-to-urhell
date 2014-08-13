@@ -26,14 +26,14 @@ public class GwtService extends AbstractLeechService {
 
 	@Override
 	protected void gatherData(Object incoming) {
-		// scan
-		LOGGER.info("Start Scan reflections GWT ! ");
-		Reflections reflections = new Reflections(
-				new ConfigurationBuilder().setUrls(ClasspathHelper
-						.forClassLoader()));
-		LOGGER.info("End Scan reflections GWT ! ");
 		if (!getFrameworkInformations().getVersion().equals(
 				VersionUtils.NO_FRAMEWORK)) {
+			// scan
+			LOGGER.info("Start Scan reflections GWT ! ");
+			Reflections reflections = new Reflections(
+					new ConfigurationBuilder().setUrls(ClasspathHelper
+							.forClassLoader()));
+			LOGGER.info("End Scan reflections GWT ! ");
 			Set<Class<?>> setGwtService = reflections
 					.getTypesAnnotatedWith(RemoteServiceRelativePath.class);
 			if (setGwtService != null && !setGwtService.isEmpty()) {
@@ -58,5 +58,5 @@ public class GwtService extends AbstractLeechService {
 		}
 
 	}
-	
+
 }

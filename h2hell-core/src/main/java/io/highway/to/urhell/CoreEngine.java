@@ -4,16 +4,11 @@ import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class CoreEngine {
 
@@ -25,7 +20,7 @@ public class CoreEngine {
     private Map<FrameworkEnum, LeechService> leechPluginRegistry = new HashMap<FrameworkEnum, LeechService>();
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
 
-	private CoreEngine() {
+    private CoreEngine() {
         // nothing
     }
 
@@ -43,10 +38,10 @@ public class CoreEngine {
         return instance;
     }
 
-    private void collectGwtData(){
+    private void collectGwtData() {
         getFramework(FrameworkEnum.GWT).receiveData(null);
     }
-    
+
     private void collectSystemData() {
         getFramework(FrameworkEnum.SYSTEM).receiveData(null);
     }
@@ -83,10 +78,7 @@ public class CoreEngine {
                 LeechService leechService = (LeechService) plugin.newInstance();
                 leechPluginRegistry.put(leechService.getFrameworkInformations()
                         .getFrameworkEnum(), leechService);
-            } catch (InstantiationException e) {
-                LOGGER.error("An error occured while registering leech plugin "
-                        + plugin.getCanonicalName(), e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error("An error occured while registering leech plugin "
                         + plugin.getCanonicalName(), e);
             } catch (Exception e) {
@@ -104,11 +96,7 @@ public class CoreEngine {
                 LOGGER.info("registering reporter plugin {}",
                         plugin.getCanonicalName());
                 reporterPluginRegistry.add(plugin.newInstance());
-            } catch (InstantiationException e) {
-                LOGGER.error(
-                        "An error occured while registering reporter plugin "
-                                + plugin.getCanonicalName(), e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error(
                         "An error occured while registering reporter plugin "
                                 + plugin.getCanonicalName(), e);

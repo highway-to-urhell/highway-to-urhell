@@ -1,6 +1,6 @@
 package io.highway.to.urhell.agent;
 
-import io.highway.to.urhell.transformer.LeechTransformer;
+import io.highway.to.urhell.transformer.AbstractLeechTransformer;
 
 import java.lang.instrument.Instrumentation;
 import java.util.HashSet;
@@ -14,21 +14,21 @@ public class H2hellAgent {
     private static final Logger LOGGER = LoggerFactory.getLogger(H2hellAgent.class);
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        for (LeechTransformer transformer : autoDiscoverTransformer()) {
+        for (AbstractLeechTransformer transformer : autoDiscoverTransformer()) {
             inst.addTransformer(transformer);
         }
     }
     
    
-    private static Set<LeechTransformer> autoDiscoverTransformer() {
+    private static Set<AbstractLeechTransformer> autoDiscoverTransformer() {
         Reflections reflections = new Reflections("io.highway.to.urhell");
-        Set<LeechTransformer> leechPluginRegistry = new HashSet<LeechTransformer>();
+        Set<AbstractLeechTransformer> leechPluginRegistry = new HashSet<AbstractLeechTransformer>();
 
-        Set<Class<? extends LeechTransformer>> pluginsAvailable = reflections.getSubTypesOf(LeechTransformer.class);
-        for (Class<? extends LeechTransformer> plugin : pluginsAvailable) {
+        Set<Class<? extends AbstractLeechTransformer>> pluginsAvailable = reflections.getSubTypesOf(AbstractLeechTransformer.class);
+        for (Class<? extends AbstractLeechTransformer> plugin : pluginsAvailable) {
             try {
                 LOGGER.info("registering leech transformer {}", plugin.getCanonicalName());
-                LeechTransformer transformer = plugin.newInstance();
+                AbstractLeechTransformer transformer = plugin.newInstance();
                 leechPluginRegistry.add(transformer);
                 LOGGER.info("registering leech transformer complete {}", plugin.getCanonicalName());
             } catch (InstantiationException e) {

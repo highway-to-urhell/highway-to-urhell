@@ -32,12 +32,16 @@ public class CoreEngine {
                     instance.registerPlugins();
                     instance.collectSystemData();
                     instance.collectGwtData();
+                    instance.collectJAXRSData();
                 }
             }
         }
         return instance;
     }
-
+    
+    private void collectJAXRSData() {
+        getFramework(FrameworkEnum.JAX_RS).receiveData(null);
+    }
     private void collectGwtData() {
         getFramework(FrameworkEnum.GWT).receiveData(null);
     }

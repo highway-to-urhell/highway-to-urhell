@@ -50,43 +50,46 @@ public class JaxRsService extends AbstractLeechService {
 						if (annotation instanceof Path) {
 							Path remoteAnnotation = (Path) annotation;
 							String pathForClass = remoteAnnotation.value();
-							//Search all method public with annotation Path
+							// Search all method public with annotation Path
 							Method[] tabMethod = service.getDeclaredMethods();
-							if(tabMethod.length>0){
-								for(Method m : tabMethod){
-									addEntryPath(getEntryForClassJAXRS(pathForClass,m,service.getName()));
+							if (tabMethod.length > 0) {
+								for (Method m : tabMethod) {
+									Path pMethod = m.getAnnotation(Path.class);
+									if (pMethod != null) {
+										addEntryPath(getEntryForClassJAXRS(
+												pathForClass, m,
+												service.getName(),pMethod));
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-			
+
 		}
 	}
-	
-	private EntryPathData getEntryForClassJAXRS(String pathClass,Method m,String nameClass){
+
+	private EntryPathData getEntryForClassJAXRS(String pathClass, Method m,
+			String nameClass,Path pMethod) {
 		EntryPathData entry = new EntryPathData();
-		Path pMethod = m.getAnnotation(Path.class);
-		if(pMethod!=null){
-			//method
-			if(m.getAnnotation(GET.class)!=null){
-				entry.setHttpMethod(HttpMethod.GET);
-			}else if (m.getAnnotation(POST.class)!=null) {
-				entry.setHttpMethod(HttpMethod.POST);
-			} else if (m.getAnnotation(PUT.class)!=null){
-				entry.setHttpMethod(HttpMethod.PUT);
-			}else if (m.getAnnotation(DELETE.class)!=null){
-				entry.setHttpMethod(HttpMethod.DELETE);
-			}else{
-				entry.setHttpMethod(HttpMethod.UNKNOWN);
-			}
-			//
-			entry.setUri(pathClass+pMethod.value());
-			entry.setMethodEntry(nameClass);
-			entry.setMethodName(m.getName());
-			entry.setTypePath(TypePath.DYNAMIC);
+		// method
+		if (m.getAnnotation(GET.class) != null) {
+			entry.setHttpMethod(HttpMethod.GET);
+		} else if (m.getAnnotation(POST.class) != null) {
+			entry.setHttpMethod(HttpMethod.POST);
+		} else if (m.getAnnotation(PUT.class) != null) {
+			entry.setHttpMethod(HttpMethod.PUT);
+		} else if (m.getAnnotation(DELETE.class) != null) {
+			entry.setHttpMethod(HttpMethod.DELETE);
+		} else {
+			entry.setHttpMethod(HttpMethod.UNKNOWN);
 		}
+		//
+		entry.setUri(pathClass + pMethod.value());
+		entry.setMethodEntry(nameClass);
+		entry.setMethodName(m.getName());
+		entry.setTypePath(TypePath.DYNAMIC);
 		return entry;
 	}
 

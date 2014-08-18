@@ -1,8 +1,9 @@
-package io.highway.to.urhell.servlet;
+package io.highway.to.urhell.generator.impl;
 
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
 import io.highway.to.urhell.domain.FrameworkInformations;
+import io.highway.to.urhell.generator.TheJack;
 import io.highway.to.urhell.service.LeechService;
 
 import java.util.Collection;
@@ -11,13 +12,9 @@ import java.util.Collection;
  * Be careful, code 3v1l and D1rty
  *
  */
-public class ResultGeneratorUtils {
+public class HTMLGenerator implements TheJack{
 	
-	private ResultGeneratorUtils(){
-		//Nothing ?
-	}
-	
-	public static String generatePage(Collection<LeechService> collectionService){
+	public String generatePage(Collection<LeechService> collectionService){
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html><head><meta charset=\"utf-8\"></head><style type=\"text/css\">body{ font-size:18px; color:#FFF; }");
 		sb.append(".classh2h {text-shadow:5px 1px 11px #1a45f0}.classname { border:solid 1px #2d2d2d;  text-align:center; background:#575757; padding:50px 10px 20px 20px;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}table.gridtable {	font-family: verdana,arial,sans-serif;	font-size:11px;	color:#333333;	border-width: 1px;	border-color: #666666;	border-collapse: collapse;} table.gridtable tr{	border-width: 1px;	padding: 8px;	border-style: solid;	border-color: #666666;	background-color: #dedede ;} table.gridtable td {	border-width: 1px;	padding: 8px;	border-style: solid;	border-color: #666666;	background-color: #ffffff;}</style><body>)");		

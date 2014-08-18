@@ -8,7 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLeechService implements LeechService {
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	
+    protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private FrameworkInformations frameworkInformations = new FrameworkInformations();
 
     public AbstractLeechService(FrameworkEnum framework) {

@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.sun.faces.mgbean.BeanBuilder;
-import com.sun.faces.mgbean.ManagedBeanInfo;
 
 public class JSF2Service extends AbstractLeechService {
 

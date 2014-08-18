@@ -1,18 +1,17 @@
 package io.highway.to.urhell.service.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import javax.faces.application.NavigationCase;
-
 import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.HttpMethod;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
+
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.faces.application.NavigationCase;
 
 public class JSF2NavigationService extends AbstractLeechService {
 

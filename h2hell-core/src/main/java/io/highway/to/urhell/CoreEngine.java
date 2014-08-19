@@ -35,13 +35,6 @@ public class CoreEngine {
         return instance;
     }
 
-    private void runPluginsTriggeredAtStartup() {
-        for (LeechService leechService : leechPluginRegistry.values()) {
-            if (leechService.isTriggeredAtStartup()) {
-                leechService.receiveData(null);
-            }
-        }
-    }
 
     public void leech() {
         for (ReporterService reporterService : reporterPluginRegistry) {
@@ -55,13 +48,15 @@ public class CoreEngine {
         return leechPluginRegistry.values();
     }
 
-    private void registerPlugins() {
-        autoDiscoverLeechPlugins();
-        autoDiscoverReporterPlugins();
-    }
 
     public LeechService getFramework(String frameworkName) {
         return leechPluginRegistry.get(frameworkName);
+    }
+
+
+    private void registerPlugins() {
+        autoDiscoverLeechPlugins();
+        autoDiscoverReporterPlugins();
     }
 
     private void autoDiscoverLeechPlugins() {
@@ -73,6 +68,14 @@ public class CoreEngine {
 
     private void autoDiscoverReporterPlugins() {
         reporterPluginRegistry = PluginUtils.autodiscoverPlugin(ReporterService.class);
+    }
+
+    private void runPluginsTriggeredAtStartup() {
+        for (LeechService leechService : leechPluginRegistry.values()) {
+            if (leechService.isTriggeredAtStartup()) {
+                leechService.receiveData(null);
+            }
+        }
     }
 
 }

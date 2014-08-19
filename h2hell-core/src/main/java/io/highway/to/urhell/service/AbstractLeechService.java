@@ -1,24 +1,22 @@
 package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.domain.EntryPathData;
-import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.FrameworkInformations;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLeechService implements LeechService {
-	
+
     protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private FrameworkInformations frameworkInformations = new FrameworkInformations();
 
-    public AbstractLeechService(FrameworkEnum framework) {
-        frameworkInformations.setFrameworkEnum(framework);
+    public AbstractLeechService(String frameworkName) {
+        frameworkInformations.setFrameworkName(frameworkName);
     }
 
-    public AbstractLeechService(FrameworkEnum framework, String version) {
-    	this(framework);
-    	frameworkInformations.setVersion(version);
+    public AbstractLeechService(String frameworkName, String version) {
+        this(frameworkName);
+        frameworkInformations.setVersion(version);
     }
 
     public void receiveData(Object incoming) {
@@ -39,9 +37,8 @@ public abstract class AbstractLeechService implements LeechService {
     public FrameworkInformations getFrameworkInformations() {
         return frameworkInformations;
     }
-    
+
     public void addEntryPath(EntryPathData entryPath) {
         frameworkInformations.getListEntryPath().add(entryPath);
     }
-
 }

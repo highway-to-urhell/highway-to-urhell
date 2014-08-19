@@ -1,19 +1,16 @@
 package io.highway.to.urhell;
 
-import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
+import io.highway.to.urhell.service.impl.FileSystemService;
+import io.highway.to.urhell.service.impl.GwtService;
+import io.highway.to.urhell.service.impl.JaxRsService;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class CoreEngine {
 
@@ -22,7 +19,7 @@ public class CoreEngine {
 
     private static CoreEngine instance;
 
-    private Map<FrameworkEnum, LeechService> leechPluginRegistry = new HashMap<FrameworkEnum, LeechService>();
+    private Map<String, LeechService> leechPluginRegistry = new HashMap<String, LeechService>();
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
 
     private CoreEngine() {
@@ -43,16 +40,17 @@ public class CoreEngine {
         }
         return instance;
     }
-    
+
     private void collectJAXRSData() {
-        getFramework(FrameworkEnum.JAX_RS).receiveData(null);
+        getFramework(JaxRsService.FRAMEWORK_NAME).receiveData(null);
     }
+
     private void collectGwtData() {
-        getFramework(FrameworkEnum.GWT).receiveData(null);
+        getFramework(GwtService.FRAMEWORK_NAME).receiveData(null);
     }
 
     private void collectSystemData() {
-        getFramework(FrameworkEnum.SYSTEM).receiveData(null);
+        getFramework(FileSystemService.FRAMEWORK_NAME).receiveData(null);
     }
 
     public void leech() {
@@ -72,8 +70,8 @@ public class CoreEngine {
         autoDiscoverReporterPlugins();
     }
 
-    public LeechService getFramework(FrameworkEnum framework) {
-        return leechPluginRegistry.get(framework);
+    public LeechService getFramework(String frameworkName) {
+        return leechPluginRegistry.get(frameworkName);
     }
 
     private void autoDiscoverLeechPlugins() {
@@ -86,7 +84,7 @@ public class CoreEngine {
                         plugin.getCanonicalName());
                 LeechService leechService = (LeechService) plugin.newInstance();
                 leechPluginRegistry.put(leechService.getFrameworkInformations()
-                        .getFrameworkEnum(), leechService);
+                        .getFrameworkName(), leechService);
             } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error("An error occured while registering leech plugin "
                         + plugin.getCanonicalName(), e);

@@ -1,33 +1,31 @@
 package io.highway.to.urhell.service.impl;
 
 import io.highway.to.urhell.domain.EntryPathData;
-import io.highway.to.urhell.domain.FrameworkEnum;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.exception.H2HException;
 import io.highway.to.urhell.service.AbstractLeechService;
-
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+
 public class FileSystemService extends AbstractLeechService {
 
     private final static String PATHH2H = "PATH_H2H";
     private final static String WEBXML = "web.xml";
+    public static final String FRAMEWORK_NAME = "SYSTEM";
 
     private String pathWebXml;
 
     public FileSystemService() {
-        super(FrameworkEnum.SYSTEM);
+        super(FRAMEWORK_NAME);
     }
 
     @Override

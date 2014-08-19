@@ -5,17 +5,17 @@ import java.util.List;
 
 public class FrameworkInformations {
 
-    private FrameworkEnum frameworkEnum;
+    private String frameworkName;
     private String version = "UNKNOWN";
     private String details;
     private List<EntryPathData> listEntryPath = new ArrayList<EntryPathData>();
 
-    public FrameworkEnum getFrameworkEnum() {
-        return frameworkEnum;
+    public String getFrameworkName() {
+        return frameworkName;
     }
 
-    public void setFrameworkEnum(FrameworkEnum frameworkEnum) {
-        this.frameworkEnum = frameworkEnum;
+    public void setFrameworkName(String frameworkName) {
+        this.frameworkName = frameworkName;
     }
 
     public String getVersion() {
@@ -41,14 +41,14 @@ public class FrameworkInformations {
     public void setListEntryPath(List<EntryPathData> listEntryPath) {
         this.listEntryPath = listEntryPath;
     }
-    
+
     public boolean hasEntryPaths() {
         return !listEntryPath.isEmpty();
     }
 
     @Override
     public String toString() {
-        return "FrameworkInformations [frameworkEnum=" + frameworkEnum
+        return "FrameworkInformations [frameworkName=" + frameworkName
                 + ", version=" + version + ", details=" + details
                 + ", listEntryPath=" + listEntryPath + "]";
     }

@@ -21,12 +21,12 @@ public class PluginUtils {
                 .getSubTypesOf(pluginClass);
         for (Class<? extends T> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering {} : {}", plugin.getClass().getName(),
+                LOGGER.info("registering {} : {}", pluginClass.getName(),
                         plugin.getCanonicalName());
                 T instance = plugin.newInstance();
                 pluginList.add(instance);
             } catch (InstantiationException | IllegalAccessException e) {
-                LOGGER.error("An error occured while registering " + plugin.getClass().getName() + " : " + plugin.getCanonicalName(), e);
+                LOGGER.error("An error occured while registering " + pluginClass.getName() + " : " + plugin.getCanonicalName(), e);
             } catch (Exception e) {
                 e.printStackTrace();
             }

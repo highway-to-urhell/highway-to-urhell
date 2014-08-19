@@ -13,6 +13,6 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getMethod("afterPropertiesSet", "()V");
-        m.insertAfter("CoreEngine.getInstance().getFramework(\"" + SpringServiceMethod.FRAMEWORK_NAME + "\").receiveData(getHandlerMethods());");
+        m.insertAfter(buildReceiveDataStatement(SpringServiceMethod.FRAMEWORK_NAME, "getHandlerMethods()"));
     }
 }

@@ -13,7 +13,7 @@ public class Struts1Transformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getDeclaredMethod("destroyConfigDigester");
-        m.insertBefore("CoreEngine.getInstance().getFramework(\"" + Struts1Service.FRAMEWORK_NAME + "\").receiveData(configDigester);");
+        m.insertBefore(buildReceiveDataStatement(Struts1Service.FRAMEWORK_NAME, "configDigester"));
 
     }
 

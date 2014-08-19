@@ -16,6 +16,8 @@ public class JSF2NavigationTransformer extends AbstractLeechTransformer {
         CtMethod m = cc
                 .getMethod("process",
                         "(Ljavax/servlet/ServletContext;[Lcom/sun/faces/config/DocumentInfo;)V");
-        m.insertAfter("CoreEngine.getInstance().getFramework(\"" + JSF2NavigationService.FRAMEWORK_NAME + "\").receiveData(ApplicationAssociate.getInstance(sc).getNavigationCaseListMappings());");
+        m.insertAfter(buildReceiveDataStatement(JSF2NavigationService.FRAMEWORK_NAME, "ApplicationAssociate.getInstance(sc).getNavigationCaseListMappings()"));
     }
+
+
 }

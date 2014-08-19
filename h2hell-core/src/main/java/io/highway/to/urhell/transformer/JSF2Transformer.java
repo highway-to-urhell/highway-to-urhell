@@ -13,6 +13,6 @@ public class JSF2Transformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getMethod("register", "(Lcom/sun/faces/mgbean/ManagedBeanInfo;)V");
-        m.insertAfter("CoreEngine.getInstance().getFramework(\"" + JSF2Service.FRAMEWORK_NAME + "\").receiveData(managedBeans);");
+        m.insertAfter(buildReceiveDataStatement(JSF2Service.FRAMEWORK_NAME, "managedBeans"));
     }
 }

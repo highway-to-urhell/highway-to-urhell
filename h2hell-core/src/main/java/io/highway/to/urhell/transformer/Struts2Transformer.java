@@ -13,7 +13,7 @@ public class Struts2Transformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getDeclaredMethod("init");
-        m.insertAfter("CoreEngine.getInstance().getFramework(\"" + Struts2Service.FRAMEWORK_NAME + "\").receiveData(configurationManager);");
+        m.insertAfter(buildReceiveDataStatement(Struts2Service.FRAMEWORK_NAME, "configurationManager"));
     }
 
 }

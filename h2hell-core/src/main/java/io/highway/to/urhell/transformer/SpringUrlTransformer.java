@@ -13,7 +13,7 @@ public class SpringUrlTransformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getMethod("registerHandler", "(Ljava/lang/String;Ljava/lang/Object;)V");
-        m.insertAfter("CoreEngine.getInstance().getFramework(\"" + SpringServiceUrl.FRAMEWORK_NAME + "\").receiveData(handlerMap);");
+        m.insertAfter(buildReceiveDataStatement(SpringServiceUrl.FRAMEWORK_NAME, "handlerMap"));
 
     }
 }

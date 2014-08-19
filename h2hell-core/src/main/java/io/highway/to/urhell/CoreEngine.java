@@ -3,15 +3,10 @@ package io.highway.to.urhell;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class CoreEngine {
-
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(CoreEngine.class);
 
     private static CoreEngine instance;
 

@@ -1,6 +1,7 @@
-package io.highway.to.urhell.service.impl;
+package io.highway.to.urhell.trigger;
 
 import io.highway.to.urhell.CoreEngine;
+import io.highway.to.urhell.service.impl.ServletService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -10,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 import java.util.Map;
 
 @WebListener
-public class Servlet3Service implements ServletContextListener {
+public class Servlet3Trigger implements ServletContextListener {
 
     @Override
     public void contextInitialized(final ServletContextEvent sce) {

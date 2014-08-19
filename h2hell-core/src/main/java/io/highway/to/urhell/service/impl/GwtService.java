@@ -21,6 +21,7 @@ public class GwtService extends AbstractLeechService {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
                 "com.google.gwt.user.client.rpc.RemoteServiceRelativePath",
                 "com.google.gwt", "GWT"));
+        setTriggerAtStartup(true);
     }
 
     @Override

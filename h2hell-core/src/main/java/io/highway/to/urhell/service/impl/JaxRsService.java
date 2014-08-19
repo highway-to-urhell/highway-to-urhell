@@ -22,6 +22,7 @@ public class JaxRsService extends AbstractLeechService {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
                 "javax.ws.rs.core.Application", "javax.ws.rs",
                 "javax.ws.rs-api"));
+        setTriggerAtStartup(true);
     }
 
     @Override

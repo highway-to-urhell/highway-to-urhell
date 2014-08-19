@@ -26,6 +26,7 @@ public class FileSystemService extends AbstractLeechService {
 
     public FileSystemService() {
         super(FRAMEWORK_NAME);
+        setTriggerAtStartup(true);
     }
 
     @Override

@@ -3,9 +3,6 @@ package io.highway.to.urhell;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
-import io.highway.to.urhell.service.impl.FileSystemService;
-import io.highway.to.urhell.service.impl.GwtService;
-import io.highway.to.urhell.service.impl.JaxRsService;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,25 +29,19 @@ public class CoreEngine {
                 if (instance == null) {
                     instance = new CoreEngine();
                     instance.registerPlugins();
-                    instance.collectSystemData();
-                    instance.collectGwtData();
-                    instance.collectJAXRSData();
+                    instance.runPluginsTriggeredAtStartup();
                 }
             }
         }
         return instance;
     }
 
-    private void collectJAXRSData() {
-        getFramework(JaxRsService.FRAMEWORK_NAME).receiveData(null);
-    }
-
-    private void collectGwtData() {
-        getFramework(GwtService.FRAMEWORK_NAME).receiveData(null);
-    }
-
-    private void collectSystemData() {
-        getFramework(FileSystemService.FRAMEWORK_NAME).receiveData(null);
+    private void runPluginsTriggeredAtStartup() {
+        for (LeechService leechService : leechPluginRegistry.values()) {
+            if (leechService.isTriggeredAtStartup()) {
+                leechService.receiveData(null);
+            }
+        }
     }
 
     public void leech() {

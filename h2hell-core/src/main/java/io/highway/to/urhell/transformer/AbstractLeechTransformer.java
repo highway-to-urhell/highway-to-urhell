@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class AbstractLeechTransformer implements ClassFileTransformer {
 
-    protected final Logger log = LoggerFactory
+    private final Logger log = LoggerFactory
             .getLogger(this.getClass());
     private final String classNameToTransformNormalized;
     private final String classNameToTransform;

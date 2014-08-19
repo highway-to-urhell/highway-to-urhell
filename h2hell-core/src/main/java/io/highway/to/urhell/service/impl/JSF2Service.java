@@ -44,8 +44,8 @@ public class JSF2Service extends AbstractLeechService {
         List<String> res = new ArrayList<String>();
         try {
             Method[] tabMethod = Class.forName(className).getDeclaredMethods();
-            for (int i = 0; i < tabMethod.length; i++) {
-                res.add(tabMethod[i].getName());
+            for (Method method : tabMethod) {
+                res.add(method.getName());
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

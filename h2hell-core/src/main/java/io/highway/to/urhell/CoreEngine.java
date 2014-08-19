@@ -82,7 +82,7 @@ public class CoreEngine {
             try {
                 LOGGER.info("registering leech plugin {}",
                         plugin.getCanonicalName());
-                LeechService leechService = (LeechService) plugin.newInstance();
+                LeechService leechService = plugin.newInstance();
                 leechPluginRegistry.put(leechService.getFrameworkInformations()
                         .getFrameworkName(), leechService);
             } catch (InstantiationException | IllegalAccessException e) {

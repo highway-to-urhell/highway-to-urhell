@@ -27,7 +27,7 @@ public abstract class AbstractLeechService implements LeechService {
                 frameworkInformations.getListEntryPath().size());
     }
 
-    protected void clearPreviousData() {
+    private void clearPreviousData() {
         frameworkInformations.getListEntryPath().clear();
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractLeechService implements LeechService {
         return frameworkInformations;
     }
 
-    public void addEntryPath(EntryPathData entryPath) {
+    protected void addEntryPath(EntryPathData entryPath) {
         frameworkInformations.getListEntryPath().add(entryPath);
     }
 }

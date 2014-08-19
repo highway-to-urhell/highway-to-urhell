@@ -36,7 +36,7 @@ public class FileSystemService extends AbstractLeechService {
                 throw new H2HException("Unknow Variable Path H2h. Please Set "
                         + PATHH2H + " to location application deployment.");
             }
-            if (rootPath != null && "".equals(rootPath)) {
+            if ("".equals(rootPath)) {
                 throw new H2HException(
                         "Variable Path H2h is empty. Please Set " + PATHH2H
                                 + " to location application deployment.");

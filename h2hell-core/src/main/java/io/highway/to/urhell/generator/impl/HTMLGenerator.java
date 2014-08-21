@@ -30,11 +30,12 @@ public class HTMLGenerator implements TheJack {
                 sb.append("<p>Entries Path : </p><br>");
                 if (fwk.getListEntryPath() != null && !fwk.getListEntryPath().isEmpty()) {
                     sb.append("<table class=\"gridtable\">");
-                    sb.append("<tr><td>Method Name</td><td>Method Entry</td><td>Type Path</td><td>Uri Path</td></tr>");
+                    sb.append("<tr><td>Method Name</td><td>Method Entry</td><td>Http Method</td><td>Type Path</td><td>Uri Path</td></tr>");
                     for (EntryPathData entry : fwk.getListEntryPath()) {
                         sb.append("<tr>");
                         sb.append("<td><p>" + entry.getMethodName() + "</p></p></td>");
                         sb.append("<td><p>" + entry.getMethodEntry() + "</p></td>");
+                        sb.append("<td><p>" + entry.getHttpMethod().toString() + "</p></td>");
                         sb.append("<td><p>" + entry.getTypePath().toString() + "</p></td>");
                         sb.append("<td><p>" + entry.getUri() + "</p></td>");
                         if (entry.getListEntryPathData() != null && !entry.getListEntryPathData().isEmpty()) {

@@ -5,10 +5,10 @@ import java.util.List;
 
 public class EntryPathData {
 
-    private String uri;
-    private TypePath typePath;
-    private String methodEntry;
-    private String methodName;
+    private String uri="";
+    private TypePath typePath=TypePath.UNKNOW;
+    private String methodEntry="";
+    private String methodName="";
     private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
     private HttpMethod httpMethod= HttpMethod.UNKNOWN;
     

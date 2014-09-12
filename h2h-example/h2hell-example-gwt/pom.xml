@@ -132,7 +132,6 @@ http://maven.apache.org/maven-v4_0_0.xsd">
             </plugin>
 
             <plugin>
-                <!-- http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
@@ -146,10 +145,6 @@ http://maven.apache.org/maven-v4_0_0.xsd">
                         <contextPath>/core/</contextPath>
                     </webAppConfig>
                 </configuration>
-                <!-- <executions> <execution> <id>start-jetty</id> <phase>pre-integration-test</phase>
-                    <goals> <goal>start</goal> </goals> <configuration> <daemon>true</daemon>
-                    </configuration> </execution> <execution> <id>stop-jetty</id> <phase>post-integration-test</phase>
-                    <goals> <goal>stop</goal> </goals> </execution> </executions> -->
             </plugin>
         </plugins>
     </build>

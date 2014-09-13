@@ -24,7 +24,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
 
     public AbstractLeechTransformer(String classNameToTransform) {
         this.classNameToTransform = classNameToTransform;
-        this.classNameToTransformNormalized = classNameToTransform.replace(".", "/");
+        this.classNameToTransformNormalized = classNameToTransform.replace("/", ".");
 
         addImportPackage("io.highway.to.urhell");
         addImportPackage("io.highway.to.urhell.domain");

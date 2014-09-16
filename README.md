@@ -29,7 +29,7 @@ set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/
 ```
 set PATH_H2H=/home/myapplication/
 ```
-### Visualisation Paths with Browser
+### Visualisation Paths with Browser when AppServer doesn't support Servlet3
 Configuration servlet, add code into web.xml
 ```
     <servlet>
@@ -42,6 +42,12 @@ Configuration servlet, add code into web.xml
         <url-pattern>/h2h/</url-pattern>
     </servlet-mapping>
 ```
+
+### Apps Example
+
+mvn clean package -DappExample
+
+For each application example in h2h-example you can launch jetty (forked mode) with 'mvn'
 
 ## Contributing
 

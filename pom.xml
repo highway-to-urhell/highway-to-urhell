@@ -325,6 +325,15 @@
 
 	<profiles>
 		<profile>
+			<id>appExample</id>
+			<modules>
+				<module>h2h-example/h2hell-example-gwt</module>
+				<module>h2h-example/h2hell-example-jsf2</module>
+				<module>h2h-example/h2hell-example-spring</module>
+				<module>h2h-example/h2hell-example-struts1</module>
+			</modules>
+		</profile>	
+		<profile>
 			<id>sonar</id>
 			<build>
 				<plugins>

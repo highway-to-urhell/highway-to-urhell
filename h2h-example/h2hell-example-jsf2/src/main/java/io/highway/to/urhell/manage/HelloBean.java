@@ -1,4 +1,4 @@
-package com.mkyong.common;
+package io.highway.to.urhell.manage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

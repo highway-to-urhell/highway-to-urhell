@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet add in your web.xml
  * 
  */
-@WebServlet(value = "/h2h/*", name = "h2h-servlet")
+@WebServlet(value = "/h2hTest/*", name = "h2h-servlet")
 public class H2hellServlet extends HttpServlet {
 
 

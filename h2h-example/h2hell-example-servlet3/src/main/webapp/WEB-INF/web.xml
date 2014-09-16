@@ -6,14 +6,5 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="WebApp_ID" version="3.0">
 
   
- <servlet>
-        <servlet-name>h2h</servlet-name>
-        <servlet-class>io.highway.to.urhell.servlet.H2hellServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>h2h</servlet-name>
-        <url-pattern>/h2h/</url-pattern>
-    </servlet-mapping>
  
 </web-app>

@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
 import com.opensymphony.xwork2.config.entities.ResultConfig;
+
 import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.*;
 import io.highway.to.urhell.service.AbstractLeechService;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.struts2.dispatcher.Dispatcher;
 
 public class Struts2Service extends AbstractLeechService {
 
@@ -40,7 +43,9 @@ public class Struts2Service extends AbstractLeechService {
     public void gatherData(Object dataIncoming) {
         if (!getFrameworkInformations().getVersion().equals(
                 VersionUtils.NO_FRAMEWORK)) {
-            ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
+        	ConfigurationManager configurationManager = Dispatcher.getInstance().getConfigurationManager();
+        	
+            //ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
             Configuration config = configurationManager.getConfiguration();
             Collection<PackageConfig> colPackages = config.getPackageConfigs()
                     .values();

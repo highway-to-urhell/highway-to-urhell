@@ -39,7 +39,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                             byte[] classfileBuffer) throws IllegalClassFormatException {
 
 
-        if (className.startsWith(classNameToTransform)) {
+        if (className.equals(classNameToTransform)) {
             log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());
             try {
                 ClassPool cp = ClassPool.getDefault();

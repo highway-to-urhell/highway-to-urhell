@@ -8,6 +8,12 @@
 	<name>struts2</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<!-- dev only -->
+		<dependency>
+			<groupId>io.highway.to.urhell</groupId>
+			<artifactId>h2hell-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -21,47 +27,74 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>Struts2Example</finalName>
-		 <defaultGoal>jetty:run-forked</defaultGoal>
+		<defaultGoal>jetty:run-forked</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
+				<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>io.highway.to.urhell</groupId>
-                                    <artifactId>h2hell-distribution</artifactId>
-                                    <version>0.0.1-SNAPSHOT</version>
-                                    <classifier>distrib</classifier>
-                                    <type>zip</type>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+				<!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes>**/logback.xml</packagingExcludes>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>io.highway.to.urhell</groupId>
+									<artifactId>h2hell-distribution</artifactId>
+									<version>0.0.1-SNAPSHOT</version>
+									<classifier>distrib</classifier>
+									<type>zip</type>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-						<jvmArgs>
+					<jvmArgs>
                         -javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar
                         -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/
                     </jvmArgs>
@@ -70,25 +103,7 @@
 					<webAppConfig>
 						<contextPath>/core/</contextPath>
 					</webAppConfig>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
 				</configuration>
-				<dependencies>
-				<!-- <dependency>
-						<groupId>org.apache.myfaces.core</groupId>
-						<artifactId>myfaces-impl</artifactId>
-						<version>1.1.2</version>
-					</dependency>
-					<dependency>
-						<groupId>org.apache.myfaces.core</groupId>
-						<artifactId>myfaces-api</artifactId>
-						<version>1.1.2</version>
-					</dependency>
-					<dependency>
-						<groupId>log4j</groupId>
-						<artifactId>log4j</artifactId>
-						<version>1.2.9</version>
-					</dependency>-->
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

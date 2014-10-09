@@ -16,58 +16,62 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.dispatcher.Dispatcher;
+import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
 
 public class Struts2Service extends AbstractLeechService {
 
-    public static final String FRAMEWORK_NAME = "STRUTS_2";
+	public static final String FRAMEWORK_NAME = "STRUTS_2";
 
-    public Struts2Service() {
-        super(FRAMEWORK_NAME, VersionUtils.getVersion(
-                "com.opensymphony.xwork2.config.ConfigurationManager",
-                "org.apache.struts", "struts2-core"));
-    }
+	public Struts2Service() {
+		super(FRAMEWORK_NAME, VersionUtils.getVersion(
+				"com.opensymphony.xwork2.config.ConfigurationManager",
+				"org.apache.struts", "struts2-core"));
+		setTriggerAtStartup(true);
+	}
 
-    private List<EntryPathParam> findParam(Map<String, String> map) {
-        List<EntryPathParam> res = new ArrayList<EntryPathParam>();
+	private List<EntryPathParam> findParam(Map<String, String> map) {
+		List<EntryPathParam> res = new ArrayList<EntryPathParam>();
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            EntryPathParam entryData = new EntryPathParam();
-            entryData.setKey(entry.getKey());
-            entryData.setValue(entry.getValue());
-            entryData.setTypeParam(TypeParam.PARAM_DATA);
-            res.add(entryData);
-        }
-        return res;
-    }
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			EntryPathParam entryData = new EntryPathParam();
+			entryData.setKey(entry.getKey());
+			entryData.setValue(entry.getValue());
+			entryData.setTypeParam(TypeParam.PARAM_DATA);
+			res.add(entryData);
+		}
+		return res;
+	}
 
-    public void gatherData(Object dataIncoming) {
-        if (!getFrameworkInformations().getVersion().equals(
-                VersionUtils.NO_FRAMEWORK)) {
-        	ConfigurationManager configurationManager = Dispatcher.getInstance().getConfigurationManager();
-        	
-            //ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
-            Configuration config = configurationManager.getConfiguration();
-            Collection<PackageConfig> colPackages = config.getPackageConfigs()
-                    .values();
-            if (colPackages != null) {
-                for (PackageConfig value : colPackages) {
-                    Collection<ActionConfig> colActionConfigs = value
-                            .getActionConfigs().values();
-                    for (ActionConfig action : colActionConfigs) {
-                        for (ResultConfig resultConfig : action.getResults()
-                                .values()) {
-                            EntryPathData entry = new EntryPathData();
-                            entry.setTypePath(TypePath.DYNAMIC);
-                            entry.setMethodEntry(HttpMethod.GET.toString());
-                            entry.setUri(action.getName());
-                            entry.setListEntryPathData(findParam(resultConfig
-                                    .getParams()));
-                            addEntryPath(entry);
-                        }
-                    }
-                }
-            }
-        }
-    }
+	public void gatherData(Object dataIncoming) {
+		if (!getFrameworkInformations().getVersion().equals(
+				VersionUtils.NO_FRAMEWORK)) {
+			if (dataIncoming != null) {
+				ConfigurationManager configurationManager = (ConfigurationManager) dataIncoming;
+				Configuration config = configurationManager.getConfiguration();
+				Collection<PackageConfig> colPackages = config
+						.getPackageConfigs().values();
+				if (colPackages != null) {
+					for (PackageConfig value : colPackages) {
+						Collection<ActionConfig> colActionConfigs = value
+								.getActionConfigs().values();
+						for (ActionConfig action : colActionConfigs) {
+							for (ResultConfig resultConfig : action
+									.getResults().values()) {
+								EntryPathData entry = new EntryPathData();
+								entry.setTypePath(TypePath.DYNAMIC);
+								entry.setMethodEntry(HttpMethod.GET.toString());
+								entry.setUri(action.getName());
+								entry.setListEntryPathData(findParam(resultConfig
+										.getParams()));
+								addEntryPath(entry);
+							}
+						}
+					}
+				}
+			}else{
+				//...
+			}
+		}
+	}
 
 }

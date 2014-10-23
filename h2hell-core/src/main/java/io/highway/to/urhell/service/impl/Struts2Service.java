@@ -1,13 +1,11 @@
 package io.highway.to.urhell.service.impl;
 
-import com.opensymphony.xwork2.config.Configuration;
-import com.opensymphony.xwork2.config.ConfigurationManager;
-import com.opensymphony.xwork2.config.entities.ActionConfig;
-import com.opensymphony.xwork2.config.entities.PackageConfig;
-import com.opensymphony.xwork2.config.entities.ResultConfig;
-
 import io.highway.to.urhell.VersionUtils;
-import io.highway.to.urhell.domain.*;
+import io.highway.to.urhell.domain.EntryPathData;
+import io.highway.to.urhell.domain.EntryPathParam;
+import io.highway.to.urhell.domain.HttpMethod;
+import io.highway.to.urhell.domain.TypeParam;
+import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.util.ArrayList;
@@ -15,8 +13,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.dispatcher.Dispatcher;
-import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
+import com.opensymphony.xwork2.config.Configuration;
+import com.opensymphony.xwork2.config.ConfigurationManager;
+import com.opensymphony.xwork2.config.entities.ActionConfig;
+import com.opensymphony.xwork2.config.entities.PackageConfig;
+import com.opensymphony.xwork2.config.entities.ResultConfig;
 
 public class Struts2Service extends AbstractLeechService {
 
@@ -26,7 +27,6 @@ public class Struts2Service extends AbstractLeechService {
 		super(FRAMEWORK_NAME, VersionUtils.getVersion(
 				"com.opensymphony.xwork2.config.ConfigurationManager",
 				"org.apache.struts", "struts2-core"));
-		setTriggerAtStartup(true);
 	}
 
 	private List<EntryPathParam> findParam(Map<String, String> map) {

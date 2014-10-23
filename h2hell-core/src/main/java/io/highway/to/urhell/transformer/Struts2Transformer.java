@@ -8,14 +8,17 @@ public class Struts2Transformer extends AbstractLeechTransformer {
 
 	public Struts2Transformer() {
 		super(
-				"org/apache/struts2/dispatcher/ng/listener/StrutsPrepareAndExecuteFilter");
+				"org/apache/struts2/dispatcher/ng/filter/StrutsPrepareAndExecuteFilter");
 	}
 
 	@Override
 	protected void doTransform(CtClass cc) throws Exception {
-		CtMethod m = cc.getMethod("initDispatcher", "(Lorg/apache/struts2/dispatcher/ng/HostConfig;)V");
-		m.insertAfter(buildReceiveDataStatement(Struts2Service.FRAMEWORK_NAME,
-				"dispatcher.getContainer()"));
+
+		CtMethod m = cc
+				.getMethod("postInit",
+						"(Lorg/apache/struts2/dispatcher/Dispatcher;Ljavax/servlet/FilterConfig;)V");
+		m.insertBefore(buildReceiveDataStatement(Struts2Service.FRAMEWORK_NAME,
+				"dispatcher.getConfigurationManager()"));
 	}
 
 }

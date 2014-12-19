@@ -8,6 +8,7 @@ import io.highway.to.urhell.domain.TypeParam;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,21 +58,44 @@ public class Struts2Service extends AbstractLeechService {
 						for (ActionConfig action : colActionConfigs) {
 							for (ResultConfig resultConfig : action
 									.getResults().values()) {
-								EntryPathData entry = new EntryPathData();
-								entry.setTypePath(TypePath.DYNAMIC);
-								entry.setMethodEntry(HttpMethod.GET.toString());
-								entry.setUri(action.getName());
-								entry.setListEntryPathData(findParam(resultConfig
-										.getParams()));
-								addEntryPath(entry);
+								// recursif sur les noms de méthodes possible
+								List<String> methodsList = getListMethod(action
+										.getClassName());
+								for(String fullNameMethod : methodsList){
+									EntryPathData entry = new EntryPathData();
+									entry.setTypePath(TypePath.DYNAMIC);
+									entry.setMethodEntry(HttpMethod.GET.toString());
+									entry.setMethodName(fullNameMethod);
+									entry.setUri(action.getName());
+									/*entry.setListEntryPathData(findParam(resultConfig
+											.getParams()));*/
+									addEntryPath(entry);
+								}
 							}
 						}
 					}
 				}
-			}else{
-				//...
+			} else {
+				// ...
 			}
 		}
+	}
+
+	private List<String> getListMethod(String className) {
+		List<String> res = new ArrayList<String>();
+		try {
+			Object obj = Class.forName(className).newInstance();
+			if (obj != null) {
+				Method[] tabMethod = obj.getClass().getDeclaredMethods();
+				for(int i = 0; i<tabMethod.length;i++){
+					res.add(className+"."+tabMethod[i].getName());
+				}
+			}
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			LOGGER.error("Impossible construct bean " + className);
+		}
+		return res;
 	}
 
 }

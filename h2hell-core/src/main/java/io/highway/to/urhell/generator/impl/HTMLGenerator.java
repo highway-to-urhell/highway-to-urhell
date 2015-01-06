@@ -30,46 +30,44 @@ public class HTMLGenerator implements TheJack {
             int i = 0;
             for (LeechService leech : collectionService) {
                 FrameworkInformations fwk = leech.getFrameworkInformations();
-
-                sb.append("<div id=\"gibson" + i + "\" class=\"classname\">");
-                sb.append("<ul>");
-                sb.append("<p>Framework Informations " + fwk.getFrameworkName() + "</p><br>");
-                sb.append("<p>Framework Version " + fwk.getVersion() + "</p><br>");
-                sb.append("<p>Entries Path : </p><br>");
-                if (fwk.getListEntryPath() != null && !fwk.getListEntryPath().isEmpty()) {
+                if(fwk.getListEntryPath() != null && !fwk.getListEntryPath().isEmpty()){
+                	sb.append("<div id=\"gibson" + i + "\" class=\"classname\">");
+                	sb.append("<ul>");
+                	sb.append("<p>Framework Informations " + fwk.getFrameworkName() + "</p><br>");
+                	sb.append("<p>Framework Version " + fwk.getVersion() + "</p><br>");
+                	sb.append("<p>Entries Path : </p><br>");
                     sb.append("<table class=\"gridtable\">");
-                    sb.append("<tr><td>Method Name</td><td>Method Entry</td><td>Http Method</td><td>Type Path</td><td>Uri Path</td></tr>");
+                    sb.append("<tr><td>Class Name</td><td>Method Entry</td><td>Http Method</td><td>Type Path</td><td>Uri Path</td></tr>");
                     for (EntryPathData entry : fwk.getListEntryPath()) {
                         sb.append("<tr>");
-                        sb.append("<td><p>" + entry.getMethodName() + "</p></p></td>");
+                        sb.append("<td><p>" + entry.getClassName() + "</p></p></td>");
                         sb.append("<td><p>" + entry.getMethodEntry() + "</p></td>");
                         sb.append("<td><p>" + entry.getHttpMethod().toString() + "</p></td>");
                         sb.append("<td><p>" + entry.getTypePath().toString() + "</p></td>");
                         sb.append("<td><p>" + entry.getUri() + "</p></td>");
                         sb.append("</tr>");
                         if (entry.getListEntryPathData() != null && !entry.getListEntryPathData().isEmpty()) {
-                        	for (EntryPathParam param : entry.getListEntryPathData()) {
-                            	sb.append("<tr>");
-                            	sb.append("<td colspan=\"5\">");
-                            	sb.append("<table class=\"gridtable2\">");
-                                sb.append("<tr><td>Key</td><td>Value</td><td>Type</td></tr>");
+                        	sb.append("<tr>");
+                        	sb.append("<td colspan=\"5\">");
+                        	sb.append("<table class=\"gridtable2\">");
+                            sb.append("<tr><td>Key</td><td>Value</td><td>Type</td></tr>");
+                            for (EntryPathParam param : entry.getListEntryPathData()) {
                                 sb.append("<tr>");
                                 sb.append("<td>" + param.getKey() + "</td>");
                                 sb.append("<td>" + param.getValue() + "</td>");
                                 sb.append("<td>" + param.getTypeParam().toString() + "</td>");
                                 sb.append("</tr>");
-                                sb.append("</table>");
-                                sb.append("</td>");
-                                sb.append("</tr>");
                             }
+                            sb.append("</table>");
+                            sb.append("</td>");
+                            sb.append("</tr>");
+                        
                         }
                     }
                     sb.append("</table>");
-                } else {
-                    sb.append("<p class=\"classh2h\" No Framework detected</p>");
-                }
-
-                sb.append("</div>");
+                    sb.append("</div>");
+                } 
+            
             }
         }
         sb.append("</body></html>");

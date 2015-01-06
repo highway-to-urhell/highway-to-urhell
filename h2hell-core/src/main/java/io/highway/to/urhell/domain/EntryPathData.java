@@ -8,16 +8,18 @@ public class EntryPathData {
     private String uri="";
     private TypePath typePath=TypePath.UNKNOW;
     private String methodEntry="";
-    private String methodName="";
+    private String className="";
     private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
     private HttpMethod httpMethod= HttpMethod.UNKNOWN;
     
-    public String getMethodName() {
-		return methodName;
+    
+
+	public String getClassName() {
+		return className;
 	}
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	public String getUri() {
@@ -65,7 +67,7 @@ public class EntryPathData {
     @Override
     public String toString() {
         return "EntryPathData [uri=" + uri + ", typePath=" + typePath
-                + ", methodEntry=" + methodEntry + ", methodName=" + methodName
+                + ", methodEntry=" + methodEntry + ", className=" + className
                 + ", listEntryPathData=" + listEntryPathData + ", httpMethod="
                 + httpMethod + "]";
     }

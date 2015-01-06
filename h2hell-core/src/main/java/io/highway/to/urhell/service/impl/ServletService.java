@@ -25,7 +25,7 @@ public class ServletService extends AbstractLeechService {
                 if (sv.getMappings() != null) {
                     for (String mapping : sv.getMappings()) {
                         EntryPathData entry = new EntryPathData();
-                        entry.setMethodName(sv.getName());
+                        entry.setClassName(sv.getName());
                         entry.setUri(mapping);
                         if (sv.getInitParameters() != null) {
                             List<EntryPathParam> listEntryPathParams = new ArrayList<EntryPathParam>();

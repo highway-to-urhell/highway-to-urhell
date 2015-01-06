@@ -35,7 +35,7 @@ public class Struts1Service extends AbstractLeechService {
                 if (res != null) {
                     for (ActionMapping action : res) {
                         EntryPathData entry = new EntryPathData();
-                        entry.setMethodName(action.getName());
+                        entry.setClassName(action.getName());
                         if (action.getPrefix() != null
                                 && !"null".equals(action.getPrefix())) {
                             entry.setUri(action.getPrefix() + action.getPath());

@@ -32,7 +32,7 @@ public class JSF2Service extends AbstractLeechService {
                 EntryPathData entry = new EntryPathData();
                 entry.setHttpMethod(HttpMethod.UNKNOWN);
                 entry.setMethodEntry(nameMethod);
-                entry.setMethodName(element.getValue().getManagedBeanInfo().getClassName());
+                entry.setClassName(element.getValue().getManagedBeanInfo().getClassName());
                 entry.setTypePath(TypePath.DYNAMIC);
                 addEntryPath(entry);
             }

@@ -331,6 +331,9 @@
 				<module>h2h-example/h2hell-example-jsf2</module>
 				<module>h2h-example/h2hell-example-spring</module>
 				<module>h2h-example/h2hell-example-struts1</module>
+				<module>h2h-example/h2hell-example-struts2</module>
+				<module>h2h-example/h2hell-example-servlet3</module>
+				<module>h2h-example/h2hell-example-jaxrs</module>
 			</modules>
 		</profile>	
 		<profile>

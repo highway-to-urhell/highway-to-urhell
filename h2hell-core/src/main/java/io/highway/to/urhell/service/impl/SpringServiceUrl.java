@@ -29,10 +29,19 @@ public class SpringServiceUrl extends AbstractLeechService {
                 EntryPathData entry = new EntryPathData();
                 entry.setTypePath(TypePath.DYNAMIC);
                 entry.setUri(element.getKey());
-                entry.setMethodName(element.getValue().getClass().toString());
+                entry.setClassName(removeClassName(element.getValue().getClass().toString()));
                 addEntryPath(entry);
             }
         }
+    }
+    
+    private String removeClassName(String fullNameDescriptor){
+    	if(fullNameDescriptor.contains("class")){
+    		String elem = fullNameDescriptor.replace("class ", "");
+    		return elem;
+    	}else{
+    		return fullNameDescriptor;
+    	}
     }
 
     @Override

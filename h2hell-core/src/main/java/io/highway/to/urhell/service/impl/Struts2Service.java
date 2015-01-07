@@ -64,7 +64,7 @@ public class Struts2Service extends AbstractLeechService {
 								for(String fullNameMethod : methodsList){
 									EntryPathData entry = new EntryPathData();
 									entry.setTypePath(TypePath.DYNAMIC);
-									entry.setMethodEntry(HttpMethod.GET.toString());
+									entry.setMethodEntry(action.getClassName());
 									entry.setClassName(fullNameMethod);
 									entry.setUri(action.getName());
 									/*entry.setListEntryPathData(findParam(resultConfig
@@ -88,7 +88,7 @@ public class Struts2Service extends AbstractLeechService {
 			if (obj != null) {
 				Method[] tabMethod = obj.getClass().getDeclaredMethods();
 				for(int i = 0; i<tabMethod.length;i++){
-					res.add(className+"."+tabMethod[i].getName());
+					res.add(tabMethod[i].getName());
 				}
 			}
 		} catch (InstantiationException | IllegalAccessException

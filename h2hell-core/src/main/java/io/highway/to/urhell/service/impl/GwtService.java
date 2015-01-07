@@ -61,7 +61,7 @@ public class GwtService extends AbstractLeechService {
 			//Search class extends service.getName(), class represents implementation server for gwt
 			Set<?> setGwtServiceServer = reflections.getSubTypesOf(Class.forName(service.getName()));
 			for (Object serviceServer : setGwtServiceServer) {
-				Class realName = (Class) serviceServer;
+				Class<?> realName = (Class<?>) serviceServer;
 				Method[] tabMethod =  realName.getDeclaredMethods();
 				for (Method mMethod : tabMethod) {
 					EntryPathData entry = new EntryPathData();
@@ -82,7 +82,7 @@ public class GwtService extends AbstractLeechService {
 	
 	private List<EntryPathParam> searchParameterMethod(Class<?>[] tabParam){
 		List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
-		for (Class mMethod : tabParam) {
+		for (Class<?> mMethod : tabParam) {
 			EntryPathParam param = new EntryPathParam();
 			param.setKey("");
 			param.setTypeParam(TypeParam.PARAM_DATA);

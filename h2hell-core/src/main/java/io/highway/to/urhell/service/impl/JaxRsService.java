@@ -105,7 +105,7 @@ public class JaxRsService extends AbstractLeechService {
 
 	private List<EntryPathParam> searchParameterMethod(Class<?>[] tabParam) {
 		List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
-		for (Class mMethod : tabParam) {
+		for (Class<?> mMethod : tabParam) {
 			EntryPathParam param = new EntryPathParam();
 			param.setKey("");
 			param.setTypeParam(TypeParam.PARAM_DATA);

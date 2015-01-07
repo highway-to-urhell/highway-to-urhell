@@ -2,13 +2,17 @@ package io.highway.to.urhell.service.impl;
 
 import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.EntryPathData;
+import io.highway.to.urhell.domain.EntryPathParam;
+import io.highway.to.urhell.domain.TypeParam;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
+
 import org.apache.commons.digester.Digester;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.impl.ModuleConfigImpl;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,20 +35,11 @@ public class Struts1Service extends AbstractLeechService {
             try {
                 f = m.getClass().getDeclaredField("actionConfigList");
                 f.setAccessible(true);
-                List<ActionMapping> res = (ArrayList) f.get(m);
+                List<ActionMapping> res= (ArrayList<ActionMapping>) f.get(m);
                 if (res != null) {
                     for (ActionMapping action : res) {
-                        EntryPathData entry = new EntryPathData();
-                        entry.setClassName(action.getName());
-                        if (action.getPrefix() != null
-                                && !"null".equals(action.getPrefix())) {
-                            entry.setUri(action.getPrefix() + action.getPath());
-                        } else {
-                            entry.setUri(action.getPath());
-                        }
-                        entry.setTypePath(TypePath.DYNAMIC);
-                        entry.setMethodEntry(action.getInput());
-                        addEntryPath(entry);
+                        findEntryPathDataStruts(action);
+                        
                     }
                 }
 
@@ -56,5 +51,46 @@ public class Struts1Service extends AbstractLeechService {
             }
         }
     }
+    
+    private void findEntryPathDataStruts(ActionMapping action){
+    	
+    	try {
+			Class<?> c = Class.forName(action.getType());
+			for(Method m : c.getDeclaredMethods()){
+				EntryPathData res = new EntryPathData();
+		    	res.setClassName(action.getType());
+		    	res.setMethodEntry(m.getName());
+		    	if (action.getPrefix() != null
+		                && !"null".equals(action.getPrefix())) {
+		        	res.setUri(action.getPrefix() + action.getPath());
+		        } else {
+		        	res.setUri(action.getPath());
+		        }
+		        res.setTypePath(TypePath.DYNAMIC);
+		        res.setListEntryPathData(searchParameterMethod(m.getParameterTypes()));
+		        addEntryPath(res);
+			}
+			
+			
+		} catch (ClassNotFoundException e) {
+			 LOGGER.error("Exception in "
+                     + Struts1Service.class.getCanonicalName()
+                     + " entryClass " + action.getType() + " msg :"
+                     + e.getMessage());
+		}
+    	
+    }
+    
+    private List<EntryPathParam> searchParameterMethod(Class<?>[] tabParam){
+		List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
+		for (Class<?> mMethod : tabParam) {
+			EntryPathParam param = new EntryPathParam();
+			param.setKey("");
+			param.setTypeParam(TypeParam.PARAM_DATA);
+			param.setValue(mMethod.getName());
+			listEntryPathData.add(param);
+		}
+		return listEntryPathData;
+	}
 
 }

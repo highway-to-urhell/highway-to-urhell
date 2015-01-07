@@ -3,7 +3,6 @@ package io.highway.to.urhell.service.impl;
 import io.highway.to.urhell.VersionUtils;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.EntryPathParam;
-import io.highway.to.urhell.domain.HttpMethod;
 import io.highway.to.urhell.domain.TypeParam;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
@@ -12,13 +11,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
-import com.opensymphony.xwork2.config.entities.ResultConfig;
 
 public class Struts2Service extends AbstractLeechService {
 
@@ -30,20 +27,7 @@ public class Struts2Service extends AbstractLeechService {
 				"org.apache.struts", "struts2-core"));
 	}
 
-	private List<EntryPathParam> findParam(Map<String, String> map) {
-		List<EntryPathParam> res = new ArrayList<EntryPathParam>();
-
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			EntryPathParam entryData = new EntryPathParam();
-			entryData.setKey(entry.getKey());
-			entryData.setValue(entry.getValue());
-			entryData.setTypeParam(TypeParam.PARAM_DATA);
-			res.add(entryData);
-		}
-		return res;
-	}
-
-	public void gatherData(Object dataIncoming) {
+		public void gatherData(Object dataIncoming) {
 		if (!getFrameworkInformations().getVersion().equals(
 				VersionUtils.NO_FRAMEWORK)) {
 			if (dataIncoming != null) {
@@ -56,46 +40,44 @@ public class Struts2Service extends AbstractLeechService {
 						Collection<ActionConfig> colActionConfigs = value
 								.getActionConfigs().values();
 						for (ActionConfig action : colActionConfigs) {
-							for (ResultConfig resultConfig : action
-									.getResults().values()) {
-								// recursif sur les noms de méthodes possible
-								List<String> methodsList = getListMethod(action
-										.getClassName());
-								for(String fullNameMethod : methodsList){
-									EntryPathData entry = new EntryPathData();
-									entry.setTypePath(TypePath.DYNAMIC);
-									entry.setMethodEntry(action.getClassName());
-									entry.setClassName(fullNameMethod);
-									entry.setUri(action.getName());
-									/*entry.setListEntryPathData(findParam(resultConfig
-											.getParams()));*/
-									addEntryPath(entry);
-								}
-							}
+							findAllClassAndMethod(action);
 						}
 					}
 				}
-			} else {
-				// ...
 			}
 		}
 	}
 
-	private List<String> getListMethod(String className) {
-		List<String> res = new ArrayList<String>();
+	private void findAllClassAndMethod(ActionConfig action) {
 		try {
-			Object obj = Class.forName(className).newInstance();
-			if (obj != null) {
-				Method[] tabMethod = obj.getClass().getDeclaredMethods();
-				for(int i = 0; i<tabMethod.length;i++){
-					res.add(tabMethod[i].getName());
-				}
+			Class<?> c = Class.forName(action.getClassName());
+			for (Method m : c.getDeclaredMethods()) {
+				EntryPathData entry = new EntryPathData();
+				entry.setTypePath(TypePath.DYNAMIC);
+				entry.setMethodEntry(action.getClassName());
+				entry.setClassName(m.getName());
+				entry.setUri(action.getName());
+				entry.setListEntryPathData(searchParameterMethod(m
+						.getParameterTypes()));
+				addEntryPath(entry);
 			}
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException e) {
-			LOGGER.error("Impossible construct bean " + className);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("Exception in "
+					+ Struts2Service.class.getCanonicalName() + " entryClass "
+					+ action.getClassName() + " msg :" + e.getMessage());
 		}
-		return res;
+	}
+
+	private List<EntryPathParam> searchParameterMethod(Class<?>[] tabParam) {
+		List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
+		for (Class<?> mMethod : tabParam) {
+			EntryPathParam param = new EntryPathParam();
+			param.setKey("");
+			param.setTypeParam(TypeParam.PARAM_DATA);
+			param.setValue(mMethod.getName());
+			listEntryPathData.add(param);
+		}
+		return listEntryPathData;
 	}
 
 }

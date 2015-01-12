@@ -45,6 +45,7 @@ public class SpringServiceMethod extends AbstractLeechService {
 				String methodName = element.getValue().getMethod().getName();
 				entrypath.setClassName(className);
 				entrypath.setMethodEntry(methodName);
+				entrypath.setSignatureName(getInternalSignature(className,methodName));
 				//search parameter
 				entrypath.setListEntryPathData(searchParameterMethod(element));
 				addEntryPath(entrypath);

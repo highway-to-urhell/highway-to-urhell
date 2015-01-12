@@ -30,6 +30,7 @@ public class JSF2NavigationService extends AbstractLeechService {
                 entry.setHttpMethod(HttpMethod.UNKNOWN);
                 entry.setMethodEntry(nav.getKey());
                 entry.setClassName(nLocal.toString());
+                entry.setSignatureName(getInternalSignature(nLocal.toString(),nav.getKey()));
                 entry.setTypePath(TypePath.DYNAMIC);
                 addEntryPath(entry);
             }

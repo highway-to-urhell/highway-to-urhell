@@ -68,6 +68,7 @@ public class Struts1Service extends AbstractLeechService {
 		        }
 		        res.setTypePath(TypePath.DYNAMIC);
 		        res.setListEntryPathData(searchParameterMethod(m.getParameterTypes()));
+		        res.setSignatureName(getInternalSignature(m));
 		        addEntryPath(res);
 			}
 			

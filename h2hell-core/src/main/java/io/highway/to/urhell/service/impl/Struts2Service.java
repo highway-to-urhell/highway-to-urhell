@@ -59,6 +59,7 @@ public class Struts2Service extends AbstractLeechService {
 				entry.setUri(action.getName());
 				entry.setListEntryPathData(searchParameterMethod(m
 						.getParameterTypes()));
+				entry.setSignatureName(getInternalSignature(m));
 				addEntryPath(entry);
 			}
 		} catch (ClassNotFoundException e) {

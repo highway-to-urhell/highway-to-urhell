@@ -9,10 +9,19 @@ public class EntryPathData {
     private TypePath typePath=TypePath.UNKNOW;
     private String methodEntry="";
     private String className="";
+    private String signatureName="";
     private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
     private HttpMethod httpMethod= HttpMethod.UNKNOWN;
     
     
+
+	public String getSignatureName() {
+		return signatureName;
+	}
+
+	public void setSignatureName(String signatureName) {
+		this.signatureName = signatureName;
+	}
 
 	public String getClassName() {
 		return className;

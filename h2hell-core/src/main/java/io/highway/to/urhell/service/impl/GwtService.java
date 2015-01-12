@@ -69,6 +69,7 @@ public class GwtService extends AbstractLeechService {
 					entry.setHttpMethod(HttpMethod.POST);
 					entry.setClassName(realName.getName());
 					entry.setMethodEntry(mMethod.getName());
+					entry.setSignatureName(getInternalSignature(realName.getName(),mMethod.getName()));
 					entry.setUri(remoteAnnotation.value());
 					entry.setListEntryPathData(searchParameterMethod(mMethod.getParameterTypes()));
 					addEntryPath(entry);

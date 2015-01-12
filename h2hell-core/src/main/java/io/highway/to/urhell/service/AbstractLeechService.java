@@ -2,6 +2,10 @@ package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkInformations;
+
+import java.lang.reflect.Method;
+
+import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,4 +55,26 @@ public abstract class AbstractLeechService implements LeechService {
     protected void addEntryPath(EntryPathData entryPath) {
         frameworkInformations.getListEntryPath().add(entryPath);
     }
+    
+    public String getInternalSignature(String className, String methodName){
+    	String res = "";
+    	try {
+			Class<?> c = Class.forName(className);
+			for(Method m : c.getDeclaredMethods()){
+				if(m.getName().equals(methodName)){
+					res = Type.getMethodDescriptor(m);
+				}
+			}
+			
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("Impossible construct classname "+className +" msg "+e.getMessage());
+		}
+    	
+    	return res;
+    }
+    
+    public String getInternalSignature(Method m){
+    	return Type.getMethodDescriptor(m);
+    }
+    
 }

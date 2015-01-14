@@ -54,8 +54,8 @@ public class Struts2Service extends AbstractLeechService {
 			for (Method m : c.getDeclaredMethods()) {
 				EntryPathData entry = new EntryPathData();
 				entry.setTypePath(TypePath.DYNAMIC);
-				entry.setMethodEntry(action.getClassName());
-				entry.setClassName(m.getName());
+				entry.setClassName(action.getClassName());
+				entry.setMethodEntry(m.getName());
 				entry.setUri(action.getName());
 				entry.setListEntryPathData(searchParameterMethod(m
 						.getParameterTypes()));

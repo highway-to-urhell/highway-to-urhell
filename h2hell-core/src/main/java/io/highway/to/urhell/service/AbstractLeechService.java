@@ -67,7 +67,7 @@ public abstract class AbstractLeechService implements LeechService {
 			}
 			
 		} catch (ClassNotFoundException e) {
-			LOGGER.error("Impossible construct classname "+className +" msg "+e.getMessage());
+			LOGGER.error("Impossible construct classname "+className +" msg "+e);
 		}
     	
     	return res;

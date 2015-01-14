@@ -65,7 +65,7 @@ public class Struts2Service extends AbstractLeechService {
 		} catch (ClassNotFoundException e) {
 			LOGGER.error("Exception in "
 					+ Struts2Service.class.getCanonicalName() + " entryClass "
-					+ action.getClassName() + " msg :" + e.getMessage());
+					+ action.getClassName() + " msg :" + e);
 		}
 	}
 

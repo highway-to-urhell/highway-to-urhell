@@ -49,7 +49,7 @@ public class JSF2Service extends AbstractLeechService {
                 res.add(method.getName());
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+           LOGGER.error("Class Not Found "+e);
         }
         return res;
     }

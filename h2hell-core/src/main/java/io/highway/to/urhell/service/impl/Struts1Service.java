@@ -47,7 +47,7 @@ public class Struts1Service extends AbstractLeechService {
                 LOGGER.error("Exception in "
                         + Struts1Service.class.getCanonicalName()
                         + " receiveData " + dataIncoming + " msg :"
-                        + e.getMessage());
+                        + e);
             }
         }
     }
@@ -77,7 +77,7 @@ public class Struts1Service extends AbstractLeechService {
 			 LOGGER.error("Exception in "
                      + Struts1Service.class.getCanonicalName()
                      + " entryClass " + action.getType() + " msg :"
-                     + e.getMessage());
+                     + e);
 		}
     	
     }

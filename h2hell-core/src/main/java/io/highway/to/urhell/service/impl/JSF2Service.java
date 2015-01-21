@@ -33,7 +33,7 @@ public class JSF2Service extends AbstractLeechService {
                 entry.setHttpMethod(HttpMethod.UNKNOWN);
                 entry.setMethodEntry(nameMethod);
                 entry.setClassName(element.getValue().getManagedBeanInfo().getClassName());
-                entry.setSignatureName(getInternalSignature(element.getValue().getManagedBeanInfo().getClassName(),nameMethod));
+                entry.setSignatureName(getInternalSignature(element.getValue().getManagedBeanInfo().getClassName(), nameMethod));
                 entry.setTypePath(TypePath.DYNAMIC);
                 addEntryPath(entry);
             }
@@ -49,7 +49,7 @@ public class JSF2Service extends AbstractLeechService {
                 res.add(method.getName());
             }
         } catch (ClassNotFoundException e) {
-           LOGGER.error("Class Not Found "+e);
+            LOGGER.error("Class Not Found :" + className, e);
         }
         return res;
     }

@@ -27,8 +27,6 @@ public class PluginUtils {
                 pluginList.add(instance);
             } catch (InstantiationException | IllegalAccessException e) {
                 LOGGER.error("An error occurred while registering " + pluginClass.getName() + " : " + plugin.getCanonicalName(), e);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
         return pluginList;

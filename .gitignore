@@ -7,3 +7,5 @@ release.properties
 .settings
 .classpath
 .project
+*.iml
+.idea

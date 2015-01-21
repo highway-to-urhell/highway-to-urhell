@@ -34,14 +34,13 @@ public class SpringServiceUrl extends AbstractLeechService {
             }
         }
     }
-    
-    private String removeClassName(String fullNameDescriptor){
-    	if(fullNameDescriptor.contains("class")){
-    		String elem = fullNameDescriptor.replace("class ", "");
-    		return elem;
-    	}else{
-    		return fullNameDescriptor;
-    	}
+
+    private String removeClassName(String fullNameDescriptor) {
+        if (fullNameDescriptor.contains("class")) {
+            return fullNameDescriptor.replace("class ", "");
+        } else {
+            return fullNameDescriptor;
+        }
     }
 
     @Override

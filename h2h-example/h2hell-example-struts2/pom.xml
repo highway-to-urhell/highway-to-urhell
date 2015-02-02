@@ -8,12 +8,6 @@
 	<name>struts2</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-		<!-- dev only -->
-		<dependency>
-			<groupId>io.highway.to.urhell</groupId>
-			<artifactId>h2hell-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

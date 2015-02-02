@@ -25,13 +25,6 @@
             <artifactId>struts-taglib</artifactId>
             <version>1.3.10</version>
         </dependency>
-
-        <!--dev only -->
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <!-- ~~~~~ -->

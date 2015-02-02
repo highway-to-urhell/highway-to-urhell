@@ -43,13 +43,6 @@
             <artifactId>el-ri</artifactId>
             <version>1.0</version>
         </dependency>
-
-        <!--dev only -->
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <!-- ~~~~~ -->

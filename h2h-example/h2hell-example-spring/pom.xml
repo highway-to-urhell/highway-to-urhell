@@ -70,12 +70,6 @@
     </properties>
 
     <dependencies>
-        <!-- dev-->
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>

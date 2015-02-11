@@ -54,13 +54,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts-taglib</artifactId>
+			<groupId>struts</groupId>
+			<artifactId>struts</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

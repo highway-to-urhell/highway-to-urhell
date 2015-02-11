@@ -1,9 +1,14 @@
 package io.h2h.action;
 
-public class WelcomeUserAction{
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class WelcomeUserAction {
+
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private String username;
-	 
+
 	public String getUsername() {
 		return username;
 	}
@@ -14,7 +19,7 @@ public class WelcomeUserAction{
 
 	// all struts logic here
 	public String execute() {
-
+		log.error(" init passage ");
 		return "SUCCESS";
 
 	}

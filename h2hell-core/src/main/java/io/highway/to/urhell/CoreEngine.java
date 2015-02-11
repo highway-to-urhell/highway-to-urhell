@@ -1,10 +1,29 @@
 package io.highway.to.urhell;
 
+import io.highway.to.urhell.domain.BreakerData;
+import io.highway.to.urhell.domain.H2hConfig;
+import io.highway.to.urhell.exception.H2HException;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
+import io.highway.to.urhell.service.impl.TransformerService;
+import io.highway.to.urhell.transformer.GenericTransformer;
 
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.instrument.Instrumentation;
+import java.lang.instrument.UnmodifiableClassException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CoreEngine {
 
@@ -12,6 +31,10 @@ public class CoreEngine {
 
     private Map<String, LeechService> leechPluginRegistry = new HashMap<String, LeechService>();
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
+    private Instrumentation inst = null;
+    protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final static String H2H_CONFIG = "H2H_CONFIG";
+    private H2hConfig config;
 
     private CoreEngine() {
         // nothing
@@ -24,12 +47,28 @@ public class CoreEngine {
                     instance = new CoreEngine();
                     instance.registerPlugins();
                     instance.runPluginsTriggeredAtStartup();
+                    instance.initEnv();
                 }
             }
         }
         return instance;
     }
 
+    public void persistInMemory(Instrumentation instrumentation){
+    	inst = instrumentation;
+    }
+    	
+    public void launchTransformerGeneric() throws ClassNotFoundException, UnmodifiableClassException{
+    	LOGGER.info("launchTransformerGeneric !");
+    	if(inst !=null){
+    		TransformerService ts = new TransformerService();
+    		Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
+	    	inst.addTransformer(new GenericTransformer(mapConvert),true);
+	    	ts.transformAllClassScanByH2h(inst,mapConvert.keySet());
+    	}else{
+    		LOGGER.error("Instrumentation fail because internal inst is null");
+    	}
+    }
 
     public void leech() {
         for (ReporterService reporterService : reporterPluginRegistry) {
@@ -72,6 +111,56 @@ public class CoreEngine {
             }
         }
     }
+    
+    private void initEnv() {
+        // Grab Env
+        String rootH2h = System.getProperty(H2H_CONFIG);
+        try {
+            if (rootH2h == null) {
+                throw new H2HException(
+                        "Unknow Variable H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
+            }
+            if ("".equals(rootH2h)) {
+                throw new H2HException(
+                        "Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
+            }
+            parseConfig(rootH2h);
 
+        } catch (H2HException e) {
+            LOGGER.error("H2H is broken ", e);
+        }
+    }
+    
+    public void parseConfig(String pathFile) {
+    	 config = new H2hConfig();
+         Properties prop = new Properties();
+         InputStream input = null;
+         try {
+             input = new FileInputStream(pathFile);
+             prop.load(input);
+             config.setUrlApplication(prop.getProperty("urlapplication"));
+             config.setNameApplication(prop.getProperty("nameapplication"));
+             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
+             config.setOutputSystem(io.highway.to.urhell.domain.OutputSystem.valueOf(prop.getProperty("outputSystem")));
+
+         } catch (IOException ex) {
+             LOGGER.error("Error while reading H2hConfigFile " + pathFile, ex);
+             config = null;
+         } finally {
+             if (input != null) {
+                 try {
+                     input.close();
+                 } catch (IOException e) {
+                     //Don't care
+                 }
+             }
+         }
+    }
+
+	public H2hConfig getConfig() {
+		return config;
+	}
+    
+   
 }
 

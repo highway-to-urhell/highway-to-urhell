@@ -15,9 +15,34 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
-			<version>2.3.1.2</version>
+			<version>2.3.16.1</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -89,9 +114,8 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
 					<jvmArgs>
-                        -javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar
-                        -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/
-                    </jvmArgs>
+						-javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/ -DH2H_CONFIG=${project.build.directory}/classes/config.properties
+					</jvmArgs>
 					<stopKey>foo</stopKey>
 					<stopPort>9999</stopPort>
 					<webAppConfig>

@@ -7,7 +7,7 @@ import javassist.CtMethod;
 public class Struts1Transformer extends AbstractLeechTransformer {
 
     public Struts1Transformer() {
-        super("org/apache/struts/action/ActionServlet");
+        super("org/apache/struts/action/²");
     }
 
     @Override

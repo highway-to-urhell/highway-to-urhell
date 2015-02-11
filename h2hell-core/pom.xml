@@ -42,7 +42,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -55,8 +54,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>struts</groupId>
-			<artifactId>struts</artifactId>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-taglib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

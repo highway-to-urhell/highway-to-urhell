@@ -26,7 +26,7 @@ public class Struts1Service extends AbstractLeechService {
     }
 
     public void gatherData(Object dataIncoming) {
-        if (!getFrameworkInformations().getVersion().equals(
+    	  if (!getFrameworkInformations().getVersion().equals(
                 VersionUtils.NO_FRAMEWORK)) {
             Digester configDigester = (Digester) dataIncoming;
             ModuleConfigImpl m = (ModuleConfigImpl) configDigester.getRoot();

@@ -73,9 +73,14 @@
 				<version>2.3.16.1</version>
 			</dependency>
 			<dependency>
-				<groupId>struts</groupId>
-				<artifactId>struts</artifactId>
-				<version>1.2.9</version>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts-core</artifactId>
+				<version>1.3.10</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts-taglib</artifactId>
+				<version>1.3.10</version>
 			</dependency>
 			<!-- ~~~~~~ -->
 			<!-- GWT -->

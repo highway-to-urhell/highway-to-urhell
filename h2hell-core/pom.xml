@@ -54,9 +54,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>struts</groupId>
-			<artifactId>struts</artifactId>
-			<scope>provided</scope>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-taglib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>

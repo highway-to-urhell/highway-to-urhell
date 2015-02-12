@@ -29,6 +29,7 @@ public class Struts2Service extends AbstractLeechService {
 	}
 
 	public void gatherData(Object dataIncoming) {
+		//getFrameworkInformations().setVersion("fu");
 		if (!getFrameworkInformations().getVersion().equals(
 				VersionUtils.NO_FRAMEWORK)) {
 			if (dataIncoming != null) {

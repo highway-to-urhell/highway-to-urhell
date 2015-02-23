@@ -16,15 +16,22 @@ You can build it using Maven 3+ :
  * Configure agent in JAVA_OPTS (see above)
 
  ## config.properties
-#REMOTE send data to h2hell-web, MEMORY data in memory agent
+###REMOTE send data to h2hell-web, MEMORY data in memory agent
+```
 outputSystem=REMOTE||MEMORY
-#url of your application
+```
+###url of your application
+```
 urlapplication=http://localhost:8080/core/
-#name ...
+```
+###name ...
+```
 nameapplication=struts2Demoh2H
-#url of h2hell-web
+```
+###url of h2hell-web
+```
 urlh2hweb=http://localhost:8090/core/api/ThunderApp
-
+```
 ### Configuring agent on  Unix machines : 
 ```
 export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties

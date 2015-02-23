@@ -15,20 +15,20 @@ You can build it using Maven 3+ :
  * Unzip highway-to-url distribution in a directory of your choice
  * Configure agent in JAVA_OPTS (see above)
 
- ## config.properties
-###REMOTE send data to h2hell-web, MEMORY data in memory agent
+### config.properties
+REMOTE send data to h2hell-web, MEMORY data in memory agent
 ```
 outputSystem=REMOTE||MEMORY
 ```
-###url of your application
+url of your application
 ```
 urlapplication=http://localhost:8080/core/
 ```
-###name ...
+name ...
 ```
 nameapplication=struts2Demoh2H
 ```
-###url of h2hell-web
+url of h2hell-web
 ```
 urlh2hweb=http://localhost:8090/core/api/ThunderApp
 ```

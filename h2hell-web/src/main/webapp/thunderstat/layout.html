@@ -1,0 +1,35 @@
+
+<form class="form-horizontal">
+	<div class="control-group"></div>
+</form>
+
+<div class="alert alert-info" style="width: 850px; margin-left: 0px;"
+	ng-show="ms.listThunderStat.length == 0">No statistics in database</div>
+<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;">
+<tr>
+	<td style="text-align: center; width : 280px;"> Total Stat : {{ms.totalStat}}</td>
+	<td style="text-align: center;width : 280px;"> Total No Test : {{ms.totalNoTest}}</td>
+	<td style="text-align: center;width : 280px;"> Total False positive : {{ms.totalFalsePositive}}</td>
+</tr>
+</table>
+<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;" ng-show="ms.listThunderStat.length > 0">
+	<thead>
+		<tr>
+			<th style="text-align: center;">Method input</th>
+			<th style="text-align: center;">Name App</th>
+			<th style="text-align: center;">Count</th>
+			<th style="text-align: center;">False Positive</th>
+			<th style="text-align: center;">Change Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="stat in ms.listThunderStat">
+
+			<td style="text-align: center;">{{stat.pathClassMethodName}}</td>
+			<td style="text-align: center;">{{stat.thunderApp.nameApp}}</td>
+			<td style="text-align: center;">{{stat.count}}</td>
+			<td style="text-align: center;"><input ng-disabled="true" type="checkbox" ng-model="stat.falsePositive"/></td>
+			<td style="text-align: center;"><button class="btn-error" ng-click="updateThunderStatFalsePositive(stat.id,stat.falsePositive)">Change status</button></td>
+		</tr>
+	</tbody>
+	</table>

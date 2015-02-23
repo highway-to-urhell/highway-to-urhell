@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+	
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%d{ISO8601}] [%-5level] [%C{3}.%M] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="File"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>@project.build.directory@/thunder.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>@project.build.directory@/h2h-web.log.%i.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>5</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>[%d{ISO8601}] [%-5level] [%C{3}.%M] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Log Hibernate SQL queries to file (log level must be DEBUG to enable 
+		it) -->
+	<logger name="org.hibernate.SQL" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="File" />
+	</logger>
+
+	<!-- log the param value in the prepared statement and the query result! 
+		(log level must be TRACE to enable it) -->
+	<!--<logger name="org.hibernate.type"> -->
+	<!--<level value="trace" /> -->
+	<!-- <appender-ref ref="File"/> -->
+	<!--</logger> -->
+
+	<logger name="org.hibernate.cache.EhCacheProvider" level="error" />
+	<logger name="org.hibernate" level="warn" />
+	<logger name="org.apache.commons" level="warn" />
+	<logger name="org.springframework" level="warn" />
+	<logger name="org.springframework.beans.factory.support" level="warn" />
+	<logger name="com.wordnik.swagger.jersey" level="warn"/>
+	<logger name="org.glassfish.jersey" level="warn"/>
+
+	<logger name="LOG4J" level="INFO" />
+	<logger name="SLF4J" level="INFO" />
+	<logger name="JCL" level="INFO" />
+
+	<logger name="io.highway.to.urhell" level="info" />
+
+	<root level="info">
+		<appender-ref ref="Console" />
+		<appender-ref ref="File" />
+	</root>
+
+</configuration>

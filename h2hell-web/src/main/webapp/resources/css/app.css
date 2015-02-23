@@ -1,0 +1,38 @@
+/* app css stylesheet */
+#wrapper {
+	
+	width: 850px;
+	margin-top: 50px;
+}
+
+.menu {
+	text-align: center;
+	list-style: none;
+	padding: 0 0 0.5em;
+	font-size: 30px;
+	font-weight: bolder;
+}
+
+.menu>li {
+	display: inline;
+}
+
+.menu>li:before {
+	content: "|";
+	padding-right: 0.3em;
+}
+
+.menu>li:nth-child(1):before {
+	content: "";
+	padding: 0;
+}
+
+.uncheckedClass {
+	background-color: #eeeeee;
+	color: black;
+}
+
+.checkedClass {
+	background-color: #3ab44a;
+	color: white;
+}

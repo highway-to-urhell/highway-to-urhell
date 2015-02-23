@@ -1,0 +1,32 @@
+
+<div class="input-append">
+	<select style="margin-left: 150px;width: 450px;" ng-model="token"
+		ng-options="valueApp.token as valueApp.nameApp+'-'+valueApp.token for valueApp in tokenlist"></select>
+	<button class="btn btn-primary" ng-disabled="!token"
+		ng-click="findByToken(token)">Filter by App Name</button>
+</div>
+
+<form class="form-horizontal">
+	<div class="control-group"></div>
+</form>
+
+
+<div class="alert alert-info" style="width: 850px; margin-left: 0px;"
+	ng-show="breakerlist.length == 0">No Log in database</div>
+<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;"
+	ng-show="breakerlist.length > 0">
+	<thead>
+		<tr>
+			<th style="text-align: center; width: 250px;">Method input</th>
+			<th style="text-align: center;">Token</th>
+			<th style="text-align: center; width: 300px;">Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="breaker in breakerlist">
+			<td style="text-align: center;">{{breaker.pathClassMethodName}}</td>
+			<td style="text-align: center;">{{breaker.token}}</td>
+			<td style="text-align: center;">{{breaker.dateIncoming}}</td>
+		</tr>
+	</tbody>
+</table>

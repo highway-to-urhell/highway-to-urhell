@@ -271,7 +271,7 @@
 
     <!-- ========== Message Resources Definitions =========================== -->
 
-    <message-resources parameter="examples.MessageResources" />
+    <message-resources parameter="examples.MessageResources_fr_FR" />
 
     <!-- ========== Plug Ins Configuration ================================== -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

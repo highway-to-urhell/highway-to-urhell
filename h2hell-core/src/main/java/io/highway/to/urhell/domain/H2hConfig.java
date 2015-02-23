@@ -5,7 +5,14 @@ public class H2hConfig {
 	private String urlApplication;
 	private String nameApplication;
 	private String urlH2hWeb;
+	private String token;
 	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getUrlApplication() {
 		return urlApplication;
 	}
@@ -32,9 +39,9 @@ public class H2hConfig {
 	}
 	@Override
 	public String toString() {
-		return "H2hConfig [urlApplication=" + urlApplication
-				+ ", nameApplication=" + nameApplication + ", urlH2hWeb="
-				+ urlH2hWeb + "]";
+		return "H2hConfig [outputSystem=" + outputSystem + ", urlApplication="
+				+ urlApplication + ", nameApplication=" + nameApplication
+				+ ", urlH2hWeb=" + urlH2hWeb + ", token=" + token + "]";
 	}
 	
 	

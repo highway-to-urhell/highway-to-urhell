@@ -70,6 +70,11 @@
     </properties>
 
     <dependencies>
+    <dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-all</artifactId>
+				<version>5.0.3</version>
+			</dependency>
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
@@ -479,9 +484,8 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <jvmArgs>
-                        -javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar
-                        -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/
-                    </jvmArgs>
+						-javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/ -DH2H_CONFIG=${project.build.directory}/classes/config.properties
+					</jvmArgs>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
                     <webAppConfig>

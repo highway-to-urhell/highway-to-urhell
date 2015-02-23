@@ -51,6 +51,7 @@
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_en_US.properties">MessageResources_en_US.properties</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_en_GB.properties">MessageResources_en_GB.properties</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_fr.properties">MessageResources_fr.properties</html:link></p>
+<p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_fr_FR.properties">MessageResources_fr_FR.properties</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_de.properties">MessageResources_de.properties</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_es.properties">MessageResources_es.properties</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_it.properties">MessageResources_it.properties</html:link></p>

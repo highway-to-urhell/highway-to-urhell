@@ -64,4 +64,23 @@ public class TransformerService {
 		 
 		 return mapToTransform;
 	}
+	
+	public List<BreakerData> transforDataH2hToList(Collection<LeechService> leechService){
+		List<BreakerData> listBreaker = new ArrayList<BreakerData>();
+		for(LeechService leech : leechService){
+			 for(EntryPathData entryPath : leech.getFrameworkInformations().getListEntryPath()){
+				 if (!entryPath.getMethodEntry().equals("")) {
+		                BreakerData bd = new BreakerData();
+		                bd.setClassName(entryPath.getClassName());
+		                bd.setMethodName(entryPath.getMethodEntry());
+		                String classNameNormalized = entryPath.getClassName().replaceAll("\\.", "/");
+		                bd.setClassNameNormalized(classNameNormalized);
+		                bd.setSignatureName(entryPath.getSignatureName());
+		                listBreaker.add(bd);
+		            }
+			 }
+		}
+		return listBreaker;
+	}
+	
 }

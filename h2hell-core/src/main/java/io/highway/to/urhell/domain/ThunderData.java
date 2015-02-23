@@ -7,7 +7,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ThunderData {
 
-    private final AtomicLong counter;
+    @Override
+	public String toString() {
+		return "ThunderData [counter=" + counter + ", listDate=" + listDate
+				+ ", methodName=" + methodName + "]";
+	}
+
+	private final AtomicLong counter;
     private final List<Date> listDate;
     private final String methodName;
 

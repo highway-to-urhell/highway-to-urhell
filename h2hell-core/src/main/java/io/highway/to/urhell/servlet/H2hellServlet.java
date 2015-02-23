@@ -29,9 +29,13 @@ public class H2hellServlet extends HttpServlet {
 			.getLogger(H2hellServlet.class);
 	private static final long serialVersionUID = 1L;
 
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,IOException{
+		doGet(request, response);
+	}
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
 
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
@@ -39,8 +43,11 @@ public class H2hellServlet extends HttpServlet {
 		if (launch != null) {
 			try {
 				CoreEngine.getInstance().launchTransformerGeneric();
+				out.print("Transformer activated for App "
+						+ CoreEngine.getInstance().getConfig()
+								.getNameApplication());
 			} catch (ClassNotFoundException | UnmodifiableClassException e) {
-				LOG.error("Error while launchTransformer ",e);
+				LOG.error("Error while launchTransformer ", e);
 				out.print(e);
 			}
 		} else {

@@ -46,6 +46,8 @@
 <h2>Configuration files</h2>
 <p><html:link page="/source.jsp?src=/WEB-INF/struts-config.xml">struts-config.xml</html:link></p>
 <p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources.properties">MessageResources.properties</html:link></p>
+<p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_fr.properties">MessageResources_fr.properties</html:link></p>
+<p><html:link page="/source.jsp?src=/WEB-INF/src/java/examples/MessageResources_fr_FR.properties">MessageResources_fr_FR.properties</html:link></p>
 
 <h2>Other source files</h2>
 <p>None</p>

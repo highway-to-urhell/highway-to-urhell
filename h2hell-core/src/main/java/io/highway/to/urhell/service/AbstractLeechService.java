@@ -34,7 +34,7 @@ public abstract class AbstractLeechService implements LeechService {
 
     public void receiveData(Object incoming) {
         clearPreviousData();
-        LOGGER.debug("receive incoming data");
+        LOGGER.debug("receive incoming data obj {}",incoming);
         gatherData(incoming);
         LOGGER.debug("data gathering complete. Found {} entries",
                 frameworkInformations.getListEntryPath().size());

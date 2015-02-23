@@ -1,18 +1,20 @@
 package io.highway.to.urhell;
 
+import io.highway.to.urhell.agent.AgentService;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.exception.H2HException;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
+import io.highway.to.urhell.service.impl.GatherService;
+import io.highway.to.urhell.service.impl.ThunderService;
 import io.highway.to.urhell.service.impl.TransformerService;
 import io.highway.to.urhell.transformer.GenericTransformer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,7 +33,6 @@ public class CoreEngine {
 
     private Map<String, LeechService> leechPluginRegistry = new HashMap<String, LeechService>();
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
-    private Instrumentation inst = null;
     protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final static String H2H_CONFIG = "H2H_CONFIG";
     private H2hConfig config;
@@ -54,17 +55,16 @@ public class CoreEngine {
         return instance;
     }
 
-    public void persistInMemory(Instrumentation instrumentation){
-    	inst = instrumentation;
-    }
+    
     	
     public void launchTransformerGeneric() throws ClassNotFoundException, UnmodifiableClassException{
     	LOGGER.info("launchTransformerGeneric !");
-    	if(inst !=null){
+    	if(AgentService.getInstance().getInst() !=null){
     		TransformerService ts = new TransformerService();
     		Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
-	    	inst.addTransformer(new GenericTransformer(mapConvert),true);
-	    	ts.transformAllClassScanByH2h(inst,mapConvert.keySet());
+    		ThunderService.getInstance().sendH2hPath();
+    		AgentService.getInstance().getInst().addTransformer(new GenericTransformer(mapConvert),true);
+	    	ts.transformAllClassScanByH2h(AgentService.getInstance().getInst(),mapConvert.keySet());
     	}else{
     		LOGGER.error("Instrumentation fail because internal inst is null");
     	}
@@ -129,6 +129,8 @@ public class CoreEngine {
         } catch (H2HException e) {
             LOGGER.error("H2H is broken ", e);
         }
+        GatherService.getInstance().initEnv();
+        
     }
     
     public void parseConfig(String pathFile) {

@@ -2,6 +2,7 @@ package io.highway.to.urhell.service.impl;
 
 import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.H2hConfig;
+import io.highway.to.urhell.domain.OutputSystem;
 import io.highway.to.urhell.domain.ThunderData;
 
 import java.util.HashMap;
@@ -29,8 +30,17 @@ public class GatherService {
 	private GatherService() {
 		mapThunderData = new HashMap<String, ThunderData>();
 	}
+	
+	public void initEnv(){
+		if(CoreEngine.getInstance().getConfig().getOutputSystem()!=null && OutputSystem.REMOTE.equals(CoreEngine.getInstance().getConfig().getOutputSystem())){
+			ThunderService.getInstance().initRemoteBreaker();
+        }
+	}
 
 	public void gather(String fullMethodName) {
+		for(ThunderData th : mapThunderData.values()){
+			LOGGER.debug("th :"+th.toString());
+		}
 		H2hConfig hc = CoreEngine.getInstance().getConfig();
 		if (hc == null) {
 			LOGGER.error("we have a little problem ...");
@@ -46,7 +56,7 @@ public class GatherService {
 				td.incrementCounter();
 				break;
 			case REMOTE:
-				// stream to server ...
+				ThunderService.getInstance().sendRemoteBreaker(fullMethodName);
 				break;
 			default:
 				throw new IllegalStateException(hc.getOutputSystem()

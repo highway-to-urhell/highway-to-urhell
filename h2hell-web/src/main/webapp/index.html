@@ -1,27 +1,29 @@
 <!doctype html>
 <html lang="en" ng-app="thunderWebApp">
 <head>
-    <meta charset="utf-8">
-    <title>Thunder</title>
-    <link rel="stylesheet" href="resources/css/app.css"/>
-    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" />
+<meta charset="utf-8">
+<title>Thunder</title>
+<link rel="stylesheet" href="resources/css/app.css" />
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
-<div id="wrapper">
+	<div id="wrapper">
 
-    <ul class="menu">
-        <li><a href="#/thunderapp">Application</a></li>
-        <li><a href="#/breaker">Log</a></li>
-    </ul>
-    <hr class="" />
-    <div ng-view></div>
+		<ul class="menu">
+			<li><a href="#/appReference">Example</a></li>
+			<li><a href="#/thunderapp">Analysis</a></li>
+			<li><a href="#/breaker">Log</a></li>
+		</ul>
+		<div ng-view></div>
 
-</div>
 
-<script src="resources/js/lib/angular/angular.js"></script>
-<script src="resources/js/app.js"></script>
-<script src="resources/js/controllers/ThunderAppController.js"></script>
-<script src="resources/js/controllers/ThunderStatController.js"></script>
-<script src="resources/js/controllers/BreakerController.js"></script>
+	</div>
+
+	<script src="resources/js/lib/angular/angular.js"></script>
+	<script src="resources/js/app.js"></script>
+	<script src="resources/js/controllers/ThunderAppReferenceController.js"></script>
+	<script src="resources/js/controllers/ThunderAppController.js"></script>
+	<script src="resources/js/controllers/ThunderStatController.js"></script>
+	<script src="resources/js/controllers/BreakerController.js"></script>
 </body>
 </html>

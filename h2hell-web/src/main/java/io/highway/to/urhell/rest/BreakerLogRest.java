@@ -35,7 +35,7 @@ public class BreakerLogRest {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation("Find all Thunder Stat")
+	@ApiOperation("Find all Breaker Log")
 	@Path("/findAllBreaker")
 	public Response findAll() {
 		LOG.info("Call findAllBreaker ");
@@ -45,7 +45,7 @@ public class BreakerLogRest {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation("Find all Thunder Stat")
+	@ApiOperation("Find Breaker Log by Token")
 	@Path("/findBreakerWithToken/{token}")
 	public Response findBreakerWithToken(@PathParam("token") String token) {
 		LOG.info("Call findBreakerWithToken ");

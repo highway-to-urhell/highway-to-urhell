@@ -1,6 +1,6 @@
 
 <div class="input-append">
-	<select style="margin-left: 150px;width: 450px;" ng-model="token"
+	<select style="margin-left: 150px; width: 450px;" ng-model="token"
 		ng-options="valueApp.token as valueApp.nameApp+'-'+valueApp.token for valueApp in tokenlist"></select>
 	<button class="btn btn-primary" ng-disabled="!token"
 		ng-click="findByToken(token)">Filter by App Name</button>
@@ -13,7 +13,9 @@
 
 <div class="alert alert-info" style="width: 850px; margin-left: 0px;"
 	ng-show="breakerlist.length == 0">No Log in database</div>
-<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;"
+
+<table class="table table-bordered table-striped"
+	style="width: 850px; margin-left: 0px;"
 	ng-show="breakerlist.length > 0">
 	<thead>
 		<tr>

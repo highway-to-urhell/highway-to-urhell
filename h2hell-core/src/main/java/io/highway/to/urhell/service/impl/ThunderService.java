@@ -49,7 +49,7 @@ public class ThunderService {
     	String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/createThunderApp/";
     	Gson gson = new Gson();
     	String token = sendDataHTTP(urlServer, gson.toJson(CoreEngine.getInstance().getConfig()));
-    	LOGGER.info("token create for application {}",token);
+    	LOGGER.info("application registred with token {} for application {}",token,CoreEngine.getInstance().getConfig().getNameApplication());
     	CoreEngine.getInstance().getConfig().setToken(token);
     }
     

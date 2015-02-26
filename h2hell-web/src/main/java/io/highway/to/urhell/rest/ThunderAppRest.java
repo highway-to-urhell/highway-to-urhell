@@ -1,6 +1,5 @@
 package io.highway.to.urhell.rest;
 
-import io.highway.to.urhell.dao.ThunderAppDao;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.exception.NotExistThunderAppException;
@@ -43,8 +42,6 @@ public class ThunderAppRest {
 	@Inject
 	private BreakerLogService breakerLogService;
 	@Inject
-	private ThunderAppDao thunderAppDao;
-	@Inject
 	private LaunchService launchService;
 
 	@GET
@@ -53,10 +50,10 @@ public class ThunderAppRest {
 	@Path("/findAllThunderApp")
 	public Response findAll() {
 		LOG.info("Call findAllThunder ");
-		List<ThunderApp> listThunderApp = thunderAppDao.findAll();
+		List<ThunderApp> listThunderApp = thunderAppService.findAll();
 		return Response.status(Status.ACCEPTED).entity(listThunderApp).build();
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Create ThunderApp")
@@ -66,44 +63,47 @@ public class ThunderAppRest {
 		String token = thunderAppService.createThunderApp(config);
 		return Response.status(Status.ACCEPTED).entity(token).build();
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Launch analysis")
 	@Path("/launchAnalysis/{token}")
 	public Response launchAnalysis(@PathParam("token") String token) {
 		LOG.info("Call launchAnalysis ");
-		String msg=launchService.launchAnalysis(token);
+		String msg = launchService.launchAnalysis(token);
 		return Response.status(Status.ACCEPTED).entity(msg).build();
 	}
-	
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Init ThunderApp")
 	@Path("/initThunderApp")
 	public Response initThunderAppAndStat(MessageThunderApp msg) {
-		LOG.info("Call createThunderApp with token {} and list size {}", msg.getToken(),msg.getListBreakerData().size());
-		try{
-			thunderAppService.initThunderAppAndStat(msg.getToken(),msg.getListBreakerData());
-		}catch (NotExistThunderAppException ne){
+		LOG.info("Call createThunderApp with token {} and list size {}",
+				msg.getToken(), msg.getListBreakerData().size());
+		try {
+			thunderAppService.initThunderAppAndStat(msg.getToken(),
+					msg.getListBreakerData());
+		} catch (NotExistThunderAppException ne) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		return Response.status(Status.ACCEPTED).build();
 	}
-	
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation("Add Breaker from Agent Thunder")
 	@Path("/addBreaker")
 	public Response addBreaker(MessageBreaker msg) {
-		LOG.info("Call addBreaker with pathClassMethodName {} token {} and dateIncoming {}", msg.getPathClassMethodName(),msg.getToken(),msg.getDateIncoming());
-		breakerLogService.addBreaker(msg.getPathClassMethodName(), msg.getToken(), msg.getDateIncoming());
+		LOG.info(
+				"Call addBreaker with pathClassMethodName {} token {} and dateIncoming {}",
+				msg.getPathClassMethodName(), msg.getToken(),
+				msg.getDateIncoming());
+		breakerLogService.addBreaker(msg.getPathClassMethodName(),
+				msg.getToken(), msg.getDateIncoming());
 		return Response.status(Status.ACCEPTED).build();
 	}
-	
-	
-	
+
 }

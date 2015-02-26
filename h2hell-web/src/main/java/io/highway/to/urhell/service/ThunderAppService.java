@@ -26,6 +26,11 @@ public class ThunderAppService {
 	private ThunderStatService thunderStatService;
 
 	@Transactional
+	public List<ThunderApp> findAll() {
+		return thunderAppDao.findAll();
+	}
+
+	@Transactional
 	public String createThunderApp(H2hConfig config) {
 		ThunderApp th = new ThunderApp();
 		th.setNameApp(config.getNameApplication());

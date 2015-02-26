@@ -39,7 +39,7 @@ public class GatherService {
 
 	public void gather(String fullMethodName) {
 		for(ThunderData th : mapThunderData.values()){
-			LOGGER.debug("th :"+th.toString());
+			LOGGER.info("th :"+th.toString());
 		}
 		H2hConfig hc = CoreEngine.getInstance().getConfig();
 		if (hc == null) {

@@ -1,12 +1,8 @@
 package io.highway.to.urhell.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +20,16 @@ public class ThunderApp {
 	@NotNull
 	private String dateCreation;
 	private String urlApp;
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getUrlApp() {
 		return urlApp;
 	}
@@ -31,9 +37,6 @@ public class ThunderApp {
 	public void setUrlApp(String urlApp) {
 		this.urlApp = urlApp;
 	}
-
-	@OneToMany
-	List<ThunderStat> listThunderStat = new ArrayList<ThunderStat>();
 
 	public String getDateCreation() {
 		return dateCreation;

@@ -1,12 +1,8 @@
+<h3 style="margin-left: 300px;">Application H2H List</h3>
 
-
-<h3 style="margin-left: 300px;">Application H2h List</h3>
-<div class="alert alert-info" style="width: 850px; margin-left: 0px;"
-	ng-show="applisthunder.length == 0">No Application</div>
-
-<table class="table table-bordered table-striped"
-	style="width: 850px; margin-left: 0px;"
-	ng-show="applisthunder.length > 0">
+<div class="alert alert-info" style="width: 850px; margin-left: 0px;" ng-show="applisthunder.length == 0">No Application</div>
+<div class="alert alert-info" style="width: 800px; margin-left: 0px;" ng-show="messageConfig !=null">{{messageConfig}}</div>
+<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;" ng-show="applisthunder.length > 0">
 	<thead>
 		<tr>
 			<th style="text-align: center; width: 25px;">Name</th>
@@ -22,7 +18,7 @@
 			<td style="text-align: center;">{{appthunder.token}}</td>
 			<td style="text-align: center;">{{appthunder.dateCreation}}</td>
 			<td style="text-align: center;"><a href="#/thunderstat/{{appthunder.token}}">Stat</a></td>
-			<td style="text-align: center;"><button class="btn btn-primary" ng-click="launchAnalysis(appthunder.token)">Launch Analysis</button></td>
+			<td style="text-align: center;"><button class="btn btn-primary"	ng-click="launchAnalysis(appthunder.token,appthunder.nameApp)">Launch Analysis</button></td>
 		</tr>
 	</tbody>
 </table>

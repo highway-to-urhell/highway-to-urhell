@@ -18,6 +18,9 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'breaker/layout.html',
         controller: BreakerController
     });
-
-    $routeProvider.otherwise({redirectTo: '/thunderapp'});
+    $routeProvider.when('/appReference', {
+        templateUrl: 'appReference/layout.html',
+        controller: ThunderAppReferenceController
+    });
+    $routeProvider.otherwise({redirectTo: '/appReference'});
 }]);

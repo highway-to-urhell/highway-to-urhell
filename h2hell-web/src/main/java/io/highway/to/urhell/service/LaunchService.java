@@ -26,6 +26,7 @@ public class LaunchService {
 		String url =th.getUrlApp()+"h2h/?launch=true";
 		LOG.info("Call app {}",url);
 		String responseEntity = restTemplate.postForObject(url, null, String.class);
+		LOG.info("result call {}",responseEntity);
 		return responseEntity;
 	}
 

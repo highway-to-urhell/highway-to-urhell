@@ -45,6 +45,7 @@ public class ThunderStatService {
 		}
 		ms.setTotalFalsePositive(falsePositive);
 		ms.setTotalNoTest(totalNoTest);
+		ms.setToken(token);
 		return ms;
 	}
 	

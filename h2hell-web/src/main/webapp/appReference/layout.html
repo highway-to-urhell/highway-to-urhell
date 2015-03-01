@@ -10,7 +10,8 @@
 		<tr>
 			<th style="text-align: center;">Application Name</th>
 			<th style="text-align: center;">Description</th>
-			<th style="text-align: center;">Launch</th>
+			<th style="text-align: center;">View</th>
+			<th style="text-align: center;">Analysis</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +20,7 @@
 			<td style="text-align: center;">{{app.description}}</td>
 			<td style="text-align: center;"><button class="btn btn-primary"
 					onclick="window.open('{{app.urlApp}}')">Launch</button></td>
+			<td style="text-align: center;" ng-disabled="app.token == 'NO_TOKEN'"><a href="#/thunderstat/{{app.token}}">Stat</a></td>
 		</tr>
 	</tbody>
 </table>

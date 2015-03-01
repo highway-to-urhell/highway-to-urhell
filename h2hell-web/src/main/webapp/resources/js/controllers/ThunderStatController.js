@@ -13,6 +13,13 @@ var ThunderStatController = function($scope, $routeParams, $http) {
 					$scope.ms = message;
 				});
 	};
+	
+	 $scope.launchAnalysis = function(token) {
+	    	$scope.messageConfig='Analysis Running for application ';
+	        $http.post('api/ThunderApp/launchAnalysis/' + token).success(function(message) {
+	        	$scope.messageConfig=message;
+	        });
+	    };
 
 	$scope.updateThunderStatFalsePositive = function(id, status, methodInput) {
 		$scope.messageConfig = 'Update status ...';

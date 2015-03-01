@@ -39,6 +39,8 @@ public class ThunderAppService {
 		th.setToken(token);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		th.setDateCreation(sdf.format(new Date()));
+		th.setDescription(config.getDescription());
+		th.setPathSource(config.getPathSource());
 		thunderAppDao.save(th);
 		return token;
 	}

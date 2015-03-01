@@ -7,6 +7,13 @@ import java.util.List;
 public class MessageStat {
 	
 	private List<ThunderStat> listThunderStat;
+	private String token;
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	private Integer totalFalsePositive;
 	private Integer totalNoTest;
 	private Integer totalStat;

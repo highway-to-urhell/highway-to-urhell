@@ -143,6 +143,9 @@ public class CoreEngine {
              config.setUrlApplication(prop.getProperty("urlapplication"));
              config.setNameApplication(prop.getProperty("nameapplication"));
              config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
+             config.setPathH2h(prop.getProperty("pathH2h"));
+             config.setPathSource(prop.getProperty("pathSource"));
+             config.setDescription(prop.getProperty("description"));
              config.setOutputSystem(io.highway.to.urhell.domain.OutputSystem.valueOf(prop.getProperty("outputSystem")));
 
          } catch (IOException ex) {

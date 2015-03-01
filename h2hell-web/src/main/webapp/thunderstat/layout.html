@@ -4,7 +4,8 @@
 </form>
 
 <div class="alert alert-info" style="width: 850px; margin-left: 0px;" ng-show="ms.listThunderStat.length == 0">No statistics in	database</div>
-<button class="btn btn-primary" style="width: 150px; margin-left: 350px;" ng-click="updateToken()">Update</button>
+<button class="btn btn-primary" style="width: 150px; margin-left: 250px;" ng-click="updateToken()">Update</button>
+<button class="btn btn-primary"	ng-click="launchAnalysis(ms.token)">Launch Analysis</button>
 <div class="alert alert-info" style="width: 800px; margin-left: 0px;margin-top : 10px;" ng-show="messageConfig !=null">{{messageConfig}}</div>
 <table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;margin-top : 10px;">
 	<tr>
@@ -25,11 +26,11 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="stat in ms.listThunderStat" ng-style="set_color(stat.falsePositive,stat.count)">
-			<td style="text-align: center;">{{stat.pathClassMethodName}}</td>
+			<td style="text-align: center;"><a href="#/thundersource/{{ms.token}}/{{stat.pathClassMethodName}}" target="_blank">{{stat.pathClassMethodName}}</a></td>
 			<td style="text-align: center;">{{stat.thunderApp.nameApp}}</td>
 			<td style="text-align: center;">{{stat.count}}</td>
 			<td style="text-align: center;"><input ng-disabled="true" type="checkbox" ng-model="stat.falsePositive" /></td>
-			<td style="text-align: center;"><button class="btn btn-primary" ng-click="updateThunderStatFalsePositive(stat.id,stat.falsePositive,stat.pathClassMethodName)">Change status</button></td>
+			<td style="text-align: center;"><button class="btn btn-primary" ng-click="updateThunderStatFalsePositive(stat.id,stat.falsePositive,stat.pathClassMethodName)">FalsePositive</button></td>
 		</tr>
 	</tbody>
 </table>

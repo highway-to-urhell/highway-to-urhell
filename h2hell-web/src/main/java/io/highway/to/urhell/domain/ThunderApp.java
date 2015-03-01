@@ -16,11 +16,21 @@ public class ThunderApp {
 	@NotNull
 	private String nameApp;
 	@NotNull
-	private String token;
+	private String token ="NO_TOKEN";
 	@NotNull
 	private String dateCreation;
 	private String urlApp;
 	private String description;
+	private String pathSource;
+	
+
+	public String getPathSource() {
+		return pathSource;
+	}
+
+	public void setPathSource(String pathSource) {
+		this.pathSource = pathSource;
+	}
 
 	public String getDescription() {
 		return description;

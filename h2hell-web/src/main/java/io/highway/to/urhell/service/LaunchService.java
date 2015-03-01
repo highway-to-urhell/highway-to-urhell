@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Named
@@ -23,10 +24,17 @@ public class LaunchService {
 		if (th == null) {
 			return "No config for application with token" + token;
 		}
-		String url =th.getUrlApp()+"h2h/?launch=true";
-		LOG.info("Call app {}",url);
-		String responseEntity = restTemplate.postForObject(url, null, String.class);
-		LOG.info("result call {}",responseEntity);
+		String url = th.getUrlApp() + "h2h/?launch=true";
+		String responseEntity = null;
+		LOG.info("Call app {}", url);
+		try {
+			responseEntity = restTemplate
+					.postForObject(url, null, String.class);
+			
+		} catch (RestClientException r) {
+			responseEntity = r.getMessage();
+		}
+		LOG.info("result call {}", responseEntity);
 		return responseEntity;
 	}
 

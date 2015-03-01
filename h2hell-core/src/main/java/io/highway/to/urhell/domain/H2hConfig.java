@@ -6,7 +6,28 @@ public class H2hConfig {
 	private String nameApplication;
 	private String urlH2hWeb;
 	private String token;
+	private String description;
+	private String pathSource;
+	private String pathH2h;
 	
+	public String getPathSource() {
+		return pathSource;
+	}
+	public void setPathSource(String pathSource) {
+		this.pathSource = pathSource;
+	}
+	public String getPathH2h() {
+		return pathH2h;
+	}
+	public void setPathH2h(String pathH2h) {
+		this.pathH2h = pathH2h;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getToken() {
 		return token;
 	}

@@ -1,12 +1,10 @@
-1/ Color lignes dans h2hell-web pour les faux positifs (green) et les lignes à 0 (rouge)
+1/ Add transformer pour
+  - RestX
+  - Restlet
+  - Jersey (sans impl de jax-rs les valeurs du fwk direct)
 
-2/ Reparer ce bordel de spring
+2/ Reporting avec des graphes kikoolol
 
-3/ Installer env pour appli
-	* primefaces 5.1 (ok)
-	* struts 1 (ok)
-	* struts 2 (ok)
-	* spring petclinic (à tester)
+3/ script selenium par env
 
-4/ script selenium par env
-
+4/ Faire des tests ?!

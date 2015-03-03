@@ -1,4 +1,4 @@
-package io.highway.to.urhell.service;
+package io.highway.to.urhell.service.impl;
 
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.TypePath;
@@ -12,6 +12,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import io.highway.to.urhell.service.AbstractLeechService;
+import io.highway.to.urhell.service.FilterFileH2H;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

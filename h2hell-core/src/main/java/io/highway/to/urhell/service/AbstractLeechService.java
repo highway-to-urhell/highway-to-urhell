@@ -46,7 +46,13 @@ public abstract class AbstractLeechService implements LeechService {
         frameworkInformations.getListEntryPath().clear();
     }
 
-    protected abstract void gatherData(List<EntryPathData> incoming);
+
+    protected void gatherData(List<EntryPathData> incoming) {
+		List<EntryPathData> listEntryPath = incoming;
+		for (EntryPathData entry : listEntryPath) {
+			addEntryPath(entry);
+		}
+    }
 
     @Override
     public FrameworkInformations getFrameworkInformations() {

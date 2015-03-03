@@ -1,4 +1,4 @@
-package io.highway.to.urhell.service.impl;
+package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.EntryPathData;

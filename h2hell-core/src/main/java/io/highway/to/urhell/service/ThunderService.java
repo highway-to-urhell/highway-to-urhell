@@ -1,16 +1,10 @@
-package io.highway.to.urhell.service.impl;
+package io.highway.to.urhell.service;
 
+import com.google.gson.Gson;
 import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.MessageBreaker;
 import io.highway.to.urhell.domain.MessageThunderApp;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -20,7 +14,11 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class ThunderService {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -39,26 +37,24 @@ public class ThunderService {
         }
         return instance;
     }
+
     /**
      * Init the first connexion to server h2h
      * the server returns the token
-     * @param url
-     * @param token
      */
-    public void initRemoteBreaker(){
-    	String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/createThunderApp/";
-    	Gson gson = new Gson();
-    	String token = sendDataHTTP(urlServer, gson.toJson(CoreEngine.getInstance().getConfig()));
-    	LOGGER.info("application registred with token {} for application {}",token,CoreEngine.getInstance().getConfig().getNameApplication());
-    	CoreEngine.getInstance().getConfig().setToken(token);
+    public void initRemoteBreaker() {
+        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/createThunderApp/";
+        Gson gson = new Gson();
+        String token = sendDataHTTP(urlServer, gson.toJson(CoreEngine.getInstance().getConfig()));
+        LOGGER.info("application registred with token {} for application {}", token, CoreEngine.getInstance().getConfig().getNameApplication());
+        CoreEngine.getInstance().getConfig().setToken(token);
     }
-    
-    
-    
-	public void sendH2hPath() {
+
+
+    public void sendH2hPath() {
         TransformerService ts = new TransformerService();
         List<BreakerData> res = ts.transforDataH2hToList(CoreEngine.getInstance().getLeechServiceRegistered());
-		MessageThunderApp msg = new MessageThunderApp();
+        MessageThunderApp msg = new MessageThunderApp();
         msg.setListBreakerData(res);
         msg.setToken(CoreEngine.getInstance().getConfig().getToken());
         Gson gson = new Gson();
@@ -81,8 +77,8 @@ public class ThunderService {
     private String sendDataHTTP(String urlServer, String data) {
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(urlServer);
-        if(data!=null){
-        	httpPost.setEntity(new StringEntity(data, "UTF8"));
+        if (data != null) {
+            httpPost.setEntity(new StringEntity(data, "UTF8"));
         }
         httpPost.setHeader("Content-type", "application/json");
         String result = null;

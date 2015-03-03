@@ -8,7 +8,6 @@ import io.highway.to.urhell.domain.ThunderData;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.highway.to.urhell.service.impl.ThunderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

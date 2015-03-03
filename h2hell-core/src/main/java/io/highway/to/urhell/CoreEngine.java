@@ -8,8 +8,8 @@ import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
 import io.highway.to.urhell.service.GatherService;
-import io.highway.to.urhell.service.impl.ThunderService;
-import io.highway.to.urhell.service.impl.TransformerService;
+import io.highway.to.urhell.service.ThunderService;
+import io.highway.to.urhell.service.TransformerService;
 import io.highway.to.urhell.transformer.GenericTransformer;
 
 import java.io.FileInputStream;

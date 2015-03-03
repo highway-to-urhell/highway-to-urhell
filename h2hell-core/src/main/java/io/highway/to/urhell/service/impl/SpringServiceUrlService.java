@@ -6,11 +6,11 @@ import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.util.List;
 
-public class SpringServiceUrl extends AbstractLeechService {
+public class SpringServiceUrlService extends AbstractLeechService {
 
 	public static final String FRAMEWORK_NAME = "SPRING_URL";
 
-	public SpringServiceUrl() {
+	public SpringServiceUrlService() {
 		super(
 				FRAMEWORK_NAME,
 				VersionUtils

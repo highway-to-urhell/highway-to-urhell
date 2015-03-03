@@ -38,7 +38,7 @@ public class JaxRsService extends AbstractLeechService {
 	}
 
 	@Override
-	protected void gatherData(Object incoming) {
+	protected void gatherData(List<EntryPathData> incoming) {
 		if (!getFrameworkInformations().getVersion().equals(
 				VersionUtils.NO_FRAMEWORK)) {
 			// scan

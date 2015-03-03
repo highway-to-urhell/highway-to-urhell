@@ -2,11 +2,13 @@ package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkInformations;
+
 import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 public abstract class AbstractLeechService implements LeechService {
 
@@ -32,7 +34,7 @@ public abstract class AbstractLeechService implements LeechService {
         this.triggeredAtStartup = triggeredAtStartup;
     }
 
-    public void receiveData(Object incoming) {
+    public void receiveData(List<EntryPathData> incoming) {
         clearPreviousData();
         LOGGER.debug("receive incoming data obj {}",incoming);
         gatherData(incoming);
@@ -44,7 +46,7 @@ public abstract class AbstractLeechService implements LeechService {
         frameworkInformations.getListEntryPath().clear();
     }
 
-    protected abstract void gatherData(Object incoming);
+    protected abstract void gatherData(List<EntryPathData> incoming);
 
     @Override
     public FrameworkInformations getFrameworkInformations() {

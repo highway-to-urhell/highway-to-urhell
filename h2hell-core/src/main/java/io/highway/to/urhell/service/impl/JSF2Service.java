@@ -15,9 +15,9 @@ public class JSF2Service extends AbstractLeechService {
 				"javax.faces.webapp.FacesServlet", "com.sun.faces", "jsf-impl"));
 	}
 
-	public void gatherData(Object dataIncoming) {
+	public void gatherData(List<EntryPathData> dataIncoming) {
 
-		List<EntryPathData> listEntryPath = (List<EntryPathData>) dataIncoming;
+		List<EntryPathData> listEntryPath = dataIncoming;
 		for (EntryPathData entry : listEntryPath) {
 			addEntryPath(entry);
 		}

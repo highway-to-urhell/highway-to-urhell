@@ -1,17 +1,23 @@
 package io.highway.to.urhell.service.impl;
 
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import io.highway.to.urhell.VersionUtils;
-import io.highway.to.urhell.domain.*;
+import io.highway.to.urhell.domain.EntryPathData;
+import io.highway.to.urhell.domain.EntryPathParam;
+import io.highway.to.urhell.domain.HttpMethod;
+import io.highway.to.urhell.domain.TypeParam;
+import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.service.AbstractLeechService;
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 public class GwtService extends AbstractLeechService {
 
@@ -26,7 +32,7 @@ public class GwtService extends AbstractLeechService {
 
 
     @Override
-    protected void gatherData(Object incoming) {
+    protected void gatherData(List<EntryPathData> incoming) {
         if (!getFrameworkInformations().getVersion().equals(
                 VersionUtils.NO_FRAMEWORK)) {
             // scan

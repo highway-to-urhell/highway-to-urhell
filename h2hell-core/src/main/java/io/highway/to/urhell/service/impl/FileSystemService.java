@@ -1,6 +1,5 @@
 package io.highway.to.urhell.service.impl;
 
-import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.TypePath;
 import io.highway.to.urhell.exception.H2HException;
@@ -8,6 +7,7 @@ import io.highway.to.urhell.service.AbstractLeechService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,7 +32,7 @@ public class FileSystemService extends AbstractLeechService {
 	}
 
 	@Override
-	protected void gatherData(Object incoming) {
+	protected void gatherData(List<EntryPathData> incoming) {
 		String rootPath = null;
 		try {
 			if (rootPath == null) {

@@ -1,5 +1,8 @@
 package io.highway.to.urhell.service;
 
+import java.util.List;
+
+import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.FrameworkInformations;
 
 /**
@@ -10,7 +13,7 @@ public interface LeechService {
     /**
      * Receive incoming Data to analyze
      */
-    void receiveData(Object incoming);
+    void receiveData(List<EntryPathData> incoming);
 
     /**
      * Details Framework Informations

@@ -17,9 +17,9 @@ public class Struts2Service extends AbstractLeechService {
 				"org.apache.struts", "struts2-core"));
 	}
 
-	public void gatherData(Object dataIncoming) {
+	public void gatherData(List<EntryPathData> dataIncoming) {
 
-		List<EntryPathData> listEntryPath = (List<EntryPathData>) dataIncoming;
+		List<EntryPathData> listEntryPath = dataIncoming;
 		for (EntryPathData entry : listEntryPath) {
 			addEntryPath(entry);
 		}

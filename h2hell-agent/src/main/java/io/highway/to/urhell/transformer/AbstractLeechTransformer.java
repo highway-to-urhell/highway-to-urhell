@@ -25,34 +25,22 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     public AbstractLeechTransformer(String classNameToTransform) {
         this.classNameToTransform = classNameToTransform;
         this.classNameToTransformNormalized = classNameToTransform.replace("/", ".");
-
-        addImportPackage("io.highway.to.urhell");
-        addImportPackage("io.highway.to.urhell.domain");
-        addImportPackage("io.highway.to.urhell.service");
+        addImportPackage(
+                "io.highway.to.urhell",
+                "io.highway.to.urhell.domain",
+                "io.highway.to.urhell.service");
     }
 
-    public AbstractLeechTransformer(String classNameToTransform,String listPackage) {
-        this.classNameToTransform = classNameToTransform;
-        this.classNameToTransformNormalized = classNameToTransform.replace("/", ".");
-
-        addImportPackage("io.highway.to.urhell");
-        addImportPackage("io.highway.to.urhell.domain");
-        addImportPackage("io.highway.to.urhell.service");
-        String[] tabPack = listPackage.split(";");
-        for(String pack : tabPack){
-        	addImportPackage(pack);
+    protected void addImportPackage(String... packages) {
+        for (String packageName : packages) {
+            this.importPackages.add(packageName);
         }
-    }
-
-    
-    protected void addImportPackage(String importPackage) {
-        this.importPackages.add(importPackage);
     }
 
     public byte[] transform(ClassLoader loader, String className,
                             Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
-    	if (className.equals(classNameToTransform)) {
+        if (className.equals(classNameToTransform)) {
             log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());
             try {
                 ClassPool cp = ClassPool.getDefault();

@@ -6,8 +6,13 @@ import javassist.CtMethod;
 public class Struts1Transformer extends AbstractLeechTransformer {
 
     public Struts1Transformer() {
-        super("org/apache/struts/action/ActionServlet",
-                "org.apache.struts.action;java.lang.reflect;org.objectweb.asm;org.apache.struts.config.impl;java.util");
+        super("org/apache/struts/action/ActionServlet");
+        addImportPackage(
+                "org.apache.struts.action",
+                "java.lang.reflect",
+                "org.objectweb.asm",
+                "org.apache.struts.config.impl",
+                "java.util");
     }
 
     @Override

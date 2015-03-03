@@ -6,9 +6,16 @@ import javassist.CtMethod;
 public class SpringMethodTransformer extends AbstractLeechTransformer {
 
     public SpringMethodTransformer() {
-        super(
-                "org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerMapping",
-                "org.springframework.core;org.springframework.web.method;org.springframework.web.servlet.mvc.method;java.util.Map;java.util.Map.Entry;java.util;java.lang.reflect;org.objectweb.asm");
+        super("org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerMapping");
+        addImportPackage(
+                "org.springframework.core",
+                "org.springframework.web.method",
+                "org.springframework.web.servlet.mvc.method",
+                "java.util.Map",
+                "java.util.Map.Entry",
+                "java.util",
+                "java.lang.reflect",
+                "org.objectweb.asm");
     }
 
     @Override

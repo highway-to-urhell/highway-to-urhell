@@ -6,8 +6,10 @@ import javassist.CtMethod;
 public class SpringUrlTransformer extends AbstractLeechTransformer {
 
     public SpringUrlTransformer() {
-        super(
-                "org/springframework/web/servlet/handler/AbstractUrlHandlerMapping", "java.util.Map;java.util");
+        super("org/springframework/web/servlet/handler/AbstractUrlHandlerMapping");
+        addImportPackage(
+                "java.util.Map",
+                "java.util");
     }
 
     @Override

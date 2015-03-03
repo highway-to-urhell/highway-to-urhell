@@ -6,9 +6,13 @@ import javassist.CtMethod;
 public class JSF2Transformer extends AbstractLeechTransformer {
 
     public JSF2Transformer() {
-        super(
-                "com/sun/faces/mgbean/BeanManager",
-                "org.objectweb.asm;java.lang.reflect;java.util;java.util.Map;com.sun.faces.mgbean");
+        super("com/sun/faces/mgbean/BeanManager");
+        addImportPackage(
+                "org.objectweb.asm",
+                "java.lang.reflect",
+                "java.util",
+                "java.util.Map",
+                "com.sun.faces.mgbean");
     }
 
     @Override

@@ -56,7 +56,7 @@ public class JSF2Transformer extends AbstractLeechTransformer {
                 "       listEntryPath.add(entry);" +
                 "   }" +
                 "}" +
-                "CoreEngine.getInstance().getFramework(\"JSF_2\" +.receiveData(listEntryPath);";
+                "CoreEngine.getInstance().getFramework(\"JSF_2\").receiveData(listEntryPath);";
         m.insertAfter(h2hHookCode);
     }
 }

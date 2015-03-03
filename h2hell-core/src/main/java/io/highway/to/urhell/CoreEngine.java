@@ -7,7 +7,7 @@ import io.highway.to.urhell.exception.H2HException;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
 import io.highway.to.urhell.service.ReporterService;
-import io.highway.to.urhell.service.impl.GatherService;
+import io.highway.to.urhell.service.GatherService;
 import io.highway.to.urhell.service.impl.ThunderService;
 import io.highway.to.urhell.service.impl.TransformerService;
 import io.highway.to.urhell.transformer.GenericTransformer;
@@ -63,7 +63,7 @@ public class CoreEngine {
     		TransformerService ts = new TransformerService();
     		Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
     		ThunderService.getInstance().sendH2hPath();
-    		AgentService.getInstance().getInst().addTransformer(new GenericTransformer(mapConvert),true);
+    		AgentService.getInstance().getInst().addTransformer(new GenericTransformer(mapConvert), true);
 	    	ts.transformAllClassScanByH2h(AgentService.getInstance().getInst(),mapConvert.keySet());
     	}else{
     		LOGGER.error("Instrumentation fail because internal inst is null");

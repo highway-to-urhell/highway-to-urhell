@@ -1,4 +1,4 @@
-package io.highway.to.urhell.service.impl;
+package io.highway.to.urhell.service;
 
 import java.io.File;
 import java.io.FileFilter;

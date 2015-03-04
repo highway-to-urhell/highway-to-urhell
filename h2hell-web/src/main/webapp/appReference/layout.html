@@ -18,9 +18,8 @@
 		<tr ng-repeat="app in appReferenceList">
 			<td style="text-align: center;">{{app.nameApp}}</td>
 			<td style="text-align: center;">{{app.description}}</td>
-			<td style="text-align: center;"><button class="btn btn-primary"
-					onclick="window.open('{{app.urlApp}}')">Launch</button></td>
-			<td style="text-align: center;" ng-disabled="app.token == 'NO_TOKEN'"><a href="#/thunderstat/{{app.token}}">Stat</a></td>
+			<td style="text-align: center;"><button class="btn btn-primary"	onclick="window.open('{{app.urlApp}}')">Launch</button></td>
+			<td style="text-align: center;" ng-disabled="app.token == 'NO_TOKEN'"><a class="btn btn-primary" href="#/thunderstat/{{app.token}}">Stat</a></td>
 		</tr>
 	</tbody>
 </table>

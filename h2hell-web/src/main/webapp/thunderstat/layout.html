@@ -5,8 +5,8 @@
 
 <div class="alert alert-info" style="width: 850px; margin-left: 0px;" ng-show="ms.listThunderStat.length == 0">No statistics in	database</div>
 <button class="btn btn-primary" style="width: 150px; margin-left: 250px;" ng-click="updateToken()">Update</button>
-<button class="btn btn-primary"	ng-click="launchAnalysis(ms.token)">Launch Analysis</button>
-<div class="alert alert-info" style="width: 800px; margin-left: 0px;margin-top : 10px;" ng-show="messageConfig !=null">{{messageConfig}}</div>
+<button class="btn btn-danger"	ng-click="launchAnalysis(ms.token)">Launch Analysis</button>
+<div class="alert alert-danger" style="width: 800px; margin-left: 0px;margin-top : 10px;" ng-show="messageConfig !=null">{{messageConfig}}</div>
 <table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;margin-top : 10px;">
 	<tr>
 		<td style="text-align: center; width: 280px;">Total entry point : {{ms.totalStat}}</td>

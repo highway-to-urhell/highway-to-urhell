@@ -18,6 +18,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'thundersource/layout.html',
         controller: 'ThundersourceController'
     });
+    $routeProvider.when('/adminh2h', {
+        templateUrl: 'adminh2h/layout.html',
+        controller: 'ThunderAdminController'
+    });
     $routeProvider.when('/appReference', {
         templateUrl: 'appReference/layout.html',
         controller: 'ThunderAppReferenceController'

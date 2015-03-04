@@ -1,11 +1,19 @@
 package io.highway.to.urhell.domain;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ThunderApp {
@@ -22,7 +30,18 @@ public class ThunderApp {
 	private String urlApp;
 	private String description;
 	private String pathSource;
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "thunderApp", cascade =  CascadeType.REMOVE)
+	@JsonIgnore
+    private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
 	
+
+	public Set<ThunderStat> getThunderStatSet() {
+		return thunderStatSet;
+	}
+
+	public void setThunderStatSet(Set<ThunderStat> thunderStatSet) {
+		this.thunderStatSet = thunderStatSet;
+	}
 
 	public String getPathSource() {
 		return pathSource;

@@ -49,6 +49,7 @@ public class TransformerService {
 		                String classNameNormalized = entryPath.getClassName().replaceAll("\\.", "/");
 		                bd.setClassNameNormalized(classNameNormalized);
 		                bd.setSignatureName(entryPath.getSignatureName());
+		                bd.setTypePath(entryPath.getTypePath().toString());
 		                List<BreakerData> listbd = mapToTransform.get(classNameNormalized);
 		                if (listbd == null) {
 		                    //first time
@@ -76,6 +77,8 @@ public class TransformerService {
 		                String classNameNormalized = entryPath.getClassName().replaceAll("\\.", "/");
 		                bd.setClassNameNormalized(classNameNormalized);
 		                bd.setSignatureName(entryPath.getSignatureName());
+		                bd.setUri(entryPath.getUri());
+		                bd.setHttpMethod(entryPath.getHttpMethod().toString());
 		                listBreaker.add(bd);
 		            }
 			 }

@@ -33,7 +33,16 @@ public class ThunderApp {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "thunderApp", cascade =  CascadeType.REMOVE)
 	@JsonIgnore
     private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
+	private String versionApp;
 	
+
+	public String getVersionApp() {
+		return versionApp;
+	}
+
+	public void setVersionApp(String versionApp) {
+		this.versionApp = versionApp;
+	}
 
 	public Set<ThunderStat> getThunderStatSet() {
 		return thunderStatSet;

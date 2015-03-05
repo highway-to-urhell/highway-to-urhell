@@ -46,7 +46,7 @@ public class GenericTransformer implements ClassFileTransformer {
 					classNameToTransform = bd.getClassName();
 					methodNameToTransform = bd.getMethodName();
 					signatureName = bd.getSignatureName();
-
+					
 					LOGGER.info(
 							"Going to Transform {} with methodName {} and signature {} this class {}",
 							classNameToTransform, methodNameToTransform,

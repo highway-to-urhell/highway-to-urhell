@@ -33,6 +33,7 @@ public class ThunderAppService {
 	@Transactional
 	public String createThunderApp(H2hConfig config) {
 		ThunderApp th = new ThunderApp();
+		th.setVersionApp(config.getVersionApp());
 		th.setNameApp(config.getNameApplication());
 		th.setUrlApp(config.getUrlApplication());
 		String token = RandomStringUtils.randomAlphanumeric(16).toUpperCase();
@@ -51,8 +52,7 @@ public class ThunderAppService {
 		ThunderApp ta = validateToken(token);
 		if (listBreakerData != null && !listBreakerData.isEmpty()) {
 			for (BreakerData bd : listBreakerData) {
-				thunderStatService.createOrUpdateThunderStat(bd.getClassName(),
-						bd.getMethodName(), ta);
+				thunderStatService.createOrUpdateThunderStat(bd, ta);
 			}
 		}
 	}

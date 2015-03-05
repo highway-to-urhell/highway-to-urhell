@@ -34,7 +34,7 @@ public class FileSystemService extends AbstractLeechService {
 
 	@Override
 	protected void gatherData(List<EntryPathData> incoming) {
-		String rootPath = null;
+		String rootPath = System.getProperty("H2H_PATH");
 		try {
 			if (rootPath == null) {
 				throw new H2HException("Unknow Variable Path H2h. Please Set pathH2h to location application deployment.");

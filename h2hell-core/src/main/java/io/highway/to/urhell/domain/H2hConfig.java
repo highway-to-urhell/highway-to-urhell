@@ -9,7 +9,14 @@ public class H2hConfig {
 	private String description;
 	private String pathSource;
 	private String pathH2h;
+	private String versionApp;
 	
+	public String getVersionApp() {
+		return versionApp;
+	}
+	public void setVersionApp(String versionApp) {
+		this.versionApp = versionApp;
+	}
 	public String getPathSource() {
 		return pathSource;
 	}

@@ -23,6 +23,24 @@ public class ThunderStat {
 	private String pathClassMethodName;
 	@NotNull
 	private Boolean falsePositive = false;
+	private String uri;
+	private String httpmethod;
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public String getHttpmethod() {
+		return httpmethod;
+	}
+
+	public void setHttpmethod(String httpmethod) {
+		this.httpmethod = httpmethod;
+	}
 
 	public Boolean getFalsePositive() {
 		return falsePositive;

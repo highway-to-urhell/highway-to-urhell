@@ -6,8 +6,35 @@ public class BreakerData {
     private String classNameNormalized;
     private String methodName;
     private String signatureName;
+    private String uri;
+    private String httpMethod;
+    private String typePath;
 
-    public String getSignatureName() {
+    public String getTypePath() {
+		return typePath;
+	}
+
+	public void setTypePath(String typePath) {
+		this.typePath = typePath;
+	}
+
+	public String getHttpMethod() {
+		return httpMethod;
+	}
+
+	public void setHttpMethod(String httpMethod) {
+		this.httpMethod = httpMethod;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public String getSignatureName() {
         return signatureName;
     }
 

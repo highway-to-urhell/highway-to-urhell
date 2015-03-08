@@ -32,7 +32,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "   entrypath.setUri(requestMappingInfo.getPatternsCondition().toString());" +
                 "   String removeClass = \"\";" +
                 "   if (handler.getBeanType().toString().contains(\"class\")) {" +
-                "       removeClass = handler.getBeanType().toString().replace(\"class \", \"\" );" +
+                "       removeClass = handler.getBeanType().toString().replace(\"class \", \"\" +" +
                 "   } else {" +
                 "       removeClass = handler.getBeanType().toString();" +
                 "   }" +

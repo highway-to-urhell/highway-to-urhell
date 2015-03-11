@@ -155,9 +155,9 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setClassName(elem.getElementsByTagName("filter-name")
+				web.setMethodEntry(elem.getElementsByTagName("filter-name")
 						.item(0).getChildNodes().item(0).getNodeValue());
-				web.setMethodEntry(elem.getElementsByTagName("filter-class")
+				web.setClassName(elem.getElementsByTagName("filter-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setTypePath(TypePath.FILTER);
 				for (int j = 0; j < nodeListMapping.getLength(); j++) {
@@ -199,9 +199,9 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setClassName(elem.getElementsByTagName("servlet-name")
+				web.setMethodEntry(elem.getElementsByTagName("servlet-name")
 						.item(0).getChildNodes().item(0).getNodeValue());
-				web.setMethodEntry(elem.getElementsByTagName("servlet-class")
+				web.setClassName(elem.getElementsByTagName("servlet-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setTypePath(TypePath.SERVLET);
 				for (int j = 0; j < nodeListMapping.getLength(); j++) {

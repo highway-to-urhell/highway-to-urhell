@@ -123,7 +123,7 @@
 						<contextPath>/core/</contextPath>
 					</webAppConfig>
 				</configuration>
-			</plugin>
+			</plugin>	
 		</plugins>
 	</build>
 </project>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtMethod;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 
@@ -41,6 +42,46 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className,
                             Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
+    	/*if(className.equals("io/test/H2hellServlet")){
+    		try {
+                ClassPool cp = ClassPool.getDefault();
+                cp.appendClassPath(new LoaderClassPath(loader));
+                CtClass cc = cp
+                        .get("io.test.H2hellServlet");
+                CtMethod[] tabMethod=cc.getDeclaredMethods();
+                for(int i=0;i<tabMethod.length;i++){
+                	log.error("#####"+tabMethod[i].getSignature());
+                }
+                classfileBuffer = cc.toBytecode();
+                cc.detach();
+
+            } catch (NotFoundException ex) {
+                log.error("not found ", ex);
+            } catch (Exception ex) {
+                log.error("Fail to Transform {} with {}", classNameToTransform, this.getClass(), ex);
+            }
+
+    	}
+    	if(className.equals("io/test/H2hellFilter")){
+    		try {
+                ClassPool cp = ClassPool.getDefault();
+                cp.appendClassPath(new LoaderClassPath(loader));
+                CtClass cc = cp
+                        .get("io.test.H2hellFilter");
+                CtMethod[] tabMethod=cc.getDeclaredMethods();
+                for(int i=0;i<tabMethod.length;i++){
+                	log.error("#####"+tabMethod[i].getSignature());
+                }
+                classfileBuffer = cc.toBytecode();
+                cc.detach();
+
+            } catch (NotFoundException ex) {
+                log.error("not found ", ex);
+            } catch (Exception ex) {
+                log.error("Fail to Transform {} with {}", classNameToTransform, this.getClass(), ex);
+            }
+
+    	}*/
     	
         if (className.equals(classNameToTransform)) {
             log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());

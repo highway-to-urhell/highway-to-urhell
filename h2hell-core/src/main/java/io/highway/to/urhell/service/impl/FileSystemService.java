@@ -164,7 +164,7 @@ public class FileSystemService extends AbstractLeechService {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("filter-name").item(0)
 							.getChildNodes().item(0).getNodeValue()
-							.equals(web.getClassName())) {
+							.equals(web.getMethodEntry())) {
 						NodeList urlPattern = elemMapping
 								.getElementsByTagName("url-pattern");
 						if (urlPattern != null && urlPattern.getLength() > 0) {
@@ -208,7 +208,7 @@ public class FileSystemService extends AbstractLeechService {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("servlet-name")
 							.item(0).getChildNodes().item(0).getNodeValue()
-							.equals(web.getClassName())) {
+							.equals(web.getMethodEntry())) {
 						web.setUri(elemMapping
 								.getElementsByTagName("url-pattern").item(0)
 								.getChildNodes().item(0).getNodeValue());

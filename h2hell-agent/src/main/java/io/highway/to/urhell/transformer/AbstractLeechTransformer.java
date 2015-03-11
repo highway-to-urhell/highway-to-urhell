@@ -2,11 +2,15 @@ package io.highway.to.urhell.transformer;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
+import javassist.CtMethod;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
@@ -40,6 +44,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className,
                             Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
+    	
         if (className.equals(classNameToTransform)) {
             log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());
             try {

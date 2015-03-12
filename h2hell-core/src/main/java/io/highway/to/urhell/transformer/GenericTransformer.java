@@ -8,6 +8,7 @@ import java.security.ProtectionDomain;
 import java.util.List;
 import java.util.Map;
 
+import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -29,11 +30,7 @@ public class GenericTransformer implements ClassFileTransformer {
 	public byte[] transform(ClassLoader loader, String className,
 			Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
 			byte[] classfileBuffer) throws IllegalClassFormatException {
-
 		String classNameToTransform = null;
-		String methodNameToTransform = null;
-		String signatureName = null;
-
 		if (!mapToTransform.get(className).isEmpty()) {
 			try {
 				List<BreakerData> listbd = mapToTransform.get(className);
@@ -43,20 +40,7 @@ public class GenericTransformer implements ClassFileTransformer {
 				classNameToTransform = listbd.get(0).getClassName();
 				CtClass cc = cp.get(classNameToTransform);
 				for (BreakerData bd : listbd) {
-					classNameToTransform = bd.getClassName();
-					methodNameToTransform = bd.getMethodName();
-					signatureName = bd.getSignatureName();
-					
-					LOGGER.info(
-							"Going to Transform {} with methodName {} and signature {} this class {}",
-							classNameToTransform, methodNameToTransform,
-							signatureName, this.getClass());
-
-					CtMethod m = cc.getMethod(methodNameToTransform,
-							signatureName);
-
-					m.insertBefore(generateCmd(classNameToTransform,
-							methodNameToTransform));
+					insertCode(bd,cc);
 				}
 				classfileBuffer = cc.toBytecode();
 				cc.detach();
@@ -66,10 +50,23 @@ public class GenericTransformer implements ClassFileTransformer {
 				LOGGER.error("Fail to Transform {} with {}",
 						classNameToTransform, this.getClass(), ex);
 			}
-
 		}
-
 		return classfileBuffer;
+	}
+	
+	private void insertCode(BreakerData bd,CtClass cc){
+		LOGGER.info(
+				"Going to Transform {} with methodName {} and signature {} this class {}",
+				bd.getClassName(), bd.getMethodName(),
+				bd.getSignatureName(), this.getClass());
+
+		CtMethod m;
+		try {
+			m = cc.getMethod(bd.getMethodName(),bd.getSignatureName());
+			m.insertBefore(generateCmd(bd.getClassName(),bd.getMethodName()));
+		} catch (NotFoundException | CannotCompileException e) {
+			LOGGER.error("Insert Code for className {} and methodName {} fails msg {}",bd.getClassName(),bd.getMethodName(),e.getMessage());
+		}
 	}
 
 	private String generateCmd(String className, String methodName) {

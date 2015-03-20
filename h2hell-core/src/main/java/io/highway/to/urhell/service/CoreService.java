@@ -74,7 +74,7 @@ public class CoreService {
 			LOG.error("Error while launchTransformer ", e);
 			out.print(e);
 		}
-
+		out.close();
 	}
 
 	

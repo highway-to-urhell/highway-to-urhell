@@ -47,3 +47,18 @@ set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/
 mvn jetty:run -Djetty.port=8090
 ```
 h2h.properties for changing : url of swagger, connexion to db, configuration hibernate
+
+### Configuration for PHP SYMFONY - beta version
+
+Copy H2h in src/
+mv H2h/Controller/H2hController to path/src/Controller
+add in Resources/config/routing.yml
+```
+_h2h:
+    resource: "@AcmeDemoBundle/Controller/H2hController.php"
+    type:     annotation
+```
+Start symfony (example php app/console server:run)
+Launch the viewer http://host:port/h2h/checkPath
+Launch the transformer http://host:port/h2h/launch
+Change the hostandport for h2hserver

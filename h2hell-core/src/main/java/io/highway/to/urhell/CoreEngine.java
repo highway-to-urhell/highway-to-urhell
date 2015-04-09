@@ -3,6 +3,7 @@ package io.highway.to.urhell;
 import io.highway.to.urhell.agent.AgentService;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.H2hConfig;
+import io.highway.to.urhell.domain.OutputSystem;
 import io.highway.to.urhell.exception.H2HException;
 import io.highway.to.urhell.service.AbstractLeechService;
 import io.highway.to.urhell.service.LeechService;
@@ -147,7 +148,7 @@ public class CoreEngine {
              config.setPathSource(prop.getProperty("pathSource"));
              config.setDescription(prop.getProperty("description"));
              config.setVersionApp(prop.getProperty("versionApp"));
-             config.setOutputSystem(io.highway.to.urhell.domain.OutputSystem.valueOf(prop.getProperty("outputSystem")));
+             config.setOutputSystem(OutputSystem.valueOf(prop.getProperty("outputSystem")));
 
          } catch (IOException ex) {
              LOGGER.error("Error while reading H2hConfigFile " + pathFile, ex);

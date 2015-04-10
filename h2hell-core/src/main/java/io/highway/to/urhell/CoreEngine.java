@@ -5,7 +5,7 @@ import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.domain.OutputSystem;
 import io.highway.to.urhell.service.*;
-import io.highway.to.urhell.transformer.GenericTransformer;
+import io.highway.to.urhell.transformer.EntryPointTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +50,7 @@ public class CoreEngine {
             TransformerService ts = new TransformerService();
             Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
             ThunderService.getInstance().sendH2hPath();
-            AgentService.getInstance().getInst().addTransformer(new GenericTransformer(mapConvert), true);
+            AgentService.getInstance().getInst().addTransformer(new EntryPointTransformer(mapConvert), true);
             ts.transformAllClassScanByH2h(AgentService.getInstance().getInst(), mapConvert.keySet());
         } else {
             LOGGER.error("Instrumentation fail because internal inst is null");

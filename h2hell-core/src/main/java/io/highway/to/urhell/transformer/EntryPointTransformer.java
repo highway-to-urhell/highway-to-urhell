@@ -18,12 +18,12 @@ import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GenericTransformer implements ClassFileTransformer {
+public class EntryPointTransformer implements ClassFileTransformer {
 
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	private Map<String, List<BreakerData>> mapToTransform = null;
 
-	public GenericTransformer(Map<String, List<BreakerData>> mapTransform) {
+	public EntryPointTransformer(Map<String, List<BreakerData>> mapTransform) {
 		mapToTransform = mapTransform;
 	}
 

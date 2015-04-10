@@ -5,15 +5,13 @@ import java.util.List;
 
 public class EntryPathData {
 
-    private String uri="";
+    private String uri;
+    private String methodEntry;
+    private String className;
+    private String signatureName;
     private TypePath typePath=TypePath.UNKNOWN;
-    private String methodEntry="";
-    private String className="";
-    private String signatureName="";
-    private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
     private HttpMethod httpMethod= HttpMethod.UNKNOWN;
-    
-    
+    private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
 
 	public String getSignatureName() {
 		return signatureName;
@@ -26,6 +24,10 @@ public class EntryPathData {
 	public String getClassName() {
 		return className;
 	}
+
+    public String getNormalizedClassName() {
+        return className.replaceAll("\\.","/");
+    }
 
 	public void setClassName(String className) {
 		this.className = className;

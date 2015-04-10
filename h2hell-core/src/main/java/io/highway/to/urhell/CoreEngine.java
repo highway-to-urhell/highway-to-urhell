@@ -1,6 +1,6 @@
 package io.highway.to.urhell;
 
-import io.highway.to.urhell.agent.AgentService;
+import io.highway.to.urhell.agent.InstrumentationHolder;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.domain.OutputSystem;
@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.*;
 
@@ -46,12 +47,13 @@ public class CoreEngine {
 
     public void enableEntryPointCoverage() throws ClassNotFoundException, UnmodifiableClassException {
         LOGGER.info("enabling entry point coverage");
-        if (AgentService.getInstance().getInst() != null) {
+        Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
+        if (instrumentation != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
             ThunderService.getInstance().sendH2hPath();
-            AgentService.getInstance().getInst().addTransformer(new EntryPointTransformer(mapConvert), true);
-            ts.transformAllClassScanByH2h(AgentService.getInstance().getInst(), mapConvert.keySet());
+            instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
+            ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {
             LOGGER.error("Instrumentation fail because internal inst is null");
         }

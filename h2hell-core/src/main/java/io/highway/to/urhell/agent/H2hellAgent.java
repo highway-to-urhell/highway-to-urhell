@@ -12,7 +12,7 @@ public class H2hellAgent {
         for (AbstractLeechTransformer transformer : PluginUtils.autodiscoverPlugin(AbstractLeechTransformer.class)) {
             inst.addTransformer(transformer);
         }
-        AgentService.getInstance().persistInMemory(inst);
+        InstrumentationHolder.getInstance().persistInMemory(inst);
 
     }
 }

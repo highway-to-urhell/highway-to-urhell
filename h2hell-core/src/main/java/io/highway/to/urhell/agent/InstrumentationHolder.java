@@ -2,19 +2,19 @@ package io.highway.to.urhell.agent;
 
 import java.lang.instrument.Instrumentation;
 
-public class AgentService {
+public class InstrumentationHolder {
 	
-	private static AgentService instance = null;
+	private static InstrumentationHolder instance = null;
 	private Instrumentation inst = null;
-	private AgentService(){
+	private InstrumentationHolder(){
 		
 	}
 	
-	public static AgentService getInstance(){
+	public static InstrumentationHolder getInstance(){
 		if(instance ==null){
-			synchronized (AgentService.class) {
+			synchronized (InstrumentationHolder.class) {
 				if(instance == null){
-					instance = new AgentService();
+					instance = new InstrumentationHolder();
 				}
 			}
 		}

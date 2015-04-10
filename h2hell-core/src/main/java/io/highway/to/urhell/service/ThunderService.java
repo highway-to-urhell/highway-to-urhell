@@ -5,6 +5,7 @@ import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.MessageBreaker;
 import io.highway.to.urhell.domain.MessageThunderApp;
+import io.highway.to.urhell.domain.OutputSystem;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -106,5 +107,10 @@ public class ThunderService {
 
     }
 
+    public void initEnv(){
+        if(CoreEngine.getInstance().getConfig().getOutputSystem()!=null && OutputSystem.REMOTE.equals(CoreEngine.getInstance().getConfig().getOutputSystem())){
+            initRemoteBreaker();
+        }
+    }
 
 }

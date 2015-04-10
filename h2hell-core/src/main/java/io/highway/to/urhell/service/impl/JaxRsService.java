@@ -97,7 +97,7 @@ public class JaxRsService extends AbstractLeechService {
 		//
 		entry.setUri(pathClass + pMethod.value());
 		entry.setClassName(nameClass);
-		entry.setMethodEntry(m.getName());
+		entry.setMethodName(m.getName());
 		entry.setTypePath(TypePath.DYNAMIC);
 		entry.setSignatureName(getInternalSignature(m));
 		entry.setListEntryPathData(searchParameterMethod(m.getParameterTypes()));

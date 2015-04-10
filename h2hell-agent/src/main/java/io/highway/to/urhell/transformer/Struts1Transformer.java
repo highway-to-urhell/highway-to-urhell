@@ -37,7 +37,7 @@ public class Struts1Transformer extends AbstractLeechTransformer {
                 "                  for (int i=0;i<tabMet.length;i++) {" +
                 "                      EntryPathData entry = new EntryPathData();" +
                 "                      entry.setClassName(action.getType());" +
-                "                      entry.setMethodEntry(tabMet[i].getName());" +
+                "                      entry.setMethodName(tabMet[i].getName());" +
                 "                      if (action.getPrefix() != null && !\"null\".equals(action.getPrefix())) {" +
                 "                          entry.setUri(action.getPrefix() + action.getPath()); }" +
                 "                      else {" +

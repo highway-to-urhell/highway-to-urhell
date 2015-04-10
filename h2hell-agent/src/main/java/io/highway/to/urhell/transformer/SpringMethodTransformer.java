@@ -39,7 +39,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "   String className = removeClass;" +
                 "   String methodName = handler.getMethod().getName();" +
                 "   entrypath.setClassName(className);" +
-                "   entrypath.setMethodEntry(methodName);" +
+                "   entrypath.setMethodName(methodName);" +
                 "   String internalSignature = \"\";" +
                 "   try {" +
                 "       Class c = Class.forName(className);" +

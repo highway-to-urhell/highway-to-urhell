@@ -43,7 +43,7 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "                     EntryPathData entry = new EntryPathData();" +
                 "                     entry.setTypePath(TypePath.DYNAMIC);" +
                 "                     entry.setClassName(action.getClassName());" +
-                "                     entry.setMethodEntry(m.getName());" +
+                "                     entry.setMethodName(m.getName());" +
                 "                     entry.setUri(action.getName());" +
                 "                     entry.setSignatureName(org.objectweb.asm.Type.getMethodDescriptor(m));" +
                 "                     List listEntryPathData = new ArrayList();" +

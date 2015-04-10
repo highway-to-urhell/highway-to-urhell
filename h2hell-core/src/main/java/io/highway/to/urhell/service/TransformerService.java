@@ -45,7 +45,7 @@ public class TransformerService {
 		for (LeechService leech : leechService) {
 			for (EntryPathData entryPath : leech.getFrameworkInformations()
 					.getListEntryPath()) {
-				if (!entryPath.getMethodEntry().equals("")) {
+				if (entryPath.getMethodName() !=null) {
 					switch (entryPath.getTypePath()) {
 					case SERVLET:
 						createRegistrerBreakerData(
@@ -73,7 +73,7 @@ public class TransformerService {
 						break;
 					default:
 						createRegistrerBreakerData(entryPath, mapToTransform,
-								entryPath.getMethodEntry(),
+								entryPath.getMethodName(),
 								entryPath.getSignatureName());
 						break;
 					}
@@ -112,7 +112,7 @@ public class TransformerService {
 		for (LeechService leech : leechService) {
 			for (EntryPathData entryPath : leech.getFrameworkInformations()
 					.getListEntryPath()) {
-				if (!entryPath.getMethodEntry().equals("")) {
+				if (entryPath.getMethodName()!=null) {
 					switch(entryPath.getTypePath()){
 				case SERVLET:
 					listBreaker.add(createBreakerData(entryPath, "doGet","(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
@@ -123,7 +123,7 @@ public class TransformerService {
 					listBreaker.add(createBreakerData(entryPath, "doFilter","(Ljavax/servlet/ServletRequest;Ljavax/servlet/ServletResponse;Ljavax/servlet/FilterChain;)V"));
 					break;
 				default:
-					listBreaker.add(createBreakerData(entryPath,entryPath.getMethodEntry(),entryPath.getSignatureName()));
+					listBreaker.add(createBreakerData(entryPath,entryPath.getMethodName(),entryPath.getSignatureName()));
 					break;
 				}
 				}

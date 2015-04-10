@@ -6,7 +6,7 @@ import java.util.List;
 public class EntryPathData {
 
     private String uri;
-    private String methodEntry;
+    private String methodName;
     private String className;
     private String signatureName;
     private TypePath typePath=TypePath.UNKNOWN;
@@ -49,17 +49,15 @@ public class EntryPathData {
         this.typePath = typePath;
     }
 
-  
+    public String getMethodName() {
+        return methodName;
+    }
 
-    public String getMethodEntry() {
-		return methodEntry;
-	}
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 
-	public void setMethodEntry(String methodEntry) {
-		this.methodEntry = methodEntry;
-	}
-
-	public List<EntryPathParam> getListEntryPathData() {
+    public List<EntryPathParam> getListEntryPathData() {
         return listEntryPathData;
     }
 
@@ -78,7 +76,7 @@ public class EntryPathData {
     @Override
     public String toString() {
         return "EntryPathData [uri=" + uri + ", typePath=" + typePath
-                + ", methodEntry=" + methodEntry + ", className=" + className
+                + ", methodName=" + methodName + ", className=" + className
                 + ", listEntryPathData=" + listEntryPathData + ", httpMethod="
                 + httpMethod + "]";
     }

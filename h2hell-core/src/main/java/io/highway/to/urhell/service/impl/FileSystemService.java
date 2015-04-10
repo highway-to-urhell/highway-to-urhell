@@ -135,7 +135,7 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setMethodEntry(elem.getElementsByTagName("listener-class")
+				web.setMethodName(elem.getElementsByTagName("listener-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setTypePath(TypePath.LISTENER);
 				addEntryPath(web);
@@ -155,7 +155,7 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setMethodEntry(elem.getElementsByTagName("filter-name")
+				web.setMethodName(elem.getElementsByTagName("filter-name")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setClassName(elem.getElementsByTagName("filter-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
@@ -164,7 +164,7 @@ public class FileSystemService extends AbstractLeechService {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("filter-name").item(0)
 							.getChildNodes().item(0).getNodeValue()
-							.equals(web.getMethodEntry())) {
+							.equals(web.getMethodName())) {
 						NodeList urlPattern = elemMapping
 								.getElementsByTagName("url-pattern");
 						if (urlPattern != null && urlPattern.getLength() > 0) {
@@ -199,7 +199,7 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setMethodEntry(elem.getElementsByTagName("servlet-name")
+				web.setMethodName(elem.getElementsByTagName("servlet-name")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setClassName(elem.getElementsByTagName("servlet-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
@@ -208,7 +208,7 @@ public class FileSystemService extends AbstractLeechService {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("servlet-name")
 							.item(0).getChildNodes().item(0).getNodeValue()
-							.equals(web.getMethodEntry())) {
+							.equals(web.getMethodName())) {
 						web.setUri(elemMapping
 								.getElementsByTagName("url-pattern").item(0)
 								.getChildNodes().item(0).getNodeValue());

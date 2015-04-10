@@ -45,7 +45,7 @@ public class GatherService {
                 td.incrementCounter();
                 break;
             case REMOTE:
-                ThunderService.getInstance().sendRemoteBreaker(fullMethodName);
+                ThunderExporterService.getInstance().sendRemoteBreaker(fullMethodName);
                 break;
             default:
                 throw new IllegalStateException(hc.getOutputSystem()

@@ -20,18 +20,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ThunderService {
+public class ThunderExporterService {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private static ThunderService instance;
+    private static ThunderExporterService instance;
 
-    private ThunderService() {
+    private ThunderExporterService() {
     }
 
-    public static ThunderService getInstance() {
+    public static ThunderExporterService getInstance() {
         if (instance == null) {
-            synchronized (ThunderService.class) {
+            synchronized (ThunderExporterService.class) {
                 if (instance == null) {
-                    instance = new ThunderService();
+                    instance = new ThunderExporterService();
                 }
             }
         }

@@ -44,8 +44,8 @@ public class CoreEngine {
     }
 
 
-    public void launchTransformerGeneric() throws ClassNotFoundException, UnmodifiableClassException {
-        LOGGER.info("launchTransformerGeneric !");
+    public void enableEntryPointCoverage() throws ClassNotFoundException, UnmodifiableClassException {
+        LOGGER.info("enabling entry point coverage");
         if (AgentService.getInstance().getInst() != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());

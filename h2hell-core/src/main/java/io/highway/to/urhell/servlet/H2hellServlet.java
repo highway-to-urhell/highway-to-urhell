@@ -25,14 +25,13 @@ public class H2hellServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+        String launch = request.getParameter("launch");
+        String customGeneratorClass = request.getParameter("customGeneratorClass");
 
-		String launch = request.getParameter("launch");
-		String classGenerate = request.getParameter("classGenerate");
-		if(launch!=null || classGenerate!=null){
-			CoreService coreService = new CoreService();
-			coreService.treatRequest(request,response,launch,classGenerate);
-		}
+        if(launch!=null) {
+            CoreService.getInstance().enableEntryPointCoverage(response);
+        }
+        CoreService.getInstance().generateReport(response,customGeneratorClass);
 	}
-	
 
 }

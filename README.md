@@ -19,7 +19,7 @@ H2H supports for Java
 * RestX (in progress)
 * Jersey (in progress)
 
-For Java technology you can see the entries path via url : http://server:port/uriRoot/h2h/?classGenerate=io.highway.to.urhell.generator.impl.HTMLGenerator
+For Java technology you can see the entries path via url : http://server:port/uriRoot/h2h/?customGeneratorClass=io.highway.to.urhell.generator.impl.HTMLGenerator
 
 ### H2H - PHP
 

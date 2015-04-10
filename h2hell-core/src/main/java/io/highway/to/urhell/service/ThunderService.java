@@ -5,7 +5,6 @@ import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.MessageBreaker;
 import io.highway.to.urhell.domain.MessageThunderApp;
-import io.highway.to.urhell.domain.OutputSystem;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -39,43 +38,35 @@ public class ThunderService {
         return instance;
     }
 
-    /**
-     * Init the first connexion to server h2h
-     * the server returns the token
-     */
-    public void initRemoteBreaker() {
-        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/createThunderApp/";
-        Gson gson = new Gson();
-        String token = sendDataHTTP(urlServer, gson.toJson(CoreEngine.getInstance().getConfig()));
+    public void registerAppInThunder() {
+        String token = sendDataHTTP("/createThunderApp/", CoreEngine.getInstance().getConfig());
         LOGGER.info("application registred with token {} for application {}", token, CoreEngine.getInstance().getConfig().getNameApplication());
         CoreEngine.getInstance().getConfig().setToken(token);
     }
 
-
-    public void sendH2hPath() {
+    public void initApp() {
         TransformerService ts = new TransformerService();
         List<BreakerData> res = ts.transforDataH2hToList(CoreEngine.getInstance().getLeechServiceRegistered());
         MessageThunderApp msg = new MessageThunderApp();
         msg.setListBreakerData(res);
         msg.setToken(CoreEngine.getInstance().getConfig().getToken());
-        Gson gson = new Gson();
-        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/initThunderApp";
-        sendDataHTTP(urlServer, gson.toJson(msg));
+        sendDataHTTP("/initThunderApp", msg);
     }
 
     public void sendRemoteBreaker(String pathClassMethodName) {
-        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + "/addBreaker";
         MessageBreaker msg = new MessageBreaker();
         msg.setPathClassMethodName(pathClassMethodName);
         msg.setToken(CoreEngine.getInstance().getConfig().getToken());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
         Date date = new Date();
         msg.setDateIncoming(sdf.format(date));
-        Gson gson = new Gson();
-        sendDataHTTP(urlServer, gson.toJson(msg));
+        sendDataHTTP("/addBreaker", msg);
     }
 
-    private String sendDataHTTP(String urlServer, String data) {
+    private String sendDataHTTP(String uri, Object message) {
+        Gson gson = new Gson();
+        String data = gson.toJson(message);
+        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(urlServer);
         if (data != null) {
@@ -105,12 +96,6 @@ public class ThunderService {
         }
         return result;
 
-    }
-
-    public void initEnv(){
-        if(CoreEngine.getInstance().getConfig().getOutputSystem()!=null && OutputSystem.REMOTE.equals(CoreEngine.getInstance().getConfig().getOutputSystem())){
-            initRemoteBreaker();
-        }
     }
 
 }

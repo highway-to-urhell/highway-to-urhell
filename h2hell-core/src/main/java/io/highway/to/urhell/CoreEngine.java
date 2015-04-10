@@ -37,7 +37,7 @@ public class CoreEngine {
                     instance = new CoreEngine();
                     instance.registerPlugins();
                     instance.runPluginsTriggeredAtStartup();
-                    instance.initEnv();
+                    instance.configure();
                 }
             }
         }
@@ -51,7 +51,7 @@ public class CoreEngine {
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
-            ThunderService.getInstance().sendH2hPath();
+            ThunderService.getInstance().initApp();
             instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {
@@ -101,7 +101,7 @@ public class CoreEngine {
         }
     }
 
-    private void initEnv() {
+    private void configure() {
         // Grab Env
         String rootH2h = System.getProperty(H2H_CONFIG);
         if (rootH2h == null) {
@@ -111,9 +111,9 @@ public class CoreEngine {
             throw new RuntimeException("Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
         }
         parseConfig(rootH2h);
-
-        ThunderService.getInstance().initEnv();
-
+        if (config.getOutputSystem() == OutputSystem.REMOTE) {
+            ThunderService.getInstance().registerAppInThunder();
+        }
     }
 
     public void parseConfig(String pathFile) {
@@ -125,12 +125,12 @@ public class CoreEngine {
             prop.load(input);
             config.setUrlApplication(prop.getProperty("urlapplication"));
             config.setNameApplication(prop.getProperty("nameapplication"));
-            config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
             config.setPathH2h(prop.getProperty("pathH2h"));
             config.setPathSource(prop.getProperty("pathSource"));
             config.setDescription(prop.getProperty("description"));
             config.setVersionApp(prop.getProperty("versionApp"));
             config.setOutputSystem(OutputSystem.valueOf(prop.getProperty("outputSystem")));
+            config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
 
         } catch (IOException ex) {
             throw new RuntimeException("Error while reading H2hConfigFile " + pathFile, ex);

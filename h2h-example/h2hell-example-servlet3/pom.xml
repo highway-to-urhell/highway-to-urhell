@@ -87,7 +87,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <jvmArgs>
-                        -javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar
+                        -javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-core-0.0.1-SNAPSHOT.jar
                         -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/
                     </jvmArgs>
                     <stopKey>foo</stopKey>

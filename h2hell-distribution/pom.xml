@@ -14,11 +14,6 @@
      <dependencies>
         <dependency>
             <groupId>io.highway.to.urhell</groupId>
-            <artifactId>h2hell-agent</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.highway.to.urhell</groupId>
             <artifactId>h2hell-core</artifactId>
             <version>${project.version}</version>
         </dependency>

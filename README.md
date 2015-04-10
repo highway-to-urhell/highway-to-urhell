@@ -76,12 +76,12 @@ versionApp=version
 ```
 ### Configuring agent on  Unix machines : 
 ```
-export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
 ```
 
 ### Configuring agent on Windows machines :  
 ```
-set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-agent.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
 ```
 
 ## Configuration for PHP SYMFONY - beta version

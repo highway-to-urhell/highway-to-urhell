@@ -122,7 +122,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <jvmArgs>
-						-javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-agent-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/ -DH2H_CONFIG=${project.build.directory}/classes/config.properties -DH2H_PATH=${project.basedir}/src/main/webapp/
+						-javaagent:${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/h2hell-core-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=${project.build.directory}/h2hell-distribution-0.0.1-SNAPSHOT/ -DH2H_CONFIG=${project.build.directory}/classes/config.properties -DH2H_PATH=${project.basedir}/src/main/webapp/
 					</jvmArgs>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>

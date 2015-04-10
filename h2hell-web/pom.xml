@@ -41,7 +41,6 @@
 		<spring.version>4.1.4.RELEASE</spring.version>
 		<jersey.version>2.8</jersey.version>
 		<jackson.version>2.3.1</jackson.version>
-		<gatling.version>2.0.0-M3a</gatling.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -225,16 +224,6 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.5.2.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-envers</artifactId>
-			<version>0.1.0.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.4.2.RELEASE</version>
 		</dependency>
 
 		<!-- ~~~~~~~~~~~~~~ -->
@@ -429,24 +418,6 @@
 							<Implementation-Build>${buildNumber}</Implementation-Build>
 						</manifestEntries>
 					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<configuration>
-					<apiSources>
-						<apiSource>
-							<locations>io.highway.to.urhell.rest</locations>
-							<apiVersion>v1</apiVersion>
-							<basePath>http://localhost:8090/core/api</basePath>
-							<outputTemplate>src/main/swagger/html.mustache</outputTemplate>
-							<outputPath>${project.build.directory}/apidocumentation.html</outputPath>
-							<!--swaggerDirectory>generated/apidocs</swaggerDirectory -->
-							<!--useOutputFlatStructure>false</useOutputFlatStructure -->
-							<!--mustacheFileRoot>${basedir}/src/main/resources/</mustacheFileRoot -->
-						</apiSource>
-					</apiSources>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -6,7 +6,7 @@ import java.util.List;
 public class EntryPathData {
 
     private String uri="";
-    private TypePath typePath=TypePath.UNKNOW;
+    private TypePath typePath=TypePath.UNKNOWN;
     private String methodEntry="";
     private String className="";
     private String signatureName="";

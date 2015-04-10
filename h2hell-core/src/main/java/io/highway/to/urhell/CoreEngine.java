@@ -51,7 +51,9 @@ public class CoreEngine {
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
-            ThunderExporterService.getInstance().initApp();
+            if (config.getOutputSystem() == OutputSystem.REMOTE) {
+                ThunderExporterService.getInstance().initApp();
+            }
             instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {

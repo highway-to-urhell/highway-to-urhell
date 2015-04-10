@@ -23,6 +23,7 @@ import java.util.List;
 public class ThunderExporterService {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private static ThunderExporterService instance;
+    private String token;
 
     private ThunderExporterService() {
     }
@@ -38,10 +39,10 @@ public class ThunderExporterService {
         return instance;
     }
 
+
     public void registerAppInThunder() {
-        String token = sendDataHTTP("/createThunderApp/", CoreEngine.getInstance().getConfig());
+        this.token= sendDataHTTP("/createThunderApp/", CoreEngine.getInstance().getConfig());
         LOGGER.info("application registred with token {} for application {}", token, CoreEngine.getInstance().getConfig().getNameApplication());
-        CoreEngine.getInstance().getConfig().setToken(token);
     }
 
     public void initApp() {
@@ -49,14 +50,14 @@ public class ThunderExporterService {
         List<BreakerData> res = ts.transforDataH2hToList(CoreEngine.getInstance().getLeechServiceRegistered());
         MessageThunderApp msg = new MessageThunderApp();
         msg.setListBreakerData(res);
-        msg.setToken(CoreEngine.getInstance().getConfig().getToken());
+        msg.setToken(token);
         sendDataHTTP("/initThunderApp", msg);
     }
 
     public void sendRemoteBreaker(String pathClassMethodName) {
         MessageBreaker msg = new MessageBreaker();
         msg.setPathClassMethodName(pathClassMethodName);
-        msg.setToken(CoreEngine.getInstance().getConfig().getToken());
+        msg.setToken(token);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
         Date date = new Date();
         msg.setDateIncoming(sdf.format(date));
@@ -97,5 +98,4 @@ public class ThunderExporterService {
         return result;
 
     }
-
 }

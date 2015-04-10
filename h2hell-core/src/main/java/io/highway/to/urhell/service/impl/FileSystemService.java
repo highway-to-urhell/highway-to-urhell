@@ -13,7 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import io.highway.to.urhell.service.AbstractLeechService;
-import io.highway.to.urhell.service.FilterFileH2H;
+import io.highway.to.urhell.service.FilterStaticFileH2H;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -61,7 +61,7 @@ public class FileSystemService extends AbstractLeechService {
 	private void searchStatic(File file) {
 		if (file.isDirectory()) {
 			if (file.canRead()) {
-				for (File tempFile : file.listFiles(new FilterFileH2H())) {
+				for (File tempFile : file.listFiles(new FilterStaticFileH2H())) {
 					if (tempFile.isDirectory()) {
 						searchStatic(tempFile);
 					} else {

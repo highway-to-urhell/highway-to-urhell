@@ -5,11 +5,11 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterFileH2H implements FileFilter {
+public class FilterStaticFileH2H implements FileFilter {
 
 	private List<String> listExtentions;
 
-	public FilterFileH2H() {
+	public FilterStaticFileH2H() {
 		listExtentions = new ArrayList<String>();
 		listExtentions.add("html");
 		listExtentions.add("xhtml");

@@ -70,7 +70,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
 	}
 
 	private String generateCmd(String className, String methodName) {
-		return "GatherService.getInstance().gather(\"" + className + "."+ methodName + "\");";
+		return "GatherService.getInstance().gatherInvocation(\"" + className + "."+ methodName + "\");";
 	}
 
 	private void addImportPackage(ClassPool cp) {

@@ -29,7 +29,7 @@ public class GatherService {
         mapThunderData = new HashMap<String, ThunderData>();
     }
 
-    public void gather(String fullMethodName) {
+    public void gatherInvocation(String fullMethodName) {
         for (ThunderData th : mapThunderData.values()) {
             LOGGER.info("th :" + th.toString());
         }

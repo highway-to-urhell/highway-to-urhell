@@ -56,7 +56,7 @@ public class ThunderStatService {
 		String className=entry.getClassName();
 		String methodName=entry.getMethodName();
 		String uri = entry.getUri();
-		String httpmethod=entry.getHttpMethod();
+		String httpmethod=entry.getHttpMethod().name();
 		String pathClassMethodName = className + "." + methodName;
 		ThunderStat ts = thunderStatDao.findByPathClassMethodNameAndToken(
 				pathClassMethodName, ta.getToken());

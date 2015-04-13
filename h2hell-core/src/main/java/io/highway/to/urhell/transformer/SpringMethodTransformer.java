@@ -28,7 +28,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "   RequestMappingInfo requestMappingInfo = (RequestMappingInfo) iter.next();" +
                 "   HandlerMethod handler = (HandlerMethod) getHandlerMethods().get(requestMappingInfo);" +
                 "   EntryPathData entrypath = new EntryPathData();" +
-                "   entrypath.setTypePath(TypePath.DYNAMIC.name());" +
+                "   entrypath.setTypePath(TypePath.DYNAMIC);" +
                 "   entrypath.setUri(requestMappingInfo.getPatternsCondition().toString());" +
                 "   String removeClass = \"\";" +
                 "   if (handler.getBeanType().toString().contains(\"class\")) {" +
@@ -59,7 +59,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "       for (int j = 0; j < mParam.length; j++) {" +
                 "           EntryPathParam param = new EntryPathParam();" +
                 "           param.setKey(String.valueOf(mParam[j].getParameterIndex()));" +
-                "           param.setTypeParam(TypeParam.PARAM_DATA.name());" +
+                "           param.setTypeParam(TypeParam.PARAM_DATA);" +
                 "           param.setValue(mParam[j].getParameterType().toString());" +
                 "           listEntryPathData.add(param);" +
                 "       }" +

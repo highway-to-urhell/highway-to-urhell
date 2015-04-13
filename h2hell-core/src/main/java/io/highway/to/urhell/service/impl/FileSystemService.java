@@ -66,7 +66,7 @@ public class FileSystemService extends AbstractLeechService {
 						searchStatic(tempFile);
 					} else {
 						EntryPathData entry = new EntryPathData();
-						entry.setTypePath(TypePath.STATIC.name());
+						entry.setTypePath(TypePath.STATIC);
 						entry.setUri(tempFile.getPath());
 						addEntryPath(entry);
 					}
@@ -74,7 +74,7 @@ public class FileSystemService extends AbstractLeechService {
 			}
 		} else {
 			EntryPathData entry = new EntryPathData();
-			entry.setTypePath(TypePath.STATIC.name());
+			entry.setTypePath(TypePath.STATIC);
 			entry.setUri(file.getPath());
 			addEntryPath(entry);
 		}
@@ -137,7 +137,7 @@ public class FileSystemService extends AbstractLeechService {
 				Element elem = (Element) node;
 				web.setMethodName(elem.getElementsByTagName("listener-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
-				web.setTypePath(TypePath.LISTENER.name());
+				web.setTypePath(TypePath.LISTENER);
 				addEntryPath(web);
 			}
 		}
@@ -159,7 +159,7 @@ public class FileSystemService extends AbstractLeechService {
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setClassName(elem.getElementsByTagName("filter-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
-				web.setTypePath(TypePath.FILTER.name());
+				web.setTypePath(TypePath.FILTER);
 				for (int j = 0; j < nodeListMapping.getLength(); j++) {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("filter-name").item(0)
@@ -203,7 +203,7 @@ public class FileSystemService extends AbstractLeechService {
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setClassName(elem.getElementsByTagName("servlet-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
-				web.setTypePath(TypePath.SERVLET.name());
+				web.setTypePath(TypePath.SERVLET);
 				for (int j = 0; j < nodeListMapping.getLength(); j++) {
 					Element elemMapping = (Element) nodeListMapping.item(j);
 					if (elemMapping.getElementsByTagName("servlet-name")

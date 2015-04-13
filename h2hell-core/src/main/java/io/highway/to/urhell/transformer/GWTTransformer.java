@@ -33,8 +33,8 @@ public class GWTTransformer extends AbstractLeechTransformer {
 		sb.append("		Method[] tabMethod = realName.getDeclaredMethods();");
 		sb.append("			for (int j=0;j<tabMethod.length;j++) {");
 		sb.append("				EntryPathData entry = new EntryPathData();");
-		sb.append("				entry.setTypePath(TypePath.DYNAMIC.name());");
-		sb.append("				entry.setHttpMethod(HttpMethod.POST.name());");
+		sb.append("				entry.setTypePath(TypePath.DYNAMIC);");
+		sb.append("				entry.setHttpMethod(HttpMethod.POST);");
 		sb.append("				entry.setClassName(realName.getName());");
 		sb.append("				entry.setMethodName(tabMethod[j].getName());");
 		sb.append("				entry.setUri(remoteAnnotation.value());");

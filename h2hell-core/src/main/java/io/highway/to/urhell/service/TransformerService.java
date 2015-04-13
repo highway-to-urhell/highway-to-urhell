@@ -46,7 +46,7 @@ public class TransformerService {
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {
                     switch (entryPath.getTypePath()) {
-                        case "SERVLET":
+                        case SERVLET:
                             createRegistrerBreakerData(
                                     entryPath,
                                     mapToTransform,
@@ -63,7 +63,7 @@ public class TransformerService {
                                     "service",
                                     "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V");
                             break;
-                        case "FILTER":
+                        case FILTER:
                             createRegistrerBreakerData(
                                     entryPath,
                                     mapToTransform,
@@ -93,7 +93,7 @@ public class TransformerService {
                 "/");
         entry.setClassNameNormalized(classNameNormalized);
         entry.setSignatureName(signatureName);
-        entry.setTypePath(entryPath.getTypePath().toString());
+        entry.setTypePath(entryPath.getTypePath());
         List<EntryPathData> listEntry = mapToTransform.get(classNameNormalized);
         if (listEntry == null) {
             // first time
@@ -113,12 +113,12 @@ public class TransformerService {
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {
                     switch (entryPath.getTypePath()) {
-                        case "SERVLET":
+                        case SERVLET:
                             listBreaker.add(createBreakerData(entryPath, "doGet", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             listBreaker.add(createBreakerData(entryPath, "doPost", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             listBreaker.add(createBreakerData(entryPath, "service", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             break;
-                        case "FILTER":
+                        case FILTER:
                             listBreaker.add(createBreakerData(entryPath, "doFilter", "(Ljavax/servlet/ServletRequest;Ljavax/servlet/ServletResponse;Ljavax/servlet/FilterChain;)V"));
                             break;
                         default:

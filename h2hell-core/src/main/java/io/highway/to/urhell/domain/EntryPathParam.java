@@ -4,7 +4,7 @@ public class EntryPathParam {
 
     private String key;
     private String value;
-    private String typeParam;
+    private TypeParam typeParam;
 
     public String getKey() {
         return key;
@@ -23,11 +23,13 @@ public class EntryPathParam {
     }
 
 
-    public String getTypeParam() {
+    
+
+	public TypeParam getTypeParam() {
 		return typeParam;
 	}
 
-	public void setTypeParam(String typeParam) {
+	public void setTypeParam(TypeParam typeParam) {
 		this.typeParam = typeParam;
 	}
 

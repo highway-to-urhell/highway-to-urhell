@@ -22,7 +22,7 @@ public class SpringUrlTransformer extends AbstractLeechTransformer {
                 "while(iter.hasNext()){" +
                 "   String key = (String) iter.next();" +
                 "   EntryPathData entry = new EntryPathData();" +
-                "   entry.setTypePath(TypePath.DYNAMIC.name());" +
+                "   entry.setTypePath(TypePath.DYNAMIC);" +
                 "   entry.setUri(key);" +
                 "   String fullNameDescriptor = handlerMap.get(key).getClass().toString();" +
                 "   if (fullNameDescriptor.contains(\"class\")) {" +

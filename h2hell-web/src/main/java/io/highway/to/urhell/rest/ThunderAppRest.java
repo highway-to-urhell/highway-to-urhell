@@ -1,10 +1,10 @@
 package io.highway.to.urhell.rest;
 
 import io.highway.to.urhell.domain.H2hConfig;
+import io.highway.to.urhell.domain.MessageBreaker;
+import io.highway.to.urhell.domain.MessageThunderApp;
 import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.exception.NotExistThunderAppException;
-import io.highway.to.urhell.rest.domain.MessageBreaker;
-import io.highway.to.urhell.rest.domain.MessageThunderApp;
 import io.highway.to.urhell.service.BreakerLogService;
 import io.highway.to.urhell.service.LaunchService;
 import io.highway.to.urhell.service.ThunderAppService;
@@ -81,10 +81,10 @@ public class ThunderAppRest {
 	@Path("/initThunderApp")
 	public Response initThunderAppAndStat(MessageThunderApp msg) {
 		LOG.info("Call createThunderApp with token {} and list size {}",
-				msg.getToken(), msg.getListBreakerData().size());
+				msg.getToken(), msg.getListentryPathData().size());
 		try {
 			thunderAppService.initThunderAppAndStat(msg.getToken(),
-					msg.getListBreakerData());
+					msg.getListentryPathData());
 		} catch (NotExistThunderAppException ne) {
 			return Response.status(Status.NOT_FOUND).build();
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 public class MessageThunderApp {
 
     private String token;
-    private List<BreakerData> listBreakerData;
+    private List<EntryPathData> listentryPathData;
 
     public String getToken() {
         return token;
@@ -15,13 +15,14 @@ public class MessageThunderApp {
         this.token = token;
     }
 
-    public List<BreakerData> getListBreakerData() {
-        return listBreakerData;
-    }
+	public List<EntryPathData> getListentryPathData() {
+		return listentryPathData;
+	}
 
-    public void setListBreakerData(List<BreakerData> listBreakerData) {
-        this.listBreakerData = listBreakerData;
-    }
+	public void setListentryPathData(List<EntryPathData> listentryPathData) {
+		this.listentryPathData = listentryPathData;
+	}
 
+    
 
 }

@@ -1,13 +1,18 @@
 package io.highway.to.urhell.service;
 
-import io.highway.to.urhell.domain.BreakerData;
 import io.highway.to.urhell.domain.EntryPathData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TransformerService {
 
@@ -33,15 +38,15 @@ public class TransformerService {
         }
     }
 
-    public Map<String, List<BreakerData>> transformDataH2h(
+    public Map<String, List<EntryPathData>> transformDataFromLeechPluginForTransformation(
             Collection<LeechService> leechService) {
-        Map<String, List<BreakerData>> mapToTransform = new HashMap<String, List<BreakerData>>();
+        Map<String, List<EntryPathData>> mapToTransform = new HashMap<String, List<EntryPathData>>();
         for (LeechService leech : leechService) {
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {
                     switch (entryPath.getTypePath()) {
-                        case SERVLET:
+                        case "SERVLET":
                             createRegistrerBreakerData(
                                     entryPath,
                                     mapToTransform,
@@ -58,7 +63,7 @@ public class TransformerService {
                                     "service",
                                     "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V");
                             break;
-                        case FILTER:
+                        case "FILTER":
                             createRegistrerBreakerData(
                                     entryPath,
                                     mapToTransform,
@@ -79,41 +84,41 @@ public class TransformerService {
     }
 
     private void createRegistrerBreakerData(EntryPathData entryPath,
-                                            Map<String, List<BreakerData>> mapToTransform, String methodName,
+                                            Map<String, List<EntryPathData>> mapToTransform, String methodName,
                                             String signatureName) {
-        BreakerData bd = new BreakerData();
-        bd.setClassName(entryPath.getClassName());
-        bd.setMethodName(methodName);
+    	EntryPathData entry = new EntryPathData();
+    	entry.setClassName(entryPath.getClassName());
+    	entry.setMethodName(methodName);
         String classNameNormalized = entryPath.getClassName().replaceAll("\\.",
                 "/");
-        bd.setClassNameNormalized(classNameNormalized);
-        bd.setSignatureName(signatureName);
-        bd.setTypePath(entryPath.getTypePath().toString());
-        List<BreakerData> listbd = mapToTransform.get(classNameNormalized);
-        if (listbd == null) {
+        entry.setClassNameNormalized(classNameNormalized);
+        entry.setSignatureName(signatureName);
+        entry.setTypePath(entryPath.getTypePath().toString());
+        List<EntryPathData> listEntry = mapToTransform.get(classNameNormalized);
+        if (listEntry == null) {
             // first time
-            listbd = new ArrayList<BreakerData>();
-            listbd.add(bd);
-            mapToTransform.put(classNameNormalized, listbd);
+        	listEntry = new ArrayList<EntryPathData>();
+        	listEntry.add(entry);
+            mapToTransform.put(classNameNormalized, listEntry);
         } else {
-            listbd.add(bd);
+        	listEntry.add(entry);
         }
     }
 
-    public List<BreakerData> transforDataH2hToList(
+    public List<EntryPathData> collectBreakerDataFromLeechPlugin(
             Collection<LeechService> leechService) {
-        List<BreakerData> listBreaker = new ArrayList<BreakerData>();
+        List<EntryPathData> listBreaker = new ArrayList<EntryPathData>();
         for (LeechService leech : leechService) {
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {
                     switch (entryPath.getTypePath()) {
-                        case SERVLET:
+                        case "SERVLET":
                             listBreaker.add(createBreakerData(entryPath, "doGet", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             listBreaker.add(createBreakerData(entryPath, "doPost", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             listBreaker.add(createBreakerData(entryPath, "service", "(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V"));
                             break;
-                        case FILTER:
+                        case "FILTER":
                             listBreaker.add(createBreakerData(entryPath, "doFilter", "(Ljavax/servlet/ServletRequest;Ljavax/servlet/ServletResponse;Ljavax/servlet/FilterChain;)V"));
                             break;
                         default:
@@ -126,18 +131,14 @@ public class TransformerService {
         return listBreaker;
     }
 
-    private BreakerData createBreakerData(EntryPathData entryPath,
+    private EntryPathData createBreakerData(EntryPathData entryPath,
                                           String methodName, String signatureName) {
-        BreakerData bd = new BreakerData();
-        bd.setClassName(entryPath.getClassName());
-        bd.setMethodName(methodName);
+    	entryPath.setMethodName(methodName);
         String classNameNormalized = entryPath.getClassName().replaceAll("\\.",
                 "/");
-        bd.setClassNameNormalized(classNameNormalized);
-        bd.setSignatureName(signatureName);
-        bd.setUri(entryPath.getUri());
-        bd.setHttpMethod(entryPath.getHttpMethod().toString());
-        return bd;
+        entryPath.setClassNameNormalized(classNameNormalized);
+        entryPath.setSignatureName(signatureName);
+        return entryPath;
     }
 
 }

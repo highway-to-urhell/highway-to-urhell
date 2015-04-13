@@ -1,20 +1,31 @@
 package io.highway.to.urhell;
 
 import io.highway.to.urhell.agent.InstrumentationHolder;
-import io.highway.to.urhell.domain.BreakerData;
+import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.domain.OutputSystem;
-import io.highway.to.urhell.service.*;
+import io.highway.to.urhell.service.AbstractLeechService;
+import io.highway.to.urhell.service.LeechService;
+import io.highway.to.urhell.service.ReporterService;
+import io.highway.to.urhell.service.ThunderExporterService;
+import io.highway.to.urhell.service.TransformerService;
 import io.highway.to.urhell.transformer.EntryPointTransformer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CoreEngine {
 
@@ -50,9 +61,10 @@ public class CoreEngine {
         Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
-            Map<String, List<BreakerData>> mapConvert = ts.transformDataH2h(leechPluginRegistry.values());
+            Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values());
+            LOGGER.error(" PASSAGE ");
             if (config.getOutputSystem() == OutputSystem.REMOTE) {
-                ThunderExporterService.getInstance().initApp();
+                ThunderExporterService.getInstance().initRemoteApp();
             }
             instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());

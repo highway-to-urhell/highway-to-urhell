@@ -2,7 +2,7 @@ package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.dao.BreakerLogDao;
 import io.highway.to.urhell.dao.ThunderStatDao;
-import io.highway.to.urhell.domain.BreakerData;
+import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.domain.ThunderStat;
 import io.highway.to.urhell.rest.domain.MessageStat;
@@ -51,12 +51,12 @@ public class ThunderStatService {
 	}
 	
 	@Transactional
-	public void createOrUpdateThunderStat(BreakerData bd,
+	public void createOrUpdateThunderStat(EntryPathData entry,
 			ThunderApp ta) {
-		String className=bd.getClassName();
-		String methodName=bd.getMethodName();
-		String uri = bd.getUri();
-		String httpmethod=bd.getHttpMethod();
+		String className=entry.getClassName();
+		String methodName=entry.getMethodName();
+		String uri = entry.getUri();
+		String httpmethod=entry.getHttpMethod();
 		String pathClassMethodName = className + "." + methodName;
 		ThunderStat ts = thunderStatDao.findByPathClassMethodNameAndToken(
 				pathClassMethodName, ta.getToken());

@@ -1,7 +1,7 @@
 package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.dao.ThunderAppDao;
-import io.highway.to.urhell.domain.BreakerData;
+import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.H2hConfig;
 import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.exception.NotExistThunderAppException;
@@ -48,11 +48,11 @@ public class ThunderAppService {
 
 	@Transactional
 	public void initThunderAppAndStat(String token,
-			List<BreakerData> listBreakerData) {
+			List<EntryPathData> listEntryPathData) {
 		ThunderApp ta = validateToken(token);
-		if (listBreakerData != null && !listBreakerData.isEmpty()) {
-			for (BreakerData bd : listBreakerData) {
-				thunderStatService.createOrUpdateThunderStat(bd, ta);
+		if (listEntryPathData != null && !listEntryPathData.isEmpty()) {
+			for (EntryPathData entry : listEntryPathData) {
+				thunderStatService.createOrUpdateThunderStat(entry, ta);
 			}
 		}
 	}

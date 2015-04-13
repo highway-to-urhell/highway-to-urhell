@@ -84,21 +84,21 @@ public class JaxRsService extends AbstractLeechService {
 		EntryPathData entry = new EntryPathData();
 		// method
 		if (m.getAnnotation(GET.class) != null) {
-			entry.setHttpMethod(HttpMethod.GET);
+			entry.setHttpMethod(HttpMethod.GET.name());
 		} else if (m.getAnnotation(POST.class) != null) {
-			entry.setHttpMethod(HttpMethod.POST);
+			entry.setHttpMethod(HttpMethod.POST.name());
 		} else if (m.getAnnotation(PUT.class) != null) {
-			entry.setHttpMethod(HttpMethod.PUT);
+			entry.setHttpMethod(HttpMethod.PUT.name());
 		} else if (m.getAnnotation(DELETE.class) != null) {
-			entry.setHttpMethod(HttpMethod.DELETE);
+			entry.setHttpMethod(HttpMethod.DELETE.name());
 		} else {
-			entry.setHttpMethod(HttpMethod.UNKNOWN);
+			entry.setHttpMethod(HttpMethod.UNKNOWN.name());
 		}
 		//
 		entry.setUri(pathClass + pMethod.value());
 		entry.setClassName(nameClass);
 		entry.setMethodName(m.getName());
-		entry.setTypePath(TypePath.DYNAMIC);
+		entry.setTypePath(TypePath.DYNAMIC.name());
 		entry.setSignatureName(getInternalSignature(m));
 		entry.setListEntryPathData(searchParameterMethod(m.getParameterTypes()));
 		return entry;
@@ -109,7 +109,7 @@ public class JaxRsService extends AbstractLeechService {
 		for (Class<?> mMethod : tabParam) {
 			EntryPathParam param = new EntryPathParam();
 			param.setKey("");
-			param.setTypeParam(TypeParam.PARAM_DATA);
+			param.setTypeParam(TypeParam.PARAM_DATA.name());
 			param.setValue(mMethod.getName());
 			listEntryPathData.add(param);
 		}

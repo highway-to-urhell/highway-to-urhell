@@ -1,9 +1,6 @@
 package io.highway.to.urhell.transformer;
 
-import io.highway.to.urhell.domain.BreakerData;
-import javassist.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.highway.to.urhell.domain.EntryPathData;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -11,12 +8,22 @@ import java.security.ProtectionDomain;
 import java.util.List;
 import java.util.Map;
 
+import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.LoaderClassPath;
+import javassist.NotFoundException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class EntryPointTransformer implements ClassFileTransformer {
 
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private Map<String, List<BreakerData>> mapToTransform = null;
+    private Map<String, List<EntryPathData>> mapToTransform = null;
 
-    public EntryPointTransformer(Map<String, List<BreakerData>> mapTransform) {
+    public EntryPointTransformer(Map<String, List<EntryPathData>> mapTransform) {
         mapToTransform = mapTransform;
     }
 
@@ -26,14 +33,14 @@ public class EntryPointTransformer implements ClassFileTransformer {
         String classNameToTransform = null;
         if (!mapToTransform.get(className).isEmpty()) {
             try {
-                List<BreakerData> listbd = mapToTransform.get(className);
+                List<EntryPathData> listbd = mapToTransform.get(className);
                 ClassPool cp = ClassPool.getDefault();
                 cp.appendClassPath(new LoaderClassPath(loader));
                 addImportPackage(cp);
                 classNameToTransform = listbd.get(0).getClassName();
                 CtClass cc = cp.get(classNameToTransform);
-                for (BreakerData bd : listbd) {
-                    insertCode(bd, cc);
+                for (EntryPathData entry : listbd) {
+                    insertCode(entry, cc);
                 }
                 classfileBuffer = cc.toBytecode();
                 cc.detach();
@@ -44,18 +51,18 @@ public class EntryPointTransformer implements ClassFileTransformer {
         return classfileBuffer;
     }
 
-    private void insertCode(BreakerData bd, CtClass cc) {
+    private void insertCode(EntryPathData entry, CtClass cc) {
         LOGGER.info(
                 "Going to Transform {} with methodName {} and signature {}",
-                bd.getClassName(), bd.getMethodName(),
-                bd.getSignatureName());
+                entry.getClassName(), entry.getMethodName(),
+                entry.getSignatureName());
 
         CtMethod m;
         try {
-            m = cc.getMethod(bd.getMethodName(), bd.getSignatureName());
-            m.insertBefore(generateCmd(bd.getClassName(), bd.getMethodName()));
+            m = cc.getMethod(entry.getMethodName(), entry.getSignatureName());
+            m.insertBefore(generateCmd(entry.getClassName(), entry.getMethodName()));
         } catch (NotFoundException | CannotCompileException e) {
-            LOGGER.error("Insert Code for className " + bd.getClassName() + "  and methodName " + bd.getMethodName() + "  fails msg {}", e);
+            LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
         }
     }
 

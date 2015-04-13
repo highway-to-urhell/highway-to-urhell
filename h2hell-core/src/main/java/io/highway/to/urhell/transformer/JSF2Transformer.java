@@ -39,10 +39,10 @@ public class JSF2Transformer extends AbstractLeechTransformer {
                 "   while (iterName.hasNext()) {" +
                 "       String nameMethod = (String) iterName.next();" +
                 "       EntryPathData entry = new EntryPathData();" +
-                "       entry.setHttpMethod(HttpMethod.UNKNOWN);" +
+                "       entry.setHttpMethod(HttpMethod.UNKNOWN.name());" +
                 "       entry.setMethodName(nameMethod);" +
                 "       entry.setClassName(className);" +
-                "       entry.setTypePath(TypePath.DYNAMIC);" +
+                "       entry.setTypePath(TypePath.DYNAMIC.name());" +
                 "       List listSignature = new ArrayList();" +
                 "       String resSignature = \"\";" +
                 "       try {" +

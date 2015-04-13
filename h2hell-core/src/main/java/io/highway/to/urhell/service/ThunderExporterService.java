@@ -1,10 +1,16 @@
 package io.highway.to.urhell.service;
 
-import com.google.gson.Gson;
 import io.highway.to.urhell.CoreEngine;
-import io.highway.to.urhell.domain.BreakerData;
+import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.MessageBreaker;
 import io.highway.to.urhell.domain.MessageThunderApp;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,11 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import com.google.gson.Gson;
 
 public class ThunderExporterService {
     private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -45,11 +47,12 @@ public class ThunderExporterService {
         LOGGER.info("application registred with token {} for application {}", token, CoreEngine.getInstance().getConfig().getNameApplication());
     }
 
-    public void initApp() {
+    public void initRemoteApp() {
         TransformerService ts = new TransformerService();
-        List<BreakerData> res = ts.transforDataH2hToList(CoreEngine.getInstance().getLeechServiceRegistered());
+        List<EntryPathData> res = ts.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance().getLeechServiceRegistered());
+        LOGGER.error(" RES "+res.toString());
         MessageThunderApp msg = new MessageThunderApp();
-        msg.setListBreakerData(res);
+        msg.setListentryPathData(res);
         msg.setToken(token);
         sendDataHTTP("/initThunderApp", msg);
     }
@@ -86,7 +89,7 @@ public class ThunderExporterService {
                     LOGGER.info("Message from H2H server" + result);
                 } else {
                     LOGGER.error("Failed : HTTP error code : "
-                            + response.getStatusLine().getStatusCode() + " for urlServer " + urlServer);
+                            + response.getStatusLine().getStatusCode() + " for urlServer " + urlServer + "msg "+EntityUtils.toString(response.getEntity()));
                 }
             } else {
                 LOGGER.error("Failed : Response Null from urlServer : " + urlServer);

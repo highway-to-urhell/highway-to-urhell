@@ -41,7 +41,7 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "                 for (int i=0;i<tabM.length;i++) {" +
                 "                     Method m = tabM[i];" +
                 "                     EntryPathData entry = new EntryPathData();" +
-                "                     entry.setTypePath(TypePath.DYNAMIC);" +
+                "                     entry.setTypePath(TypePath.DYNAMIC.name());" +
                 "                     entry.setClassName(action.getClassName());" +
                 "                     entry.setMethodName(m.getName());" +
                 "                     entry.setUri(action.getName());" +
@@ -50,7 +50,7 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "                     for (int j=0;j<m.getParameterTypes().length;j++) {" +
                 "                         EntryPathParam param = new EntryPathParam();" +
                 "                         param.setKey(\"\");" +
-                "                         param.setTypeParam(TypeParam.PARAM_DATA);" +
+                "                         param.setTypeParam(TypeParam.PARAM_DATA.name());" +
                 "                         param.setValue(m.getParameterTypes()[j].getName());" +
                 "                         listEntryPathData.add(param);" +
                 "                     }" +

@@ -14,7 +14,7 @@ var ThunderStatController = function($scope, $routeParams, $http) {
 				});
 	};
 	
-	 $scope.launchAnalysis = function(token) {
+	$scope.launchAnalysis = function(token) {
 	    	$scope.messageConfig='Analysis Running for application ';
 	        $http.post('api/ThunderApp/launchAnalysis/' + token).success(function(message) {
 	        	$scope.messageConfig=message;
@@ -39,20 +39,9 @@ var ThunderStatController = function($scope, $routeParams, $http) {
 		// alert(falsePositive);
 		if (falsePositive == true) {
 			return {
-				color : "purple"
+				color : "green"
 			};
-		} else {
-			if (count > 0) {
-				return {
-					color : "green"
-				};
-			} else {
-				return {
-					color : "red"
-				};
-			}
-
-		}
+		} 
 	};
 	$scope.updateToken = function() {
 		$scope.messageConfig = 'Update ...';

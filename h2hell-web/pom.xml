@@ -394,7 +394,8 @@
 				<version>9.2.8.v20150217</version>
 				<configuration>
 					<stopKey>foo</stopKey>
-					<stopPort>9999</stopPort>
+					<stopPort>9080</stopPort>
+                    <jettyXml>src/main/resources/jetty.xml</jettyXml>
 					<webAppConfig>
 						<contextPath>/core/</contextPath>
 					</webAppConfig>

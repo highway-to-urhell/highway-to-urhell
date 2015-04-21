@@ -3,6 +3,7 @@
 	background-color:#111;
    background-image:url("../../images/bg_sidebar.png");
    background-size:contain;
+   background-repeat: no-repeat;
 
 }
 

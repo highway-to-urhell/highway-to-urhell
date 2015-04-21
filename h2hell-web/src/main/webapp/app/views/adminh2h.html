@@ -1,18 +1,20 @@
-
-<form class="form-horizontal">
-	<div class="control-group"></div>
-</form>
+<div class="page-title">
+	<h3>
+		<span class="fa fa-bar-chart"></span> Administration of H2H
+	</h3>
+</div>
+<div id="main-wrapper">
 
 <div class="alert alert-info" style="width: 850px; margin-left: 0px;" ng-show="appList.length == 0">No application in database</div>
 <div class="alert alert-danger" style="width: 800px; margin-left: 0px;margin-top : 10px;" ng-show="messageStatus !=null">{{messageStatus}}</div>
-<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;" ng-show="appList.length > 0">
+<table class="table table-bordered table-striped"  ng-show="appList.length > 0">
 	<thead>
 		<tr>
-			<th style="text-align: center;">Name App</th>
+			<th style="text-align: center;">Application name</th>
 			<th style="text-align: center;">Description</th>
-			<th style="text-align: center;">Date creation</th>
-			<th style="text-align: center;">Purge stat</th>
-			<th style="text-align: center;">Delete application</th>
+			<th style="text-align: center;">Creation date</th>
+			<th style="text-align: center;">Empty statistics</th>
+			<th style="text-align: center;">Stop watching application</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,8 +22,19 @@
 			<td style="text-align: center;">{{app.nameApp}}</td>
 			<td style="text-align: center;">{{app.description}}</td>
 			<td style="text-align: center;">{{app.dateCreation}}</td>
-			<td style="text-align: center;"><button class="btn btn-danger" ng-click="purgeStatByToken(app.token,app.nameApp)">stat</button></td>
-			<td style="text-align: center;"><button class="btn btn-danger" ng-click="deleteThunderAppByToken(app.token,app.nameApp)">{{app.nameApp}}</button></td>
+			<td style="text-align: center;">
+			<a class="fa fa-trash-o" href=""  ng-click="purgeStatByToken(app.token,app.nameApp)">
+			empty statistics
+			</a>
+			</td>
+			<td style="text-align: center;">
+				<a class="fa fa-trash-o" href=""  ng-click="deleteThunderAppByToken(app.token,app.nameApp)">
+				 stop watching
+				</a>
+			
+			</td>
 		</tr>
 	</tbody>
 </table>
+
+</div>

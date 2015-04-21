@@ -19,7 +19,7 @@ public interface ThunderStatDao extends JpaRepository<ThunderStat, String> {
 	
 	
 	@Transactional(readOnly = true)
-	@Query("from ThunderStat th where th.thunderApp.token=(:token) order by th.count desc ")
+	@Query("from ThunderStat th where th.thunderApp.token=(:token) order by th.falsePositive, th.pathClassMethodName asc, th.count desc ")
 	List<ThunderStat> findByToken(@Param("token") String token);
 
 }

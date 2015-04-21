@@ -25,4 +25,8 @@ var ThunderAdminController = function($scope, $http) {
     };
     $scope.findAllApp();
     $scope.messageStatus=null;
+    
+    $("#menu li").removeClass("active");
+    $("#menu_settings").addClass("active");
+    
 };

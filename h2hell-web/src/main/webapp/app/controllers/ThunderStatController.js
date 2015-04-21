@@ -53,4 +53,9 @@ var ThunderStatController = function($scope, $routeParams, $http) {
 				});
 	};
 	$scope.findByToken();
+	
+	 console.log("Changing stat of menu");
+    $("#menu li").removeClass("active");
+    $("#menu_app").addClass("active");
+    
 };

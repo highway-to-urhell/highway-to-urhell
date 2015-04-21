@@ -22,9 +22,9 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'app/views/adminh2h.html',
         controller: 'ThunderAdminController'
     });
-    $routeProvider.when('/appReference', {
-        templateUrl: 'app/views/appReference.html',
+    $routeProvider.when('/home', {
+        templateUrl: 'app/views/home.html',
         controller: 'ThunderAppReferenceController'
     });
-    $routeProvider.otherwise({redirectTo: '/appReference'});
+    $routeProvider.otherwise({redirectTo: '/home'});
 }]);

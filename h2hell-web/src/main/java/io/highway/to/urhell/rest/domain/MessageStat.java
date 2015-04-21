@@ -6,6 +6,7 @@ import java.util.List;
 
 public class MessageStat {
 	
+	private String appName;
 	private List<ThunderStat> listThunderStat;
 	private String token;
 	public String getToken() {
@@ -42,6 +43,10 @@ public class MessageStat {
 	public void setTotalStat(Integer totalStat) {
 		this.totalStat = totalStat;
 	}
-	
-
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 }

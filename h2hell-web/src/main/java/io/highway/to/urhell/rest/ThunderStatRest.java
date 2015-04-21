@@ -1,6 +1,8 @@
 package io.highway.to.urhell.rest;
 
+import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.rest.domain.MessageStat;
+import io.highway.to.urhell.service.ThunderAppService;
 import io.highway.to.urhell.service.ThunderStatService;
 
 import javax.inject.Inject;
@@ -28,6 +30,8 @@ public class ThunderStatRest {
 	
 	@Inject
 	private ThunderStatService thunderStatService;
+	@Inject
+	private ThunderAppService thunderAppService;
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -36,6 +40,10 @@ public class ThunderStatRest {
 	public Response findThunderStatByToken(@PathParam("token") String token) {
 		LOG.info("Call findThunderStatByToken ");
 		MessageStat ms = thunderStatService.analysisStat(token);
+		//TODO dirty clean this
+		ThunderApp app = thunderAppService.findAppByToken(token);
+		
+		ms.setAppName(app.getNameApp());
 		return Response.status(Status.ACCEPTED).entity(ms).build();
 	}
 

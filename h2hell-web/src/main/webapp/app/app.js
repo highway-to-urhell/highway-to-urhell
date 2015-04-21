@@ -7,23 +7,23 @@ var App = angular.module('thunderWebApp', []);
 // Declare app level module which depends on filters, and services
 App.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/thunderstat/:token', {
-        templateUrl: 'thunderstat/layout.html',
+        templateUrl: 'app/views/thunderstat.html',
         controller: 'ThunderStatController'
     });
     $routeProvider.when('/breaker', {
-        templateUrl: 'breaker/layout.html',
+        templateUrl: 'app/views/breaker.html',
         controller: 'BreakerController'
     });
     $routeProvider.when('/thundersource/:token/:pathClassMethodName', {
-        templateUrl: 'thundersource/layout.html',
+        templateUrl: 'app/views/thundersource.html',
         controller: 'ThundersourceController'
     });
     $routeProvider.when('/adminh2h', {
-        templateUrl: 'adminh2h/layout.html',
+        templateUrl: 'app/views/adminh2h.html',
         controller: 'ThunderAdminController'
     });
     $routeProvider.when('/appReference', {
-        templateUrl: 'appReference/layout.html',
+        templateUrl: 'app/views/appReference.html',
         controller: 'ThunderAppReferenceController'
     });
     $routeProvider.otherwise({redirectTo: '/appReference'});

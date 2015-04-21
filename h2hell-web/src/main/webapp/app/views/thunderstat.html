@@ -1,4 +1,11 @@
 
+ <div class="page-title">
+                    <h3><span class="fa fa-bar-chart"></span> Statistics of {{ms.appName}} </h3>
+                </div>
+                <div id="main-wrapper">
+						
+               
+
 <form class="form-horizontal">
 	<div class="control-group"></div>
 </form>
@@ -14,7 +21,7 @@
 		<td style="text-align: center; width: 280px;">Total entry point false positive : {{ms.totalFalsePositive}}</td>
 	</tr>
 </table> 
-<table class="table table-bordered table-striped" style="width: 850px; margin-left: 0px;" ng-show="ms.listThunderStat.length > 0">
+<table class="table table-bordered table-striped"  ng-show="ms.listThunderStat.length > 0">
 	<thead>
 		<tr>
 			<th style="text-align: center;">Method input</th>
@@ -38,3 +45,5 @@
 		</tr>
 	</tbody>
 </table>
+
+</div>

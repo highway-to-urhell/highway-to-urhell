@@ -1,0 +1,57 @@
+
+ <div class="page-title">
+                    <h3>Home</h3>
+                </div>
+                <div id="main-wrapper"> 
+						
+<div class="row">
+	<div class="col-lg-4 col-md-4" ng-repeat="app in appReferenceList">
+		<div class="panel  panel-white">
+			<!-- Panel 1-->
+
+			<div class="panel-heading">
+				<h4 class="panel-title">{{app.nameApp}} v{{app.versionApp}}</h4>
+<!-- 				<p style="clear:both">{{app.description}}</p> -->
+				<div class="panel-control">
+					<a href="javascript:void(0);" data-toggle="tooltip"
+						data-placement="top" title="" class="panel-reload"
+						data-original-title="Reload"><i class="icon-reload"></i></a>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div style="font-size: 18px">
+					<span class="fa fa-sellsy"></span> Detected entry points:
+				</div>
+				
+				
+				<a ng-show="app.numberEntryPoints > 0"  href="#/thunderstat/{{app.token}}" style="font-size: 48px">{{app.numberEntryPoints}}</a>
+				<span ng-show="app.numberEntryPoints == 0"  style="font-size: 48px">0</span>
+				
+				<div>
+					<a href="#" class="fa fa-external-link" onclick="window.open('{{app.urlApp}}')"> Launch app</a>
+					|
+					<a href="#/thunderstat/{{app.token}}" class="fa fa-bar-chart"> see statistics</a>
+					|
+					<a href="#" class="fa fa-search-plus" > details</a>
+<!-- 					<a href="#"> -->
+<!-- 						<span class="fa fa-file-text"></span> Logs -->
+<!-- 					</a> | -->
+<!-- 					<a href="#"> -->
+<!-- 						<span class="fa fa fa-cogs"></span> Configure -->
+<!-- 					</a> | -->
+<!-- 					<a href="#"> -->
+<!-- 						<span class="fa fa-trash"></span> Forget -->
+<!-- 					</a> -->
+					
+				</div>
+			</div>
+
+
+
+			<!-- fin panel 1 -->
+		</div>
+	</div>
+</div>
+
+
+</div>

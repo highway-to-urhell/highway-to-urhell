@@ -57,6 +57,10 @@ public class ThunderAppService {
 		}
 	}
 
+	public ThunderApp findAppByToken(String token) {
+		return validateToken(token) ;
+	}
+	
 	private ThunderApp validateToken(String token) {
 		if (token == null) {
 			throw new TokenException();

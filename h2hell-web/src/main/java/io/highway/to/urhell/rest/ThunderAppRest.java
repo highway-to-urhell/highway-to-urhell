@@ -1,8 +1,10 @@
 package io.highway.to.urhell.rest;
 
 import io.highway.to.urhell.domain.ThunderApp;
+import io.highway.to.urhell.rest.domain.MessageStat;
 import io.highway.to.urhell.service.LaunchService;
 import io.highway.to.urhell.service.ThunderAppService;
+import io.highway.to.urhell.service.ThunderStatService;
 
 import java.util.List;
 
@@ -35,7 +37,9 @@ public class ThunderAppRest {
 	private ThunderAppService thunderAppService;
 	@Inject
 	private LaunchService launchService;
-
+	@Inject
+	private ThunderStatService thunderStatService;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Find all Thunder App")
@@ -43,6 +47,10 @@ public class ThunderAppRest {
 	public Response findAll() {
 		LOG.info("Call findAllThunder ");
 		List<ThunderApp> listThunderApp = thunderAppService.findAll();
+		for (ThunderApp app : listThunderApp) {
+			MessageStat stat = thunderStatService.analysisStat(app.getToken());
+			app.setNumberEntryPoints(stat.getListThunderStat().size());
+		}
 		return Response.status(Status.ACCEPTED).entity(listThunderApp).build();
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -34,6 +35,8 @@ public class ThunderApp {
 	@JsonIgnore
     private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
 	private String versionApp;
+	@Transient
+	private Integer numberEntryPoints;
 	
 
 	public String getVersionApp() {
@@ -108,4 +111,11 @@ public class ThunderApp {
 		this.token = token;
 	}
 
+	public Integer getNumberEntryPoints() {
+		return numberEntryPoints;
+	}
+
+	public void setNumberEntryPoints(Integer numberEntryPoints) {
+		this.numberEntryPoints = numberEntryPoints;
+	}
 }

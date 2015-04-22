@@ -51,6 +51,10 @@
 <!-- <div class="alert alert-info" style="width: 850px; margin-left: 0px;" -->
 <!-- 	ng-show="breakerlist.length == 0">No Log in database</div> -->
 
+
+<div class="input-group"> <span class="input-group-addon">Filter</span>
+    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+</div>
 <table class="table table-bordered table-striped"
 
 	ng-show="breakerlist.length > 0">
@@ -61,7 +65,7 @@
 			<th style="text-align: center; width: 300px;">Date</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="searchable">
 		<tr ng-repeat="breaker in breakerlist">
 			<td style="text-align: center;">{{breaker.pathClassMethodName}}</td>
 			<td style="text-align: center;">{{breaker.token}}</td>
@@ -71,3 +75,24 @@
 </table>
 
 </div>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    (function ($) {
+
+        $('#filter').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});
+</script>

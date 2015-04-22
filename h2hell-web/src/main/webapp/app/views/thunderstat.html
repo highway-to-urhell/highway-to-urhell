@@ -54,11 +54,13 @@
 				<a class="btn" href="" ng-click="launchAnalysis(ms.token)"  style="font-size:18px">
 				  <i class="fa fa-eye"></i> Launch
 				analysis</a>
-			
-			
+			</div>
 		</div>
 	</div>
 
+<div class="input-group"> <span class="input-group-addon">Filter</span>
+    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+</div>
 	<table class="table table-bordered table-striped"
 		ng-show="ms.listThunderStat.length > 0">
 		<thead>
@@ -72,7 +74,7 @@
 				<th style="text-align: center;">Change Status</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="searchable">
 			<tr ng-repeat="stat in ms.listThunderStat"
 				ng-style="set_color(stat.falsePositive,stat.count)">
 				<td style="text-align: center;"><a
@@ -104,3 +106,23 @@
 	</table>
 	
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    (function ($) {
+
+        $('#filter').keyup(function () {
+
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+
+        })
+
+    }(jQuery));
+
+});
+</script>

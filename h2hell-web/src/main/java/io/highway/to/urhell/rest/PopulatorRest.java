@@ -58,6 +58,20 @@ public class PopulatorRest {
 		return Response.status(Status.ACCEPTED).build();
 	}
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation("Reset and launch Populator")
+	@Path("/resetAndPopulate")	
+	public Response resetAndPopulate() {
+		breakerLogDao.deleteAll();
+		thunderStatDao.deleteAll();
+		thunderAppDao.deleteAll();
+		
+
+		
+		return populator() ;
+	}
+	
 	private void createAllThunderStat(ThunderApp ta){
 		for(int i=0;i<10;i++){
 			createThunderStat(ta,"io.highway.to.urhell.method"+i);
@@ -82,6 +96,8 @@ public class PopulatorRest {
 		ts.setUri("/titi"+randomInt);
 		thunderStatDao.save(ts);
 	}
+	
+	
 	@Transactional
 	private void createBreaker(String key) {
 		for(int i=0;i<10;i++){
@@ -114,17 +130,17 @@ public class PopulatorRest {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		ta0.setDateCreation(sdf.format(new Date()));
-		ta0.setDescription("Description populator");
+		ta0.setDescription("Fake Description from populator");
 		ta0.setNameApp("populatorname");
-		ta0.setPathSource("/home/srcPath");
+		ta0.setPathSource("/tmp/src/java/io/42kik/");
 		ta0.setToken(key1);
 		ta0.setUrlApp("http://localhost:9090");
 		ta0.setVersionApp("1.0");
 		// create App 1
 		ta1.setDateCreation(sdf.format(new Date()));
-		ta1.setDescription("Description populator");
+		ta1.setDescription("Fake Description from populator");
 		ta1.setNameApp("populatorname");
-		ta1.setPathSource("/home/srcPath");
+		ta1.setPathSource("/tmp/src/java/io/h2h/");
 		ta1.setToken(key2);
 		ta1.setUrlApp("http://localhost:9091");
 		ta1.setVersionApp("1.0");

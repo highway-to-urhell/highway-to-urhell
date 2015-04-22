@@ -1,21 +1,58 @@
 
-<div class="input-append">
-	<select style="margin-left: 150px; width: 450px;" ng-model="token"
-		ng-options="valueApp.token as valueApp.nameApp+'-'+valueApp.token for valueApp in tokenlist"></select>
-	<button class="btn btn-primary" ng-disabled="!token"
-		ng-click="findByToken(token)">Filter by App Name</button>
+<div class="page-title">
+	<h3>
+		<span class="fa fa-bar-chart"></span> Details of {{ms.appName}}
+	</h3>
 </div>
-
-<form class="form-horizontal">
-	<div class="control-group"></div>
-</form>
+<div id="main-wrapper">
 
 
-<div class="alert alert-info" style="width: 850px; margin-left: 0px;"
-	ng-show="breakerlist.length == 0">No Log in database</div>
+	<div class="row">
+		<div class="col-lg-4 col-md-3">
+			<div class="panel  panel-white">
+				<div class="panel-body">
+					<div style="font-size: 18px">
+						<span class="fa fa-sellsy"></span> Total entry point:
+					</div>
+					<span style="font-size: 32px">{{ms.totalStat}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-3">
+			<div class="panel  panel-white">
+				<div class="panel-body">
+					<div style="font-size: 18px">
+						<span class="fa fa-sellsy"></span> Not tested:
+					</div>
+
+					<span style="font-size: 32px">{{ms.totalNoTest}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-3">
+			<div class="panel  panel-white">
+				<div class="panel-body">
+					<div style="font-size: 18px">
+						<span class="fa fa-sellsy"></span> False positive:
+					</div>
+					<span style="font-size: 32px">{{ms.totalFalsePositive}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- <div class="input-append"> -->
+<!-- 	<select style="margin-left: 150px; width: 450px;" ng-model="token" -->
+<!-- 		ng-options="valueApp.token as valueApp.nameApp+'-'+valueApp.token for valueApp in tokenlist"></select> -->
+<!-- 	<button class="btn btn-primary" ng-disabled="!token" -->
+<!-- 		ng-click="findByToken(token)">Filter by App Name</button> -->
+<!-- </div> -->
+
+<!-- <div class="alert alert-info" style="width: 850px; margin-left: 0px;" -->
+<!-- 	ng-show="breakerlist.length == 0">No Log in database</div> -->
 
 <table class="table table-bordered table-striped"
-	style="width: 850px; margin-left: 0px;"
+
 	ng-show="breakerlist.length > 0">
 	<thead>
 		<tr>
@@ -32,3 +69,5 @@
 		</tr>
 	</tbody>
 </table>
+
+</div>

@@ -10,7 +10,7 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'app/views/thunderstat.html',
         controller: 'ThunderStatController'
     });
-    $routeProvider.when('/breaker', {
+    $routeProvider.when('/breaker/:token', {
         templateUrl: 'app/views/breaker.html',
         controller: 'BreakerController'
     });

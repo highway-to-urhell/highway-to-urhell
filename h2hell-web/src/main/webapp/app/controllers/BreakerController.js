@@ -4,8 +4,10 @@
  * BreakerController.js
  * @constructor
  */
-var BreakerController = function($scope, $http) {
-    $scope.findByToken = function(token) {
+var BreakerController = function($scope, $routeParams, $http) {
+    
+	
+	$scope.findByToken = function(token) {
         $http.post('api/BreakerLog/findBreakerWithToken/'+token).success(function(breakerListResult){
             $scope.breakerlist = breakerListResult;
         });
@@ -16,6 +18,18 @@ var BreakerController = function($scope, $http) {
         	$scope.tokenlist = tokenListResult;
         });
     };
-     
-    $scope.findToken();
+    
+	$scope.loadAppStat = function(token) {
+		$http.post('api/ThunderStat/findThunderStatByToken/' + token)
+				.success(function(message) {
+					$scope.ms = message;
+				});
+	};
+    
+    $scope.findByToken($routeParams.token);
+    $scope.loadAppStat($routeParams.token);
+    
+    
+    
+//    $scope.findToken();
 };

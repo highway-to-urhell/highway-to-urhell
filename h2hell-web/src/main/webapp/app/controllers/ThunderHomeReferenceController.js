@@ -77,7 +77,7 @@ function draw_Appz(apps) {
 		},
 		series : [ {
 			name : 'Entries Points',
-			data : [ 18, 18, 18 ]
+			data : tabAppzEntries
 		} ]
 	});
 }

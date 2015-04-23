@@ -15,5 +15,7 @@ var ThunderAppReferenceController = function($scope,$routeParams, $http) {
   
     $("#menu li").removeClass("active");
     $("#menu_app").addClass("active");
-     
+  
 };
+
+

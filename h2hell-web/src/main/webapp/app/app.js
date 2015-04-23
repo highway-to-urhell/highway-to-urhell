@@ -30,5 +30,13 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'app/views/home.html',
         controller: 'ThunderHomeReferenceController'
     });
+    $routeProvider.when('/bq', {
+        templateUrl: 'app/views/bq.html',
+        controller: 'bqController'
+    });
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
+
+cheet('↑ ↑ ↓ ↓ ← → ← →', function () {
+	  window.location = "#/bq"
+	});

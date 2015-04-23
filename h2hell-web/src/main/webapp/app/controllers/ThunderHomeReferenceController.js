@@ -96,7 +96,7 @@ function draw_Type(apps) {
 			}
 		},
 		title : {
-			text : 'Type Applications'
+			text : 'Application types'
 		},
 		plotOptions : {
 			pie : {

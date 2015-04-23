@@ -35,6 +35,7 @@ public class CoreEngine {
     private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
     protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final static String H2H_CONFIG = "H2H_CONFIG";
+    private final static String JAVA = "Java";
     private H2hConfig config;
 
     private CoreEngine() {
@@ -132,6 +133,7 @@ public class CoreEngine {
 
     public void parseConfig(String pathFile) {
         config = new H2hConfig();
+        config.setTypeAppz(JAVA);
         Properties prop = new Properties();
         InputStream input = null;
         try {

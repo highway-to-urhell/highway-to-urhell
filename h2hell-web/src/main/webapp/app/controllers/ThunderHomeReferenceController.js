@@ -26,7 +26,8 @@ function draw_Appz(apps) {
 	var tabAppzEntries = [];
 	for (var i = 0; i < apps.length; i++) {
 		tabAppz.push(apps[i].nameApp);
-		tabAppzEntries.push(apps[i].numberEntryPoints);
+		tabAppzEntries.push(Number(apps[i].numberEntryPoints));
+		console.log(Number(apps[i].numberEntryPoints));
 	}
 	console.log(tabAppz.length);
 	console.log(tabAppzEntries.length);
@@ -47,7 +48,7 @@ function draw_Appz(apps) {
 		yAxis : {
 			min : 0,
 			title : {
-				text : '',
+				text : 'PPPP',
 				align : 'high'
 			},
 			labels : {
@@ -65,7 +66,7 @@ function draw_Appz(apps) {
 			layout : 'vertical',
 			align : 'right',
 			verticalAlign : 'top',
-			x : -40,
+			x : 0,
 			y : 100,
 			floating : true,
 			borderWidth : 1,

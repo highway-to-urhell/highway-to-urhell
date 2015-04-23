@@ -21,6 +21,22 @@ H2H supports (for Java)
 
 H2H comes with a webapp that will collect and present all detected entry points in applications that subscribed to H2H service.
 
+### H2H - PHP
+
+H2H php agent must be copied in PHP project. We now support
+* Symfony (PHP)
+* Zend (in progress)
+
+For PHP technology you can see the entries path via url : http://server:port/uriRoot/h2h/checkPath/
+
+### H2H - NodeJS
+
+We are working with Nashorn to fully support NodeJS application. Supported frameworks are
+* Express - NodeJS (in progress)
+* SailJS - NodeJS (in progress)
+
+Whatever the technology, if you want centralize the results, you can live monitor results (entry points) and save data. Please have a look to h2hell-web.
+
 ## H2H - Web
 
 H2H-Web is a web application designed to
@@ -68,6 +84,21 @@ export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=
 ```
 set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
 ```
+
+## Configuration for PHP SYMFONY - beta version
+
+* Copy H2h in src/
+* mv H2h/Controller/H2hController to path/src/Controller
+* add in Resources/config/routing.yml
+```
+_h2h:
+    resource: "@AcmeDemoBundle/Controller/H2hController.php"
+    type:     annotation
+```
+* Start symfony (example php app/console server:run)
+* Launch the viewer http://host:port/h2h/checkPath
+* Launch the transformer http://host:port/h2h/launch
+* Change the hostandport for h2hserver
 
 ## Launch h2hell-web
 Juste type

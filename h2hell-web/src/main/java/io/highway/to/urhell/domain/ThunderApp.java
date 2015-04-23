@@ -31,6 +31,7 @@ public class ThunderApp {
 	private String urlApp;
 	private String description;
 	private String pathSource;
+	private String typeAppz;
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "thunderApp", cascade =  CascadeType.REMOVE)
 	@JsonIgnore
     private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
@@ -38,6 +39,14 @@ public class ThunderApp {
 	@Transient
 	private Integer numberEntryPoints;
 	
+
+	public String getTypeAppz() {
+		return typeAppz;
+	}
+
+	public void setTypeAppz(String typeAppz) {
+		this.typeAppz = typeAppz;
+	}
 
 	public String getVersionApp() {
 		return versionApp;

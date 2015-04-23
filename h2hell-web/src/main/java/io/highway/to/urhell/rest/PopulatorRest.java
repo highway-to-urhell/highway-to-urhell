@@ -40,52 +40,53 @@ public class PopulatorRest {
 	private BreakerLogDao breakerLogDao;
 	@Inject
 	private ThunderStatDao thunderStatDao;
-	
+
 	private ThunderApp ta0 = new ThunderApp();
 	private ThunderApp ta1 = new ThunderApp();
-	
+	private ThunderApp ta2 = new ThunderApp();
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Launch Populator")
 	@Path("/launch")
 	public Response populator() {
 		LOG.info("Call populator ");
-		createThunderApp("A12356789","B12356789");
+		createThunderApp("A12356789", "B12356789", "C12356789");
 		createAllThunderStat(ta0);
 		createAllThunderStat(ta1);
+		createAllThunderStat(ta2);
 		createBreaker("A12356789");
 		createBreaker("B12356789");
+		createBreaker("C12356789");
 		return Response.status(Status.ACCEPTED).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("Reset and launch Populator")
-	@Path("/resetAndPopulate")	
+	@Path("/resetAndPopulate")
 	public Response resetAndPopulate() {
 		breakerLogDao.deleteAll();
 		thunderStatDao.deleteAll();
 		thunderAppDao.deleteAll();
-		
 
-		
-		return populator() ;
+		return populator();
 	}
-	
-	private void createAllThunderStat(ThunderApp ta){
-		for(int i=0;i<10;i++){
-			createThunderStat(ta,"io.highway.to.urhell.method"+i);
+
+	private void createAllThunderStat(ThunderApp ta) {
+		for (int i = 0; i < 10; i++) {
+			createThunderStat(ta, "io.highway.to.urhell.method" + i);
 		}
-		for(int i=0;i<5;i++){
-			createThunderStat(ta,"io.highway.to.urhell.othermethod"+i);
+		for (int i = 0; i < 5; i++) {
+			createThunderStat(ta, "io.highway.to.urhell.othermethod" + i);
 		}
-		for(int i=0;i<3;i++){
-			createThunderStat(ta,"io.highway.to.urhell.totomethod"+i);
+		for (int i = 0; i < 3; i++) {
+			createThunderStat(ta, "io.highway.to.urhell.totomethod" + i);
 		}
 	}
-	
+
 	@Transactional
-	private void createThunderStat(ThunderApp ta, String methodName){
+	private void createThunderStat(ThunderApp ta, String methodName) {
 		ThunderStat ts = new ThunderStat();
 		ts.setPathClassMethodName(methodName);
 		ts.setThunderApp(ta);
@@ -93,41 +94,40 @@ public class PopulatorRest {
 		ts.setHttpmethod("GET");
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(100);
-		ts.setUri("/titi"+randomInt);
+		ts.setUri("/titi" + randomInt);
 		thunderStatDao.save(ts);
 	}
-	
-	
+
 	@Transactional
 	private void createBreaker(String key) {
-		for(int i=0;i<10;i++){
-			createBreakerUnit(key,"method"+i);
+		for (int i = 0; i < 10; i++) {
+			createBreakerUnit(key, "method" + i);
 		}
-		for(int i=0;i<5;i++){
-			createBreakerUnit(key,"othermethod"+i);
+		for (int i = 0; i < 5; i++) {
+			createBreakerUnit(key, "othermethod" + i);
 		}
-		for(int i=0;i<3;i++){
-			createBreakerUnit(key,"totomethod"+i);
+		for (int i = 0; i < 3; i++) {
+			createBreakerUnit(key, "totomethod" + i);
 		}
 	}
-	
-	private void createBreakerUnit(String key,String methodName){
+
+	private void createBreakerUnit(String key, String methodName) {
 		Random randomGenerator = new Random();
 		int randomInt = randomGenerator.nextInt(4);
-		for(int j=0;j<randomInt;j++){
+		for (int j = 0; j < randomInt; j++) {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 			BreakerLog bl0 = new BreakerLog();
 			bl0.setDateIncoming(sdf.format(new Date()));
-			bl0.setPathClassMethodName("io.highway.to.urhell."+methodName);
+			bl0.setPathClassMethodName("io.highway.to.urhell." + methodName);
 			bl0.setToken(key);
 			breakerLogDao.save(bl0);
 		}
 	}
 
 	@Transactional
-	private void createThunderApp(String key1, String key2) {
+	private void createThunderApp(String key1, String key2, String key3) {
 		// create App 1
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		ta0.setDateCreation(sdf.format(new Date()));
 		ta0.setDescription("Fake Description from populator");
@@ -136,6 +136,7 @@ public class PopulatorRest {
 		ta0.setToken(key1);
 		ta0.setUrlApp("http://localhost:9090");
 		ta0.setVersionApp("1.0");
+		ta0.setTypeAppz("Java");
 		// create App 1
 		ta1.setDateCreation(sdf.format(new Date()));
 		ta1.setDescription("Fake Description from populator");
@@ -144,8 +145,19 @@ public class PopulatorRest {
 		ta1.setToken(key2);
 		ta1.setUrlApp("http://localhost:9091");
 		ta1.setVersionApp("1.0");
+		ta1.setTypeAppz("Java");
+		// create App 2
+		ta2.setDateCreation(sdf.format(new Date()));
+		ta2.setDescription("Fake Description from populator");
+		ta2.setNameApp("populatornamePhp");
+		ta2.setPathSource("/tmp/src/java/io/h2h/");
+		ta2.setToken(key3);
+		ta2.setUrlApp("http://localhost:9091");
+		ta2.setVersionApp("1.0");
+		ta2.setTypeAppz("PHP");
 		thunderAppDao.save(ta0);
 		thunderAppDao.save(ta1);
+		thunderAppDao.save(ta2);
 	}
 
 }

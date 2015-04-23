@@ -1,11 +1,14 @@
 package io.highway.to.urhell.rest;
 
 import io.highway.to.urhell.domain.ThunderApp;
+import io.highway.to.urhell.rest.domain.MessageGlobalStat;
 import io.highway.to.urhell.rest.domain.MessageStat;
+import io.highway.to.urhell.rest.domain.MessageType;
 import io.highway.to.urhell.service.LaunchService;
 import io.highway.to.urhell.service.ThunderAppService;
 import io.highway.to.urhell.service.ThunderStatService;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,6 +55,26 @@ public class ThunderAppRest {
 			app.setNumberEntryPoints(stat.getListThunderStat().size());
 		}
 		return Response.status(Status.ACCEPTED).entity(listThunderApp).build();
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation("Find findGlobalStat")
+	@Path("/findGlobalStat")
+	public Response findGlobalStat() {
+		LOG.info("Call findGlobalStat ");
+		MessageGlobalStat mg = thunderAppService.findMessageGlobalStat();
+		return Response.status(Status.ACCEPTED).entity(mg).build();
+	}
+	
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation("Find all Thunder App")
+	@Path("/findAllType")
+	public Response findAllType() {
+		LOG.info("Call findAllType ");
+		Collection<MessageType> mt = thunderAppService.findMessageType();
+		return Response.status(Status.ACCEPTED).entity(mt).build();
 	}
 
 	

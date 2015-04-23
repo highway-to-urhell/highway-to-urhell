@@ -10,12 +10,12 @@ H2H is a component that detects entry points paths in your project.
 
 For a JVM (Java virtual machine), H2H is a javagent. This Java agent will scan your application at runtime for each component and framework.
 
-H2H supports (for Java) 
-* JSF 2 
-* Spring 
-* Struts 1 
-* Struts 2 
-* JEE & JAX-RS 
+H2H supports (for Java)
+* JSF 2
+* Spring
+* Struts 1
+* Struts 2
+* JEE & JAX-RS
 * RestX (in progress)
 * Jersey (in progress)
 
@@ -46,7 +46,7 @@ H2H-Web is a web application designed to
 
 Demo : http://62.210.222.197:8180/h2hell-web/
 
-Tips : 
+Tips :
 * Launch real application : "Launch app" icon
 * "See statistics" to have a precise view of all detected entry points
 
@@ -55,7 +55,7 @@ Tips :
 
 highway-to-urhell requires Java 7.
 
-You can build it using Maven 3+ : 
+You can build it using Maven 3+ :
 
 `mvn install`
 
@@ -75,7 +75,7 @@ description=
 pathSource=path to source
 versionApp=version
 ```
-### Configuring agent on  Unix machines : 
+### Configuring agent on  Unix machines :
 ```
 export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
 ```
@@ -100,9 +100,11 @@ _h2h:
 * Launch the transformer http://host:port/h2h/launch
 * Change the hostandport for h2hserver
 
-## Configuring h2hell-web
+## Launch h2hell-web
+Juste type
 ```
-mvn jetty:run -Djetty.port=8090
+mvn
 ```
-h2h.properties for changing : url of swagger, connexion to db, configuration hibernate
+in h2hell-web directory.
 
+You can edit h2h.properties to change : Swagger url , DB connexion, Hibernate configuration

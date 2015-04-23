@@ -1,16 +1,16 @@
-# highway-to-urhell
+# highway-to-URhell
 
 [![Build Status](https://travis-ci.org/highway-to-urhell/highway-to-urhell.svg)](https://travis-ci.org/highway-to-urhell/highway-to-urhell)
 
 ## H2H
 
-H2H is a component for detecting entries paths in your project.
+H2H is a component that detects entry points paths in your project.
 
-### H2H - JVM
+### H2H - Java (JVM)
 
-For an application JVM, H2h is a javagent. The Javaagent scan application at runtime for each component and framework.
+For a JVM (Java virtual machine), H2H is a javagent. This Java agent will scan your application at runtime for each component and framework.
 
-H2H supports for Java 
+H2H supports (for Java) 
 * JSF 2 
 * Spring 
 * Struts 1 
@@ -19,11 +19,11 @@ H2H supports for Java
 * RestX (in progress)
 * Jersey (in progress)
 
-For Java technology you can see the entries path via url : http://server:port/uriRoot/h2h/?customGeneratorClass=io.highway.to.urhell.generator.impl.HTMLGenerator
+H2H comes with a webapp that will collect and present all detected entry points in applications that subscribed to H2H service.
 
 ### H2H - PHP
 
-For an application, we must copy the source into your project. Actually we support only Symfony actually.
+H2H php agent must be copied in PHP project. We now support
 * Symfony (PHP)
 * Zend (in progress)
 
@@ -31,23 +31,24 @@ For PHP technology you can see the entries path via url : http://server:port/uri
 
 ### H2H - NodeJS
 
-For an application NodeJS we work actually with Nashorn for integration
+We are working with Nashorn to fully support NodeJS application. Supported frameworks are
 * Express - NodeJS (in progress)
 * SailJS - NodeJS (in progress)
 
-Whatever the technology if you want centralize the results, monitore in live each entry point and save the data you can use H2H-Web (see docs)
+Whatever the technology, if you want centralize the results, you can live monitor results (entry points) and save data. Please have a look to h2hell-web.
 
 ## H2H - Web
 
-H2H-Web is a web application for
-* Display the all entries path for each application
-* Monitoring activity for each entry point
-* Save each pentesting.
+H2H-Web is a web application designed to
+* Display all entry paths for each application
+* Monitor activity for each entry point
+* Save each pentesting
 
 Demo : http://62.210.222.197:8180/h2hell-web/
+
 Tips : 
-* Launch display the real application
-* Stat display all entries path
+* Launch real application : "Launch app" icon
+* "See statistics" to have a precise view of all detected entry points
 
 
 ## Build Java Agent

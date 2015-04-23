@@ -32,7 +32,7 @@ App.config(['$routeProvider', function ($routeProvider) {
     });
     $routeProvider.when('/bq', {
         templateUrl: 'app/views/bq.html',
-        controller: 'bqController'
+        controller: 'BqController'
     });
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);

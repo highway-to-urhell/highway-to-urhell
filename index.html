@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Highway-to-urhell by highway-to-urhell</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Highway-to-urhell</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/highway-to-urhell/highway-to-urhell" class="btn">View on GitHub</a>
+      <a href="https://github.com/highway-to-urhell/highway-to-urhell/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/highway-to-urhell/highway-to-urhell/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="highway-to-urhell" class="anchor" href="#highway-to-urhell" aria-hidden="true"><span class="octicon octicon-link"></span></a>highway-to-URhell</h1>
+
+<p><a href="https://travis-ci.org/highway-to-urhell/highway-to-urhell"><img src="https://travis-ci.org/highway-to-urhell/highway-to-urhell.svg" alt="Build Status"></a></p>
+
+<h2>
+<a id="h2h" class="anchor" href="#h2h" aria-hidden="true"><span class="octicon octicon-link"></span></a>H2H</h2>
+
+<p>H2H is a component that detects entry points paths in your project.</p>
+
+<h3>
+<a id="h2h---java-jvm" class="anchor" href="#h2h---java-jvm" aria-hidden="true"><span class="octicon octicon-link"></span></a>H2H - Java (JVM)</h3>
+
+<p>For a JVM (Java virtual machine), H2H is a javagent. This Java agent will scan your application at runtime for each component and framework.</p>
+
+<p>H2H supports (for Java)</p>
+
+<ul>
+<li>JSF 2</li>
+<li>Spring</li>
+<li>Struts 1</li>
+<li>Struts 2</li>
+<li>JEE &amp; JAX-RS</li>
+<li>RestX (in progress)</li>
+<li>Jersey (in progress)</li>
+</ul>
+
+<p>H2H comes with a webapp that will collect and present all detected entry points in applications that subscribed to H2H service.</p>
+
+<h2>
+<a id="h2h---web" class="anchor" href="#h2h---web" aria-hidden="true"><span class="octicon octicon-link"></span></a>H2H - Web</h2>
+
+<p>H2H-Web is a web application designed to</p>
+
+<ul>
+<li>Display all entry paths for each application</li>
+<li>Monitor activity for each entry point</li>
+<li>Save each pentesting</li>
+</ul>
+
+<p>Demo : <a href="http://62.210.222.197:8180/h2hell-web/">http://62.210.222.197:8180/h2hell-web/</a></p>
+
+<p>Tips :</p>
+
+<ul>
+<li>Launch real application : "Launch app" icon</li>
+<li>"See statistics" to have a precise view of all detected entry points</li>
+</ul>
+
+<h2>
+<a id="build-java-agent" class="anchor" href="#build-java-agent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Java Agent</h2>
+
+<p>highway-to-urhell requires Java 7.</p>
+
+<p>You can build it using Maven 3+ :</p>
+
+<p><code>mvn install</code></p>
+
+<h3>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h3>
+
+<ul>
+<li>Unzip highway-to-url distribution in a directory of your choice</li>
+<li>Configure agent in JAVA_OPTS (see above)</li>
+</ul>
+
+<h3>
+<a id="add-file-in-your-application--configproperties" class="anchor" href="#add-file-in-your-application--configproperties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add file in your application : config.properties</h3>
+
+<p>REMOTE send data to h2hell-web, MEMORY data in memory agent</p>
+
+<pre><code>outputSystem=REMOTE or Memory
+urlapplication=url of your application reachable for H2H-web
+nameapplication=name
+urlh2hweb=http://server-h2h-web:port/core/api/ThunderApp (only REMOTE)
+description=
+pathSource=path to source
+versionApp=version
+</code></pre>
+
+<h3>
+<a id="configuring-agent-on--unix-machines-" class="anchor" href="#configuring-agent-on--unix-machines-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuring agent on  Unix machines :</h3>
+
+<pre><code>export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+</code></pre>
+
+<h3>
+<a id="configuring-agent-on-windows-machines-" class="anchor" href="#configuring-agent-on-windows-machines-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuring agent on Windows machines :</h3>
+
+<pre><code>set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+</code></pre>
+
+<h2>
+<a id="launch-h2hell-web" class="anchor" href="#launch-h2hell-web" aria-hidden="true"><span class="octicon octicon-link"></span></a>Launch h2hell-web</h2>
+
+<p>Juste type</p>
+
+<pre><code>mvn
+</code></pre>
+
+<p>in h2hell-web directory.</p>
+
+<p>You can edit h2h.properties to change : Swagger url , DB connexion, Hibernate configuration</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/highway-to-urhell/highway-to-urhell">Highway-to-urhell</a> is maintained by <a href="https://github.com/highway-to-urhell">highway-to-urhell</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+

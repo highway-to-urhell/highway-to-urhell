@@ -135,7 +135,7 @@ public class FileSystemService extends AbstractLeechService {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				EntryPathData web = new EntryPathData();
 				Element elem = (Element) node;
-				web.setMethodName(elem.getElementsByTagName("listener-class")
+				web.setClassName(elem.getElementsByTagName("listener-class")
 						.item(0).getChildNodes().item(0).getNodeValue());
 				web.setTypePath(TypePath.LISTENER);
 				addEntryPath(web);

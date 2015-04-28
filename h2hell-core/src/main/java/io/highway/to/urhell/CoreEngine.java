@@ -130,7 +130,8 @@ public class CoreEngine {
             ThunderExporterService.getInstance().registerAppInThunder();
         }
     }
-
+    
+   
     public void parseConfig(String pathFile) {
         config = new H2hConfig();
         config.setTypeAppz(JAVA);
@@ -145,9 +146,14 @@ public class CoreEngine {
             config.setPathSource(prop.getProperty("pathSource"));
             config.setDescription(prop.getProperty("description"));
             config.setVersionApp(prop.getProperty("versionApp"));
-            config.setOutputSystem(OutputSystem.valueOf(prop.getProperty("outputSystem")));
+            String outputSystem = prop.getProperty("outputSystem");
+            if(outputSystem!=null){
+            	config.setOutputSystem(OutputSystem.valueOf(outputSystem));
+            }else{
+            	 throw new RuntimeException("Variable outpuSystem is not defined");
+            }
             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
-
+            
         } catch (IOException ex) {
             throw new RuntimeException("Error while reading H2hConfigFile " + pathFile, ex);
         } finally {

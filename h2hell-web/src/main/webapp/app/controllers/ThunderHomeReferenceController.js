@@ -21,13 +21,22 @@ var ThunderHomeReferenceController = function($scope, $routeParams, $http) {
 	$("#menu_home").addClass("active");
 };
 
+var h2hGraphColors =  ["#EA0037", "#FF5600", "#B40097", "#53DF00", "#980023", "#A63800", "#750062", "#369100", "#F56E8D", "#FFA273", "#60D4AE", "#9CEF6C"];
+
+
 function draw_Appz(apps) {
 	var tabAppz = [];
 	var tabAppzEntries = [];
+	
 	for (var i = 0; i < apps.length; i++) {
 		tabAppz.push(apps[i].nameApp);
-		tabAppzEntries.push(Number(apps[i].numberEntryPoints));
+		tabAppzEntries.push(
+				{
+					'y' : Number(apps[i].numberEntryPoints),
+					'token' : apps[i].token
+				});
 		console.log(Number(apps[i].numberEntryPoints));
+		console.log(tabAppz);
 	}
 	console.log(tabAppz.length);
 	console.log(tabAppzEntries.length);
@@ -55,13 +64,28 @@ function draw_Appz(apps) {
 				overflow : 'justify'
 			}
 		},
-		plotOptions : {
+		plotOptions: {
+			column: {
+				colorByPoint: true
+			},
 			bar : {
 				dataLabels : {
 					enabled : true
-				}
-			}
-		},
+				},
+				colorByPoint : true,
+				colors : h2hGraphColors
+			},
+            series: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function () {
+                            location.href = "#/thunderstat/" + this.options.token;
+                        }
+                    }
+                }
+            }
+        },
 		legend : {
 			layout : 'vertical',
 			align : 'right',
@@ -77,7 +101,7 @@ function draw_Appz(apps) {
 			enabled : false
 		},
 		series : [ {
-			name : 'Entries Points',
+			name : 'Entry Points',
 			data : tabAppzEntries
 		} ]
 	});
@@ -94,7 +118,8 @@ function draw_Type(apps) {
 			options3d : {
 				enabled : true,
 				alpha : 45
-			}
+			},
+			colors : h2hGraphColors
 		},
 		title : {
 			text : 'Application types'

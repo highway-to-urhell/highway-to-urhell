@@ -1,26 +1,33 @@
 .page-content {
 	/* background-color:#222; */
-	background-color:#111;
-   background-image:url("../../images/bg_sidebar.png");
-   background-size:contain;
+
+ 	background-image:url("../../images/bg_sidebar.png");
+  background-size:200px;
    background-repeat: no-repeat;
 
 }
 
 .navbar .logo-box {
-	/* background-color:#222; */
-	background-color:#111;
-   background-image:url("../../images/bg_sidebar.png");
-
-
+background : none;
 }
 
 .navbar .logo-box a {
-    color: #fff;
+    color: #111;
+    font-size:24px;
 } 
+
+.navbar .logo-box a span {
+    font-size:32px;
+	
+}
+
+.page-title h3 {
+	color:#A0000F;
+}
 
 .sidebar {
 	/* background-color:#222; */
+	  
 	
 }
 
@@ -41,14 +48,14 @@
 }
 
 .menu.accordion-menu a:hover {
-	background: #111;
-    color: #fff;
+	background: none;
+    color: #c74040;
 }
 
 .menu.accordion-menu > li.active > a,
 .menu.accordion-menu > li.active.open > a {
-	background: #222;
-    color: #fff;
+	background: none;
+    color: #c74040;
 }
 
 .small-sidebar:not(.page-sidebar-fixed) .accordion-menu li.droplink:hover > a,

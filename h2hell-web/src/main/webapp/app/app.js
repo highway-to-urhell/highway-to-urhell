@@ -34,6 +34,10 @@ App.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'app/views/bq.html',
         controller: 'BqController'
     });
+    $routeProvider.when('/plugins', {
+        templateUrl: 'app/views/plugins.html',
+        controller: 'PluginsController'
+    });
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 

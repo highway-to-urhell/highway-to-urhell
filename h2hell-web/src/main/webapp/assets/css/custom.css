@@ -8,3 +8,8 @@
 .btn-primary:hover {
   background-color: #183b89;
 }
+
+.disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+}

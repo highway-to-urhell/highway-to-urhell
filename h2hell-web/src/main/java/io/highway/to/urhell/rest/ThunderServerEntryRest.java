@@ -7,6 +7,8 @@ import io.highway.to.urhell.exception.NotExistThunderAppException;
 import io.highway.to.urhell.service.BreakerLogService;
 import io.highway.to.urhell.service.ThunderAppService;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -68,14 +70,9 @@ public class ThunderServerEntryRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation("Add Breaker from Agent Thunder")
 	@Path("/addBreaker")
-	public Response addBreaker(MessageBreaker msg) {
-		LOG.info(
-				"Call addBreaker with pathClassMethodName {} token {} and dateIncoming {}",
-				msg.getPathClassMethodName(), msg.getToken(),
-				msg.getDateIncoming());
-		breakerLogService.addBreaker(msg.getPathClassMethodName(),
-				msg.getToken(), msg.getDateIncoming());
-		return Response.status(Status.ACCEPTED).build();
+	public Response addBreaker(List<MessageBreaker> listBreaker) {
+		breakerLogService.addListBreaker(listBreaker);
+		return Response.status(Status.ACCEPTED).entity("OK").build();
 	}
 
 }

@@ -15,7 +15,6 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 @Named
@@ -28,10 +27,16 @@ public class ThunderStatService {
 	private ThunderStatDao thunderStatDao;
 	@Inject
 	private BreakerLogDao breakerLogDao;
-
+	
 	public MessageStat analysisStat(String token){
 		MessageStat ms = new MessageStat();
+		LOG.info("analysis for token {}",token);
 		List<ThunderStat> listThunderStat = thunderStatDao.findByToken(token);
+		for (ThunderStat ts : listThunderStat) {
+			Long count = breakerLogDao.findByPathClassMethodNameAndToken(
+					ts.getPathClassMethodName(), ts.getThunderApp().getToken());
+			ts.setCount(count);
+		}
 		ms.setListThunderStat(listThunderStat);
 		ms.setTotalStat(listThunderStat.size());
 		Integer falsePositive = 0;
@@ -49,6 +54,7 @@ public class ThunderStatService {
 		ms.setToken(token);
 		return ms;
 	}
+	
 	
 	@Transactional
 	public void createOrUpdateThunderStat(EntryPathData entry,
@@ -82,18 +88,4 @@ public class ThunderStatService {
 		thunderStatDao.save(ts);
 	}
 	
-	@Scheduled(fixedDelay = 60 * 1000)
-	public void updateThunderApp() {
-		LOG.info("Launch schedule updateThunderApp");
-		List<ThunderStat> listThunderStat = thunderStatDao.findAll();
-		for (ThunderStat ts : listThunderStat) {
-			Long count = breakerLogDao.findByPathClassMethodNameAndToken(
-					ts.getPathClassMethodName(), ts.getThunderApp().getToken());
-			ts.setCount(count);
-			thunderStatDao.save(ts);
-			LOG.info("save thunderStat " + ts.getPathClassMethodName());
-		}
-
-	}
-
 }

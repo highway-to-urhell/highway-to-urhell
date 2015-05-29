@@ -19,11 +19,15 @@ public class H2hellFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         String launch = request.getParameter("launch");
         String customGeneratorClass = request.getParameter("customGeneratorClass");
-
-        if (launch != null) {
-            CoreService.getInstance().enableEntryPointCoverage(response);
+        String srcPath = request.getParameter("srcPath");
+        if (srcPath !=null && !"".equals(srcPath)){
+            CoreService.getInstance().findSource(response,srcPath);
+        }else {
+            if (launch != null) {
+                CoreService.getInstance().enableEntryPointCoverage(response);
+            }
+            CoreService.getInstance().generateReport(response,customGeneratorClass);
         }
-        CoreService.getInstance().generateReport(response,customGeneratorClass);
     }
 
     @Override

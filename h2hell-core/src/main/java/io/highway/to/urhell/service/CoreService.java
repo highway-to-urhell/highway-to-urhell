@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.Collection;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class CoreService {
     private static final Logger LOG = LoggerFactory
@@ -29,6 +32,21 @@ public class CoreService {
             }
         }
         return instance;
+    }
+
+    public void findSource(ServletResponse response, String srcPath) throws IOException  {
+        String path = CoreEngine.getInstance().getConfig().getPathSource()+srcPath;
+        String res;
+        try {
+            res= new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            res = "FileNotFound  source "+path;
+            LOG.error("FileNotFound source "+path+" "+e);
+        }
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+        out.println(res);
+        out.close();
     }
 
     public void generateReport(ServletResponse response, String customGeneratorClass) throws IOException {

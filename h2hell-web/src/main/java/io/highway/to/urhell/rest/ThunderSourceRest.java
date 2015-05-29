@@ -1,6 +1,6 @@
 package io.highway.to.urhell.rest;
 
-import io.highway.to.urhell.service.ThunderLocalSourceService;
+import io.highway.to.urhell.service.ThunderSourceService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +25,7 @@ public class ThunderSourceRest {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(ThunderSourceRest.class);
 	@Inject
-	private ThunderLocalSourceService thunderLocalSourceService;
+	private ThunderSourceService thunderSourceService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +34,7 @@ public class ThunderSourceRest {
 	public Response findSource(@PathParam("token") String token,
 			@PathParam("pathClassMethodName") String pathClassMethodName) {
 		LOG.info("Call findSource token {} pathClassMethodName {}",token,pathClassMethodName);
-		String res = thunderLocalSourceService.findClassAndMethod(token, pathClassMethodName);
+		String res = thunderSourceService.findSource(token, pathClassMethodName);
 		return Response.status(Status.ACCEPTED)
 				.entity(res).build();
 	}

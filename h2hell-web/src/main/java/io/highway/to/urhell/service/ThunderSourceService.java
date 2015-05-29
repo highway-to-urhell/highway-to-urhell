@@ -2,6 +2,7 @@ package io.highway.to.urhell.service;
 
 import io.highway.to.urhell.dao.ThunderAppDao;
 import io.highway.to.urhell.domain.ThunderApp;
+import io.highway.to.urhell.service.helper.ThunderAppHelper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.slf4j.LoggerFactory;
 
 @Named
 public class ThunderSourceService {
@@ -19,14 +19,14 @@ public class ThunderSourceService {
 	@Inject
 	private ThunderAppDao thunderAppDao;
 
+
 	public String findSource(String token,String classAndMethod) {
 		String className = extractClass(classAndMethod);
-		String res =null;
 		ThunderApp th  =thunderAppDao.findByToken(token); 
 		if(th == null){
 			return "no Application";
 		}
-		String path = className+".java";
+		String path = className+ThunderAppHelper.getMapTypeConversion().get(th.getTypeAppz().toLowerCase());
 
 		RestTemplate restTemplate = new RestTemplate();
 		String url = th.getUrlApp() + "h2h/?srcPath="+path;

@@ -109,7 +109,6 @@ function draw_Appz(apps) {
 function draw_Type(apps) {
 	var tabAppz = [];
 	for (var i = 0; i < apps.length; i++) {
-		console.log("HERE"+apps[i].typeApplication+apps[i].nb);
 		tabAppz.push([apps[i].typeApplication,apps[i].nb]);
 	}
 	$('#apps_type').highcharts({

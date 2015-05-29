@@ -25,20 +25,19 @@ public class ThunderApp {
 	@NotNull
 	private String nameApp;
 	@NotNull
-	private String token ="NO_TOKEN";
+	private String token = "NO_TOKEN";
 	@NotNull
 	private String dateCreation;
 	private String urlApp;
 	private String description;
 	private String pathSource;
 	private String typeAppz;
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "thunderApp", cascade =  CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "thunderApp", cascade = CascadeType.REMOVE)
 	@JsonIgnore
-    private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
+	private Set<ThunderStat> thunderStatSet = new LinkedHashSet<ThunderStat>();
 	private String versionApp;
 	@Transient
 	private Integer numberEntryPoints;
-	
 
 	public String getTypeAppz() {
 		return typeAppz;

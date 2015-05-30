@@ -26,7 +26,6 @@ public class ThunderSourceService {
 		if(th == null){
 			return "no Application";
 		}
-		LOG.error("##################### th"+th.getTypeAppz());
 		String path = className+ThunderAppHelper.getMapTypeConversion().get(th.getTypeAppz().toLowerCase());
 
 		RestTemplate restTemplate = new RestTemplate();

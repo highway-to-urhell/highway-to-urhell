@@ -8,12 +8,13 @@ import javax.inject.Named;
 @Named
 public class ThunderAppHelper {
 	
-	private static Map<String,String> mapTypeConversion = new HashMap<String,String>();
+	private static Map<String,String> mapTypeConversion ;
 	
 	
 	public static Map<String, String> getMapTypeConversion() {
 		if(mapTypeConversion == null){
 			synchronized (ThunderAppHelper.class) {
+				mapTypeConversion = new HashMap<String,String>();
 				mapTypeConversion.put("java", ".java");
 				mapTypeConversion.put("php", ".php");
 				mapTypeConversion.put("nodejs", ".js");

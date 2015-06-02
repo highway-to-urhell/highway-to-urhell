@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class ThunderStat {
+public class ThunderStat implements Comparable<ThunderStat>{
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -81,6 +81,11 @@ public class ThunderStat {
 
 	public void setPathClassMethodName(String pathClassMethodName) {
 		this.pathClassMethodName = pathClassMethodName;
+	}
+
+	@Override
+	public int compareTo(ThunderStat obj) {
+		return Long.compare( obj.getCount().longValue(),count.longValue());
 	}
 
 }

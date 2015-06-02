@@ -19,8 +19,16 @@ public class WelcomeUserAction {
 
 	// all struts logic here
 	public String execute() {
-		log.error(" init passage ");
-		return "SUCCESS";
-
+		int range = (10 - 0) + 1;
+		int cal = (int) (Math.random() * range) + 0;
+		if (cal%2 == 0){
+			log.error(" Modulo 2 ");
+			return "SUCCESS";
+		}else{
+			log.error(" No Module 2 ");
+			return "SUCCESS";
+		}
+	
 	}
+
 }

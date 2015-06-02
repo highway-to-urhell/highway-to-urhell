@@ -7,6 +7,7 @@ import io.highway.to.urhell.domain.ThunderApp;
 import io.highway.to.urhell.domain.ThunderStat;
 import io.highway.to.urhell.rest.domain.MessageStat;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,6 +38,7 @@ public class ThunderStatService {
 					ts.getPathClassMethodName(), ts.getThunderApp().getToken());
 			ts.setCount(count);
 		}
+		Collections.sort(listThunderStat);
 		ms.setListThunderStat(listThunderStat);
 		ms.setTotalStat(listThunderStat.size());
 		Integer falsePositive = 0;

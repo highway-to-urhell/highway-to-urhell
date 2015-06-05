@@ -18,22 +18,9 @@ H2H supports (for Java)
 * JEE & JAX-RS
 * RestX (in progress)
 * Jersey (in progress)
+* Restlet (in progress)
 
 H2H comes with a webapp that will collect and present all detected entry points in applications that subscribed to H2H service.
-
-## H2H - Web
-
-H2H-Web is a web application designed to
-* Display all entry paths for each application
-* Monitor activity for each entry point
-* Save each pentesting
-
-Demo : http://62.210.222.197:8180/h2hell-web/
-
-Tips :
-* Launch real application : "Launch app" icon
-* "See statistics" to have a precise view of all detected entry points
-
 
 ## Build Java Agent
 
@@ -46,9 +33,8 @@ You can build it using Maven 3+ :
 ### How to use it
 
  * Unzip highway-to-url distribution in a directory of your choice
- * Configure agent in JAVA_OPTS (see above)
 
-### Add file in your application : config.properties
+### Create configuration file : config.properties
 REMOTE send data to h2hell-web, MEMORY data in memory agent
 ```
 outputSystem=REMOTE or Memory
@@ -59,6 +45,10 @@ description=
 pathSource=path to source
 versionApp=version
 ```
+You can see example file in h2h-example project.
+
+## Configuration via JAVA_OPTS
+
 ### Configuring agent on  Unix machines :
 ```
 export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
@@ -69,11 +59,60 @@ export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=
 set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
 ```
 
-## Launch h2hell-web
-Juste type
+### Configuration for tomcat
+add setnv.sh in your_tomcat\bin\setenv.sh
 ```
-mvn
-```
-in h2hell-web directory.
+export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/"
 
-You can edit h2h.properties to change : Swagger url , DB connexion, Hibernate configuration
+```
+## Vizualisation
+### Mode MEMORY
+* Call the url for JSON result http://host:port/root_uri_of_your_application/h2h
+* Call the url for HTML result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=io.highway.to.urhell.generator.impl.HTMLGenerator 
+* Call the url for File result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=io.highway.to.urhell.generator.impl.FileGenerator 
+
+### Mode Remote
+* See H2H-Web project
+
+
+## Troubleshooting
+If your application server doesn't support servlet 3+, add the filter h2h (on the top) in web.xml of your application
+```
+ 		<filter>
+                <filter-name>h2h</filter-name>
+                <filter-class>io.highway.to.urhell.filter.H2hellFilter</filter-class>
+        </filter>
+
+        <filter-mapping>
+                <filter-name>h2h</filter-name>
+                <url-pattern>/h2h/*</url-pattern>
+        </filter-mapping>
+
+```
+
+## Add custom entry point
+
+For add new entry point because we can't support your prefer framework you must create 2 services (class) : first retrieve the entrypoint and the second treat the list of entrypoint.
+
+The first service must extends io.highway.to.urhell.transforme.AbstractLeechTransformer. 
+You must implements doTransform with 2 requirements :
+* Create the list of entrypoint ArrayList<EntryPathData>
+* Send the data to CoreEngine with CoreEngine.getInstance().getFramework(your_framework).receiveData(listEntryPath) 
+You must implements the constructor like :
+```
+super(package_class_modified_by_agent);// example "com/google/gwt/user/server/rpc/RemoteServiceServlet" 
+addImportPackage(String... packages);// list package add by Agent for running the agent with your modification. example "java.lang.reflect", "java.util","org.reflections", "org.reflections.util", "java.util.Map"
+```
+For example, we recommand to see the actual transformer in package io.highway.to.urhell.transformer.
+
+The second service must extends io.highway.to.urhell.service.AbstractLeechService with 1 requirement :
+* The constructor must invoke like 
+```
+super(FRAMEWORK_NAME, VersionUtils.getVersion("package_class","groupid", "artifactId"));
+```
+
+## Add custom vizualisation
+
+For add your custom vizualisation you must : 
+* implements the interface io.highway.to.urhell.generator.TheJack
+* add your class in highway-to-url distribution

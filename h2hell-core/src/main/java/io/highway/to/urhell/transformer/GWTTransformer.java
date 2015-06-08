@@ -5,50 +5,49 @@ import javassist.CtConstructor;
 
 public class GWTTransformer extends AbstractLeechTransformer {
 
-	public GWTTransformer() {
-		super("com/google/gwt/user/server/rpc/RemoteServiceServlet");
-		addImportPackage("java.lang.reflect", "java.util",
-				"org.reflections", "org.reflections.util",
-				"org.reflections.util.ClasspathHelper","org.objectweb.asm",
-				"com.google.gwt.user.client.rpc", "java.util.Map");
-	}
+    public GWTTransformer() {
+        super("com/google/gwt/user/server/rpc/RemoteServiceServlet");
+        addImportPackage("java.lang.reflect", "java.util",
+                "org.reflections", "org.reflections.util",
+                "org.reflections.util.ClasspathHelper", "org.objectweb.asm",
+                "com.google.gwt.user.client.rpc", "java.util.Map");
+    }
 
-	@Override
-	protected void doTransform(CtClass cc) throws Exception {
-		CtConstructor c = cc.getConstructor("()V");
-		StringBuilder sb = new StringBuilder();
-		sb.append("List listEntryPath = new ArrayList();");
-		sb.append("final Set urlClassLoader = ClasspathHelper.forClassLoader(null);");
-		sb.append("Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urlClassLoader));");
-		sb.append("Set setGwtService = reflections.getTypesAnnotatedWith(RemoteServiceRelativePath.class);");
-		sb.append("Iterator iter = setGwtService.iterator();");
-		sb.append("while (iter.hasNext()) {");
-		sb.append("Class c = (Class) iter.next();");
-		sb.append("RemoteServiceRelativePath remoteAnnotation = (RemoteServiceRelativePath) c.getAnnotation(RemoteServiceRelativePath.class);");
-		sb.append("try {");
-		sb.append("	Set setGwtServiceServer = reflections.getSubTypesOf(Class.forName(c.getName()));");
-		sb.append("	Iterator iterServer = setGwtServiceServer.iterator();");
-		sb.append("	while (iterServer.hasNext()) {");
-		sb.append("Class realName = (Class) iterServer.next();");
-		sb.append("		Method[] tabMethod = realName.getDeclaredMethods();");
-		sb.append("			for (int j=0;j<tabMethod.length;j++) {");
-		sb.append("				EntryPathData entry = new EntryPathData();");
-		sb.append("				entry.setTypePath(TypePath.DYNAMIC);");
-		sb.append("				entry.setHttpMethod(HttpMethod.POST);");
-		sb.append("				entry.setClassName(realName.getName());");
-		sb.append("				entry.setMethodName(tabMethod[j].getName());");
-		sb.append("				entry.setUri(remoteAnnotation.value());");
-		sb.append("				entry.setSignatureName(org.objectweb.asm.Type.getMethodDescriptor(tabMethod[j]));");
-		sb.append("				listEntryPath.add(entry);");
-		sb.append("			}");
-		sb.append("		}");
-		sb.append("	} catch (ClassNotFoundException e) {");
-		sb.append("e.printStackTrace();");
-		sb.append("	}");
-		sb.append("}");
-		sb.append("CoreEngine.getInstance().getFramework(\"GWT\").receiveData(listEntryPath);");
+    @Override
+    protected void doTransform(CtClass cc) throws Exception {
+        CtConstructor c = cc.getConstructor("()V");
+        String h2hHookCode = "" +
+                "List listEntryPath = new ArrayList();" +
+                "final Set urlClassLoader = ClasspathHelper.forClassLoader(null);" +
+                "Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(urlClassLoader));" +
+                "Set setGwtService = reflections.getTypesAnnotatedWith(RemoteServiceRelativePath.class);" +
+                "Iterator iter = setGwtService.iterator();" +
+                "while (iter.hasNext()) {" +
+                "   Class c = (Class) iter.next();" +
+                "   RemoteServiceRelativePath remoteAnnotation = (RemoteServiceRelativePath) c.getAnnotation(RemoteServiceRelativePath.class);" +
+                "   try {" +
+                "	    Set setGwtServiceServer = reflections.getSubTypesOf(Class.forName(c.getName()));" +
+                "	    Iterator iterServer = setGwtServiceServer.iterator();" +
+                "	    while (iterServer.hasNext()) {" +
+                "           Class realName = (Class) iterServer.next();" +
+                "		    Method[] tabMethod = realName.getDeclaredMethods();" +
+                "			for (int j=0;j<tabMethod.length;j++) {" +
+                "				EntryPathData entry = new EntryPathData();" +
+                "				entry.setTypePath(TypePath.DYNAMIC);" +
+                "				entry.setHttpMethod(HttpMethod.POST);" +
+                "				entry.setClassName(realName.getName());" +
+                "				entry.setMethodName(tabMethod[j].getName());" +
+                "				entry.setUri(remoteAnnotation.value());" +
+                "				entry.setSignatureName(org.objectweb.asm.Type.getMethodDescriptor(tabMethod[j]));" +
+                "				listEntryPath.add(entry);" +
+                "			}" +
+                "		}" +
+                "	} catch (ClassNotFoundException e) {" +
+                "       e.printStackTrace();" +
+                "	}" +
+                "}" +
+                "CoreEngine.getInstance().getFramework(\"GWT\").receiveData(listEntryPath);";
+        c.insertBefore(h2hHookCode);
 
-		c.insertBefore(sb.toString());
-
-	}
+    }
 }

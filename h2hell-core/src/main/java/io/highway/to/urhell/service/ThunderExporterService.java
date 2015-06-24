@@ -3,6 +3,7 @@ package io.highway.to.urhell.service;
 import io.highway.to.urhell.CoreEngine;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.domain.MessageBreaker;
+import io.highway.to.urhell.domain.MessageMetrics;
 import io.highway.to.urhell.domain.MessageThunderApp;
 
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class ThunderExporterService {
 	private String token;
 	private BlockingQueue<MessageBreaker> queueRemoteBreaker = new LinkedBlockingQueue<MessageBreaker>(
 			10000);
+	private BlockingQueue<MessageMetrics> queueRemotePerformance = new LinkedBlockingQueue<MessageMetrics>(
+			10000);
 	private final static int MSG_SIZE = 50;
 
 	private ThunderExporterService() {
@@ -42,14 +45,24 @@ public class ThunderExporterService {
 		schExService.scheduleAtFixedRate(new Runnable() {
 
 			public void run() {
-				LOGGER.info("Drain the queue");
+				LOGGER.info("Drain the queue Remote");
 				List<MessageBreaker> listBreaker = new ArrayList<MessageBreaker>();
 		        int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
-		        LOGGER.info("Drain size "+result);
+		        LOGGER.info("Drain Remote size "+result);
 		        if (result > 0) {
 		        	LOGGER.info("Send the Data");
 		        	sendDataHTTP("/addBreaker", listBreaker);
 		        }
+		        
+		        LOGGER.info("Drain the queue Performance");
+				List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
+		        int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
+		        LOGGER.info("Drain Performance size "+result);
+		        if (resultPerf > 0) {
+		        	LOGGER.info("Send the Data");
+		        	sendDataHTTP("/addPerformance", listPerformance);
+		        }
+		        
 			}
 	    }, 5, 30,  TimeUnit.SECONDS);
 	}
@@ -85,6 +98,17 @@ public class ThunderExporterService {
 		sendDataHTTP("/initThunderApp", msg);
 	}
 
+	public void sendRemotePerformance(String fullMethodName,long timeExec){
+		MessageMetrics msg = new MessageMetrics();
+		msg.setPathClassMethodName(fullMethodName);
+		msg.setToken(token);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
+		Date date = new Date();
+		msg.setDateIncoming(sdf.format(date));
+		msg.setTimeExec(timeExec);
+		queueRemotePerformance.add(msg);
+	}
+	
 	public void sendRemoteBreaker(String pathClassMethodName) {
 		MessageBreaker msg = new MessageBreaker();
 		msg.setPathClassMethodName(pathClassMethodName);

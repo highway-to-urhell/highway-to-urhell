@@ -152,6 +152,12 @@ public class CoreEngine {
             }else{
             	 throw new RuntimeException("Variable outpuSystem is not defined");
             }
+            String timer = prop.getProperty("timer");
+            if(timer!=null){
+            	config.setTimer(OutputSystem.valueOf(timer));
+            }else{
+            	 throw new RuntimeException("Variable timer is not defined");
+            }
             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
             
         } catch (IOException ex) {

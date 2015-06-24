@@ -28,11 +28,22 @@ public class GatherService {
     private GatherService() {
         mapThunderData = new HashMap<String, ThunderData>();
     }
+    
+    public void gatherPerformance(String fullMethodName,long timeExec){
+    	 H2hConfig hc = CoreEngine.getInstance().getConfig();
+         switch (hc.getTimer()) {
+             case MEMORY:
+            	 LOGGER.info(" fullMethodName "+fullMethodName+" timeExec "+timeExec);
+             	 break;
+             case REMOTE:
+                 ThunderExporterService.getInstance().sendRemotePerformance(fullMethodName,timeExec);
+                 break;
+             default:
+                 LOGGER.info("No config for Timer");
+         }
+    }
 
     public void gatherInvocation(String fullMethodName) {
-        for (ThunderData th : mapThunderData.values()) {
-            LOGGER.info("th :" + th.toString());
-        }
         H2hConfig hc = CoreEngine.getInstance().getConfig();
         switch (hc.getOutputSystem()) {
             case MEMORY:

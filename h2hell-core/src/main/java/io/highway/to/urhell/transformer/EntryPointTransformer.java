@@ -60,7 +60,9 @@ public class EntryPointTransformer implements ClassFileTransformer {
         CtMethod m;
         try {
             m = cc.getMethod(entry.getMethodName(), entry.getSignatureName());
-            m.insertBefore(generateCmd(entry.getClassName(), entry.getMethodName()));
+            m.addLocalVariable("startH2H", CtClass.longType);
+            m.insertBefore(generateCmd(entry.getClassName(), entry.getMethodName())+"startH2H = System.currentTimeMillis();");
+            m.insertAfter("final long endH2H = System.currentTimeMillis();"+generateCmdPerf(entry.getClassName(), entry.getMethodName()));
         } catch (NotFoundException | CannotCompileException e) {
             LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
         }
@@ -68,6 +70,10 @@ public class EntryPointTransformer implements ClassFileTransformer {
 
     private String generateCmd(String className, String methodName) {
         return "GatherService.getInstance().gatherInvocation(\"" + className + "." + methodName + "\");";
+    }
+    
+    private String generateCmdPerf(String className, String methodName) {
+        return "GatherService.getInstance().gatherPerformance(\"" + className + "." + methodName + "\",(endH2H-startH2H));";
     }
 
     private void addImportPackage(ClassPool cp) {

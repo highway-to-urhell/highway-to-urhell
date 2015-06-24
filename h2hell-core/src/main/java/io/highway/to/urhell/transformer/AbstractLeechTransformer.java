@@ -8,6 +8,7 @@ import java.util.List;
 
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtMethod;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 
@@ -51,7 +52,10 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                 }
                 CtClass cc = cp
                         .get(classNameToTransformNormalized);
-
+                if(log.isDebugEnabled()){
+                	grabAllMethod(cc);
+                }
+                
                 doTransform(cc);
 
                 classfileBuffer = cc.toBytecode();
@@ -67,6 +71,12 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
         return classfileBuffer;
     }
 
+    private void grabAllMethod(CtClass cc){
+    	for(CtMethod m : cc.getMethods()){
+    		log.error(m.getLongName()+"-"+m.getSignature());
+    	}
+    }
+    
     /**
      * Build receiveDataStatement to be produced by transformer where you want to collectdata
      *

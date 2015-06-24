@@ -10,7 +10,14 @@ public class H2hConfig {
 	private String pathH2h;
 	private String versionApp;
 	private String typeAppz;
+	private OutputSystem timer;
 	
+	public OutputSystem getTimer() {
+		return timer;
+	}
+	public void setTimer(OutputSystem timer) {
+		this.timer = timer;
+	}
 	public String getTypeAppz() {
 		return typeAppz;
 	}

@@ -16,9 +16,8 @@ public class ThunderData {
 	private final AtomicLong counter;
     private final List<Date> listDate;
     private final String methodName;
-
-
-    public ThunderData(String methodName) {
+  
+	public ThunderData(String methodName) {
         this.methodName = methodName;
         counter = new AtomicLong();
         listDate = new ArrayList<Date>();

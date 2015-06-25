@@ -4,7 +4,7 @@
 
 	<groupId>io.highway.to.urhell</groupId>
 	<artifactId>h2hell-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<prerequisites>

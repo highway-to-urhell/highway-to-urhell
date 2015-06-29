@@ -11,7 +11,14 @@ public class H2hConfig {
 	private String versionApp;
 	private String typeAppz;
 	private OutputSystem timer;
+	private String token;
 	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public OutputSystem getTimer() {
 		return timer;
 	}

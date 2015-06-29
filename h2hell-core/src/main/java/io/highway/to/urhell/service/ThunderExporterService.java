@@ -86,12 +86,19 @@ public class ThunderExporterService {
 						.getNameApplication());
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public void initRemoteApp() {
 		TransformerService ts = new TransformerService();
 		List<EntryPathData> res = ts
 				.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance()
 						.getLeechServiceRegistered());
-		LOGGER.error(" RES " + res.toString());
 		MessageThunderApp msg = new MessageThunderApp();
 		msg.setListentryPathData(res);
 		msg.setToken(token);

@@ -39,6 +39,15 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "                 Class c = Class.forName(action.getClassName());" +
                 "                 Method[] tabM = c.getDeclaredMethods();" +
                 "                 for (int i=0;i<tabM.length;i++) {" +
+                "       			String scope = Modifier.toString(tabM[i].getModifiers());"+
+    			"       			if (scope.startsWith(\"public\") && !\"wait\".equals(tabM[i].getName())"+
+    			"						&& !\"notifyall\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"notify\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"getclass\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"equals\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"tostring\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"wait\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"hashcode\".equals(tabM[i].getName().toLowerCase())) {"+
                 "                     Method m = tabM[i];" +
                 "                     EntryPathData entry = new EntryPathData();" +
                 "                     entry.setTypePath(TypePath.DYNAMIC);" +
@@ -55,7 +64,7 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "                         listEntryPathData.add(param);" +
                 "                     }" +
                 "                     entry.setListEntryPathData(listEntryPathData);" +
-                "                     listEntryPath.add(entry);" +
+                "                     listEntryPath.add(entry);}" +
                 "                 }" +
                 "             } catch (ClassNotFoundException e) {" +
                 "                 e.printStackTrace();" +

@@ -39,23 +39,33 @@ public class Struts2Transformer extends AbstractLeechTransformer {
                 "                  Class c = Class.forName(action.getClassName());" +
                 "                  Method[] tabM = c.getDeclaredMethods();" +
                 "                  for (int i=0;i<tabM.length;i++) {" +
-                "                     Method m = tabM[i];" +
-                "                     EntryPathData entry = new EntryPathData();" +
-                "                     entry.setTypePath(TypePath.DYNAMIC);" +
-                "                     entry.setClassName(action.getClassName());" +
-                "                     entry.setMethodName(m.getName());" +
-                "                     entry.setUri(action.getName());" +
-                "                     entry.setSignatureName(org.objectweb.asm.Type.getMethodDescriptor(m));" +
-                "                     List listEntryPathData = new ArrayList();" +
-                "                     for (int j=0;j<m.getParameterTypes().length;j++) {" +
-                "                         EntryPathParam param = new EntryPathParam();" +
-                "                         param.setKey(\"\");" +
-                "                         param.setTypeParam(TypeParam.PARAM_DATA);" +
-                "                         param.setValue(m.getParameterTypes()[j].getName());" +
-                "                         listEntryPathData.add(param);" +
-                "                     }" +
-                "                     entry.setListEntryPathData(listEntryPathData);" +
-                "                     listEntryPath.add(entry);" +
+                "       			String scope = Modifier.toString(tabM[i].getModifiers());"+
+    			"       			if (scope.startsWith(\"public\") && !\"wait\".equals(tabM[i].getName())"+
+    			"						&& !\"notifyall\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"notify\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"getclass\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"equals\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"tostring\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"wait\".equals(tabM[i].getName().toLowerCase())"+
+    			"						&& !\"hashcode\".equals(tabM[i].getName().toLowerCase())) {"+
+                "                     		Method m = tabM[i];" +
+                "                     		EntryPathData entry = new EntryPathData();" +
+                "                     		entry.setTypePath(TypePath.DYNAMIC);" +
+                "                     		entry.setClassName(action.getClassName());" +
+                "                     		entry.setMethodName(m.getName());" +
+                "                     		entry.setUri(action.getName());" +
+                "                     		entry.setSignatureName(org.objectweb.asm.Type.getMethodDescriptor(m));" +
+                "                     		List listEntryPathData = new ArrayList();" +
+                "                     		for (int j=0;j<m.getParameterTypes().length;j++) {" +
+                "                         		EntryPathParam param = new EntryPathParam();" +
+                "                         		param.setKey(\"\");" +
+                "                         		param.setTypeParam(TypeParam.PARAM_DATA);" +
+                "                         		param.setValue(m.getParameterTypes()[j].getName());" +
+                "                         		listEntryPathData.add(param);" +
+                "                     		}" +
+                "                     		entry.setListEntryPathData(listEntryPathData);" +
+                "                     		listEntryPath.add(entry);" +
+                "							}"+
                 "                 }" +
                 "             } catch (ClassNotFoundException e) {" +
                 "                 e.printStackTrace();" +

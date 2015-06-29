@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.highway.to.urhell</groupId>
         <artifactId>h2hell-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>h2hell-distribution</artifactId>
     <name>h2hell-distribution</name>

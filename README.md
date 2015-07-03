@@ -116,3 +116,7 @@ super(FRAMEWORK_NAME, VersionUtils.getVersion("package_class","groupid", "artifa
 For add your custom vizualisation you must : 
 * implements the interface io.highway.to.urhell.generator.TheJack
 * add your class in highway-to-url distribution
+
+## Supports
+[![JetBrains](https://www.jetbrains.com/company/docs/logo_jetbrains.png?raw=true)](https://www.jetbrains.com/webstorm/)
+- Thanks to JetBrains for providing licenses to build this project.

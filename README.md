@@ -16,9 +16,11 @@ H2H supports (for Java)
 * Struts 1
 * Struts 2
 * JEE & JAX-RS
+* RMI server
+* Scan port
+* JMS via javax.jms.* (in progress)
 * RestX (in progress)
-* Jersey (in progress)
-* Restlet (in progress)
+
 
 H2H comes with a webapp that will collect and present all detected entry points in applications that subscribed to H2H service.
 

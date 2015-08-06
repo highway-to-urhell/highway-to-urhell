@@ -152,6 +152,19 @@
 				<version>5.0.3</version>
 			</dependency>
 			<!-- ~~~~ -->
+			<!-- JMS  -->
+			<!-- ~~~~ -->
+			<dependency>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+				<version>5.10.2</version>
+			</dependency>
+			<!-- ~~~~ -->
 			<!-- TEST -->
 			<!-- ~~~~ -->
 			<dependency>

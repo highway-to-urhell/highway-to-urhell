@@ -128,12 +128,13 @@ public class CoreEngine {
         if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() ==null ) {
             ThunderExporterService.getInstance().registerAppInThunder();
         }else{
-        	LOGGER.info("application reuse the token {} for application {}",
-    				config.getToken(), config.getNameApplication());
+            //TODO valid the token with the server H2H-web
+            LOGGER.info("application reuse the token {} for application {}",
+                    config.getToken(), config.getNameApplication());
         }
     }
-    
-   
+
+
     public void parseConfig(String pathFile) {
         config = new H2hConfig();
         config.setTypeAppz(JAVA);
@@ -151,18 +152,18 @@ public class CoreEngine {
             config.setToken(prop.getProperty("token"));
             String outputSystem = prop.getProperty("outputSystem");
             if(outputSystem!=null){
-            	config.setOutputSystem(OutputSystem.valueOf(outputSystem));
+                config.setOutputSystem(OutputSystem.valueOf(outputSystem));
             }else{
-            	 throw new RuntimeException("Variable outpuSystem is not defined");
+                throw new RuntimeException("Variable outpuSystem is not defined");
             }
             String timer = prop.getProperty("timer");
             if(timer!=null){
-            	config.setTimer(OutputSystem.valueOf(timer));
+                config.setTimer(OutputSystem.valueOf(timer));
             }else{
-            	 throw new RuntimeException("Variable timer is not defined");
+                throw new RuntimeException("Variable timer is not defined");
             }
             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
-            
+
         } catch (IOException ex) {
             throw new RuntimeException("Error while reading H2hConfigFile " + pathFile, ex);
         } finally {

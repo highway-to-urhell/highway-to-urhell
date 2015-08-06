@@ -11,11 +11,17 @@ public class EntryPathData {
 	private String classNameNormalized;
 	private String signatureName;
 	private TypePath typePath = TypePath.UNKNOWN;
-
+	private Boolean audit = true;
 	private HttpMethod httpMethod = HttpMethod.UNKNOWN;
 	private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
 
-	
+	public Boolean getAudit() {
+		return audit;
+	}
+
+	public void setAudit(Boolean audit) {
+		this.audit = audit;
+	}
 
 	public String getUri() {
 		return uri;

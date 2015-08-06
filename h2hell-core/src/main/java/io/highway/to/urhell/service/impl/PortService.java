@@ -39,6 +39,7 @@ public class PortService extends AbstractLeechService {
                 entry.setClassName("portAnalysis");
                 entry.setMethodName(String.valueOf(port));
                 entry.setUri(String.valueOf("lsof -i :"+String.valueOf(port)+" -t | xargs ps -o cmd"));
+                entry.setAudit(false);
                 addEntryPath(entry);
                 serverSok.close();
             } catch (IOException ex) {

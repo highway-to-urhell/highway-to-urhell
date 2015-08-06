@@ -44,7 +44,7 @@ public class TransformerService {
         for (LeechService leech : leechService) {
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
-                if (entryPath.getMethodName() != null) {
+                if (entryPath.getMethodName() != null && !"portAnalysis".equals(entryPath.getClassName())) {
                     switch (entryPath.getTypePath()) {
                         case SERVLET:
                             createRegistrerBreakerData(

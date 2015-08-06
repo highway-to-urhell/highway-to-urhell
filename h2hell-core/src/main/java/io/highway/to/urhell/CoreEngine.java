@@ -63,7 +63,6 @@ public class CoreEngine {
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values());
-            LOGGER.error(" PASSAGE ");
             if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken()!=null) {
                 ThunderExporterService.getInstance().initRemoteApp();
             }
@@ -126,10 +125,9 @@ public class CoreEngine {
             throw new RuntimeException("Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
         }
         parseConfig(rootH2h);
-        if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() !=null ) {
+        if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() ==null ) {
             ThunderExporterService.getInstance().registerAppInThunder();
         }else{
-        	ThunderExporterService.getInstance().setToken(config.getToken());
         	LOGGER.info("application reuse the token {} for application {}",
     				config.getToken(), config.getNameApplication());
         }

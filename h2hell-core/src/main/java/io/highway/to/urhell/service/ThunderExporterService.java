@@ -32,7 +32,6 @@ import com.google.gson.Gson;
 public class ThunderExporterService {
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	private static ThunderExporterService instance;
-	private String token;
 	private BlockingQueue<MessageBreaker> queueRemoteBreaker = new LinkedBlockingQueue<MessageBreaker>(
 			10000);
 	private BlockingQueue<MessageMetrics> queueRemotePerformance = new LinkedBlockingQueue<MessageMetrics>(
@@ -47,24 +46,24 @@ public class ThunderExporterService {
 			public void run() {
 				LOGGER.info("Drain the queue Remote");
 				List<MessageBreaker> listBreaker = new ArrayList<MessageBreaker>();
-		        int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
-		        LOGGER.info("Drain Remote size "+result);
-		        if (result > 0) {
-		        	LOGGER.info("Send the Data");
-		        	sendDataHTTP("/addBreaker", listBreaker);
-		        }
-		        
-		        LOGGER.info("Drain the queue Performance");
+				int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
+				LOGGER.info("Drain Remote size " + result);
+				if (result > 0) {
+					LOGGER.info("Send the Data");
+					sendDataHTTP("/addBreaker", listBreaker);
+				}
+
+				LOGGER.info("Drain the queue Performance");
 				List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
-		        int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
-		        LOGGER.info("Drain Performance size "+result);
-		        if (resultPerf > 0) {
-		        	LOGGER.info("Send the Data");
-		        	sendDataHTTP("/addPerformance", listPerformance);
-		        }
-		        
+				int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
+				LOGGER.info("Drain Performance size " + result);
+				if (resultPerf > 0) {
+					LOGGER.info("Send the Data");
+					sendDataHTTP("/addPerformance", listPerformance);
+				}
+
 			}
-	    }, 5, 30,  TimeUnit.SECONDS);
+		}, 5, 30, TimeUnit.SECONDS);
 	}
 
 	public static ThunderExporterService getInstance() {
@@ -79,36 +78,30 @@ public class ThunderExporterService {
 	}
 
 	public void registerAppInThunder() {
-		this.token = sendDataHTTP("/createThunderApp/", CoreEngine
+		String token = sendDataHTTP("/createThunderApp/", CoreEngine
 				.getInstance().getConfig());
+		CoreEngine.getInstance().getConfig().setToken(token);
 		LOGGER.info("application registred with token {} for application {}",
 				token, CoreEngine.getInstance().getConfig()
 						.getNameApplication());
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public void initRemoteApp() {
+		LOGGER.info("initRemoteApp ");
 		TransformerService ts = new TransformerService();
 		List<EntryPathData> res = ts
 				.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance()
 						.getLeechServiceRegistered());
 		MessageThunderApp msg = new MessageThunderApp();
 		msg.setListentryPathData(res);
-		msg.setToken(token);
+		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
 		sendDataHTTP("/initThunderApp", msg);
 	}
 
 	public void sendRemotePerformance(String fullMethodName,long timeExec){
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
-		msg.setToken(token);
+		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));
@@ -119,7 +112,7 @@ public class ThunderExporterService {
 	public void sendRemoteBreaker(String pathClassMethodName) {
 		MessageBreaker msg = new MessageBreaker();
 		msg.setPathClassMethodName(pathClassMethodName);
-		msg.setToken(token);
+		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));

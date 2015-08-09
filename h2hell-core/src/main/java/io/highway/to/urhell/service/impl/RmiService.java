@@ -4,6 +4,7 @@ package io.highway.to.urhell.service.impl;
 import io.highway.to.urhell.domain.EntryPathData;
 import io.highway.to.urhell.service.AbstractLeechService;
 
+import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
@@ -23,7 +24,7 @@ public class RmiService extends AbstractLeechService {
             if(reg!=null){
                 for (String name : reg.list()){
                     EntryPathData e = new EntryPathData();
-                    e.setClassName("locateRegistry");
+                    e.setClassName(reg.lookup(name).getClass().getName());
                     e.setMethodName(name);
                     e.setUri(name);
                     e.setAudit(false);

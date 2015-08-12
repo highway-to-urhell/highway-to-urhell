@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.highway.to.urhell</groupId>
+        <groupId>com.highway2urhell</groupId>
         <artifactId>h2hell-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
@@ -68,7 +68,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Premain-Class>io.highway.to.urhell.agent.H2hellAgent</Premain-Class>
+                            <Premain-Class>com.highway2urhell.agent.H2hellAgent</Premain-Class>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                         </manifestEntries>

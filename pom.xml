@@ -6,7 +6,7 @@
 		<maven>3.1.1</maven>
 	</prerequisites>
 
-	<groupId>io.highway.to.urhell</groupId>
+	<groupId>com.highway2urhell</groupId>
 	<artifactId>h2hell-parent</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>

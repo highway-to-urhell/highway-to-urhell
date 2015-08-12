@@ -20,7 +20,7 @@
 	<logger name="SLF4J" level="WARN" />
 	<logger name="JCL" level="INFO" />
 
-	<logger name="io.highway.to.urhell" level="DEBUG" />
+	<logger name="com.highway2urhell" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="Console" />

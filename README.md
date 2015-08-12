@@ -70,8 +70,8 @@ export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core-0.0.1-SNA
 ## Vizualisation
 ### Mode MEMORY
 * Call the url for JSON result http://host:port/root_uri_of_your_application/h2h
-* Call the url for HTML result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=io.highway.to.urhell.generator.impl.HTMLGenerator 
-* Call the url for File result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=io.highway.to.urhell.generator.impl.FileGenerator 
+* Call the url for HTML result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=com.highway2urhell.generator.impl.HTMLGenerator 
+* Call the url for File result http://host:port/root_uri_of_your_application/h2h?customGeneratorClass=com.highway2urhell.generator.impl.FileGenerator 
 
 ### Mode Remote
 * See H2H-Web project
@@ -82,7 +82,7 @@ If your application server doesn't support servlet 3+, add the filter h2h (on th
 ```
  		<filter>
                 <filter-name>h2h</filter-name>
-                <filter-class>io.highway.to.urhell.filter.H2hellFilter</filter-class>
+                <filter-class>com.highway2urhell.filter.H2hellFilter</filter-class>
         </filter>
 
         <filter-mapping>
@@ -96,7 +96,7 @@ If your application server doesn't support servlet 3+, add the filter h2h (on th
 
 For add new entry point because we can't support your prefer framework you must create 2 services (class) : first retrieve the entrypoint and the second treat the list of entrypoint.
 
-The first service must extends io.highway.to.urhell.transforme.AbstractLeechTransformer. 
+The first service must extends com.highway2urhell.transforme.AbstractLeechTransformer. 
 You must implements doTransform with 2 requirements :
 * Create the list of entrypoint ArrayList<EntryPathData>
 * Send the data to CoreEngine with CoreEngine.getInstance().getFramework(your_framework).receiveData(listEntryPath) 
@@ -105,9 +105,9 @@ You must implements the constructor like :
 super(package_class_modified_by_agent);// example "com/google/gwt/user/server/rpc/RemoteServiceServlet" 
 addImportPackage(String... packages);// list package add by Agent for running the agent with your modification. example "java.lang.reflect", "java.util","org.reflections", "org.reflections.util", "java.util.Map"
 ```
-For example, we recommand to see the actual transformer in package io.highway.to.urhell.transformer.
+For example, we recommand to see the actual transformer in package com.highway2urhell.transformer.
 
-The second service must extends io.highway.to.urhell.service.AbstractLeechService with 1 requirement :
+The second service must extends com.highway2urhell.service.AbstractLeechService with 1 requirement :
 * The constructor must invoke like 
 ```
 super(FRAMEWORK_NAME, VersionUtils.getVersion("package_class","groupid", "artifactId"));
@@ -116,7 +116,7 @@ super(FRAMEWORK_NAME, VersionUtils.getVersion("package_class","groupid", "artifa
 ## Add custom vizualisation
 
 For add your custom vizualisation you must : 
-* implements the interface io.highway.to.urhell.generator.TheJack
+* implements the interface com.highway2urhell.generator.TheJack
 * add your class in highway-to-url distribution
 
 ## Supports

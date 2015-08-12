@@ -2,14 +2,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<prerequisites>
+		<maven>3.1.1</maven>
+	</prerequisites>
+
 	<groupId>io.highway.to.urhell</groupId>
 	<artifactId>h2hell-parent</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<url>http://www.highway2urhell.com/</url>
 
-	<prerequisites>
-		<maven>3.1.1</maven>
-	</prerequisites>
+	<modules>
+		<module>h2hell-core</module>
+		<module>h2hell-distribution</module>
+	</modules>
 
 	<properties>
 		<!-- ~~~~~~ -->
@@ -23,10 +29,58 @@
 		<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 		<spring.version>4.0.2.RELEASE</spring.version>
 	</properties>
-	<modules>
-		<module>h2hell-core</module>
-		<module>h2hell-distribution</module>
-	</modules>
+
+
+	<developers>
+		<developer>
+			<id>nicopoirier</id>
+			<name>nicolas.npoirier@gmail.com</name>
+			<email>nicolas@furth-tech.com</email>
+		</developer>
+		<developer>
+			<id>kerbart</id>
+			<name>Damien Kerbart</name>
+			<email>damien@kerbart.com</email>
+		</developer>
+		<developer>
+			<id>jeanlouisboudart</id>
+			<name>Jean-Louis Boudart</name>
+			<email>jeanlouis.boudart@gmail.com</email>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git://github.com/highway-to-urhell/highway-to-urhell.git</connection>
+		<developerConnection>scm:git:git@github.com:highway-to-urhell/highway-to-urhell.git</developerConnection>
+		<url>http://github.com/highway-to-urhell/highway-to-urhell/</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<issueManagement>
+		<system>github</system>
+		<url>http://github.com/highway-to-urhell/highway-to-urhell/issues#issue/</url>
+	</issueManagement>
 
 	<dependencyManagement>
 		<dependencies>

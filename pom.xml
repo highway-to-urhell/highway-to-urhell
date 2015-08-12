@@ -10,6 +10,8 @@
 	<version>1.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://www.highway2urhell.com/</url>
+	<name>highway2urhell</name>
+	<description>H2H is a component that detects entry points paths in your project.</description>
 
 	<modules>
 		<module>h2hell-core</module>

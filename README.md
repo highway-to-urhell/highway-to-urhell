@@ -18,7 +18,9 @@ H2H supports (for Java)
 * JEE & JAX-RS
 * RMI server
 * Scan port
-* JMS via javax.jms.* (in progress)
+* JMS 1.1
+* ActiveMQ (JMS only)
+* JMS 2.0 (in progress)
 * RestX (in progress)
 
 

@@ -15,12 +15,6 @@
             <groupId>com.highway2urhell</groupId>
             <artifactId>h2hell-core</artifactId>
             <version>${project.version}</version>
-    	    <exclusions>
-            	<exclusion>
-    	       		<groupId>org.apache.activemq</groupId>
-    			    <artifactId>activemq-all</artifactId>
-    			</exclusion>
-          	</exclusions>
         </dependency>
     </dependencies>
     <build>

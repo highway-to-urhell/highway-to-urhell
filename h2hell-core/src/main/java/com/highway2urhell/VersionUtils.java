@@ -3,6 +3,8 @@ package com.highway2urhell;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 public class VersionUtils {
 
@@ -45,6 +47,29 @@ public class VersionUtils {
 				}
 			}
 		}
+
+		// try to load from manifest
+		try {
+			is = clazz.getResourceAsStream("/META-INF/MANIFEST.MF");
+			if (is != null) {
+				Manifest manifest = new Manifest(is);
+				Attributes attr = manifest.getMainAttributes();
+				version = attr.getValue("Implementation-Version");
+			}
+		} catch (Exception e) {
+			// ignore
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					// ignore
+				}
+			}
+		}
+
+
+
 		// fallback to using Java API
 		if (version == null) {
 			Package aPackage = clazz.getPackage();

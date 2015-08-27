@@ -10,8 +10,8 @@ public class SpringAMQPRabbitTransformer extends AbstractLeechTransformer {
                     "com.highway2urhell.service.impl",
                     "java.lang.reflect",
                     "org.springframework.amqp.rabbit.listener.adapter",
-                    "org.springframework.amqp.remoting.service.AmqpInvokerServiceExporter",
-                    "org.springframework.messaging.handler.invocation.InvocableHandlerMethod"
+                    "org.springframework.amqp.remoting.service",
+                    "org.springframework.messaging.handler.invocation"
                 );
     }
 

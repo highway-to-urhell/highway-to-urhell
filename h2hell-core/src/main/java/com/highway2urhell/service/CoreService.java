@@ -101,6 +101,20 @@ public class CoreService {
         out.close();
     }
 
+    public void initPathsRemote(ServletResponse response)
+            throws IOException {
+        PrintWriter out = response.getWriter();
+        try {
+            CoreEngine.getInstance().initPathsRemote();
+            out.print("Send paths to remote for App "
+                    + CoreEngine.getInstance().getConfig().getNameApplication());
+        } catch (Exception e) {
+            LOG.error("Error while initPathsRemote ", e);
+            out.print(e);
+        }
+        out.close();
+    }
+
 
     private String generateJSon(Collection<LeechService> leechServiceRegistered) {
         JSONGenerator gen = new JSONGenerator();

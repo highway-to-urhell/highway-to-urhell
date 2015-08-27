@@ -11,7 +11,17 @@ public class H2hConfig {
 	private String versionApp;
 	private String typeAppz;
 	private OutputSystem timer;
+
+	public Boolean getPathSend() {
+		return pathSend;
+	}
+
+	public void setPathSend(Boolean pathSend) {
+		this.pathSend = pathSend;
+	}
+
 	private String token;
+	private Boolean pathSend = false;
 	
 	public String getToken() {
 		return token;

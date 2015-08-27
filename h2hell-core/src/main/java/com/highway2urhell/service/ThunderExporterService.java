@@ -86,8 +86,8 @@ public class ThunderExporterService {
 						.getNameApplication());
 	}
 
-	public void initRemoteApp() {
-		LOGGER.info("initRemoteApp ");
+	public void initPathsRemoteApp() {
+		LOGGER.info("initPathsRemoteApp ");
 		TransformerService ts = new TransformerService();
 		List<EntryPathData> res = ts
 				.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance()

@@ -18,15 +18,19 @@ public class H2hellFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         String launch = request.getParameter("launch");
+        String paths = request.getParameter("paths");
         String customGeneratorClass = request.getParameter("customGeneratorClass");
         String srcPath = request.getParameter("srcPath");
         if (srcPath !=null && !"".equals(srcPath)){
             CoreService.getInstance().findSource(response,srcPath);
         }else {
-            if (launch != null) {
+            if(paths !=null){
+                CoreService.getInstance().initPathsRemote(response);
+            }else if (launch != null) {
                 CoreService.getInstance().enableEntryPointCoverage(response);
+            }else {
+                CoreService.getInstance().generateReport(response, customGeneratorClass);
             }
-            CoreService.getInstance().generateReport(response,customGeneratorClass);
         }
     }
 

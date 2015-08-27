@@ -63,13 +63,21 @@ public class CoreEngine {
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
             Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values());
-            if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken()!=null) {
-                ThunderExporterService.getInstance().initRemoteApp();
+            if(!config.getPathSend()){
+                //if the initPath are not called
+                initPathsRemote();
             }
             instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {
             LOGGER.error("Instrumentation fail because internal inst is null");
+        }
+    }
+
+    public void initPathsRemote(){
+        if (config.getOutputSystem().equals(OutputSystem.REMOTE) && config.getToken()!=null) {
+            ThunderExporterService.getInstance().initPathsRemoteApp();
+            config.setPathSend(true);
         }
     }
 

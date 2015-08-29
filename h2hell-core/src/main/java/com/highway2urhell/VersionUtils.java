@@ -2,6 +2,8 @@ package com.highway2urhell;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URL;
 import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -50,9 +52,22 @@ public class VersionUtils {
 
 		// try to load from manifest
 		try {
-			is = clazz.getResourceAsStream("/META-INF/MANIFEST.MF");
-			if (is != null) {
-				Manifest manifest = new Manifest(is);
+			URL clazzRes = clazz.getResource('/' + clazz.getName().replace('.', '/') + ".class");
+			String classResPath = clazzRes.getPath();
+			Manifest manifest = null;
+			if (classResPath.contains("!")) {
+				classResPath = classResPath.split("!")[0];
+				URL url = new URL("jar:" + classResPath + "!/");
+				JarURLConnection jarConnection = (JarURLConnection) url.openConnection();
+				manifest = jarConnection.getManifest();
+			} else {
+				is = clazz.getResourceAsStream(classResPath + "!/META-INF/MANIFEST.MF");
+				if (is != null)
+					manifest = new Manifest(is);
+
+			}
+			if (manifest != null)
+			{
 				Attributes attr = manifest.getMainAttributes();
 				version = attr.getValue("Implementation-Version");
 			}

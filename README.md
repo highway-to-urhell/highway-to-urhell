@@ -42,6 +42,7 @@ You can build it using Maven 3+ :
 REMOTE send data to h2hell-web, MEMORY data in memory agent
 ```
 outputSystem=REMOTE or Memory
+timer=REMOTE (if outputSystem is REMOTE)
 urlapplication=url of your application reachable for H2H-web
 nameapplication=name
 urlh2hweb=http://server-h2h-web:port/core/api/ThunderApp (only REMOTE)

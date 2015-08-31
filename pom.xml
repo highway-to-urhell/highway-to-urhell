@@ -216,6 +216,14 @@
 				<scope>provided</scope>
 			</dependency>
 			<!-- ~~~~ -->
+			<!-- AMQP -->
+			<!-- ~~~~ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-messaging</artifactId>
+				<version>4.1.6.RELEASE</version>
+			</dependency>
+			<!-- ~~~~ -->
 			<!-- TEST -->
 			<!-- ~~~~ -->
 			<dependency>

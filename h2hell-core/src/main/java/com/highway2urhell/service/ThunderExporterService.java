@@ -102,9 +102,8 @@ public class ThunderExporterService {
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		Date date = new Date();
-		msg.setDateIncoming(sdf.format(date));
+		msg.setDateIncoming(date);
 		msg.setTimeExec(timeExec);
 		queueRemotePerformance.add(msg);
 	}

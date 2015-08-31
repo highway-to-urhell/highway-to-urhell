@@ -1,9 +1,11 @@
 package com.highway2urhell.domain;
 
+import java.util.Date;
+
 public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;
-	private String dateIncoming;
+	private Date dateIncoming;
 	private long timeExec;
 	public String getPathClassMethodName() {
 		return pathClassMethodName;
@@ -17,10 +19,10 @@ public class MessageMetrics {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getDateIncoming() {
+	public Date getDateIncoming() {
 		return dateIncoming;
 	}
-	public void setDateIncoming(String dateIncoming) {
+	public void setDateIncoming(Date dateIncoming) {
 		this.dateIncoming = dateIncoming;
 	}
 	public long getTimeExec() {

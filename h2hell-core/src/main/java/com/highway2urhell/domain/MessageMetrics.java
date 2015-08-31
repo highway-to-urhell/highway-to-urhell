@@ -5,7 +5,7 @@ import java.util.Date;
 public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;
-	private Date dateIncoming;
+	private String dateIncoming;
 	private long timeExec;
 	public String getPathClassMethodName() {
 		return pathClassMethodName;
@@ -19,10 +19,10 @@ public class MessageMetrics {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Date getDateIncoming() {
+	public String getDateIncoming() {
 		return dateIncoming;
 	}
-	public void setDateIncoming(Date dateIncoming) {
+	public void setDateIncoming(String dateIncoming) {
 		this.dateIncoming = dateIncoming;
 	}
 	public long getTimeExec() {

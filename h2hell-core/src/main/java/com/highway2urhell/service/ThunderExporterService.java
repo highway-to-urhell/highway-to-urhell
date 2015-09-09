@@ -102,7 +102,7 @@ public class ThunderExporterService {
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));
 		msg.setTimeExec(timeExec);

@@ -7,6 +7,7 @@ import com.highway2urhell.domain.MessageMetrics;
 import com.highway2urhell.domain.MessageThunderApp;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.sun.management.OperatingSystemMXBean;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -28,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+
 
 public class ThunderExporterService {
 	private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
@@ -106,6 +109,7 @@ public class ThunderExporterService {
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));
 		msg.setTimeExec(timeExec);
+		getCpuInformation(msg);
 		queueRemotePerformance.add(msg);
 	}
 	
@@ -155,6 +159,14 @@ public class ThunderExporterService {
 			LOGGER.error("Error while sending dataHttp to " + urlServer, e);
 		}
 		return result;
+	}
 
+
+	private void getCpuInformation(MessageMetrics mb){
+		OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+		Double cpuLoadProcess = Double.valueOf(operatingSystemMXBean.getProcessCpuLoad()*100);
+		Double cpuLoadSystem = Double.valueOf(operatingSystemMXBean.getSystemCpuLoad()*100);
+		mb.setCpuLoadProcess(cpuLoadProcess);
+		mb.setCpuLoadSystem(cpuLoadSystem);
 	}
 }

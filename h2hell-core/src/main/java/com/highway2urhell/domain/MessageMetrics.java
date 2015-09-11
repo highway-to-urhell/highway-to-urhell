@@ -1,12 +1,28 @@
 package com.highway2urhell.domain;
 
-import java.util.Date;
-
 public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;
 	private String dateIncoming;
 	private long timeExec;
+	private Double cpuLoadSystem;
+	private Double cpuLoadProcess;
+
+	public Double getCpuLoadSystem() {
+		return cpuLoadSystem;
+	}
+
+	public void setCpuLoadSystem(Double cpuLoadSystem) {
+		this.cpuLoadSystem = cpuLoadSystem;
+	}
+
+	public Double getCpuLoadProcess() {
+		return cpuLoadProcess;
+	}
+
+	public void setCpuLoadProcess(Double cpuLoadProcess) {
+		this.cpuLoadProcess = cpuLoadProcess;
+	}
 	public String getPathClassMethodName() {
 		return pathClassMethodName;
 	}

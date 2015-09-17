@@ -35,11 +35,15 @@ You can build it using Maven 3+ :
 `mvn install`
 
 ### How to use it
-
+ * Download the last release on github
  * Unzip highway-to-url distribution in a directory of your choice
 
 ### Create configuration file : config.properties
-REMOTE send data to h2hell-web, MEMORY data in memory agent
+The configuration file define the parameter for the agent.
+There's two configurations  :
+* MEMORY (data are located into the agent)
+* REMOTE send data to h2hell-web (see the project h2h-web)
+Structure of the property file :
 ```
 outputSystem=REMOTE or Memory
 timer=REMOTE (if outputSystem is REMOTE)

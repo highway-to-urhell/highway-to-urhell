@@ -101,7 +101,7 @@ public class CoreService {
         } catch (Exception e) {
             LOG.error(" Error during parse request with launch parameter ",e);
         }
-
+        LOG.debug(" Flux "+res.toString());
         return createFilter(res.toString());
     }
 
@@ -111,6 +111,7 @@ public class CoreService {
         try {
             res = gson.fromJson(launch, FilterEntryPath.class);
         }catch (Exception e){
+            LOG.debug(" Not a JSON format for FilterEntryPath "+launch);
             res = new FilterEntryPath();
         }
         return res;

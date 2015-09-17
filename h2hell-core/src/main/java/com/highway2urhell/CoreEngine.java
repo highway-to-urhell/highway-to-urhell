@@ -1,7 +1,9 @@
 package com.highway2urhell;
 
+import com.google.gson.Gson;
 import com.highway2urhell.agent.InstrumentationHolder;
 import com.highway2urhell.domain.EntryPathData;
+import com.highway2urhell.domain.FilterEntryPath;
 import com.highway2urhell.domain.H2hConfig;
 import com.highway2urhell.domain.OutputSystem;
 import com.highway2urhell.service.AbstractLeechService;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,13 +59,12 @@ public class CoreEngine {
         return instance;
     }
 
-
-    public void enableEntryPointCoverage() throws ClassNotFoundException, UnmodifiableClassException {
+    public void enableEntryPointCoverage(FilterEntryPath filter) throws ClassNotFoundException, UnmodifiableClassException {
         LOGGER.info("enabling entry point coverage");
         Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
-            Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values());
+            Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values(),filter);
             if(!config.getPathSend()){
                 //if the initPath are not called
                 initPathsRemote();

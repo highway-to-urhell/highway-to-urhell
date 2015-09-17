@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet add in your web.xml
- */
 @WebServlet(value = "/h2h/*", name = "h2h-servlet")
 public class H2hellServlet extends HttpServlet {
 
@@ -35,7 +32,7 @@ public class H2hellServlet extends HttpServlet {
             if(paths !=null){
                 CoreService.getInstance().initPathsRemote(response);
             }else if (launch != null) {
-                CoreService.getInstance().enableEntryPointCoverage(response);
+                CoreService.getInstance().enableEntryPointCoverage(request,response);
             }else {
                 CoreService.getInstance().generateReport(response, customGeneratorClass);
             }

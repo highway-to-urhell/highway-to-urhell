@@ -1,12 +1,16 @@
 package com.highway2urhell.service;
 
+import com.google.gson.Gson;
 import com.highway2urhell.CoreEngine;
+import com.highway2urhell.domain.FilterEntryPath;
 import com.highway2urhell.generator.TheJack;
 import com.highway2urhell.generator.impl.JSONGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.instrument.UnmodifiableClassException;
@@ -87,11 +91,37 @@ public class CoreService {
         out.close();
     }
 
-    public void enableEntryPointCoverage(ServletResponse response)
+    private FilterEntryPath getDataFromRequest(ServletRequest request){
+        StringBuffer res = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null)
+                res.append(line);
+        } catch (Exception e) {
+            LOG.error(" Error during parse request with launch parameter ",e);
+        }
+
+        return createFilter(res.toString());
+    }
+
+    private FilterEntryPath createFilter(String launch){
+        Gson gson = new Gson();
+        FilterEntryPath res = null;
+        try {
+            res = gson.fromJson(launch, FilterEntryPath.class);
+        }catch (Exception e){
+            res = new FilterEntryPath();
+        }
+        return res;
+    }
+
+    public void enableEntryPointCoverage(ServletRequest request,ServletResponse response)
             throws IOException {
         PrintWriter out = response.getWriter();
         try {
-            CoreEngine.getInstance().enableEntryPointCoverage();
+            FilterEntryPath filter = getDataFromRequest(request);
+            CoreEngine.getInstance().enableEntryPointCoverage(filter);
             out.print("Transformer activated for App "
                     + CoreEngine.getInstance().getConfig().getNameApplication());
         } catch (ClassNotFoundException | UnmodifiableClassException e) {

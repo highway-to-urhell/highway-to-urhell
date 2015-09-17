@@ -27,7 +27,7 @@ public class H2hellFilter implements Filter {
             if(paths !=null){
                 CoreService.getInstance().initPathsRemote(response);
             }else if (launch != null) {
-                CoreService.getInstance().enableEntryPointCoverage(response);
+                CoreService.getInstance().enableEntryPointCoverage(request,response);
             }else {
                 CoreService.getInstance().generateReport(response, customGeneratorClass);
             }

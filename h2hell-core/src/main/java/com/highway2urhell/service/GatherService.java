@@ -36,7 +36,11 @@ public class GatherService {
             	 LOGGER.info(" fullMethodName "+fullMethodName+" timeExec "+timeExec);
              	 break;
              case REMOTE:
-                 ThunderExporterService.getInstance().sendRemotePerformance(fullMethodName,timeExec);
+                 long timerConfig = CoreEngine.getInstance().getConfig().getHigherTime().longValue();
+                 if(timeExec>timerConfig) {
+                     int tExec = (int) timeExec;
+                     ThunderExporterService.getInstance().sendRemotePerformance(fullMethodName, tExec);
+                 }
                  break;
              default:
                  LOGGER.info("No config for Timer");

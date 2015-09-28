@@ -1,34 +1,21 @@
 package com.highway2urhell;
 
-import com.google.gson.Gson;
 import com.highway2urhell.agent.InstrumentationHolder;
 import com.highway2urhell.domain.EntryPathData;
 import com.highway2urhell.domain.FilterEntryPath;
 import com.highway2urhell.domain.H2hConfig;
 import com.highway2urhell.domain.OutputSystem;
-import com.highway2urhell.service.AbstractLeechService;
-import com.highway2urhell.service.LeechService;
-import com.highway2urhell.service.ReporterService;
-import com.highway2urhell.service.ThunderExporterService;
-import com.highway2urhell.service.TransformerService;
+import com.highway2urhell.service.*;
 import com.highway2urhell.transformer.EntryPointTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.logging.Filter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.*;
 
 public class CoreEngine {
 
@@ -39,6 +26,7 @@ public class CoreEngine {
     protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final static String H2H_CONFIG = "H2H_CONFIG";
     private final static String JAVA = "Java";
+    private final static Integer DEFAULT_TIMER = 1;
     private H2hConfig config;
 
     private CoreEngine() {
@@ -173,6 +161,18 @@ public class CoreEngine {
                 throw new RuntimeException("Variable timer is not defined");
             }
             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
+            String higherTimer = prop.getProperty("higherTimer");
+            if(higherTimer!=null){
+                try {
+                    config.setHigherTime(Integer.valueOf(higherTimer));
+                }catch (NumberFormatException e){
+                    //default value
+                    config.setHigherTime(DEFAULT_TIMER);
+                }
+            }else{
+                //default value
+                config.setHigherTime(DEFAULT_TIMER);
+            }
 
         } catch (IOException ex) {
             throw new RuntimeException("Error while reading H2hConfigFile " + pathFile, ex);

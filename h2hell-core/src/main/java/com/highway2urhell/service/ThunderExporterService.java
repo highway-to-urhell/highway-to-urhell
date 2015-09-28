@@ -101,7 +101,7 @@ public class ThunderExporterService {
 		sendDataHTTP("/initThunderApp", msg);
 	}
 
-	public void sendRemotePerformance(String fullMethodName,long timeExec){
+	public void sendRemotePerformance(String fullMethodName,int timeExec){
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());

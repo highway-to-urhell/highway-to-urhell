@@ -4,7 +4,7 @@ public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;
 	private String dateIncoming;
-	private long timeExec;
+	private int timeExec;
 	private Double cpuLoadSystem;
 	private Double cpuLoadProcess;
 
@@ -41,10 +41,10 @@ public class MessageMetrics {
 	public void setDateIncoming(String dateIncoming) {
 		this.dateIncoming = dateIncoming;
 	}
-	public long getTimeExec() {
+	public int getTimeExec() {
 		return timeExec;
 	}
-	public void setTimeExec(long timeExec) {
+	public void setTimeExec(int timeExec) {
 		this.timeExec = timeExec;
 	}
 

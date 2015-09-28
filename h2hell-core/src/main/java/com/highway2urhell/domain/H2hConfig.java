@@ -11,6 +11,15 @@ public class H2hConfig {
 	private String versionApp;
 	private String typeAppz;
 	private OutputSystem timer;
+	private Integer higherTime;
+
+	public Integer getHigherTime() {
+		return higherTime;
+	}
+
+	public void setHigherTime(Integer higherTime) {
+		this.higherTime = higherTime;
+	}
 
 	public Boolean getPathSend() {
 		return pathSend;

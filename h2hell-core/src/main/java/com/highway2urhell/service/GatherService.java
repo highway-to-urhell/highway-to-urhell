@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GatherService {
@@ -29,7 +30,7 @@ public class GatherService {
         mapThunderData = new HashMap<String, ThunderData>();
     }
     
-    public void gatherPerformance(String fullMethodName,long timeExec){
+    public void gatherPerformance(String fullMethodName,long timeExec,List<String> listParams){
     	 H2hConfig hc = CoreEngine.getInstance().getConfig();
          switch (hc.getTimer()) {
              case MEMORY:
@@ -39,7 +40,7 @@ public class GatherService {
                  long timerConfig = CoreEngine.getInstance().getConfig().getHigherTime().longValue();
                  if(timeExec>timerConfig) {
                      int tExec = (int) timeExec;
-                     ThunderExporterService.getInstance().sendRemotePerformance(fullMethodName, tExec);
+                     ThunderExporterService.getInstance().sendRemotePerformance(fullMethodName, tExec,listParams);
                  }
                  break;
              default:
@@ -47,7 +48,7 @@ public class GatherService {
          }
     }
 
-    public void gatherInvocation(String fullMethodName) {
+    public void gatherInvocation(String fullMethodName,List<String> listParams) {
         H2hConfig hc = CoreEngine.getInstance().getConfig();
         switch (hc.getOutputSystem()) {
             case MEMORY:
@@ -60,7 +61,7 @@ public class GatherService {
                 td.incrementCounter();
                 break;
             case REMOTE:
-                ThunderExporterService.getInstance().sendRemoteBreaker(fullMethodName);
+                ThunderExporterService.getInstance().sendRemoteBreaker(fullMethodName,listParams);
                 break;
             default:
                 throw new IllegalStateException(hc.getOutputSystem()

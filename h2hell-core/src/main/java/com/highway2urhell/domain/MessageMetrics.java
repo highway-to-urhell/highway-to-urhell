@@ -1,5 +1,7 @@
 package com.highway2urhell.domain;
 
+import java.util.List;
+
 public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;
@@ -7,6 +9,15 @@ public class MessageMetrics {
 	private int timeExec;
 	private Double cpuLoadSystem;
 	private Double cpuLoadProcess;
+	private List<String> parameters;
+
+	public List<String> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<String> parameters) {
+		this.parameters = parameters;
+	}
 
 	public Double getCpuLoadSystem() {
 		return cpuLoadSystem;

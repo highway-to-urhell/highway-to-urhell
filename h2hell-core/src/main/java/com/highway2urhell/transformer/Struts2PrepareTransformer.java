@@ -74,6 +74,6 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
                 "   }" +
                 "}" +
                 "CoreEngine.getInstance().getFramework(\"STRUTS_2\").receiveData(listEntryPath);";
-        m.insertBefore(h2hHookCode);
+            m.insertBefore(h2hHookCode);
     }
 }

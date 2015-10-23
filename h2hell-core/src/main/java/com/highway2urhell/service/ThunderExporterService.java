@@ -101,7 +101,7 @@ public class ThunderExporterService {
 		sendDataHTTP("/initThunderApp", msg);
 	}
 
-	public void sendRemotePerformance(String fullMethodName,int timeExec){
+	public void sendRemotePerformance(String fullMethodName,int timeExec,List<String> parameters){
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
@@ -109,17 +109,19 @@ public class ThunderExporterService {
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));
 		msg.setTimeExec(timeExec);
+		msg.setParameters(parameters);
 		getCpuInformation(msg);
 		queueRemotePerformance.add(msg);
 	}
 	
-	public void sendRemoteBreaker(String pathClassMethodName) {
+	public void sendRemoteBreaker(String pathClassMethodName,List<String> parameters) {
 		MessageBreaker msg = new MessageBreaker();
 		msg.setPathClassMethodName(pathClassMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 		Date date = new Date();
 		msg.setDateIncoming(sdf.format(date));
+		msg.setParameters(parameters);
 		queueRemoteBreaker.add(msg);
 	}
 

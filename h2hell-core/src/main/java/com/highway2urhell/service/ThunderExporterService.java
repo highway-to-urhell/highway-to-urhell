@@ -47,21 +47,21 @@ public class ThunderExporterService {
 		schExService.scheduleAtFixedRate(new Runnable() {
 
 			public void run() {
-				LOGGER.info("Drain the queue Remote");
+				LOGGER.debug("Drain the queue Remote");
 				List<MessageBreaker> listBreaker = new ArrayList<MessageBreaker>();
 				int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
-				LOGGER.info("Drain Remote size " + result);
+				LOGGER.debug("Drain Remote size " + result);
 				if (result > 0) {
-					LOGGER.info("Send the Data");
+					LOGGER.debug("Send the Data");
 					sendDataHTTP("/addBreaker", listBreaker);
 				}
 
-				LOGGER.info("Drain the queue Performance");
+				LOGGER.debug("Drain the queue Performance");
 				List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
 				int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
-				LOGGER.info("Drain Performance size " + result);
+				LOGGER.debug("Drain Performance size " + result);
 				if (resultPerf > 0) {
-					LOGGER.info("Send the Data");
+					LOGGER.debug("Send the Data");
 					sendDataHTTP("/addPerformance", listPerformance);
 				}
 
@@ -101,7 +101,7 @@ public class ThunderExporterService {
 		sendDataHTTP("/initThunderApp", msg);
 	}
 
-	public void sendRemotePerformance(String fullMethodName,int timeExec,List<String> parameters){
+	public void sendRemotePerformance(String fullMethodName,int timeExec,String parameters){
 		MessageMetrics msg = new MessageMetrics();
 		msg.setPathClassMethodName(fullMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());
@@ -113,8 +113,8 @@ public class ThunderExporterService {
 		getCpuInformation(msg);
 		queueRemotePerformance.add(msg);
 	}
-	
-	public void sendRemoteBreaker(String pathClassMethodName,List<String> parameters) {
+
+	public void sendRemoteBreaker(String pathClassMethodName,String parameters) {
 		MessageBreaker msg = new MessageBreaker();
 		msg.setPathClassMethodName(pathClassMethodName);
 		msg.setToken(CoreEngine.getInstance().getConfig().getToken());

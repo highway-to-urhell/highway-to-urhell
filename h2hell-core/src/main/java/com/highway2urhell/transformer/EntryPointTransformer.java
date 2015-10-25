@@ -10,12 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javassist.CannotCompileException;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.LoaderClassPath;
-import javassist.NotFoundException;
+import javassist.*;
 
 import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.LocalVariableAttribute;
@@ -65,9 +60,11 @@ public class EntryPointTransformer implements ClassFileTransformer {
         try {
             m = cc.getMethod(entry.getMethodName(), entry.getSignatureName());
             m.addLocalVariable("startH2H", CtClass.longType);
-            m.insertBefore(generateCmd(m,entry.getClassName(), entry.getMethodName())+"startH2H = System.currentTimeMillis();");
+            CtClass ss = ClassPool.getDefault().get("java.lang.String");
+            m.addLocalVariable("listParamsH2H",ss);
+            m.insertBefore(generateCmd(m, entry.getClassName(), entry.getMethodName()) + "startH2H = System.currentTimeMillis();");
             m.insertAfter("final long endH2H = System.currentTimeMillis();"+generateCmdPerf(m,entry.getClassName(), entry.getMethodName()));
-        } catch (NotFoundException | CannotCompileException e) {
+        } catch (    Exception e) {
             LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
         }
     }
@@ -75,14 +72,13 @@ public class EntryPointTransformer implements ClassFileTransformer {
     private String generateCmd(CtMethod m,String className, String methodName) throws NotFoundException {
         StringBuilder sbs = new StringBuilder();
         sbs.append(generateParamsLeech(m));
-        sbs.append("GatherService.getInstance().gatherInvocation(\"" + className + "." + methodName + "\",listParams);");
+        sbs.append("GatherService.getInstance().gatherInvocation(\"" + className + "." + methodName + "\",listParamsH2H);");
         return sbs.toString();
     }
     
     private String generateCmdPerf(CtMethod m,String className, String methodName) throws NotFoundException {
         StringBuilder sbs = new StringBuilder();
-        sbs.append(generateParamsLeech(m));
-        sbs.append("GatherService.getInstance().gatherPerformance(\"" + className + "." + methodName + "\",(endH2H-startH2H),listParams);");
+        sbs.append("GatherService.getInstance().gatherPerformance(\"" + className + "." + methodName + "\",(endH2H-startH2H),listParamsH2H);");
         return sbs.toString();
     }
 
@@ -96,29 +92,41 @@ public class EntryPointTransformer implements ClassFileTransformer {
 
     private String generateParamsLeech(CtMethod m){
         StringBuilder sbs = new StringBuilder();
-        sbs.append("List listParams = new ArrayList();");
+        sbs.append("listParamsH2H=\"\";");
         try {
             Map<Integer, String> hashNameParam = extractNameParameter(m);
             CtClass[] pTypes = m.getParameterTypes();
             sbs.append("Gson gson = new Gson();");
             for (int i = 0; i < pTypes.length; i++) {
                 sbs.append("    LeechParamMethodData leech" + i + " = new LeechParamMethodData();");
+                sbs.append("    String val"+i+"=\"\";");
                 sbs.append("    try{");
                 sbs.append("        leech" + i + ".setNameParameter(\"" + hashNameParam.get((i + 1)) + "\");");
                 sbs.append("        leech" + i + ".setNameClass($" + (i + 1) + ".getClass().getName());");
                 sbs.append("        leech" + i + ".setData($" + (i + 1) + ");");
-                sbs.append("        String val" + i + " = gson.toJson(leech" + i + ").toString();");
-                sbs.append("        listParams.add(val" + i + ");");
+                sbs.append("        val" + i + " = gson.toJson(leech" + i + ").toString();");
                 sbs.append("    }catch(Exception e) {");
                 sbs.append("        leech" + i + ".setNameParameter(\"ERROR_PARAM\");");
                 sbs.append("        leech" + i + ".setNameClass($" + (i + 1) + ".getClass().getName());");
                 sbs.append("        leech" + i + ".setData(null);");
-                sbs.append("        listParams.add(gson.toJson(leech" + i + ").toString());");
+                sbs.append("        val" + i + " = gson.toJson(leech" + i + ").toString();");
                 sbs.append("    }");
+            }
+            sbs.append("        listParamsH2H=");
+            if(pTypes.length == 0){
+                sbs.append("\"\";");
+            }
+            for (int i = 0; i < pTypes.length; i++) {
+                sbs.append("val" + i + "+\"@@@@@\"");
+                if(i==pTypes.length-1){
+                    sbs.append(";");
+                }else{
+                    sbs.append("+");
+                }
             }
         }catch(NotFoundException nf){
             sbs = new StringBuilder();
-            sbs.append("List listParams = new ArrayList();");
+            sbs.append("listParamsH2H = \"\";");
         }
         return sbs.toString();
     }

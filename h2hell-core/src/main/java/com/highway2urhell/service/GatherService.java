@@ -30,7 +30,7 @@ public class GatherService {
         mapThunderData = new HashMap<String, ThunderData>();
     }
     
-    public void gatherPerformance(String fullMethodName,long timeExec,List<String> listParams){
+    public void gatherPerformance(String fullMethodName,long timeExec,String listParams){
     	 H2hConfig hc = CoreEngine.getInstance().getConfig();
          switch (hc.getTimer()) {
              case MEMORY:
@@ -48,7 +48,7 @@ public class GatherService {
          }
     }
 
-    public void gatherInvocation(String fullMethodName,List<String> listParams) {
+    public void gatherInvocation(String fullMethodName,String listParams) {
         H2hConfig hc = CoreEngine.getInstance().getConfig();
         switch (hc.getOutputSystem()) {
             case MEMORY:

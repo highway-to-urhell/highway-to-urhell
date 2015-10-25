@@ -9,13 +9,13 @@ public class MessageMetrics {
 	private int timeExec;
 	private Double cpuLoadSystem;
 	private Double cpuLoadProcess;
-	private List<String> parameters;
+	private String parameters;
 
-	public List<String> getParameters() {
+	public String getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<String> parameters) {
+	public void setParameters(String parameters) {
 		this.parameters = parameters;
 	}
 

@@ -151,9 +151,9 @@ public class EntryPointTransformer implements ClassFileTransformer {
                 sbs.append("        val" + i + " = gson.toJson(leech" + i + ").toString();");
                 sbs.append("    }catch(Throwable e) {");
                 sbs.append("        System.err.println(\"name : " + hashNameParam.get((i + 2)) + " class : \" + $" + (i + 1) + ".getClass().getName() );");
-                sbs.append("        leech" + i + ".setNameParameter(\"ERROR_PARAM\");");
+                sbs.append("        leech" + i + ".setNameParameter(\"" + hashNameParam.get((i + 2)) + "\");");
                 sbs.append("        leech" + i + ".setNameClass($" + (i + 1) + ".getClass().getName());");
-                sbs.append("        leech" + i + ".setData(null);");
+                sbs.append("        leech" + i + ".setData(\"ERROR_PARAM\");");
                 sbs.append("        val" + i + " = gson.toJson(leech" + i + ").toString();");
                 sbs.append("    }");
             }

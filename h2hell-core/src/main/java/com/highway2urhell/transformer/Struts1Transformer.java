@@ -17,7 +17,7 @@ public class Struts1Transformer extends AbstractLeechTransformer {
 
     @Override
     protected void doTransform(CtClass cc) throws Exception {
-        CtMethod m = cc.getDeclaredMethod("destroyConfigDigester");
+        CtMethod m = cc.getMethod("destroyConfigDigester", "()V");
         String h2hHookCode = "" +
                 "ModuleConfigImpl m = (ModuleConfigImpl) configDigester.getRoot();" +
                 "Field f;" +

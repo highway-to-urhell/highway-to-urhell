@@ -11,7 +11,17 @@ public class H2hConfig {
 	private String versionApp;
 	private String typeAppz;
 	private OutputSystem timer;
+
+	public Boolean getPerformance() {
+		return performance;
+	}
+
+	public void setPerformance(Boolean performance) {
+		this.performance = performance;
+	}
+
 	private Integer higherTime;
+	private Boolean performance;
 
 	public Integer getHigherTime() {
 		return higherTime;

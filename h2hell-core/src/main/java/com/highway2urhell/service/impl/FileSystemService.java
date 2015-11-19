@@ -100,7 +100,11 @@ public class FileSystemService extends AbstractLeechService {
 			extractServlet(document);
 			extractFilter(document);
 			extractListener(document);
-		} catch (ParserConfigurationException | SAXException | IOException e) {
+		} catch (ParserConfigurationException e) {
+			LOGGER.error("error while parsing web.xml " + pathWebXml, e);
+		}catch (SAXException e) {
+			LOGGER.error("error while parsing web.xml " + pathWebXml, e);
+		}catch (IOException e) {
 			LOGGER.error("error while parsing web.xml " + pathWebXml, e);
 		}
 	}

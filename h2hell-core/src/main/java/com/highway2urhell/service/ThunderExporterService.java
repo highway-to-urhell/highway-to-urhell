@@ -52,17 +52,18 @@ public class ThunderExporterService {
 				int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
 				LOGGER.debug("Drain Remote size " + result);
 				if (result > 0) {
-					LOGGER.debug("Send the Data");
+					LOGGER.debug("Send the Data ");
 					sendDataHTTP("/addBreaker", listBreaker);
 				}
-
-				LOGGER.debug("Drain the queue Performance");
-				List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
-				int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
-				LOGGER.debug("Drain Performance size " + result);
-				if (resultPerf > 0) {
-					LOGGER.debug("Send the Data");
-					sendDataHTTP("/addPerformance", listPerformance);
+				if(CoreEngine.getInstance().getConfig().getPerformance()) {
+					LOGGER.debug("Drain the queue Performance");
+					List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
+					int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
+					LOGGER.debug("Drain Performance size " + resultPerf);
+					if (resultPerf > 0) {
+						LOGGER.debug("Send the Data ");
+						sendDataHTTP("/addPerformance", listPerformance);
+					}
 				}
 
 			}

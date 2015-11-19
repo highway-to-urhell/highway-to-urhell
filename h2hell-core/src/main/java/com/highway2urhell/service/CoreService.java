@@ -82,12 +82,20 @@ public class CoreService {
         try {
             gen = (TheJack) Class.forName(customGeneratorClass).newInstance();
             out.println(gen.generatePage(leechServiceRegistered));
-        } catch (InstantiationException | IllegalAccessException
-                | ClassNotFoundException e) {
+        } catch (InstantiationException e) {
+            LOG.error("Can't generate page using " + customGeneratorClass, e);
+            out.println(generateJSon(leechServiceRegistered));
+            response.setContentType("application/json");
+        }catch (IllegalAccessException e) {
+            LOG.error("Can't generate page using " + customGeneratorClass, e);
+            out.println(generateJSon(leechServiceRegistered));
+            response.setContentType("application/json");
+        }catch (ClassNotFoundException e) {
             LOG.error("Can't generate page using " + customGeneratorClass, e);
             out.println(generateJSon(leechServiceRegistered));
             response.setContentType("application/json");
         }
+
         out.close();
     }
 
@@ -125,7 +133,10 @@ public class CoreService {
             CoreEngine.getInstance().enableEntryPointCoverage(filter);
             out.print("Transformer activated for App "
                     + CoreEngine.getInstance().getConfig().getNameApplication());
-        } catch (ClassNotFoundException | UnmodifiableClassException e) {
+        } catch (ClassNotFoundException e) {
+            LOG.error("Error while launchTransformer ", e);
+            out.print(e);
+        }catch (UnmodifiableClassException e) {
             LOG.error("Error while launchTransformer ", e);
             out.print(e);
         }

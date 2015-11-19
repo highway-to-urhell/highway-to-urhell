@@ -34,7 +34,9 @@ public class TransformerService {
                 .getContextClassLoader();
         try {
             inst.retransformClasses(classLoader.loadClass(className));
-        } catch (ClassNotFoundException | UnmodifiableClassException e) {
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("Error while transform Class {} msg {}", className, e);
+        } catch (UnmodifiableClassException e) {
             LOGGER.error("Error while transform Class {} msg {}", className, e);
         }
     }

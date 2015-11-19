@@ -24,8 +24,7 @@ public class SpringServiceUrlService extends AbstractLeechService {
 		// clearPreviousData();
 		LOGGER.debug("receive incoming data");
 		gatherData(incoming);
-		LOGGER.debug("data gathering complete. Found {} entries",
-				getFrameworkInformations().getListEntryPath().size());
+		LOGGER.debug("data gathering complete. Found {} entries", getFrameworkInformations().getListEntryPath().size());
 	}
 
 }

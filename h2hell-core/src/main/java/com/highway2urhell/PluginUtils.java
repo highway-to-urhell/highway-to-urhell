@@ -15,7 +15,7 @@ public class PluginUtils {
     }
 
     public static <T> Set<T> autodiscoverPlugin(Class<T> pluginClass) {
-        Set<T> pluginList = new HashSet<>();
+        Set pluginList = new HashSet();
         Reflections reflections = new Reflections("com.highway2urhell");
         Set<Class<? extends T>> pluginsAvailable = reflections
                 .getSubTypesOf(pluginClass);
@@ -25,7 +25,9 @@ public class PluginUtils {
                         plugin.getCanonicalName());
                 T instance = plugin.newInstance();
                 pluginList.add(instance);
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (InstantiationException e) {
+                LOGGER.error("An error occurred while registering " + pluginClass.getName() + " : " + plugin.getCanonicalName(), e);
+            } catch (IllegalAccessException e) {
                 LOGGER.error("An error occurred while registering " + pluginClass.getName() + " : " + plugin.getCanonicalName(), e);
             }
         }

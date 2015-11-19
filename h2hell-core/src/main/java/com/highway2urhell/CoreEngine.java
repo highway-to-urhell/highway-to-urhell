@@ -26,7 +26,7 @@ public class CoreEngine {
     protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final static String H2H_CONFIG = "H2H_CONFIG";
     private final static String JAVA = "Java";
-    private final static Integer DEFAULT_TIMER = 1;
+    private final static Integer DEFAULT_TIMER = 2000;
     private H2hConfig config;
 
     private CoreEngine() {
@@ -57,7 +57,7 @@ public class CoreEngine {
                 //if the initPath are not called
                 initPathsRemote();
             }
-            instrumentation.addTransformer(new EntryPointTransformer(mapConvert), true);
+            instrumentation.addTransformer(new EntryPointTransformer(mapConvert,CoreEngine.getInstance().getConfig().getPerformance()), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {
             LOGGER.error("Instrumentation fail because internal inst is null");
@@ -151,6 +151,12 @@ public class CoreEngine {
             config.setDescription(prop.getProperty("description"));
             config.setVersionApp(prop.getProperty("versionApp"));
             config.setToken(prop.getProperty("token"));
+            String performance = prop.getProperty("performance");
+            if(performance!=null&&performance.equals("true")){
+                config.setPerformance(true);
+            }else{
+                config.setPerformance(false);
+            }
             String outputSystem = prop.getProperty("outputSystem");
             if(outputSystem!=null){
                 config.setOutputSystem(OutputSystem.valueOf(outputSystem));

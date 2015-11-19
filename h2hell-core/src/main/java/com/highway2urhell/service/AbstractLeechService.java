@@ -50,7 +50,9 @@ public abstract class AbstractLeechService implements LeechService {
     protected void gatherData(List<EntryPathData> incoming) {
 		List<EntryPathData> listEntryPath = incoming;
 		for (EntryPathData entry : listEntryPath) {
-			addEntryPath(entry);
+            if(entry.getMethodName()!=null && !entry.getMethodName().contains("$")) {
+                addEntryPath(entry);
+            }
 		}
     }
 

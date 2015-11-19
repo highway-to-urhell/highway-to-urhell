@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,9 +22,10 @@ public class Servlet3Trigger implements ServletContextListener {
     @Override
     public void contextInitialized(final ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        Map<String, ? extends ServletRegistration> map = servletContext.getServletRegistrations();
-        List<EntryPathData> results = new ArrayList<>();
-        for (ServletRegistration sv : map.values()) {
+        Map map = servletContext.getServletRegistrations();
+        List<EntryPathData> results = new ArrayList<EntryPathData>();
+        Collection<ServletRegistration> col = (Collection<ServletRegistration>) map.values();
+        for (ServletRegistration sv :col) {
             if (sv.getMappings() != null) {
                 for (String mapping : sv.getMappings()) {
                     EntryPathData entry = new EntryPathData();
@@ -45,6 +47,7 @@ public class Servlet3Trigger implements ServletContextListener {
 
         CoreEngine.getInstance().getFramework(ServletService.FRAMEWORK_NAME).receiveData(results);
     }
+
 
     @Override
     public void contextDestroyed(final ServletContextEvent sce) {

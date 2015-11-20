@@ -68,20 +68,20 @@ You can see example file in h2h-example project.
 
 ### Configuring agent on  Unix machines :
 ```
-export JAVA_OPTS=$JAVA_OPTS -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+export JAVA_OPTS=$JAVA_OPTS -javaagent:/path_distrib/h2hell-core.jar -Djava.ext.dirs=/path_distrib/ -DH2H_CONFIG=/path_distrib/config.properties -DH2H_PATH=/path_your_application
 ```
 
 ### Configuring agent on Windows machines :  
 ```
-set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/path/to/h2h -DH2H_CONFIG=/path/to/file/config.properties
+set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path_distrib/h2hell-core.jar -Djava.ext.dirs=/path_distrib/ -DH2H_CONFIG=/path_distrib/config.properties -DH2H_PATH=/path_your_application
 ```
 
 ### Configuration for tomcat
 add setnv.sh in your_tomcat\bin\setenv.sh
 ```
-export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/h2hell-distribution/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/"
-
+export JAVA_OPTS="-javaagent:/path_distrib/h2hell-core.jar -Djava.ext.dirs=/path_distrib/ -DH2H_CONFIG=/path_distrib/config.properties -DH2H_PATH=/path_your_application"
 ```
+
 ### Configuration for IBM WAS 
 1. Log into the admin console.
 2. Select Servers > Application servers > (selected server).

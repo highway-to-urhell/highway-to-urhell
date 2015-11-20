@@ -17,12 +17,9 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
 
     @Override
     protected void doTransform(CtClass cc) throws Exception {
-
         CtMethod m = cc
                 .getMethod("postInit",
                         "(Lorg/apache/struts2/dispatcher/Dispatcher;Ljavax/servlet/FilterConfig;)V");
-        String h2hHookCode = "Struts2PrepareCollector.collect(dispatcher);";
-
-        m.insertBefore(h2hHookCode);
+        m.insertBefore(Struts2Transformer.collect());
     }
 }

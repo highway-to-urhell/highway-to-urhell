@@ -8,12 +8,11 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractLeechTransformer implements ClassFileTransformer {
-
-    private final Logger log = LoggerFactory
-            .getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final String classNameToTransformNormalized;
     private final String classNameToTransform;
 
@@ -30,6 +29,10 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     }
 
     protected void addImportPackage(String... packages) {
+        addImportPackage(Arrays.asList(packages));
+    }
+
+    protected void addImportPackage(Iterable<String> packages) {
         for (String packageName : packages) {
             this.importPackages.add(packageName);
         }
@@ -85,6 +88,4 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     }
 
     protected abstract void doTransform(CtClass cc) throws Exception;
-
-
 }

@@ -1,4 +1,4 @@
-package com.highway2urhell.transformer;
+package com.highway2urhell.collector;
 
 import com.highway2urhell.CoreEngine;
 import com.highway2urhell.domain.EntryPathData;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Struts1Collector {
-    public static void collect(Digester configDigester) {
+    public static void collectBody(Digester configDigester) {
         ModuleConfigImpl m = (ModuleConfigImpl) configDigester.getRoot();
         Field f;
         List listEntryPath = new ArrayList();

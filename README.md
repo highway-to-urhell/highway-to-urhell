@@ -36,7 +36,8 @@ You can build it using Maven 3+ :
 
 ## Download the last release
 
-You can download the last release here : https://github.com/highway-to-urhell/highway-to-urhell/releases/download/1.0.4/h2hell-distribution-1.0.4-1.zip
+You can download the last release here :
+https://github.com/highway-to-urhell/highway-to-urhell/releases/download/1.0.4/h2hell-distribution-1.0.4.1.zip
 
 The file config.properties is in the distribution.
 

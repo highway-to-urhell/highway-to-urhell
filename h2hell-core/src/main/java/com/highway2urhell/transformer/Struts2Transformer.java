@@ -7,12 +7,19 @@ public class Struts2Transformer extends AbstractLeechTransformer {
 
     public Struts2Transformer() {
         super("org/apache/struts2/dispatcher/ng/filter/StrutsPrepareAndExecuteFilter");
-        addImportPackage(
-                "com.opensymphony.xwork2.config",
-                "com.opensymphony.xwork2.config.entities",
-                "java.util",
+        addImportPackage(collectPackages());
+    }
+
+    public static String[] collectPackages() {
+        return new String[]{
                 "java.lang.reflect",
-                "org.objectweb.asm");
+                "java.util",
+                "com.opensymphony.xwork2.config",
+                "com.highway2urhell",
+                "org.apache.struts2.dispatcher",
+                "com.opensymphony.xwork2.config.entities",
+                "com.highway2urhell.domain"
+        };
     }
 
     @Override

@@ -76,7 +76,7 @@ set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path/to/h2hell-core.jar -Djava.ext.dirs=/p
 ### Configuration for tomcat
 add setnv.sh in your_tomcat\bin\setenv.sh
 ```
-export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/"
+export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/h2hell-distribution/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/"
 
 ```
 ### Configuration for IBM WAS 

@@ -20,6 +20,6 @@ public class Struts2PrepareTransformer extends AbstractLeechTransformer {
         CtMethod m = cc
                 .getMethod("postInit",
                         "(Lorg/apache/struts2/dispatcher/Dispatcher;Ljavax/servlet/FilterConfig;)V");
-        m.insertBefore(Struts2Transformer.collect());
+        m.insertBefore(Struts2Transformer.collectBody());
     }
 }

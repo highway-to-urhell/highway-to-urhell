@@ -20,10 +20,10 @@ public class Struts2Transformer extends AbstractLeechTransformer {
         CtMethod m = cc
                 .getMethod("postInit",
                         "(Lorg/apache/struts2/dispatcher/Dispatcher;Ljavax/servlet/FilterConfig;)V");
-        m.insertBefore(collect());
+        m.insertBefore(collectBody());
     }
 
-    public static String collect() {
+    public static String collectBody() {
         return "{\n" +
                 "    List listEntryPath = new ArrayList();\n" +
                 "    ConfigurationManager cm = dispatcher.getConfigurationManager();\n" +

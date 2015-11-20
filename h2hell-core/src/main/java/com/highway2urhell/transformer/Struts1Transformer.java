@@ -25,8 +25,7 @@ public class Struts1Transformer extends AbstractLeechTransformer {
     @Override
     protected void doTransform(CtClass cc) throws Exception {
         CtMethod m = cc.getMethod("destroyConfigDigester", "()V");
-        String h2hHookCode = collectBody();
-        m.insertBefore(h2hHookCode);
+        m.insertBefore(collectBody());
     }
 
     public static String collectBody() {

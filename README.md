@@ -34,7 +34,7 @@ You can build it using Maven 3+ :
 
 `mvn install`
 
-## Use the release
+## Download the last release
 
 You can download the last release here :
 

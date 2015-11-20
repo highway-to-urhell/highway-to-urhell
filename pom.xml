@@ -7,7 +7,7 @@
 
 	<groupId>com.highway2urhell</groupId>
 	<artifactId>h2hell-parent</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://www.highway2urhell.com/</url>
 	<name>highway2urhell</name>

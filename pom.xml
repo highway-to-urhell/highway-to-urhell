@@ -7,7 +7,7 @@
 
 	<groupId>com.highway2urhell</groupId>
 	<artifactId>h2hell-parent</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.4</version>
 	<packaging>pom</packaging>
 	<url>http://www.highway2urhell.com/</url>
 	<name>highway2urhell</name>
@@ -62,7 +62,7 @@
 		<connection>scm:git:git://github.com/highway-to-urhell/highway-to-urhell.git</connection>
 		<developerConnection>scm:git:git@github.com:highway-to-urhell/highway-to-urhell.git</developerConnection>
 		<url>http://github.com/highway-to-urhell/highway-to-urhell/</url>
-		<tag>HEAD</tag>
+		<tag>h2hell-parent-1.0.4</tag>
 	</scm>
 
 	<distributionManagement>

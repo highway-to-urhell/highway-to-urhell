@@ -37,6 +37,7 @@ You can build it using Maven 3+ :
 ## Download the last release
 
 You can download the last release here :
+The file config.properties is in the distribution.
 
 ### How to use it
  * Download the last release on github

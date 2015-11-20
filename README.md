@@ -91,10 +91,7 @@ export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core.jar -Djav
 ```
 -javaagent:your_path/h2hell-distribution/h2hell-core.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/h2hell-distribution/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/
 ```
-6. Select Apply, then select Save.
-7. Restart your server.
-
-add setnv.sh in your_tomcat\bin\setenv.sh
+Select Apply, then select Save. Restart your server.
 
 ## Vizualisation
 ### Mode MEMORY

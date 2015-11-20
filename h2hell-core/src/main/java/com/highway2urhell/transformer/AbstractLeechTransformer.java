@@ -1,19 +1,14 @@
 package com.highway2urhell.transformer;
 
+import javassist.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.List;
-
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javassist.LoaderClassPath;
-import javassist.NotFoundException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLeechTransformer implements ClassFileTransformer {
 
@@ -30,7 +25,8 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
         addImportPackage(
                 "com.highway2urhell",
                 "com.highway2urhell.domain",
-                "com.highway2urhell.service");
+                "com.highway2urhell.service",
+                "com.highway2urhell.transformer");
     }
 
     protected void addImportPackage(String... packages) {
@@ -42,20 +38,20 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className,
                             Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
-    	if (className.equals(classNameToTransform)) {
+        if (className.equals(classNameToTransform)) {
             log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());
             try {
                 ClassPool cp = ClassPool.getDefault();
-                cp.appendClassPath(new LoaderClassPath(loader));
+                cp.insertClassPath(new LoaderClassPath(loader));
                 for (String importPackage : importPackages) {
                     cp.importPackage(importPackage);
                 }
                 CtClass cc = cp
                         .get(classNameToTransformNormalized);
-                if(log.isDebugEnabled()){
-                	grabAllMethod(cc);
+                if (log.isDebugEnabled()) {
+                    grabAllMethod(cc);
                 }
-                
+
                 doTransform(cc);
 
                 classfileBuffer = cc.toBytecode();
@@ -71,12 +67,12 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
         return classfileBuffer;
     }
 
-    private void grabAllMethod(CtClass cc){
-    	for(CtMethod m : cc.getMethods()){
-    		log.error(m.getLongName()+"-"+m.getSignature());
-    	}
+    private void grabAllMethod(CtClass cc) {
+        for (CtMethod m : cc.getMethods()) {
+            log.error(m.getLongName() + "-" + m.getSignature());
+        }
     }
-    
+
     /**
      * Build receiveDataStatement to be produced by transformer where you want to collectdata
      *

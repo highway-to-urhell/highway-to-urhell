@@ -12,13 +12,13 @@ public class Struts2Transformer extends AbstractLeechTransformer {
 
     public static String[] collectPackages() {
         return new String[]{
+                "com.highway2urhell",
+                "com.highway2urhell.domain",
+                "com.opensymphony.xwork2.config",
+                "com.opensymphony.xwork2.config.entities",
                 "java.lang.reflect",
                 "java.util",
-                "com.opensymphony.xwork2.config",
-                "com.highway2urhell",
-                "org.apache.struts2.dispatcher",
-                "com.opensymphony.xwork2.config.entities",
-                "com.highway2urhell.domain"
+                "org.apache.struts2.dispatcher"
         };
     }
 

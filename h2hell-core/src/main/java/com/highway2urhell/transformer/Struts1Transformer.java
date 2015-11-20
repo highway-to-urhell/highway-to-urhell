@@ -12,13 +12,13 @@ public class Struts1Transformer extends AbstractLeechTransformer {
 
     public static String[] collectPackages() {
         return new String[]{
-                "org.apache.commons.digester",
-                "java.lang.reflect",
-                "org.apache.struts.action",
-                "org.apache.struts.config.impl",
-                "java.util",
                 "com.highway2urhell",
-                "com.highway2urhell.domain"
+                "com.highway2urhell.domain",
+                "java.lang.reflect",
+                "java.util",
+                "org.apache.commons.digester",
+                "org.apache.struts.action",
+                "org.apache.struts.config.impl"
         };
     }
 

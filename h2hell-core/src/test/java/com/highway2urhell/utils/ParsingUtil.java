@@ -11,15 +11,12 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ParsingUtil {
     public static String[] extractPackages(String in) throws ParseException, FileNotFoundException {
         List<String> classes = extractImports(in);
-        Set<String> ret = new HashSet<String>();
+        Set<String> ret = new TreeSet<String>();
         for (String aClass : classes) {
             ret.add(aClass.substring(0, aClass.lastIndexOf(".")));
         }

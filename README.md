@@ -34,6 +34,10 @@ You can build it using Maven 3+ :
 
 `mvn install`
 
+## Use the release
+
+You can download the last release here :
+
 ### How to use it
  * Download the last release on github
  * Unzip highway-to-url distribution in a directory of your choice
@@ -47,9 +51,10 @@ Structure of the property file :
 ```
 outputSystem=REMOTE or Memory
 timer=REMOTE (if outputSystem is REMOTE)
+performance=false||true (false by default)
 urlapplication=url of your application reachable for H2H-web
 nameapplication=name
-urlh2hweb=http://server-h2h-web:port/core/api/ThunderApp (only REMOTE)
+urlh2hweb=http://server-h2h-web:port/h2hell-web/api/ThunderApp (only REMOTE)
 description=
 pathSource=path to source
 versionApp=version
@@ -74,6 +79,20 @@ add setnv.sh in your_tomcat\bin\setenv.sh
 export JAVA_OPTS="-javaagent:your_path/h2hell-distribution/h2hell-core-0.0.1-SNAPSHOT.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/"
 
 ```
+### Configuration for IBM WAS 
+1. Log into the admin console.
+2. Select Servers > Application servers > (selected server).
+3. Select Configuration > Service Infrastructure > Java and Process Management > Process Definition > Additional Properties.
+4. From the Process Definition > Additional Properties, select Java Virtual Machine.
+5. On the Java Virtual Machine page, in the Generic JVM arguments textbox, add the -javaagent and paths.
+```
+-javaagent:your_path/h2hell-distribution/h2hell-core.jar -Djava.ext.dirs=your_path/h2hell-distribution/ -DH2H_CONFIG=your_path/h2hell-distribution/config.properties -DH2H_PATH=your_path_tomcat/webapps/your_application/
+```
+6. Select Apply, then select Save.
+7. Restart your server.
+
+add setnv.sh in your_tomcat\bin\setenv.sh
+
 ## Vizualisation
 ### Mode MEMORY
 * Call the url for JSON result http://host:port/root_uri_of_your_application/h2h

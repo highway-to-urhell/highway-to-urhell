@@ -51,7 +51,7 @@ There's two configurations  :
 * MEMORY (data are located into the agent)
 * REMOTE send data to h2hell-web (see the project h2h-web)
 Structure of the property file :
-```
+```properties
 outputSystem=REMOTE or Memory
 timer=REMOTE (if outputSystem is REMOTE)
 performance=false||true (false by default)

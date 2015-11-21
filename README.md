@@ -105,8 +105,8 @@ Select Apply, then select Save. Restart your server.
 
 ## Troubleshooting
 If your application server doesn't support servlet 3+, add the filter h2h (on the top) in web.xml of your application
-```
- 		<filter>
+```xml
+        <filter>
                 <filter-name>h2h</filter-name>
                 <filter-class>com.highway2urhell.filter.H2hellFilter</filter-class>
         </filter>
@@ -127,7 +127,7 @@ You must implements doTransform with 2 requirements :
 * Create the list of entrypoint ArrayList<EntryPathData>
 * Send the data to CoreEngine with CoreEngine.getInstance().getFramework(your_framework).receiveData(listEntryPath) 
 You must implements the constructor like :
-```
+```java
 super(package_class_modified_by_agent);// example "com/google/gwt/user/server/rpc/RemoteServiceServlet" 
 addImportPackage(String... packages);// list package add by Agent for running the agent with your modification. example "java.lang.reflect", "java.util","org.reflections", "org.reflections.util", "java.util.Map"
 ```
@@ -135,7 +135,7 @@ For example, we recommand to see the actual transformer in package com.highway2u
 
 The second service must extends com.highway2urhell.service.AbstractLeechService with 1 requirement :
 * The constructor must invoke like 
-```
+```java
 super(FRAMEWORK_NAME, VersionUtils.getVersion("package_class","groupid", "artifactId"));
 ```
 

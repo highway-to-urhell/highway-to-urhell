@@ -28,7 +28,7 @@ H2H comes with a webapp that will collect and present all detected entry points 
 
 ## Build Java Agent
 
-highway-to-urhell requires Java 7.
+highway-to-urhell requires Java 6.
 
 You can build it using Maven 3+ :
 

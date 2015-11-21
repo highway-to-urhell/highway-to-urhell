@@ -77,7 +77,7 @@ set JAVA_OPTS=%JAVA_OPTS% -javaagent:/path_distrib/h2hell-core.jar -Djava.ext.di
 ```
 
 ### Configuration for tomcat
-add setnv.sh in your_tomcat\bin\setenv.sh
+add setenv.sh in your_tomcat\bin\setenv.sh
 ```
 export JAVA_OPTS="-javaagent:/path_distrib/h2hell-core.jar -Djava.ext.dirs=/path_distrib/ -DH2H_CONFIG=/path_distrib/config.properties -DH2H_PATH=/path_your_application"
 ```

@@ -26,7 +26,6 @@ public class FilterEntryPath {
 
     public void setListFilter(List<String> listFilter) {
         this.listFilter = listFilter;
-
     }
 
     public String getToken() {

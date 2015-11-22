@@ -76,7 +76,6 @@ public class FileSystemService extends AbstractLeechService {
             entry.setUri(file.getPath());
             addEntryPath(entry);
         }
-
     }
 
     private void searchAndParseWebXML(String rootPath) {
@@ -127,8 +126,7 @@ public class FileSystemService extends AbstractLeechService {
     }
 
     private void extractListener(Document document) {
-        NodeList nodeListServlet = document.getDocumentElement()
-                .getElementsByTagName("listener");
+        NodeList nodeListServlet = document.getDocumentElement().getElementsByTagName("listener");
         for (int i = 0; i < nodeListServlet.getLength(); i++) {
             Node node = nodeListServlet.item(i);
 
@@ -157,17 +155,14 @@ public class FileSystemService extends AbstractLeechService {
                 web.setTypePath(TypePath.FILTER);
                 for (int j = 0; j < nodeListMapping.getLength(); j++) {
                     Element elemMapping = (Element) nodeListMapping.item(j);
-                    if (getNodeValue(elemMapping, "filter-name")
-                            .equals(web.getMethodName())) {
+                    if (getNodeValue(elemMapping, "filter-name").equals(web.getMethodName())) {
                         NodeList urlPattern = elemMapping.getElementsByTagName("url-pattern");
                         if (urlPattern != null && urlPattern.getLength() > 0) {
                             web.setUri(urlPattern.item(0).getChildNodes().item(0).getNodeValue());
                         } else {
                             // Check servlet-Name
-                            NodeList nameServlet = elemMapping
-                                    .getElementsByTagName("servlet-name");
-                            if (nameServlet != null
-                                    && nameServlet.getLength() > 0) {
+                            NodeList nameServlet = elemMapping.getElementsByTagName("servlet-name");
+                            if (nameServlet != null && nameServlet.getLength() > 0) {
                                 web.setUri(nameServlet.item(0).getChildNodes().item(0).getNodeValue());
                             }
                         }

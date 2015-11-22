@@ -22,7 +22,6 @@ public class EntryPathParam {
         this.value = value;
     }
 
-
 	public TypeParam getTypeParam() {
 		return typeParam;
 	}

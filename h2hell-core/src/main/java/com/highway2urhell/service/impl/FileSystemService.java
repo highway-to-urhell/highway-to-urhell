@@ -135,7 +135,8 @@ public class FileSystemService extends AbstractLeechService {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 EntryPathData web = new EntryPathData();
                 Element elem = (Element) node;
-                web.setClassName(elem.getElementsByTagName("listener-class").item(0).getChildNodes().item(0).getNodeValue());
+                String name = "listener-class";
+                web.setClassName(getNodeValue(elem, name));
                 web.setTypePath(TypePath.LISTENER);
                 addEntryPath(web);
             }
@@ -151,12 +152,12 @@ public class FileSystemService extends AbstractLeechService {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 EntryPathData web = new EntryPathData();
                 Element elem = (Element) node;
-                web.setMethodName(elem.getElementsByTagName("filter-name").item(0).getChildNodes().item(0).getNodeValue());
-                web.setClassName(elem.getElementsByTagName("filter-class").item(0).getChildNodes().item(0).getNodeValue());
+                web.setMethodName(getNodeValue(elem, "filter-name"));
+                web.setClassName(getNodeValue(elem, "filter-class"));
                 web.setTypePath(TypePath.FILTER);
                 for (int j = 0; j < nodeListMapping.getLength(); j++) {
                     Element elemMapping = (Element) nodeListMapping.item(j);
-                    if (elemMapping.getElementsByTagName("filter-name").item(0).getChildNodes().item(0).getNodeValue()
+                    if (getNodeValue(elemMapping, "filter-name")
                             .equals(web.getMethodName())) {
                         NodeList urlPattern = elemMapping.getElementsByTagName("url-pattern");
                         if (urlPattern != null && urlPattern.getLength() > 0) {
@@ -186,17 +187,21 @@ public class FileSystemService extends AbstractLeechService {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 EntryPathData web = new EntryPathData();
                 Element elem = (Element) node;
-                web.setMethodName(elem.getElementsByTagName("servlet-name").item(0).getChildNodes().item(0).getNodeValue());
-                web.setClassName(elem.getElementsByTagName("servlet-class").item(0).getChildNodes().item(0).getNodeValue());
+                web.setMethodName(getNodeValue(elem, "servlet-name"));
+                web.setClassName(getNodeValue(elem, "servlet-class"));
                 web.setTypePath(TypePath.SERVLET);
                 for (int j = 0; j < nodeListMapping.getLength(); j++) {
                     Element elemMapping = (Element) nodeListMapping.item(j);
-                    if (elemMapping.getElementsByTagName("servlet-name").item(0).getChildNodes().item(0).getNodeValue().equals(web.getMethodName())) {
-                        web.setUri(elemMapping.getElementsByTagName("url-pattern").item(0).getChildNodes().item(0).getNodeValue());
+                    if (getNodeValue(elemMapping, "servlet-name").equals(web.getMethodName())) {
+                        web.setUri(getNodeValue(elemMapping, "url-pattern"));
                     }
                 }
                 addEntryPath(web);
             }
         }
+    }
+
+    private String getNodeValue(Element elem, String name) {
+        return elem.getElementsByTagName(name).item(0).getChildNodes().item(0).getNodeValue();
     }
 }

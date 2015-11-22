@@ -18,15 +18,15 @@ public class JmsAsyncMessageListener extends AbstractLeechService {
 
     public JmsAsyncMessageListener() {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
-                " javax.jms.MessageListener", "org.apache.geronimo.specs",
+                " javax.jms.MessageListener",
+                "org.apache.geronimo.specs",
                 "geronimo-jms_1.1_spec"));
         setTriggerAtStartup(true);
     }
 
     @Override
     protected void gatherData(List<EntryPathData> incoming) {
-        if (!getFrameworkInformations().getVersion().equals(
-                VersionUtils.NO_FRAMEWORK)) {
+        if (!getFrameworkInformations().getVersion().equals(VersionUtils.NO_FRAMEWORK)) {
             // scan
             LOGGER.info("Start Scan reflections JMS ! ");
             Reflections reflections = new Reflections(
@@ -46,8 +46,6 @@ public class JmsAsyncMessageListener extends AbstractLeechService {
                     ep.setTypePath(TypePath.DYNAMIC);
                 }
             }
-
         }
-
     }
 }

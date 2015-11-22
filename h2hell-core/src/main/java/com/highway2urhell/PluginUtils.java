@@ -17,12 +17,10 @@ public class PluginUtils {
     public static <T> Set<T> autodiscoverPlugin(Class<T> pluginClass) {
         Set pluginList = new HashSet();
         Reflections reflections = new Reflections("com.highway2urhell");
-        Set<Class<? extends T>> pluginsAvailable = reflections
-                .getSubTypesOf(pluginClass);
+        Set<Class<? extends T>> pluginsAvailable = reflections.getSubTypesOf(pluginClass);
         for (Class<? extends T> plugin : pluginsAvailable) {
             try {
-                LOGGER.info("registering {} : {}", pluginClass.getName(),
-                        plugin.getCanonicalName());
+                LOGGER.info("registering {} : {}", pluginClass.getName(), plugin.getCanonicalName());
                 T instance = plugin.newInstance();
                 pluginList.add(instance);
             } catch (InstantiationException e) {
@@ -32,7 +30,5 @@ public class PluginUtils {
             }
         }
         return pluginList;
-
     }
-
 }

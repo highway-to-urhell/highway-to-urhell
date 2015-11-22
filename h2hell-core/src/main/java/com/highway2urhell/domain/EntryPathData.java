@@ -5,131 +5,112 @@ import java.util.List;
 
 public class EntryPathData {
 
-	private String uri;
-	private String methodName;
-	private String className;
-	private String classNameNormalized;
-	private String signatureName;
-	private TypePath typePath = TypePath.UNKNOWN;
-	private Boolean audit = true;
-	private HttpMethod httpMethod = HttpMethod.POST;
-	private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
+    private String uri;
+    private String methodName;
+    private String className;
+    private String classNameNormalized;
+    private String signatureName;
+    private TypePath typePath = TypePath.UNKNOWN;
+    private Boolean audit = true;
+    private HttpMethod httpMethod = HttpMethod.POST;
+    private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
 
-	public Boolean getAudit() {
-		return audit;
-	}
+    public Boolean getAudit() {
+        return audit;
+    }
 
-	public void setAudit(Boolean audit) {
-		this.audit = audit;
-	}
+    public void setAudit(Boolean audit) {
+        this.audit = audit;
+    }
 
-	public String getUri() {
-		return uri;
-	}
-
-
-
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
+    public String getUri() {
+        return uri;
+    }
 
 
-
-	public String getMethodName() {
-		return methodName;
-	}
-
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
-	}
+    public String getMethodName() {
+        return methodName;
+    }
 
 
-
-	public String getClassName() {
-		return className;
-	}
-
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
 
 
-	public void setClassName(String className) {
-		this.className = className;
-	}
+    public String getClassName() {
+        return className;
+    }
 
 
-
-	public String getClassNameNormalized() {
-		return classNameNormalized;
-	}
-
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
 
-	public void setClassNameNormalized(String classNameNormalized) {
-		this.classNameNormalized = classNameNormalized;
-	}
+    public String getClassNameNormalized() {
+        return classNameNormalized;
+    }
 
 
-
-	public String getSignatureName() {
-		return signatureName;
-	}
-
+    public void setClassNameNormalized(String classNameNormalized) {
+        this.classNameNormalized = classNameNormalized;
+    }
 
 
-	public void setSignatureName(String signatureName) {
-		this.signatureName = signatureName;
-	}
+    public String getSignatureName() {
+        return signatureName;
+    }
 
 
-
-	public TypePath getTypePath() {
-		return typePath;
-	}
-
+    public void setSignatureName(String signatureName) {
+        this.signatureName = signatureName;
+    }
 
 
-	public void setTypePath(TypePath typePath) {
-		this.typePath = typePath;
-	}
+    public TypePath getTypePath() {
+        return typePath;
+    }
 
 
-
-	public HttpMethod getHttpMethod() {
-		return httpMethod;
-	}
-
+    public void setTypePath(TypePath typePath) {
+        this.typePath = typePath;
+    }
 
 
-	public void setHttpMethod(HttpMethod httpMethod) {
-		this.httpMethod = httpMethod;
-	}
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
 
 
-
-	public List<EntryPathParam> getListEntryPathData() {
-		return listEntryPathData;
-	}
-
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
 
 
-	public void setListEntryPathData(List<EntryPathParam> listEntryPathData) {
-		this.listEntryPathData = listEntryPathData;
-	}
+    public List<EntryPathParam> getListEntryPathData() {
+        return listEntryPathData;
+    }
 
 
-
-	@Override
-	public String toString() {
-		return "EntryPathData [uri=" + uri + ", methodName=" + methodName
-				+ ", className=" + className + ", classNameNormalized="
-				+ classNameNormalized + ", signatureName=" + signatureName
-				+ ", typePath=" + typePath + ", httpMethod=" + httpMethod
-				+ ", listEntryPathData=" + listEntryPathData + "]";
-	}
+    public void setListEntryPathData(List<EntryPathParam> listEntryPathData) {
+        this.listEntryPathData = listEntryPathData;
+    }
 
 
+    @Override
+    public String toString() {
+        return "EntryPathData [uri=" + uri + ", methodName=" + methodName
+                + ", className=" + className + ", classNameNormalized="
+                + classNameNormalized + ", signatureName=" + signatureName
+                + ", typePath=" + typePath + ", httpMethod=" + httpMethod
+                + ", listEntryPathData=" + listEntryPathData + "]";
+    }
 
-	
 
 }

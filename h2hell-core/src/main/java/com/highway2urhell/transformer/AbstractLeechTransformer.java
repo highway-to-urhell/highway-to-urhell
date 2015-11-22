@@ -49,8 +49,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                 for (String importPackage : importPackages) {
                     cp.importPackage(importPackage);
                 }
-                CtClass cc = cp
-                        .get(classNameToTransformNormalized);
+                CtClass cc = cp.get(classNameToTransformNormalized);
                 if (log.isDebugEnabled()) {
                     grabAllMethod(cc);
                 }

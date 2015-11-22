@@ -36,10 +36,9 @@ public abstract class AbstractLeechService implements LeechService {
 
     public void receiveData(List<EntryPathData> incoming) {
         clearPreviousData();
-        LOGGER.debug("receive incoming data obj {}",incoming);
+        LOGGER.debug("receive incoming data obj {}", incoming);
         gatherData(incoming);
-        LOGGER.debug("data gathering complete. Found {} entries",
-                frameworkInformations.getListEntryPath().size());
+        LOGGER.debug("data gathering complete. Found {} entries", frameworkInformations.getListEntryPath().size());
     }
 
     private void clearPreviousData() {
@@ -48,12 +47,12 @@ public abstract class AbstractLeechService implements LeechService {
 
 
     protected void gatherData(List<EntryPathData> incoming) {
-		List<EntryPathData> listEntryPath = incoming;
-		for (EntryPathData entry : listEntryPath) {
-            if(entry.getMethodName()!=null && !entry.getMethodName().contains("$")) {
+        List<EntryPathData> listEntryPath = incoming;
+        for (EntryPathData entry : listEntryPath) {
+            if (entry.getMethodName() != null && !entry.getMethodName().contains("$")) {
                 addEntryPath(entry);
             }
-		}
+        }
     }
 
     @Override
@@ -85,5 +84,4 @@ public abstract class AbstractLeechService implements LeechService {
     public String getInternalSignature(Method m) {
         return Type.getMethodDescriptor(m);
     }
-
 }

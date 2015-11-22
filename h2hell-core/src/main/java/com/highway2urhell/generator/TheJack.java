@@ -5,7 +5,5 @@ import com.highway2urhell.service.LeechService;
 import java.util.Collection;
 
 public interface TheJack {
-
-	public String generatePage(Collection<LeechService> collectionService);
-	
+	String generatePage(Collection<LeechService> collectionService);
 }

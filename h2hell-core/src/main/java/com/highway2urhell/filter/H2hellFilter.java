@@ -21,14 +21,14 @@ public class H2hellFilter implements Filter {
         String paths = request.getParameter("paths");
         String customGeneratorClass = request.getParameter("customGeneratorClass");
         String srcPath = request.getParameter("srcPath");
-        if (srcPath !=null && !"".equals(srcPath)){
-            CoreService.getInstance().findSource(response,srcPath);
-        }else {
-            if(paths !=null){
+        if (srcPath != null && !"".equals(srcPath)) {
+            CoreService.getInstance().findSource(response, srcPath);
+        } else {
+            if (paths != null) {
                 CoreService.getInstance().initPathsRemote(response);
-            }else if (launch != null) {
-                CoreService.getInstance().enableEntryPointCoverage(request,response);
-            }else {
+            } else if (launch != null) {
+                CoreService.getInstance().enableEntryPointCoverage(request, response);
+            } else {
                 CoreService.getInstance().generateReport(response, customGeneratorClass);
             }
         }

@@ -52,20 +52,20 @@ public class CoreEngine {
         Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
         if (instrumentation != null) {
             TransformerService ts = new TransformerService();
-            Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values(),filter);
-            if(!config.getPathSend()){
+            Map<String, List<EntryPathData>> mapConvert = ts.transformDataFromLeechPluginForTransformation(leechPluginRegistry.values(), filter);
+            if (!config.getPathSend()) {
                 //if the initPath are not called
                 initPathsRemote();
             }
-            instrumentation.addTransformer(new EntryPointTransformer(mapConvert,CoreEngine.getInstance().getConfig().getPerformance()), true);
+            instrumentation.addTransformer(new EntryPointTransformer(mapConvert, CoreEngine.getInstance().getConfig().getPerformance()), true);
             ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
         } else {
             LOGGER.error("Instrumentation fail because internal inst is null");
         }
     }
 
-    public void initPathsRemote(){
-        if (config.getOutputSystem().equals(OutputSystem.REMOTE) && config.getToken()!=null) {
+    public void initPathsRemote() {
+        if (config.getOutputSystem().equals(OutputSystem.REMOTE) && config.getToken() != null) {
             ThunderExporterService.getInstance().initPathsRemoteApp();
             config.setPathSend(true);
         }
@@ -83,11 +83,9 @@ public class CoreEngine {
         return leechPluginRegistry.values();
     }
 
-
     public LeechService getFramework(String frameworkName) {
         return leechPluginRegistry.get(frameworkName);
     }
-
 
     private void registerPlugins() {
         autoDiscoverLeechPlugins();
@@ -113,9 +111,6 @@ public class CoreEngine {
         }
     }
 
-
-
-
     private void configure() {
         // Grab Env
         String rootH2h = System.getProperty(H2H_CONFIG);
@@ -126,15 +121,14 @@ public class CoreEngine {
             throw new RuntimeException("Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
         }
         parseConfig(rootH2h);
-        if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() ==null ) {
+        if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() == null) {
             ThunderExporterService.getInstance().registerAppInThunder();
-        }else{
+        } else {
             //TODO valid the token with the server H2H-web
             LOGGER.info("application reuse the token {} for application {}",
                     config.getToken(), config.getNameApplication());
         }
     }
-
 
     public void parseConfig(String pathFile) {
         config = new H2hConfig();
@@ -152,33 +146,33 @@ public class CoreEngine {
             config.setVersionApp(prop.getProperty("versionApp"));
             config.setToken(prop.getProperty("token"));
             String performance = prop.getProperty("performance");
-            if(performance!=null&&performance.equals("true")){
+            if (performance != null && performance.equals("true")) {
                 config.setPerformance(true);
-            }else{
+            } else {
                 config.setPerformance(false);
             }
             String outputSystem = prop.getProperty("outputSystem");
-            if(outputSystem!=null){
+            if (outputSystem != null) {
                 config.setOutputSystem(OutputSystem.valueOf(outputSystem));
-            }else{
+            } else {
                 throw new RuntimeException("Variable outpuSystem is not defined");
             }
             String timer = prop.getProperty("timer");
-            if(timer!=null){
+            if (timer != null) {
                 config.setTimer(OutputSystem.valueOf(timer));
-            }else{
+            } else {
                 throw new RuntimeException("Variable timer is not defined");
             }
             config.setUrlH2hWeb(prop.getProperty("urlh2hweb"));
             String higherTimer = prop.getProperty("higherTimer");
-            if(higherTimer!=null){
+            if (higherTimer != null) {
                 try {
                     config.setHigherTime(Integer.valueOf(higherTimer));
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     //default value
                     config.setHigherTime(DEFAULT_TIMER);
                 }
-            }else{
+            } else {
                 //default value
                 config.setHigherTime(DEFAULT_TIMER);
             }
@@ -199,7 +193,6 @@ public class CoreEngine {
     public H2hConfig getConfig() {
         return config;
     }
-
 
 }
 

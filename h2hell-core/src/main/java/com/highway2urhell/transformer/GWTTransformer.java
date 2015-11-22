@@ -48,6 +48,5 @@ public class GWTTransformer extends AbstractLeechTransformer {
                 "}" +
                 "CoreEngine.getInstance().getFramework(\"GWT\").receiveData(listEntryPath);";
         c.insertBefore(h2hHookCode);
-
     }
 }

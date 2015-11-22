@@ -17,13 +17,13 @@ public class ActiveMQConnectionFactoryTransformer extends AbstractLeechTransform
 
         String h2hHookCode = "" +
                 "List listEntryPath = new ArrayList();" +
-                "EntryPathData entry = new EntryPathData();"+
+                "EntryPathData entry = new EntryPathData();" +
                 "entry.setClassName(\"org.apache.activemq.ActiveMQConnectionFactory\");" +
                 "entry.setMethodName(\"broker\");" +
                 "entry.setUri(brokerURL);" +
                 "entry.setAudit(Boolean.FALSE);" +
                 "entry.setTypePath(TypePath.DYNAMIC);" +
-                "listEntryPath.add(entry);"+
+                "listEntryPath.add(entry);" +
                 "CoreEngine.getInstance().getFramework(\"ACTIVEMQ_CONNECTION_FACTORY\").receiveData(listEntryPath);";
         c.insertBefore(h2hHookCode);
 

@@ -9,7 +9,8 @@ public class StrutsSpring1Service extends AbstractLeechService {
 
     public StrutsSpring1Service() {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
-                "org.springframework.web.struts.DelegatingActionProxy ", "",
+                "org.springframework.web.struts.DelegatingActionProxy",
+                "",
                 ""));
     }
 }

@@ -30,17 +30,17 @@ public class JSF2Transformer extends AbstractLeechTransformer {
                 "	try {" +
                 "       Method[] tabMethod = Class.forName(className).getDeclaredMethods();" +
                 "       for (int i = 0; i < tabMethod.length; i++) {" +
-                "       String scope = Modifier.toString(tabMethod[i].getModifiers());"+
-    			"       if (scope.startsWith(\"public\") && !\"wait\".equals(tabMethod[i].getName())"+
-    			"			&& !\"notifyall\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"notify\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"getclass\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"equals\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"tostring\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"wait\".equals(tabMethod[i].getName().toLowerCase())"+
-    			"			&& !\"hashcode\".equals(tabMethod[i].getName().toLowerCase())) {"+
+                "       String scope = Modifier.toString(tabMethod[i].getModifiers());" +
+                "       if (scope.startsWith(\"public\") && !\"wait\".equals(tabMethod[i].getName())" +
+                "			&& !\"notifyall\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"notify\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"getclass\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"equals\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"tostring\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"wait\".equals(tabMethod[i].getName().toLowerCase())" +
+                "			&& !\"hashcode\".equals(tabMethod[i].getName().toLowerCase())) {" +
                 "           	res.add(tabMethod[i].getName());" +
-    			"			}"+
+                "			}" +
                 "       }" +
                 "   } catch (ClassNotFoundException e) {" +
                 "	    e.printStackTrace();" +

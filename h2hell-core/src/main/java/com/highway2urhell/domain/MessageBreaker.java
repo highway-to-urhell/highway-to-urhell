@@ -1,7 +1,5 @@
 package com.highway2urhell.domain;
 
-import java.util.List;
-
 public class MessageBreaker {
     private String pathClassMethodName;
     private String token;
@@ -15,7 +13,6 @@ public class MessageBreaker {
     public void setParameters(String parameters) {
         this.parameters = parameters;
     }
-
 
     public String getPathClassMethodName() {
         return pathClassMethodName;

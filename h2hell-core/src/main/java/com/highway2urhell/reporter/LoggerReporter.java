@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoggerReporter implements ReporterService {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(LoggerReporter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LoggerReporter.class);
 
     @Override
     public void report(FrameworkInformations frameworkInformations) {
@@ -20,8 +19,7 @@ public class LoggerReporter implements ReporterService {
                     .size());
             if (LOG.isDebugEnabled()) {
                 Gson gson = new Gson();
-                LOG.debug(" JSON elements :"
-                        + gson.toJson(frameworkInformations.getListEntryPath()));
+                LOG.debug(" JSON elements :" + gson.toJson(frameworkInformations.getListEntryPath()));
             }
         }
     }

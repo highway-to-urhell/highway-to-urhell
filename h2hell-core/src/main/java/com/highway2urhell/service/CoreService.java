@@ -38,14 +38,14 @@ public class CoreService {
         return instance;
     }
 
-    public void findSource(ServletResponse response, String srcPath) throws IOException  {
-        String path = CoreEngine.getInstance().getConfig().getPathSource()+srcPath;
+    public void findSource(ServletResponse response, String srcPath) throws IOException {
+        String path = CoreEngine.getInstance().getConfig().getPathSource() + srcPath;
         String res;
         try {
-            res= new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            res = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            res = "FileNotFound  source "+path;
-            LOG.error("FileNotFound source "+path+" "+e);
+            res = "FileNotFound  source " + path;
+            LOG.error("FileNotFound source " + path + " " + e);
         }
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -86,11 +86,11 @@ public class CoreService {
             LOG.error("Can't generate page using " + customGeneratorClass, e);
             out.println(generateJSon(leechServiceRegistered));
             response.setContentType("application/json");
-        }catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             LOG.error("Can't generate page using " + customGeneratorClass, e);
             out.println(generateJSon(leechServiceRegistered));
             response.setContentType("application/json");
-        }catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             LOG.error("Can't generate page using " + customGeneratorClass, e);
             out.println(generateJSon(leechServiceRegistered));
             response.setContentType("application/json");
@@ -99,7 +99,7 @@ public class CoreService {
         out.close();
     }
 
-    private FilterEntryPath getDataFromRequest(ServletRequest request){
+    private FilterEntryPath getDataFromRequest(ServletRequest request) {
         StringBuffer res = new StringBuffer();
         String line = null;
         try {
@@ -107,25 +107,25 @@ public class CoreService {
             while ((line = reader.readLine()) != null)
                 res.append(line);
         } catch (Exception e) {
-            LOG.error(" Error during parse request with launch parameter ",e);
+            LOG.error(" Error during parse request with launch parameter ", e);
         }
-        LOG.info(" Flux "+res.toString());
+        LOG.info(" Flux " + res.toString());
         return createFilter(res.toString());
     }
 
-    private FilterEntryPath createFilter(String launch){
+    private FilterEntryPath createFilter(String launch) {
         Gson gson = new Gson();
         FilterEntryPath res = null;
         try {
             res = gson.fromJson(launch, FilterEntryPath.class);
-        }catch (Exception e){
-            LOG.error(" Not a JSON format for FilterEntryPath "+launch);
+        } catch (Exception e) {
+            LOG.error(" Not a JSON format for FilterEntryPath " + launch);
             res = new FilterEntryPath();
         }
         return res;
     }
 
-    public void enableEntryPointCoverage(ServletRequest request,ServletResponse response)
+    public void enableEntryPointCoverage(ServletRequest request, ServletResponse response)
             throws IOException {
         PrintWriter out = response.getWriter();
         try {
@@ -136,7 +136,7 @@ public class CoreService {
         } catch (ClassNotFoundException e) {
             LOG.error("Error while launchTransformer ", e);
             out.print(e);
-        }catch (UnmodifiableClassException e) {
+        } catch (UnmodifiableClassException e) {
             LOG.error("Error while launchTransformer ", e);
             out.print(e);
         }

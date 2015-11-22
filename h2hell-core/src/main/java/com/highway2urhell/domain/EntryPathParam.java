@@ -23,8 +23,6 @@ public class EntryPathParam {
     }
 
 
-    
-
 	public TypeParam getTypeParam() {
 		return typeParam;
 	}

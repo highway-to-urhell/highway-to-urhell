@@ -25,7 +25,7 @@ public class Servlet3Trigger implements ServletContextListener {
         Map map = servletContext.getServletRegistrations();
         List<EntryPathData> results = new ArrayList<EntryPathData>();
         Collection<ServletRegistration> col = (Collection<ServletRegistration>) map.values();
-        for (ServletRegistration sv :col) {
+        for (ServletRegistration sv : col) {
             if (sv.getMappings() != null) {
                 for (String mapping : sv.getMappings()) {
                     EntryPathData entry = new EntryPathData();

@@ -9,8 +9,8 @@ public class JmsQueueService extends AbstractLeechService {
 
     public JmsQueueService() {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
-                " javax.jms.Queue", "org.apache.geronimo.specs",
+                " javax.jms.Queue",
+                "org.apache.geronimo.specs",
                 "geronimo-jms_1.1_spec"));
     }
-
 }

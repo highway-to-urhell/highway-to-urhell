@@ -20,8 +20,8 @@ public class RmiService extends AbstractLeechService {
     protected void gatherData(List<EntryPathData> incoming) {
         try {
             Registry reg = LocateRegistry.getRegistry();
-            if(reg!=null){
-                for (String name : reg.list()){
+            if (reg != null) {
+                for (String name : reg.list()) {
                     EntryPathData e = new EntryPathData();
                     e.setClassName(reg.lookup(name).getClass().getName());
                     e.setMethodName(name);
@@ -30,10 +30,8 @@ public class RmiService extends AbstractLeechService {
                     addEntryPath(e);
                 }
             }
-        }catch (Exception e){
-            LOGGER.info(" No locate registry "+e);
+        } catch (Exception e) {
+            LOGGER.info(" No locate registry " + e);
         }
-
-
     }
 }

@@ -7,13 +7,10 @@ import javassist.bytecode.LocalVariableAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +71,6 @@ public class EntryPointTransformer implements ClassFileTransformer {
             LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
         }
     }
-
 
     private void insertCode(EntryPathData entry, CtClass cc) {
         LOGGER.info(
@@ -198,5 +194,4 @@ public class EntryPointTransformer implements ClassFileTransformer {
     public void toto() {
 
     }
-
 }

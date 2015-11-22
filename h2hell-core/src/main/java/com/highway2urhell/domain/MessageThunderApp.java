@@ -22,7 +22,4 @@ public class MessageThunderApp {
 	public void setListentryPathData(List<EntryPathData> listentryPathData) {
 		this.listentryPathData = listentryPathData;
 	}
-
-    
-
 }

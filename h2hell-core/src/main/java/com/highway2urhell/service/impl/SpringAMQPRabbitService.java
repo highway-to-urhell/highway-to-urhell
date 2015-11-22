@@ -6,9 +6,6 @@ import com.highway2urhell.service.AbstractLeechService;
 
 import java.util.List;
 
-/**
- * Created by duff on 16/08/2015.
- */
 public class SpringAMQPRabbitService extends AbstractLeechService {
 
     public static final String FRAMEWORK_NAME = "SPRING_AMQP";
@@ -16,10 +13,10 @@ public class SpringAMQPRabbitService extends AbstractLeechService {
     public SpringAMQPRabbitService() {
         super(
                 FRAMEWORK_NAME,
-                VersionUtils
-                        .getVersion(
-                                "org.springframework.amqp.core.Message",
-                                "org.springframework", "spring-amqp"));
+                VersionUtils.getVersion(
+                        "org.springframework.amqp.core.Message",
+                        "org.springframework",
+                        "spring-amqp"));
     }
 
     @Override

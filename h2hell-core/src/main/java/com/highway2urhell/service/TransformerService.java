@@ -1,19 +1,13 @@
 package com.highway2urhell.service;
 
 import com.highway2urhell.domain.EntryPathData;
-
-import java.lang.instrument.Instrumentation;
-import java.lang.instrument.UnmodifiableClassException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.highway2urhell.domain.FilterEntryPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.instrument.Instrumentation;
+import java.lang.instrument.UnmodifiableClassException;
+import java.util.*;
 
 public class TransformerService {
 
@@ -41,20 +35,20 @@ public class TransformerService {
         }
     }
 
-    private Boolean filterEntry(FilterEntryPath filterEntryPath,EntryPathData entryPath){
-        if(!filterEntryPath.getFilter()){
+    private Boolean filterEntry(FilterEntryPath filterEntryPath, EntryPathData entryPath) {
+        if (!filterEntryPath.getFilter()) {
             return true;
         }
-        if(filterEntryPath.getClassMethod()){
+        if (filterEntryPath.getClassMethod()) {
             return filterEntryPath.getListFilter().contains(entryPath.getClassName() + "." + entryPath.getMethodName());
         }
-        if(filterEntryPath.getClassOnly()){
+        if (filterEntryPath.getClassOnly()) {
             return filterEntryPath.getListFilter().contains(entryPath.getClassName());
         }
-        if(filterEntryPath.getPackageOnly()){
+        if (filterEntryPath.getPackageOnly()) {
             String[] tabPackage = entryPath.getClassName().split("\\.");
             StringBuilder packageName = new StringBuilder();
-            for(int i = 0 ;i<tabPackage.length-1;i++){
+            for (int i = 0; i < tabPackage.length - 1; i++) {
                 packageName.append(tabPackage[i]);
             }
             return filterEntryPath.getListFilter().contains(packageName);
@@ -63,12 +57,12 @@ public class TransformerService {
     }
 
     public Map<String, List<EntryPathData>> transformDataFromLeechPluginForTransformation(
-            Collection<LeechService> leechService,FilterEntryPath filterEntryPath) {
+            Collection<LeechService> leechService, FilterEntryPath filterEntryPath) {
         Map<String, List<EntryPathData>> mapToTransform = new HashMap<String, List<EntryPathData>>();
         for (LeechService leech : leechService) {
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
-                if (entryPath.getMethodName() != null && entryPath.getAudit() && filterEntry(filterEntryPath,entryPath)) {
+                if (entryPath.getMethodName() != null && entryPath.getAudit() && filterEntry(filterEntryPath, entryPath)) {
                     switch (entryPath.getTypePath()) {
                         case SERVLET:
                             createRegistrerBreakerData(
@@ -110,9 +104,9 @@ public class TransformerService {
     private void createRegistrerBreakerData(EntryPathData entryPath,
                                             Map<String, List<EntryPathData>> mapToTransform, String methodName,
                                             String signatureName) {
-    	EntryPathData entry = new EntryPathData();
-    	entry.setClassName(entryPath.getClassName());
-    	entry.setMethodName(methodName);
+        EntryPathData entry = new EntryPathData();
+        entry.setClassName(entryPath.getClassName());
+        entry.setMethodName(methodName);
         String classNameNormalized = entryPath.getClassName().replaceAll("\\.",
                 "/");
         entry.setClassNameNormalized(classNameNormalized);
@@ -121,11 +115,11 @@ public class TransformerService {
         List<EntryPathData> listEntry = mapToTransform.get(classNameNormalized);
         if (listEntry == null) {
             // first time
-        	listEntry = new ArrayList<EntryPathData>();
-        	listEntry.add(entry);
+            listEntry = new ArrayList<EntryPathData>();
+            listEntry.add(entry);
             mapToTransform.put(classNameNormalized, listEntry);
         } else {
-        	listEntry.add(entry);
+            listEntry.add(entry);
         }
     }
 
@@ -156,13 +150,12 @@ public class TransformerService {
     }
 
     private EntryPathData createBreakerData(EntryPathData entryPath,
-                                          String methodName, String signatureName) {
-    	entryPath.setMethodName(methodName);
+                                            String methodName, String signatureName) {
+        entryPath.setMethodName(methodName);
         String classNameNormalized = entryPath.getClassName().replaceAll("\\.",
                 "/");
         entryPath.setClassNameNormalized(classNameNormalized);
         entryPath.setSignatureName(signatureName);
         return entryPath;
     }
-
 }

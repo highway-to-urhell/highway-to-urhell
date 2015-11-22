@@ -114,7 +114,4 @@ public class H2hConfig {
 				+ urlApplication + ", nameApplication=" + nameApplication
 				+ ", urlH2hWeb=" + urlH2hWeb + "]";
 	}
-	
-	
-
 }

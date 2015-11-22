@@ -1,8 +1,6 @@
 package com.highway2urhell.exception;
 
 public class H2HException extends Exception{
-	
-
 	private static final long serialVersionUID = 1L;
 
 	public H2HException(String msg){

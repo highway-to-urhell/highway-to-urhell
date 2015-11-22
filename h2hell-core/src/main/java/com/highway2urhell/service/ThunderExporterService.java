@@ -126,15 +126,16 @@ public class ThunderExporterService {
         try {
             HttpResponse response = client.execute(httpPost);
             if (response != null) {
-                if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_CREATED
-                        || response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK
-                        || response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_ACCEPTED
-                        || response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_NO_CONTENT) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpURLConnection.HTTP_CREATED
+                        || statusCode == HttpURLConnection.HTTP_OK
+                        || statusCode == HttpURLConnection.HTTP_ACCEPTED
+                        || statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
                     result = EntityUtils.toString(response.getEntity());
                     LOGGER.info("Message from H2H server" + result);
                 } else {
                     LOGGER.error("Failed : HTTP error code : "
-                            + response.getStatusLine().getStatusCode()
+                            + statusCode
                             + " for urlServer " + urlServer + "msg "
                             + EntityUtils.toString(response.getEntity()));
                 }

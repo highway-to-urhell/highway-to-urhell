@@ -11,7 +11,10 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ParsingUtil {
     public static String[] extractPackages(String in) throws ParseException, FileNotFoundException {
@@ -49,7 +52,7 @@ public class ParsingUtil {
     }
 
     private static String extractMethod(CompilationUnit cu, String methodName) {
-        return new MethodBodyVisitor().visit(cu, methodName);
+        return new MethodBodyVisitor().visit(cu, methodName).replaceAll("\\r\\n", "\n");
     }
 
     private static class MethodBodyVisitor extends GenericVisitorAdapter<String, String> {

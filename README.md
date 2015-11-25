@@ -47,12 +47,8 @@ The file config.properties is in the distribution.
 
 ### Create configuration file : config.properties
 The configuration file define the parameter for the agent.
-There's two configurations  :
-* MEMORY (data are located into the agent)
-* REMOTE send data to h2hell-web (see the project h2h-web)
 Structure of the property file :
 ```properties
-outputSystem=REMOTE or Memory
 timer=REMOTE (if outputSystem is REMOTE)
 performance=false||true (false by default)
 urlapplication=url of your application reachable for H2H-web
@@ -101,22 +97,6 @@ Select Apply, then select Save. Restart your server.
 
 ### Mode Remote
 * See H2H-Web project
-
-
-## Troubleshooting
-If your application server doesn't support servlet 3+, add the filter h2h (on the top) in web.xml of your application
-```xml
-        <filter>
-                <filter-name>h2h</filter-name>
-                <filter-class>com.highway2urhell.filter.H2hellFilter</filter-class>
-        </filter>
-
-        <filter-mapping>
-                <filter-name>h2h</filter-name>
-                <url-pattern>/h2h/*</url-pattern>
-        </filter-mapping>
-
-```
 
 ## Add custom entry point
 

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.instrument.UnmodifiableClassException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListenerService {
 
@@ -51,20 +52,23 @@ public class ListenerService {
             Gson gson = new Gson();
             try {
                 Type typeList = new TypeToken<ArrayList<MessageEvent>>() {}.getType();
-                MessageEvent meResult = gson.fromJson(result, typeList);
-                switch (meResult.getTypeMessageEvent()) {
-                    case INIT_PATH:
-                        CoreEngine.getInstance().initPathsRemote();
-                        break;
-                    case ENABLE_ENTRY_POINT:
-                        enableEntryPoint(meResult);
-                        break;
-                    default:
-                        throw new IllegalStateException(meResult.getTypeMessageEvent() + " is not supported");
+                List<MessageEvent> listEvent = gson.fromJson(result, typeList);
+                for(MessageEvent meResult : listEvent) {
+                    LOGGER.debug("MessageEvent "+meResult.toString());
+                    switch (meResult.getTypeMessageEvent()) {
+                        case INIT_PATH:
+                            CoreEngine.getInstance().initPathsRemote();
+                            break;
+                        case ENABLE_ENTRY_POINT:
+                            enableEntryPoint(meResult);
+                            break;
+                        default:
+                            throw new IllegalStateException(meResult.getTypeMessageEvent() + " is not supported");
+                    }
                 }
 
             }catch (JsonParseException e){
-                LOGGER.error("Error on /event with token %s and reference %s",CoreEngine.getInstance().getConfig().getToken(),CoreEngine.getInstance().getConfig().getReference());
+                LOGGER.error("Error on /event with token "+CoreEngine.getInstance().getConfig().getToken()+" and reference "+CoreEngine.getInstance().getConfig().getReference());
             }
         }
     }

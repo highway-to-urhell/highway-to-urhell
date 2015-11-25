@@ -7,7 +7,7 @@ public class MessageEvent {
     private String token;
     private String reference;
     private TypeMessageEvent typeMessageEvent;
-    private Object data;
+    private String data;
 
     public String getReference() {
         return reference;
@@ -42,11 +42,22 @@ public class MessageEvent {
         this.typeMessageEvent = typeMessageEvent;
     }
 
-    public Object getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageEvent{" +
+                "id='" + id + '\'' +
+                ", token='" + token + '\'' +
+                ", reference='" + reference + '\'' +
+                ", typeMessageEvent=" + typeMessageEvent +
+                ", data='" + data + '\'' +
+                '}';
     }
 }

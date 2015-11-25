@@ -48,22 +48,6 @@ public class GatherService {
     }
 
     public void gatherInvocation(String fullMethodName, String listParams) {
-        H2hConfig hc = CoreEngine.getInstance().getConfig();
-        switch (hc.getOutputSystem()) {
-            case MEMORY:
-                ThunderData td = mapThunderData.get(fullMethodName);
-                if (td == null) {
-                    // first time
-                    td = new ThunderData(fullMethodName);
-                    mapThunderData.put(fullMethodName, td);
-                }
-                td.incrementCounter();
-                break;
-            case REMOTE:
-                ThunderExporterService.getInstance().sendRemoteBreaker(fullMethodName, listParams);
-                break;
-            default:
-                throw new IllegalStateException(hc.getOutputSystem() + " is not supported");
-        }
+        ThunderExporterService.getInstance().sendRemoteBreaker(fullMethodName, listParams);
     }
 }

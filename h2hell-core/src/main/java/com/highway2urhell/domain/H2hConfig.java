@@ -1,7 +1,6 @@
 package com.highway2urhell.domain;
 
 public class H2hConfig {
-	private OutputSystem outputSystem;
 	private String urlApplication;
 	private String nameApplication;
 	private String urlH2hWeb;
@@ -11,6 +10,16 @@ public class H2hConfig {
 	private String versionApp;
 	private String typeAppz;
 	private OutputSystem timer;
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	private String reference;
 
 	public Boolean getPerformance() {
 		return performance;
@@ -87,12 +96,6 @@ public class H2hConfig {
 	public String getUrlApplication() {
 		return urlApplication;
 	}
-	public OutputSystem getOutputSystem() {
-		return outputSystem;
-	}
-	public void setOutputSystem(OutputSystem outputSystem) {
-		this.outputSystem = outputSystem;
-	}
 	public void setUrlApplication(String urlApplication) {
 		this.urlApplication = urlApplication;
 	}
@@ -108,10 +111,24 @@ public class H2hConfig {
 	public void setUrlH2hWeb(String urlH2hWeb) {
 		this.urlH2hWeb = urlH2hWeb;
 	}
+
 	@Override
 	public String toString() {
-		return "H2hConfig [outputSystem=" + outputSystem + ", urlApplication="
-				+ urlApplication + ", nameApplication=" + nameApplication
-				+ ", urlH2hWeb=" + urlH2hWeb + "]";
+		return "H2hConfig{" +
+				"urlApplication='" + urlApplication + '\'' +
+				", nameApplication='" + nameApplication + '\'' +
+				", urlH2hWeb='" + urlH2hWeb + '\'' +
+				", description='" + description + '\'' +
+				", pathSource='" + pathSource + '\'' +
+				", pathH2h='" + pathH2h + '\'' +
+				", versionApp='" + versionApp + '\'' +
+				", typeAppz='" + typeAppz + '\'' +
+				", timer=" + timer +
+				", reference='" + reference + '\'' +
+				", higherTime=" + higherTime +
+				", performance=" + performance +
+				", token='" + token + '\'' +
+				", pathSend=" + pathSend +
+				'}';
 	}
 }

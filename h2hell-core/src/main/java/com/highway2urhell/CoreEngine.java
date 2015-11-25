@@ -16,6 +16,9 @@ import java.io.InputStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CoreEngine {
 
@@ -41,10 +44,22 @@ public class CoreEngine {
                     instance.registerPlugins();
                     instance.runPluginsTriggeredAtStartup();
                     instance.configure();
+                    instance.runListener();
                 }
             }
         }
         return instance;
+    }
+
+    public void runListener(){
+        ScheduledExecutorService schExService = Executors.newScheduledThreadPool(1);
+        schExService.scheduleAtFixedRate(new Runnable() {
+
+            public void run() {
+                LOGGER.debug("Call the H2H-Web server");
+                ListenerService.getInstance().callServerH2H();
+            }
+        }, 5, 10, TimeUnit.SECONDS);
     }
 
     public void enableEntryPointCoverage(FilterEntryPath filter) throws ClassNotFoundException, UnmodifiableClassException {
@@ -65,7 +80,7 @@ public class CoreEngine {
     }
 
     public void initPathsRemote() {
-        if (config.getOutputSystem().equals(OutputSystem.REMOTE) && config.getToken() != null) {
+        if (config.getToken() != null) {
             ThunderExporterService.getInstance().initPathsRemoteApp();
             config.setPathSend(true);
         }
@@ -121,13 +136,6 @@ public class CoreEngine {
             throw new RuntimeException("Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
         }
         parseConfig(rootH2h);
-        if (config.getOutputSystem() == OutputSystem.REMOTE && config.getToken() == null) {
-            ThunderExporterService.getInstance().registerAppInThunder();
-        } else {
-            //TODO valid the token with the server H2H-web
-            LOGGER.info("application reuse the token {} for application {}",
-                    config.getToken(), config.getNameApplication());
-        }
     }
 
     public void parseConfig(String pathFile) {
@@ -145,17 +153,12 @@ public class CoreEngine {
             config.setDescription(prop.getProperty("description"));
             config.setVersionApp(prop.getProperty("versionApp"));
             config.setToken(prop.getProperty("token"));
+            config.setReference(prop.getProperty("reference"));
             String performance = prop.getProperty("performance");
             if (performance != null && performance.equals("true")) {
                 config.setPerformance(true);
             } else {
                 config.setPerformance(false);
-            }
-            String outputSystem = prop.getProperty("outputSystem");
-            if (outputSystem != null) {
-                config.setOutputSystem(OutputSystem.valueOf(outputSystem));
-            } else {
-                throw new RuntimeException("Variable outpuSystem is not defined");
             }
             String timer = prop.getProperty("timer");
             if (timer != null) {

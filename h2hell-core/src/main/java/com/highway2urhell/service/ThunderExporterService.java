@@ -112,7 +112,7 @@ public class ThunderExporterService {
         queueRemoteBreaker.add(msg);
     }
 
-    private String sendDataHTTP(String uri, Object message) {
+    public String sendDataHTTP(String uri, Object message) {
         Gson gson = new Gson();
         String data = gson.toJson(message);
         String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;

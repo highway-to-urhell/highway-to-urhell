@@ -2,6 +2,7 @@ package com.highway2urhell.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.highway2urhell.CoreEngine;
 import com.highway2urhell.domain.FilterEntryPath;
 import com.highway2urhell.domain.MessageEvent;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.instrument.UnmodifiableClassException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ListenerService {
 
@@ -47,7 +50,8 @@ public class ListenerService {
             LOGGER.debug("Result on /event ",result);
             Gson gson = new Gson();
             try {
-                MessageEvent meResult = gson.fromJson(result, MessageEvent.class);
+                Type typeList = new TypeToken<ArrayList<MessageEvent>>() {}.getType();
+                MessageEvent meResult = gson.fromJson(result, typeList);
                 switch (meResult.getTypeMessageEvent()) {
                     case INIT_PATH:
                         CoreEngine.getInstance().initPathsRemote();

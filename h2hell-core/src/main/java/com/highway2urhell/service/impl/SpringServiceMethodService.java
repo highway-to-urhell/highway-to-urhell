@@ -24,6 +24,6 @@ public class SpringServiceMethodService extends AbstractLeechService {
         // clearPreviousData();
         LOGGER.debug("receive incoming data");
         gatherData(incoming);
-        LOGGER.debug("data gathering complete. Found {} entries", getFrameworkInformations().getListEntryPath().size());
+        LOGGER.debug("data gathering complete.SPRING_METHOD Found {} entries", getFrameworkInformations().getListEntryPath().size());
     }
 }

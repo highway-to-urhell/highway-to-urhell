@@ -27,8 +27,10 @@ public class SpringUrlTransformer extends AbstractLeechTransformer {
                 "   String fullNameDescriptor = handlerMap.get(key).getClass().toString();" +
                 "   if (fullNameDescriptor.contains(\"class\")) {" +
                 "       entry.setClassName(fullNameDescriptor.replace(\"class \", \"\"));" +
+                "       entry.setMethodName(fullNameDescriptor.replace(\"class \", \"\"));" +
                 "   } else {" +
                 "       entry.setClassName(fullNameDescriptor);" +
+                "       entry.setMethodName(fullNameDescriptor);" +
                 "   }" +
                 "   listEntryPath.add(entry);" +
                 "}" +

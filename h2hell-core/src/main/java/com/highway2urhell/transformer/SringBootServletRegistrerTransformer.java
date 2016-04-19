@@ -21,7 +21,7 @@ public class SringBootServletRegistrerTransformer extends AbstractLeechTransform
         CtMethod m =cc.getMethod("addMapping","([Ljava/lang/String;)Ljava/util/Set;");
         String h2hHookCode = "" +
                 "List listEntryPath = new ArrayList();" +
-                "   String[] tab =urlPatterns;" +
+                "   String[] tab =urlPatterns   ;" +
                 "   for(int i=0;i<tab.length;i++){" +
                 "            EntryPathData entry = new EntryPathData();" +
                 "            entry.setClassName(wrapper.getName());" +

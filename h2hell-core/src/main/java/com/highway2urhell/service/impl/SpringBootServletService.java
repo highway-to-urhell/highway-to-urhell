@@ -4,6 +4,7 @@ import com.highway2urhell.VersionUtils;
 import com.highway2urhell.domain.EntryPathData;
 import com.highway2urhell.service.AbstractLeechService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +25,13 @@ public class SpringBootServletService extends AbstractLeechService {
 
     @Override
     public void receiveData(List<EntryPathData> incoming) {
-        // clearPreviousData();
+        List<EntryPathData> res = new ArrayList<EntryPathData>();
         LOGGER.debug("receive incoming data ON SPRING_BOOT_SERVLET");
         for(EntryPathData e : incoming) {
-          e.setAudit(false);
+            e.setAudit(new Boolean(false));
+            res.add(e);
         }
-        gatherData(incoming);
+        gatherData(res);
         LOGGER.debug("data gathering complete. SPRING_BOOT_SERVLET Found {} entries", getFrameworkInformations().getListEntryPath().size());
     }
 

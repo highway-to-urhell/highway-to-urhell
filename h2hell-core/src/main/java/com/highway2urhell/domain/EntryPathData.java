@@ -11,7 +11,7 @@ public class EntryPathData {
     private String signatureName;
     private TypePath typePath = TypePath.UNKNOWN;
     private Boolean audit = true;
-    private HttpMethod httpMethod = HttpMethod.POST;
+    private String httpMethod = "";
     private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
 
     public Boolean getAudit() {
@@ -70,11 +70,11 @@ public class EntryPathData {
         this.typePath = typePath;
     }
 
-    public HttpMethod getHttpMethod() {
+    public String getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
+    public void setHttpMethod(String httpMethod) {
         this.httpMethod = httpMethod;
     }
 

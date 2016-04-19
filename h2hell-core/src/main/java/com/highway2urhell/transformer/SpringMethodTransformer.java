@@ -3,6 +3,8 @@ package com.highway2urhell.transformer;
 import javassist.CtClass;
 import javassist.CtMethod;
 
+import java.lang.annotation.Annotation;
+
 public class SpringMethodTransformer extends AbstractLeechTransformer {
 
     public SpringMethodTransformer() {
@@ -14,7 +16,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "java.util.Map",
                 "java.util.Map.Entry",
                 "java.util",
-                "java.lang.reflect",
+                "java.lang.reflect","org.springframework.web.bind.annotation",
                 "org.objectweb.asm");
     }
 

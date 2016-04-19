@@ -127,6 +127,7 @@ public class TransformerService {
             Collection<LeechService> leechService) {
         List<EntryPathData> listBreaker = new ArrayList<EntryPathData>();
         for (LeechService leech : leechService) {
+            LOGGER.error(leech.getFrameworkInformations().getFrameworkName()+leech.getFrameworkInformations().getListEntryPath().size());
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {

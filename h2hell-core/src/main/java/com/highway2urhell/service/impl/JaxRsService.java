@@ -25,7 +25,7 @@ public class JaxRsService extends AbstractLeechService {
         super(FRAMEWORK_NAME, VersionUtils.getVersion(
                 "javax.ws.rs.core.Application", "javax.ws.rs",
                 "javax.ws.rs-api"));
-        setTriggerAtStartup(true);
+        setTriggerAtStartup(false);
     }
 
     @Override
@@ -70,15 +70,15 @@ public class JaxRsService extends AbstractLeechService {
         EntryPathData entry = new EntryPathData();
         // method
         if (m.getAnnotation(GET.class) != null) {
-            entry.setHttpMethod(HttpMethod.GET);
+            entry.setHttpMethod("GET");
         } else if (m.getAnnotation(POST.class) != null) {
-            entry.setHttpMethod(HttpMethod.POST);
+            entry.setHttpMethod("POST");
         } else if (m.getAnnotation(PUT.class) != null) {
-            entry.setHttpMethod(HttpMethod.PUT);
+            entry.setHttpMethod("PUT");
         } else if (m.getAnnotation(DELETE.class) != null) {
-            entry.setHttpMethod(HttpMethod.DELETE);
+            entry.setHttpMethod("DELETE");
         } else {
-            entry.setHttpMethod(HttpMethod.UNKNOWN);
+            entry.setHttpMethod("");
         }
         //
         entry.setUri(pathClass + pMethod.value());

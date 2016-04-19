@@ -73,6 +73,9 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
         for (CtMethod m : cc.getMethods()) {
             log.error(m.getLongName() + "-" + m.getSignature());
         }
+        for (CtConstructor c : cc.getConstructors()) {
+            log.error(c.getLongName() + "-" + c.getSignature());
+        }
     }
 
     /**

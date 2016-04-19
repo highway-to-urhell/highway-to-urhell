@@ -1,6 +1,7 @@
 package com.highway2urhell.transformer;
 
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
 
 /**
@@ -9,30 +10,29 @@ import javassist.CtMethod;
 public class SringBootServletRegistrerTransformer extends AbstractLeechTransformer {
 
     public SringBootServletRegistrerTransformer() {
-        super("org/springframework/boot/context/embedded/ServletRegistrationBean");
+        super("org/apache/catalina/core/ApplicationServletRegistration");
         addImportPackage(
                 "java.util.Map",
-                "java.util");
+                "java.util","javax.servlet");
     }
 
     @Override
     protected void doTransform(CtClass cc) throws Exception {
-        CtMethod m =cc.getMethod("configure", "(Ljavax/servlet/ServletRegistration$Dynamic;)V");
+        CtMethod m =cc.getMethod("addMapping","([Ljava/lang/String;)Ljava/util/Set;");
         String h2hHookCode = "" +
                 "List listEntryPath = new ArrayList();" +
-                "Iterator iter = getUrlMappings().iterator();" +
-                "while(iter.hasNext()){" +
-                "   String value = (String) iter.next();" +
-                "   EntryPathData entry = new EntryPathData();" +
-                "   entry.setTypePath(TypePath.DYNAMIC);" +
-                "   entry.setUri(value);" +
-                "   entry.setMethodName(servlet.getServletInfo());" +
-                "   entry.setClassName(servlet.getServletInfo());" +
-                "   entry.setAudit(Boolean.FALSE);" +
-                "   listEntryPath.add(entry);" +
-                "}" +
+                "   String[] tab =urlPatterns;" +
+                "   for(int i=0;i<tab.length;i++){" +
+                "            EntryPathData entry = new EntryPathData();" +
+                "            entry.setClassName(wrapper.getName());" +
+                "            entry.setMethodName(wrapper.getName());" +
+                "            entry.setTypePath(TypePath.DYNAMIC);" +
+                "            entry.setUri(tab[i]);    "+
+                "            entry.setAudit(Boolean.FALSE);    "+
+                "            listEntryPath.add(entry);" +
+                "  }" +
                 "CoreEngine.getInstance().getFramework(\"SPRING_BOOT_SERVLET\").receiveData(listEntryPath);";
-        m.insertAfter(h2hHookCode);
+        m.insertBefore(h2hHookCode);
 
     }
 

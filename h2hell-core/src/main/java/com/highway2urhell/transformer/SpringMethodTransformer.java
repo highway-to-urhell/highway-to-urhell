@@ -3,8 +3,6 @@ package com.highway2urhell.transformer;
 import javassist.CtClass;
 import javassist.CtMethod;
 
-import java.lang.annotation.Annotation;
-
 public class SpringMethodTransformer extends AbstractLeechTransformer {
 
     public SpringMethodTransformer() {
@@ -16,7 +14,7 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "java.util.Map",
                 "java.util.Map.Entry",
                 "java.util",
-                "java.lang.reflect","org.springframework.web.bind.annotation",
+                "java.lang.reflect", "org.springframework.web.bind.annotation",
                 "org.objectweb.asm");
     }
 
@@ -32,6 +30,11 @@ public class SpringMethodTransformer extends AbstractLeechTransformer {
                 "   EntryPathData entrypath = new EntryPathData();" +
                 "   entrypath.setTypePath(TypePath.DYNAMIC);" +
                 "   entrypath.setUri(requestMappingInfo.getPatternsCondition().toString());" +
+                //looks like spring allow to have multiple http methods for the same url let's track only first for the moment
+                "   Iterator methodIterator = requestMappingInfo.getMethodsCondition().getMethods().iterator();" +
+                "   if (methodIterator.hasNext()) {" +
+                "       entrypath.setHttpMethod(methodIterator.next().toString());" +
+                "   }" +
                 "   String removeClass = \"\";" +
                 "   if (handler.getBeanType().toString().contains(\"class\")) {" +
                 "       removeClass = handler.getBeanType().toString().replace(\"class \", \"\" );" +

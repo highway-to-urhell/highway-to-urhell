@@ -79,9 +79,12 @@ public class ThunderExporterService {
     }
 
     public void initPathsRemoteApp() {
-        LOGGER.info("initPathsRemoteApp ");
         TransformerService ts = new TransformerService();
         List<EntryPathData> res = ts.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance().getLeechServiceRegistered());
+        LOGGER.debug("List EntryPathData for init Path");
+        for(EntryPathData en : res){
+            LOGGER.debug(en.toString());
+        }
         MessageThunderApp msg = new MessageThunderApp();
         msg.setListentryPathData(res);
         msg.setToken(CoreEngine.getInstance().getConfig().getToken());

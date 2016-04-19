@@ -80,7 +80,6 @@ public class CoreEngine {
     }
 
     public void initPathsRemote() {
-        LOGGER.error("initPathsRemote !!!");
         if (config.getToken() != null) {
             ThunderExporterService.getInstance().initPathsRemoteApp();
             config.setPathSend(true);

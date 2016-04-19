@@ -26,6 +26,9 @@ public class SpringBootServletService extends AbstractLeechService {
     public void receiveData(List<EntryPathData> incoming) {
         // clearPreviousData();
         LOGGER.debug("receive incoming data ON SPRING_BOOT_SERVLET");
+        for(EntryPathData e : incoming) {
+          e.setAudit(false);
+        }
         gatherData(incoming);
         LOGGER.debug("data gathering complete. SPRING_BOOT_SERVLET Found {} entries", getFrameworkInformations().getListEntryPath().size());
     }

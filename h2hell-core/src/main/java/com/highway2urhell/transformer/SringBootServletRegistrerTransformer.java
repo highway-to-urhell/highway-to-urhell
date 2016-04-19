@@ -24,9 +24,9 @@ public class SringBootServletRegistrerTransformer extends AbstractLeechTransform
                 "   String[] tab =urlPatterns   ;" +
                 "   for(int i=0;i<tab.length;i++){" +
                 "            EntryPathData entry = new EntryPathData();" +
-                "            entry.setClassName(wrapper.getName());" +
+                "            entry.setClassName(wrapper.getServletClass());" +
                 "            entry.setMethodName(wrapper.getName());" +
-                "            entry.setTypePath(TypePath.DYNAMIC);" +
+                "            entry.setTypePath(TypePath.SERVLET);" +
                 "            entry.setUri(tab[i]);    "+
                 "            entry.setAudit(Boolean.FALSE);    "+
                 "            listEntryPath.add(entry);" +

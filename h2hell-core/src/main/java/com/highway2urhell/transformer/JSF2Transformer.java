@@ -66,6 +66,25 @@ public class JSF2Transformer extends AbstractLeechTransformer {
                 "	        e.printStackTrace();" +
                 "       }" +
                 "       entry.setSignatureName(resSignature);" +
+                "       try {" +
+                "           Class c = Class.forName(className);" +
+                "           Method[] tabDeclared = c.getDeclaredMethods();" +
+                "           List listEntryPathData = new ArrayList();\n" +
+                "           for (int i = 0; i < tabDeclared.length; i++) {" +
+                "               if (tabDeclared[i].getName().equals(nameMethod)) {" +
+                "                  for (int j = 0; j < tabDeclared[i].getParameterTypes().length; j++) {\n" +
+                "                      EntryPathParam param = new EntryPathParam();\n" +
+                "                      param.setKey(\"\");\n" +
+                "                      param.setTypeParam(TypeParam.PARAM_DATA);\n" +
+                "                      param.setValue(tabDeclared[i].getParameterTypes()[j].getName());\n" +
+                "                  } "+
+                "                  listEntryPathData.add(param);\n" +
+                "               }" +
+                "          }" +
+                "          entry.setListEntryPathData(listEntryPathData);\n"+
+                "       } catch (ClassNotFoundException e) {" +
+                "	        e.printStackTrace();" +
+                "       }"+
                 "       listEntryPath.add(entry);" +
                 "   }" +
                 "}" +

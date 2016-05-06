@@ -30,6 +30,9 @@ public class CoreEngine {
     private final static String H2H_CONFIG = "H2H_CONFIG";
     private final static String JAVA = "Java";
     private final static Integer DEFAULT_TIMER = 2000;
+    private final static String NO_URL = "NO_URL";
+    private final static String NO_SOURCE = "NO_SOURCE";
+        
     private H2hConfig config;
 
     private CoreEngine() {
@@ -130,13 +133,32 @@ public class CoreEngine {
         // Grab Env
         String rootH2h = System.getProperty(H2H_CONFIG);
         if (rootH2h == null) {
-            throw new RuntimeException("Unknow Variable H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
+            defaultConfig();
+        }else if ("".equals(rootH2h)) {
+            defaultConfig();
+        }else {
+            parseConfig(rootH2h);
         }
-        if ("".equals(rootH2h)) {
-            throw new RuntimeException("Variable Path H2H_CONFIG. Please Set H2H_CONFIG to location application deployment.");
-        }
-        parseConfig(rootH2h);
     }
+
+    public void defaultConfig(){
+        config = new H2hConfig();
+        config.setTypeAppz(JAVA);
+        config.setUrlApplication(NO_URL);
+        config.setNameApplication(String.valueOf(System.currentTimeMillis()));
+        config.setPathSource(NO_SOURCE);
+        config.setDescription("Default Name.");
+        config.setPerformance(false);
+        config.setTimer(OutputSystem.REMOTE);
+        config.setHigherTime(DEFAULT_TIMER);
+        //TODO
+        //Hardcoded la valeur de la plateforme --> le jour ou la plateforme fonctionnera ... one day ... one day ..
+        //Actuellement on hardcode le local
+        config.setUrlH2hWeb("http://localhost:8090/core/api/ThunderEntry");
+        //TODO
+        //Recuperer le token comme parametre le jour ou la plate fonctionnera ... one day ... one day ..
+        config.setToken(null);
+     }
 
     public void parseConfig(String pathFile) {
         config = new H2hConfig();

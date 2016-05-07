@@ -13,8 +13,17 @@ public class EntryPathData {
     private Boolean audit = true;
     private String httpMethod = "";
     private List<EntryPathParam> listEntryPathData = new ArrayList<EntryPathParam>();
+    private Integer lineNumber;
 
-    public Boolean getAudit() {
+    public Integer getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(Integer lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
+	public Boolean getAudit() {
         return audit;
     }
 
@@ -92,6 +101,6 @@ public class EntryPathData {
                 + ", className=" + className + ", classNameNormalized="
                 + classNameNormalized + ", signatureName=" + signatureName
                 + ", typePath=" + typePath + ", httpMethod=" + httpMethod
-                + ", listEntryPathData=" + listEntryPathData + "]";
+                + "]";
     }
 }

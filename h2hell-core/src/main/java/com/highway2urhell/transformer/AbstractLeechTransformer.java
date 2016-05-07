@@ -71,10 +71,10 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
 
     private void grabAllMethod(CtClass cc) {
         for (CtMethod m : cc.getMethods()) {
-            log.error(m.getLongName() + "-" + m.getSignature());
+            log.error(m.getLongName() + "-" + m.getSignature()+" at line "+m.getMethodInfo().getLineNumber(0));
         }
         for (CtConstructor c : cc.getConstructors()) {
-            log.error(c.getLongName() + "-" + c.getSignature());
+            log.error(c.getLongName() + "-" + c.getSignature()+" at line "+c.getMethodInfo().getLineNumber(0));
         }
     }
 

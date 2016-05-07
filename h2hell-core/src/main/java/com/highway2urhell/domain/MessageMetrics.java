@@ -1,7 +1,5 @@
 package com.highway2urhell.domain;
 
-import java.util.List;
-
 public class MessageMetrics {
 	private String pathClassMethodName;
 	private String token;

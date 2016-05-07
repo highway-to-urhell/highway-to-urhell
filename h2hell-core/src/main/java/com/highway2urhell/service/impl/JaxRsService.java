@@ -1,20 +1,27 @@
 package com.highway2urhell.service.impl;
 
-import com.highway2urhell.VersionUtils;
-import com.highway2urhell.domain.*;
-import com.highway2urhell.domain.HttpMethod;
-import com.highway2urhell.service.AbstractLeechService;
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-
-
-import javax.ws.rs.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+
+import com.highway2urhell.VersionUtils;
+import com.highway2urhell.domain.EntryPathData;
+import com.highway2urhell.domain.EntryPathParam;
+import com.highway2urhell.domain.TypeParam;
+import com.highway2urhell.domain.TypePath;
+import com.highway2urhell.service.AbstractLeechService;
 
 
 public class JaxRsService extends AbstractLeechService {

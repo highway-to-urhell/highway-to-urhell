@@ -1,7 +1,6 @@
 package com.highway2urhell.transformer;
 
 import javassist.CtClass;
-import javassist.CtConstructor;
 import javassist.CtMethod;
 
 /**

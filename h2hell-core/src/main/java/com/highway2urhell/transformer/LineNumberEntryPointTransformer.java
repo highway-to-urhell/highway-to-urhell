@@ -41,8 +41,6 @@ public class LineNumberEntryPointTransformer implements ClassFileTransformer {
                 for (EntryPathData entry : listbd) {
                 	getLineNumber(entry, cc);
                 }
-                classfileBuffer = cc.toBytecode();
-                cc.detach();
             } catch (Exception ex) {
                 LOGGER.error("Fail to Transform " + classNameToTransform, ex);
             }

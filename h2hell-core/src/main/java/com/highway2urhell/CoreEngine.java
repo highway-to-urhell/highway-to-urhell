@@ -5,13 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +74,7 @@ public class CoreEngine {
 
 	public void enableEntryPointCoverage(FilterEntryPath filter)
 			throws ClassNotFoundException, UnmodifiableClassException {
-		LOGGER.info("enabling entry point coverage");
+		LOGGER.info("enabling entry point coverage "+filter.toString());
 		Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
 		if (instrumentation != null) {
 			TransformerService ts = new TransformerService();
@@ -100,7 +94,7 @@ public class CoreEngine {
 
 	public void getLineNumberFromEntryPoint(FilterEntryPath filter)
 			throws ClassNotFoundException, UnmodifiableClassException {
-		LOGGER.info("get Line Number entry point coverage");
+		LOGGER.info("enabling getLineNumberFromEntryPoint "+filter.toString());
 		Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
 		if (instrumentation != null) {
 			TransformerService ts = new TransformerService();
@@ -113,10 +107,17 @@ public class CoreEngine {
 		}
 	}
 
+	public void initPathsRemoteWithOutTransformerLine() {
+		ThunderExporterService.getInstance().initPathsRemoteApp();
+		config.setPathSend(true);
+	}
+
 	public void initPathsRemote() {
 		if (config.getToken() != null) {
 			try {
 				FilterEntryPath filter = new FilterEntryPath();
+				filter.setFilter(true);
+				filter.setListFilter(new ArrayList<String>());;
 				getLineNumberFromEntryPoint(filter);
 				ThunderExporterService.getInstance().initPathsRemoteApp();
 				config.setPathSend(true);

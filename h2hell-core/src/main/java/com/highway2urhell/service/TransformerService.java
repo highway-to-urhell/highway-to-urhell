@@ -36,7 +36,7 @@ public class TransformerService {
     }
 
     private Boolean filterEntry(FilterEntryPath filterEntryPath, EntryPathData entryPath) {
-        if (!filterEntryPath.getFilter()) {
+        if (filterEntryPath.getFilter()) {
             return true;
         }
         if (filterEntryPath.getClassMethod()) {
@@ -127,7 +127,6 @@ public class TransformerService {
             Collection<LeechService> leechService) {
         List<EntryPathData> listBreaker = new ArrayList<EntryPathData>();
         for (LeechService leech : leechService) {
-            LOGGER.error(leech.getFrameworkInformations().getFrameworkName()+leech.getFrameworkInformations().getListEntryPath().size());
             for (EntryPathData entryPath : leech.getFrameworkInformations()
                     .getListEntryPath()) {
                 if (entryPath.getMethodName() != null) {

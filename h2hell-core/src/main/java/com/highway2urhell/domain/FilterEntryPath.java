@@ -56,6 +56,18 @@ public class FilterEntryPath {
         return classMethod;
     }
 
+    @Override
+    public String toString() {
+        return "FilterEntryPath{" +
+                "listFilter=" + listFilter +
+                ", token='" + token + '\'' +
+                ", filter=" + filter +
+                ", packageOnly=" + packageOnly +
+                ", classOnly=" + classOnly +
+                ", classMethod=" + classMethod +
+                '}';
+    }
+
     public void setClassMethod(Boolean classMethod) {
         this.classMethod = classMethod;
     }

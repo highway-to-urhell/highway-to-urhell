@@ -124,6 +124,7 @@ public class ThunderExporterService {
         Gson gson = new Gson();
         String data = gson.toJson(message);
         String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
+        LOGGER.debug("Send Request to Server with uri {} and data {}",urlServer,data);
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(urlServer);
         if (data != null) {

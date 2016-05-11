@@ -61,7 +61,7 @@ public class CoreEngine {
 		return instance;
 	}
 
-	public void runListener() {
+	private void runListener() {
 		ScheduledExecutorService schExService = Executors.newScheduledThreadPool(1);
 		schExService.scheduleAtFixedRate(new Runnable() {
 
@@ -92,7 +92,7 @@ public class CoreEngine {
 		}
 	}
 
-	public void getLineNumberFromEntryPoint(FilterEntryPath filter)
+	private void getLineNumberFromEntryPoint(FilterEntryPath filter)
 			throws ClassNotFoundException, UnmodifiableClassException {
 		LOGGER.info("enabling getLineNumberFromEntryPoint "+filter.toString());
 		Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
@@ -113,11 +113,11 @@ public class CoreEngine {
 	}
 
 	public void initPathsRemote() {
-		if (config.getToken() != null) {
+		if (config.getToken() != null && !config.getPathSend()) {
 			try {
 				FilterEntryPath filter = new FilterEntryPath();
 				filter.setFilter(true);
-				filter.setListFilter(new ArrayList<String>());;
+				filter.setListFilter(new ArrayList<String>());
 				getLineNumberFromEntryPoint(filter);
 				ThunderExporterService.getInstance().initPathsRemoteApp();
 				config.setPathSend(true);
@@ -193,7 +193,7 @@ public class CoreEngine {
 		}
 	}
 
-	public void defaultConfig() {
+	private void defaultConfig() {
 		config = new H2hConfig();
 		config.setTypeAppz(JAVA);
 		config.setUrlApplication(NO_URL);
@@ -214,7 +214,7 @@ public class CoreEngine {
 		config.setToken(null);
 	}
 
-	public void parseConfig(String pathFile) {
+	private void parseConfig(String pathFile) {
 		config = new H2hConfig();
 		config.setTypeAppz(JAVA);
 		Properties prop = new Properties();

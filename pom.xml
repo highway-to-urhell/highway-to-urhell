@@ -16,6 +16,7 @@
     <modules>
         <module>h2hell-core</module>
         <module>h2hell-distribution</module>
+        <module>h2hell-ui</module>
     </modules>
 
     <properties>

@@ -1,0 +1,15 @@
+version: '2'
+services:
+    h2hellui-app:
+        image: h2hellui
+        external_links:
+            - h2hellui-mysql:mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/h2hellui?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - 8080:8080
+    h2hellui-mysql:
+        extends:
+            file: mysql.yml
+            service: h2hellui-mysql

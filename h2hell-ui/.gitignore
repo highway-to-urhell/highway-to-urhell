@@ -1,16 +1,14 @@
 ######################
 # Project Specific
 ######################
-h2hell-ui/target/www/**
+/target/www/**
 
 ######################
 # Node
 ######################
-/h2hell-ui/node/**
-/h2hell-ui/node_tmp/**
-/h2hell-ui/node_modules/**
-bower_components
-
+/node/**
+/node_tmp/**
+/node_modules/**
 
 ######################
 # SASS
@@ -134,12 +132,3 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-
-
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-

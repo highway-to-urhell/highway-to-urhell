@@ -1,7 +1,6 @@
 
 entity BreakerLog {
-	pathClassMethodName String,
-    dateIncoming ZonedDateTime,
+	dateIncoming ZonedDateTime,
     parameters String
 }
 
@@ -30,10 +29,12 @@ entity Application {
 	analysis Boolean,
 }
 
+entity EntryPoint {
+	pathClassMethodName String required
+}
+
 entity ApplicationStats {
 	count Long,
-//	ThunderApp thunderApp;
-	pathClassMethodName String,
 	falsePositive Boolean,
   	uri String,
     httpmethod String,
@@ -48,25 +49,26 @@ enum TypeMessageEvent {
     SOURCE
 }
 
-relationship OneToMany {
-	Application{stats} to ApplicationStats{application(token)}
-}
-
-relationship OneToMany {
-	Application{metrics} to MetricsTimer{application(token)}
-}
 
 relationship OneToMany {
 	Application{events} to Event{application(token)}
 }
 
 relationship OneToMany {
-	Application to BreakerLog{application(token)}
-}
-
-relationship OneToMany {
 	BreakerLog{metrics} to MetricsTimer{log}
 }
 
-paginate ApplicationStats, BreakerLog, MetricsTimer with infinite-scroll
-paginate Application with pagination
+relationship OneToMany {
+	Application{entryPoint} to EntryPoint{application(token)}
+}
+
+relationship OneToMany {
+	EntryPoint{stats} to ApplicationStats{entryPoint(pathClassMethodName)}
+}
+
+relationship OneToMany {
+	EntryPoint{logs} to BreakerLog
+}
+
+paginate ApplicationStats, BreakerLog, MetricsTimer with pagination
+paginate Application, EntryPoint with infinite-scroll

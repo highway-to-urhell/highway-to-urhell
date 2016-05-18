@@ -1,31 +1,25 @@
 
 entity BreakerLog {
 	pathClassMethodName String,
-    token String,
     dateIncoming ZonedDateTime,
     parameters String
 }
 
 entity Event {
-	token String,
     reference String,
     typeMessageEvent TypeMessageEvent,
     data String,
     treat Boolean
 }
 
-entity MetricsTimer {
-	pathClassMethodName String,
-	token String,
-    dateIncoming ZonedDateTime,
+entity MetricsTimer {    
     cpuLoadSystem Double,
 	cpuLoadProcess Double
-	parameters String,
 }
 
 entity Application {
-	name String,
-	token String,
+	name String required,
+	token String required,
 	dateCreation ZonedDateTime,
 	urlApp String,
 	description String,
@@ -55,12 +49,24 @@ enum TypeMessageEvent {
 }
 
 relationship OneToMany {
-	ApplicationStats{application} to Application
+	Application{stats} to ApplicationStats{application(token)}
 }
 
-relationship ManyToOne {
-	Application{stats} to ApplicationStats
+relationship OneToMany {
+	Application{metrics} to MetricsTimer{application(token)}
 }
 
-paginate JobHistory, Employee with infinite-scroll
+relationship OneToMany {
+	Application{events} to Event{application(token)}
+}
+
+relationship OneToMany {
+	Application to BreakerLog{application(token)}
+}
+
+relationship OneToMany {
+	BreakerLog{metrics} to MetricsTimer{log}
+}
+
+paginate ApplicationStats, BreakerLog, MetricsTimer with infinite-scroll
 paginate Application with pagination

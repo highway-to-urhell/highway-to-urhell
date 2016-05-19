@@ -68,5 +68,8 @@
   "scripts": {
     "test": "gulp test",
     "postinstall": "webdriver-manager update"
+  },
+  "dependencies": {
+    "jhipster-domain-language": "^1.0.1"
   }
 }

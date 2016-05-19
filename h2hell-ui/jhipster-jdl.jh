@@ -1,39 +1,41 @@
 
-entity BreakerLog {
+entity EntryPointParameters {
 	dateIncoming ZonedDateTime,
-    parameters String
+    parameters AnyBlob
 }
 
 entity Event {
-    reference String,
     typeMessageEvent TypeMessageEvent,
-    data String,
-    treat Boolean
+    data AnyBlob,
+    consumed Boolean
 }
 
-entity MetricsTimer {    
+entity MetricsTimer {
+    timeExec Integer,
     cpuLoadSystem Double,
 	cpuLoadProcess Double
 }
 
 entity Application {
 	name String required,
-	token String required,
+    token String required,
 	dateCreation ZonedDateTime,
 	urlApp String,
 	description String,
-	pathSource String,
 	appType String,
-	appVersion String,
-	numberEntryPoints Integer,
 	analysis Boolean,
 }
 
-entity EntryPoint {
-	pathClassMethodName String required
+entity Analysis {
+    dateCreation ZonedDateTime,
+   	pathSource String,
+	appVersion String,
+	numberEntryPoints Integer,
+
 }
 
-entity ApplicationStats {
+entity EntryPoint {
+	pathClassMethodName String required,
 	count Long,
 	falsePositive Boolean,
   	uri String,
@@ -43,32 +45,56 @@ entity ApplicationStats {
     checkLaunch Boolean,
 }
 
+entity Team {
+	name String required
+}
+
+entity UserPermission {
+	permission Permission required
+}
+
+enum Permission {
+	READ,
+    EXECUTE
+}
+
 enum TypeMessageEvent {
     INIT_PATH,
     ENABLE_ENTRY_POINT,
     SOURCE
 }
 
-
-relationship OneToMany {
-	Application{events} to Event{application(token)}
+relationship ManyToMany {
+	Team{members} to User
 }
 
 relationship OneToMany {
-	BreakerLog{metrics} to MetricsTimer{log}
+	Team to UserPermission
+}
+
+relationship ManyToMany {
+	UserPermission{projects} to Application{userPermissions}
 }
 
 relationship OneToMany {
-	Application{entryPoint} to EntryPoint{application(token)}
+	Application{analysis} to Analysis
 }
 
 relationship OneToMany {
-	EntryPoint{stats} to ApplicationStats{entryPoint(pathClassMethodName)}
+	Analysis{events} to Event
 }
 
 relationship OneToMany {
-	EntryPoint{logs} to BreakerLog
+	EntryPointParameters{metrics} to MetricsTimer{log}
 }
 
-paginate ApplicationStats, BreakerLog, MetricsTimer with pagination
+relationship OneToMany {
+	Analysis{entryPoint} to EntryPoint{application}
+}
+
+relationship OneToMany {
+	EntryPoint{logs} to EntryPointParameters
+}
+
+paginate EntryPointParameters, MetricsTimer with pagination
 paginate Application, EntryPoint with infinite-scroll

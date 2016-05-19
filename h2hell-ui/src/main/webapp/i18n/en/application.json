@@ -1,0 +1,30 @@
+{
+    "h2HellUiApp": {
+        "application" : {
+            "home": {
+                "title": "Applications",
+                "createLabel": "Create a new Application",
+                "createOrEditLabel": "Create or edit a Application",
+                "search": "Search for Application"
+            },
+            "created": "A new Application is created with identifier {{ param }}",
+            "updated": "A Application is updated with identifier {{ param }}",
+            "deleted": "A Application is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Application {{ id }}?"
+            },
+            "detail": {
+                "title": "Application"
+            },
+            "name": "Name",
+            "token": "Token",
+            "dateCreation": "Date Creation",
+            "urlApp": "Url App",
+            "description": "Description",
+            "appType": "App Type",
+            "analysis": "Analysis",
+            "analysis": "Analysis",
+            "userPermissions": "User Permissions"
+        }
+    }
+}

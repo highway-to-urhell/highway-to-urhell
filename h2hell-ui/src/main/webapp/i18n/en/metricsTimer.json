@@ -1,0 +1,25 @@
+{
+    "h2HellUiApp": {
+        "metricsTimer" : {
+            "home": {
+                "title": "Metrics Timers",
+                "createLabel": "Create a new Metrics Timer",
+                "createOrEditLabel": "Create or edit a Metrics Timer",
+                "search": "Search for Metrics Timer"
+            },
+            "created": "A new Metrics Timer is created with identifier {{ param }}",
+            "updated": "A Metrics Timer is updated with identifier {{ param }}",
+            "deleted": "A Metrics Timer is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Metrics Timer {{ id }}?"
+            },
+            "detail": {
+                "title": "Metrics Timer"
+            },
+            "timeExec": "Time Exec",
+            "cpuLoadSystem": "Cpu Load System",
+            "cpuLoadProcess": "Cpu Load Process",
+            "log": "Log"
+        }
+    }
+}

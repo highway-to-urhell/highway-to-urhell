@@ -1,0 +1,28 @@
+{
+    "h2HellUiApp": {
+        "analysis" : {
+            "home": {
+                "title": "Analyses",
+                "createLabel": "Créer un nouveau Analysis",
+                "createOrEditLabel": "Créer ou éditer un Analysis",
+                "search": "Recherche pour Analysis"
+            },
+            "created": "Un nouveau Analysis a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Analysis avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Analysis avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Analysis {{ id }} ?"
+            },
+            "detail": {
+                "title": "Analysis"
+            },
+            "dateCreation": "Date Creation",
+            "pathSource": "Path Source",
+            "appVersion": "App Version",
+            "numberEntryPoints": "Number Entry Points",
+            "events": "Events",
+            "entryPoint": "Entry Point",
+            "application": "Application"
+        }
+    }
+}

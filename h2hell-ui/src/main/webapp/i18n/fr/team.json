@@ -1,0 +1,24 @@
+{
+    "h2HellUiApp": {
+        "team" : {
+            "home": {
+                "title": "Teams",
+                "createLabel": "Créer un nouveau Team",
+                "createOrEditLabel": "Créer ou éditer un Team",
+                "search": "Recherche pour Team"
+            },
+            "created": "Un nouveau Team a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Team avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Team avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Team {{ id }} ?"
+            },
+            "detail": {
+                "title": "Team"
+            },
+            "name": "Name",
+            "members": "Members",
+            "userPermissions": "User Permissions"
+        }
+    }
+}

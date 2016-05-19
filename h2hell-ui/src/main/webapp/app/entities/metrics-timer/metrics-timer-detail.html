@@ -1,0 +1,30 @@
+
+<div>
+    <h2><span translate="h2HellUiApp.metricsTimer.detail.title">Metrics Timer</span> {{vm.metricsTimer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="h2HellUiApp.metricsTimer.timeExec">Time Exec</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.timeExec}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.metricsTimer.cpuLoadSystem">Cpu Load System</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.cpuLoadSystem}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.metricsTimer.cpuLoadProcess">Cpu Load Process</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.cpuLoadProcess}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.metricsTimer.log">Log</span></dt>
+        <dd>
+            <a ui-sref="entry-point-parameters-detail({id:vm.metricsTimer.log.id})">{{vm.metricsTimer.log.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -65,19 +65,19 @@ enum TypeMessageEvent {
 }
 
 relationship ManyToMany {
-	Team{members} to User{teams}
+	Team{members(login)} to User{teams(name)}
 }
 
 relationship OneToMany {
-	Team{userPermissions} to UserPermission{team}
+	Team{userPermissions} to UserPermission{team(name)}
 }
 
 relationship ManyToMany {
-	UserPermission{projects} to Application{userPermissions}
+	UserPermission{projects(name)} to Application{userPermissions}
 }
 
 relationship OneToMany {
-	Application{analysis} to Analysis{application}
+	Application{analysis} to Analysis{application(name)}
 }
 
 relationship OneToMany {
@@ -89,11 +89,11 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	Analysis{entryPoint} to EntryPoint{application}
+	Analysis{entryPoint(pathClassMethodName)} to EntryPoint{application(name)}
 }
 
 relationship OneToMany {
-	EntryPoint{logs} to EntryPointParameters{entryPoint}
+	EntryPoint{logs} to EntryPointParameters{entryPoint(pathClassMethodName)}
 }
 
 paginate EntryPointParameters, MetricsTimer with pagination

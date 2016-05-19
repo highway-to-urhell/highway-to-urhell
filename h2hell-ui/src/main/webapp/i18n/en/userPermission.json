@@ -1,0 +1,24 @@
+{
+    "h2HellUiApp": {
+        "userPermission" : {
+            "home": {
+                "title": "User Permissions",
+                "createLabel": "Create a new User Permission",
+                "createOrEditLabel": "Create or edit a User Permission",
+                "search": "Search for User Permission"
+            },
+            "created": "A new User Permission is created with identifier {{ param }}",
+            "updated": "A User Permission is updated with identifier {{ param }}",
+            "deleted": "A User Permission is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete User Permission {{ id }}?"
+            },
+            "detail": {
+                "title": "User Permission"
+            },
+            "permission": "Permission",
+            "projects": "Projects",
+            "team": "Team"
+        }
+    }
+}

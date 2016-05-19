@@ -1,0 +1,25 @@
+{
+    "h2HellUiApp": {
+        "event" : {
+            "home": {
+                "title": "Events",
+                "createLabel": "Créer un nouveau Event",
+                "createOrEditLabel": "Créer ou éditer un Event",
+                "search": "Recherche pour Event"
+            },
+            "created": "Un nouveau Event a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Event avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Event avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Event {{ id }} ?"
+            },
+            "detail": {
+                "title": "Event"
+            },
+            "typeMessageEvent": "Type Message Event",
+            "data": "Data",
+            "consumed": "Consumed",
+            "analysis": "Analysis"
+        }
+    }
+}

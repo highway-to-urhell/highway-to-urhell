@@ -1,0 +1,51 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "events",
+      "otherEntityName": "event",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "analysis"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "entryPoint",
+      "otherEntityName": "entryPoint",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "application"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipName": "application",
+      "otherEntityName": "application",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "name"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "pathSource",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "appVersion",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "numberEntryPoints",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20160519092248",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no"
+}

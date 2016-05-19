@@ -1,0 +1,28 @@
+
+<div>
+    <h2><span translate="h2HellUiApp.userPermission.detail.title">User Permission</span> {{vm.userPermission.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="h2HellUiApp.userPermission.permission">Permission</span></dt>
+        <dd>
+            <span translate="{{'h2HellUiApp.Permission.' + vm.userPermission.permission}}">{{vm.userPermission.permission}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.userPermission.projects">Projects</span></dt>
+        <dd>
+            <span ng-repeat="projects in vm.userPermission.projects">
+                <a ui-sref="application-detail({id: {{projects.id}}})">{{projects.name}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span translate="h2HellUiApp.userPermission.team">Team</span></dt>
+        <dd>
+            <a ui-sref="team-detail({id:vm.userPermission.team.id})">{{vm.userPermission.team.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

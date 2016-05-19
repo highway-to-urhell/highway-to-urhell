@@ -1,0 +1,33 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "members",
+      "otherEntityName": "user",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "login",
+      "ownerSide": true
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "userPermissions",
+      "otherEntityName": "userPermission",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "team"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "changelogDate": "20160519092250",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no"
+}

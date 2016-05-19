@@ -1,0 +1,35 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "metrics",
+      "otherEntityName": "metricsTimer",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "log"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "entryPoint",
+      "otherEntityName": "entryPoint",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "pathClassMethodName"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dateIncoming",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "parameters",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "changelogDate": "20160519092244",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "no"
+}

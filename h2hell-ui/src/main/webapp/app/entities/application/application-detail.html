@@ -1,0 +1,42 @@
+
+<div>
+    <h2><span translate="h2HellUiApp.application.detail.title">Application</span> {{vm.application.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="h2HellUiApp.application.name">Name</span></dt>
+        <dd>
+            <span>{{vm.application.name}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.token">Token</span></dt>
+        <dd>
+            <span>{{vm.application.token}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.dateCreation">Date Creation</span></dt>
+        <dd>
+            <span>{{vm.application.dateCreation | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.urlApp">Url App</span></dt>
+        <dd>
+            <span>{{vm.application.urlApp}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.description">Description</span></dt>
+        <dd>
+            <span>{{vm.application.description}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.appType">App Type</span></dt>
+        <dd>
+            <span>{{vm.application.appType}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.application.analysis">Analysis</span></dt>
+        <dd>
+            <span>{{vm.application.analysis}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

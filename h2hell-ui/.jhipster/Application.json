@@ -1,0 +1,66 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "analysis",
+      "otherEntityName": "analysis",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "application"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "userPermissions",
+      "otherEntityName": "userPermission",
+      "relationshipType": "many-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "projects"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "token",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "dateCreation",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "urlApp",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "appType",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "analysis",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20160519092031",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "no"
+}

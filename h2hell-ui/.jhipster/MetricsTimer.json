@@ -1,0 +1,32 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "log",
+      "otherEntityName": "entryPointParameters",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "timeExec",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "cpuLoadSystem",
+      "fieldType": "Double"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "cpuLoadProcess",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20160519092246",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "no"
+}

@@ -1,0 +1,130 @@
+package com.highway2urhell.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
+import com.highway2urhell.domain.Analysis;
+import com.highway2urhell.repository.AnalysisRepository;
+import com.highway2urhell.web.rest.util.HeaderUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing Analysis.
+ */
+@RestController
+@RequestMapping("/api")
+public class AnalysisResource {
+
+    private final Logger log = LoggerFactory.getLogger(AnalysisResource.class);
+        
+    @Inject
+    private AnalysisRepository analysisRepository;
+    
+    /**
+     * POST  /analyses : Create a new analysis.
+     *
+     * @param analysis the analysis to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new analysis, or with status 400 (Bad Request) if the analysis has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @RequestMapping(value = "/analyses",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Analysis> createAnalysis(@RequestBody Analysis analysis) throws URISyntaxException {
+        log.debug("REST request to save Analysis : {}", analysis);
+        if (analysis.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("analysis", "idexists", "A new analysis cannot already have an ID")).body(null);
+        }
+        Analysis result = analysisRepository.save(analysis);
+        return ResponseEntity.created(new URI("/api/analyses/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("analysis", result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /analyses : Updates an existing analysis.
+     *
+     * @param analysis the analysis to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated analysis,
+     * or with status 400 (Bad Request) if the analysis is not valid,
+     * or with status 500 (Internal Server Error) if the analysis couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @RequestMapping(value = "/analyses",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Analysis> updateAnalysis(@RequestBody Analysis analysis) throws URISyntaxException {
+        log.debug("REST request to update Analysis : {}", analysis);
+        if (analysis.getId() == null) {
+            return createAnalysis(analysis);
+        }
+        Analysis result = analysisRepository.save(analysis);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("analysis", analysis.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /analyses : get all the analyses.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of analyses in body
+     */
+    @RequestMapping(value = "/analyses",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Analysis> getAllAnalyses() {
+        log.debug("REST request to get all Analyses");
+        List<Analysis> analyses = analysisRepository.findAll();
+        return analyses;
+    }
+
+    /**
+     * GET  /analyses/:id : get the "id" analysis.
+     *
+     * @param id the id of the analysis to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the analysis, or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/analyses/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Analysis> getAnalysis(@PathVariable Long id) {
+        log.debug("REST request to get Analysis : {}", id);
+        Analysis analysis = analysisRepository.findOne(id);
+        return Optional.ofNullable(analysis)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * DELETE  /analyses/:id : delete the "id" analysis.
+     *
+     * @param id the id of the analysis to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @RequestMapping(value = "/analyses/{id}",
+        method = RequestMethod.DELETE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> deleteAnalysis(@PathVariable Long id) {
+        log.debug("REST request to delete Analysis : {}", id);
+        analysisRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("analysis", id.toString())).build();
+    }
+
+}

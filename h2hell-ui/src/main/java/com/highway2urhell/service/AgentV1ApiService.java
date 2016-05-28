@@ -5,7 +5,6 @@ import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.repository.ApplicationRepository;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
-import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,8 +34,7 @@ public class AgentV1ApiService {
         Application app = new Application();
         app.setName(configDTO.getNameApplication());
         app.setUrlApp(configDTO.getUrlApplication());
-        String token = RandomStringUtils.randomAlphanumeric(16).toUpperCase();
-        app.setToken(token);
+        app.setToken(configDTO.getToken());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
         app.setDateCreation(ZonedDateTime.now());
         app.setDescription(configDTO.getDescription());

@@ -5,6 +5,7 @@ import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.repository.ApplicationRepository;
+import com.highway2urhell.service.AgentV1ApiService;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +53,9 @@ public class AgentV1ApiResourceIntTest {
     private static final String DEFAULT_VERSION_APP = "AAAA";
 
     @Inject
+    private AgentV1ApiService agentV1ApiService;
+
+    @Inject
     private ApplicationRepository applicationRepository;
 
     @Inject
@@ -70,9 +74,9 @@ public class AgentV1ApiResourceIntTest {
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ApplicationResource applicationResource = new ApplicationResource();
-        ReflectionTestUtils.setField(applicationResource, "applicationRepository", applicationRepository);
-        this.restApplicationMockMvc = MockMvcBuilders.standaloneSetup(applicationResource)
+        AgentV1ApiResource agentV1ApiResource = new AgentV1ApiResource();
+        ReflectionTestUtils.setField(agentV1ApiResource, "agentV1ApiService", agentV1ApiService);
+        this.restApplicationMockMvc = MockMvcBuilders.standaloneSetup(agentV1ApiResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
     }
@@ -93,18 +97,19 @@ public class AgentV1ApiResourceIntTest {
     @Test
     @Transactional
     public void createApplication() throws Exception {
-        int databaseSizeBeforeCreate = applicationRepository.findAll().size();
+        int databaseApplicationSizeBeforeCreate = (int) applicationRepository.count();
+        int databaseAnalysisSizeBeforeCreate = (int) analysisRepository.count();
 
         // Create the Application
 
-        restApplicationMockMvc.perform(post("/api/applications")
+        restApplicationMockMvc.perform(post("/ThunderEntry/createThunderApp")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(configDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Application in the database
         List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeCreate + 1);
+        assertThat(applications).hasSize(databaseApplicationSizeBeforeCreate + 1);
         Application testApplication = applications.get(applications.size() - 1);
         assertThat(testApplication.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testApplication.getToken()).isEqualTo(DEFAULT_TOKEN);
@@ -114,7 +119,7 @@ public class AgentV1ApiResourceIntTest {
 
         // Validate the Analysis in the database
         List<Analysis> analysis = analysisRepository.findAll();
-        assertThat(analysis).hasSize(databaseSizeBeforeCreate + 1);
+        assertThat(analysis).hasSize(databaseAnalysisSizeBeforeCreate + 1);
         Analysis testAnalysis = analysis.get(analysis.size() - 1);
         assertThat(testAnalysis.getAppVersion()).isEqualTo(DEFAULT_VERSION_APP);
         assertThat(testAnalysis.getPathSource()).isEqualTo(DEFAULT_PATH_SOURCE);

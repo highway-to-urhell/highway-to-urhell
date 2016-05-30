@@ -3,10 +3,15 @@ package com.highway2urhell.web.rest;
 import com.highway2urhell.H2HellUiApp;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.domain.Application;
+import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.repository.ApplicationRepository;
+import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.service.AgentV1ApiService;
+import com.highway2urhell.web.rest.dto.v1api.EntryPathData;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
+import com.highway2urhell.web.rest.dto.v1api.MessageThunderApp;
+import com.highway2urhell.web.rest.dto.v1api.TypePath;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,6 +58,14 @@ public class AgentV1ApiResourceIntTest {
     private static final String DEFAULT_PATH_SOURCE = "AAAA";
     private static final String DEFAULT_VERSION_APP = "AAAA";
 
+
+    private static final String DEFAULT_CLASS_NAME = "AAAAA";
+    private static final String DEFAULT_METHODE_NAME = "AAAAA";
+    private static final String DEFAULT_SIGNATURE_NAME = "AAAAA";
+    private static final int DEFAULT_LINE_NUMBER = 1;
+    private static final TypePath DEFAULT_TYPE_PATH = TypePath.STATIC;
+    private static final String DEFAULT_HTTPMETHOD = "AAAAA";
+
     @Inject
     private AgentV1ApiService agentV1ApiService;
 
@@ -62,6 +76,9 @@ public class AgentV1ApiResourceIntTest {
     private AnalysisRepository analysisRepository;
 
     @Inject
+    private EntryPointRepository entryPointRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -70,6 +87,7 @@ public class AgentV1ApiResourceIntTest {
     private MockMvc restApplicationMockMvc;
 
     private H2hConfigDTO configDTO;
+    private MessageThunderApp msg;
 
     @PostConstruct
     public void setup() {
@@ -92,10 +110,28 @@ public class AgentV1ApiResourceIntTest {
         configDTO.setVersionApp(DEFAULT_VERSION_APP);
         configDTO.setPathSource(DEFAULT_PATH_SOURCE);
 
+        msg = new MessageThunderApp();
+        msg.setToken(DEFAULT_TOKEN);
+        List<EntryPathData> listEntryPathData = new ArrayList<>();
+        EntryPathData entryPathData = new EntryPathData();
+        entryPathData.setClassName(DEFAULT_CLASS_NAME);
+        entryPathData.setMethodName(DEFAULT_METHODE_NAME);
+        entryPathData.setSignatureName(DEFAULT_SIGNATURE_NAME);
+        entryPathData.setLineNumber(DEFAULT_LINE_NUMBER);
+        entryPathData.setTypePath(DEFAULT_TYPE_PATH);
+        entryPathData.setHttpMethod(DEFAULT_HTTPMETHOD);
+        listEntryPathData.add(entryPathData);
+        msg.setListentryPathData(listEntryPathData);
+
     }
 
     @Test
     @Transactional
+    public void makeAStandardScenarii() throws Exception {
+        createApplication();
+        initThunderApp();
+    }
+
     public void createApplication() throws Exception {
         int databaseApplicationSizeBeforeCreate = (int) applicationRepository.count();
         int databaseAnalysisSizeBeforeCreate = (int) analysisRepository.count();
@@ -123,6 +159,21 @@ public class AgentV1ApiResourceIntTest {
         Analysis testAnalysis = analysis.get(analysis.size() - 1);
         assertThat(testAnalysis.getAppVersion()).isEqualTo(DEFAULT_VERSION_APP);
         assertThat(testAnalysis.getPathSource()).isEqualTo(DEFAULT_PATH_SOURCE);
+    }
+
+    public void initThunderApp() throws Exception {
+        int databaseEntryPointSizeBeforeCreate = (int) entryPointRepository.count();
+
+        restApplicationMockMvc.perform(post("/ThunderEntry/initThunderApp")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(msg)))
+            .andExpect(status().isCreated());
+
+        // Validate the Application in the database
+        List<EntryPoint> entryPoints = entryPointRepository.findAll();
+        assertThat(entryPoints).hasSize(databaseEntryPointSizeBeforeCreate + 1);
+        EntryPoint entryPoint = entryPoints.get(entryPoints.size() - 1);
+        assertThat(entryPoint.getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
 }

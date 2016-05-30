@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.service.AgentV1ApiService;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
+import com.highway2urhell.web.rest.dto.v1api.MessageThunderApp;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,5 +42,19 @@ public class AgentV1ApiResource {
             .headers(HeaderUtil.createEntityCreationAlert("application", result.getId().toString()))
             .body(result.getApplication().getToken());
     }
+
+    @RequestMapping(value = "/initThunderApp",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> initThunderApp(@Valid @RequestBody MessageThunderApp msg) throws URISyntaxException {
+        LOG.info("Call createThunderApp with token {} and list size {}",
+            msg.getToken(), msg.getListentryPathData().size());
+        agentV1ApiService.initThunderAppAndStat(msg.getToken(),
+            msg.getListentryPathData());
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }

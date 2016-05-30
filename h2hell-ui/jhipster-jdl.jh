@@ -27,9 +27,9 @@ entity Application {
 }
 
 entity Analysis {
+	appVersion String required,
     dateCreation ZonedDateTime,
    	pathSource String,
-	appVersion String,
 	numberEntryPoints Integer,
 
 }
@@ -89,7 +89,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	Analysis{entryPoint(pathClassMethodName)} to EntryPoint{application(name)}
+	Analysis{entryPoint(pathClassMethodName)} to EntryPoint{analysis(appVersion)}
 }
 
 relationship OneToMany {

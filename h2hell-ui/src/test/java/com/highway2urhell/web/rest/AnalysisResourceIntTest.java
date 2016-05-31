@@ -3,17 +3,15 @@ package com.highway2urhell.web.rest;
 import com.highway2urhell.H2HellUiApp;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.repository.AnalysisRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -24,12 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -53,11 +52,11 @@ public class AnalysisResourceIntTest {
     private static final String DEFAULT_DATE_CREATION_STR = dateTimeFormatter.format(DEFAULT_DATE_CREATION);
     private static final String DEFAULT_PATH_SOURCE = "AAAAA";
     private static final String UPDATED_PATH_SOURCE = "BBBBB";
-    private static final String DEFAULT_APP_VERSION = "AAAAA";
-    private static final String UPDATED_APP_VERSION = "BBBBB";
 
     private static final Integer DEFAULT_NUMBER_ENTRY_POINTS = 1;
     private static final Integer UPDATED_NUMBER_ENTRY_POINTS = 2;
+    private static final String DEFAULT_APP_VERSION = "AAAAA";
+    private static final String UPDATED_APP_VERSION = "BBBBB";
 
     @Inject
     private AnalysisRepository analysisRepository;
@@ -87,8 +86,8 @@ public class AnalysisResourceIntTest {
         analysis = new Analysis();
         analysis.setDateCreation(DEFAULT_DATE_CREATION);
         analysis.setPathSource(DEFAULT_PATH_SOURCE);
-        analysis.setAppVersion(DEFAULT_APP_VERSION);
         analysis.setNumberEntryPoints(DEFAULT_NUMBER_ENTRY_POINTS);
+        analysis.setAppVersion(DEFAULT_APP_VERSION);
     }
 
     @Test
@@ -109,8 +108,8 @@ public class AnalysisResourceIntTest {
         Analysis testAnalysis = analyses.get(analyses.size() - 1);
         assertThat(testAnalysis.getDateCreation()).isEqualTo(DEFAULT_DATE_CREATION);
         assertThat(testAnalysis.getPathSource()).isEqualTo(DEFAULT_PATH_SOURCE);
-        assertThat(testAnalysis.getAppVersion()).isEqualTo(DEFAULT_APP_VERSION);
         assertThat(testAnalysis.getNumberEntryPoints()).isEqualTo(DEFAULT_NUMBER_ENTRY_POINTS);
+        assertThat(testAnalysis.getAppVersion()).isEqualTo(DEFAULT_APP_VERSION);
     }
 
     @Test
@@ -126,8 +125,8 @@ public class AnalysisResourceIntTest {
                 .andExpect(jsonPath("$.[*].id").value(hasItem(analysis.getId().intValue())))
                 .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(DEFAULT_DATE_CREATION_STR)))
                 .andExpect(jsonPath("$.[*].pathSource").value(hasItem(DEFAULT_PATH_SOURCE.toString())))
-                .andExpect(jsonPath("$.[*].appVersion").value(hasItem(DEFAULT_APP_VERSION.toString())))
-                .andExpect(jsonPath("$.[*].numberEntryPoints").value(hasItem(DEFAULT_NUMBER_ENTRY_POINTS)));
+                .andExpect(jsonPath("$.[*].numberEntryPoints").value(hasItem(DEFAULT_NUMBER_ENTRY_POINTS)))
+                .andExpect(jsonPath("$.[*].appVersion").value(hasItem(DEFAULT_APP_VERSION.toString())));
     }
 
     @Test
@@ -143,8 +142,8 @@ public class AnalysisResourceIntTest {
             .andExpect(jsonPath("$.id").value(analysis.getId().intValue()))
             .andExpect(jsonPath("$.dateCreation").value(DEFAULT_DATE_CREATION_STR))
             .andExpect(jsonPath("$.pathSource").value(DEFAULT_PATH_SOURCE.toString()))
-            .andExpect(jsonPath("$.appVersion").value(DEFAULT_APP_VERSION.toString()))
-            .andExpect(jsonPath("$.numberEntryPoints").value(DEFAULT_NUMBER_ENTRY_POINTS));
+            .andExpect(jsonPath("$.numberEntryPoints").value(DEFAULT_NUMBER_ENTRY_POINTS))
+            .andExpect(jsonPath("$.appVersion").value(DEFAULT_APP_VERSION.toString()));
     }
 
     @Test
@@ -167,8 +166,8 @@ public class AnalysisResourceIntTest {
         updatedAnalysis.setId(analysis.getId());
         updatedAnalysis.setDateCreation(UPDATED_DATE_CREATION);
         updatedAnalysis.setPathSource(UPDATED_PATH_SOURCE);
-        updatedAnalysis.setAppVersion(UPDATED_APP_VERSION);
         updatedAnalysis.setNumberEntryPoints(UPDATED_NUMBER_ENTRY_POINTS);
+        updatedAnalysis.setAppVersion(UPDATED_APP_VERSION);
 
         restAnalysisMockMvc.perform(put("/api/analyses")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -181,8 +180,8 @@ public class AnalysisResourceIntTest {
         Analysis testAnalysis = analyses.get(analyses.size() - 1);
         assertThat(testAnalysis.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
         assertThat(testAnalysis.getPathSource()).isEqualTo(UPDATED_PATH_SOURCE);
-        assertThat(testAnalysis.getAppVersion()).isEqualTo(UPDATED_APP_VERSION);
         assertThat(testAnalysis.getNumberEntryPoints()).isEqualTo(UPDATED_NUMBER_ENTRY_POINTS);
+        assertThat(testAnalysis.getAppVersion()).isEqualTo(UPDATED_APP_VERSION);
     }
 
     @Test

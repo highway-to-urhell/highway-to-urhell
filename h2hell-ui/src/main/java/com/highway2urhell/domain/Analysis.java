@@ -8,8 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Analysis.
@@ -31,18 +31,18 @@ public class Analysis implements Serializable {
     @Column(name = "path_source")
     private String pathSource;
 
-    @Column(name = "app_version")
-    private String appVersion;
-
     @Column(name = "number_entry_points")
     private Integer numberEntryPoints;
+
+    @Column(name = "app_version")
+    private String appVersion;
 
     @OneToMany(mappedBy = "analysis")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Event> events = new HashSet<>();
 
-    @OneToMany(mappedBy = "application")
+    @OneToMany(mappedBy = "analysis")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EntryPoint> entryPoints = new HashSet<>();
@@ -74,20 +74,20 @@ public class Analysis implements Serializable {
         this.pathSource = pathSource;
     }
 
-    public String getAppVersion() {
-        return appVersion;
-    }
-
-    public void setAppVersion(String appVersion) {
-        this.appVersion = appVersion;
-    }
-
     public Integer getNumberEntryPoints() {
         return numberEntryPoints;
     }
 
     public void setNumberEntryPoints(Integer numberEntryPoints) {
         this.numberEntryPoints = numberEntryPoints;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 
     public Set<Event> getEvents() {
@@ -140,8 +140,8 @@ public class Analysis implements Serializable {
             "id=" + id +
             ", dateCreation='" + dateCreation + "'" +
             ", pathSource='" + pathSource + "'" +
-            ", appVersion='" + appVersion + "'" +
             ", numberEntryPoints='" + numberEntryPoints + "'" +
+            ", appVersion='" + appVersion + "'" +
             '}';
     }
 }

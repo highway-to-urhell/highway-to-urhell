@@ -22,7 +22,7 @@
             "urlApp": "Url App",
             "description": "Description",
             "appType": "App Type",
-            "analysis": "Analysis",
+            "isAnalysed": "Is Analysed",
             "analysis": "Analysis",
             "userPermissions": "User Permissions"
         }

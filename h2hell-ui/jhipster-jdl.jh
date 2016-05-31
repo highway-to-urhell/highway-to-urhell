@@ -23,15 +23,14 @@ entity Application {
 	urlApp String,
 	description String,
 	appType String,
-	analysis Boolean,
+	isAnalysed Boolean,
 }
 
 entity Analysis {
-	appVersion String required,
     dateCreation ZonedDateTime,
    	pathSource String,
 	numberEntryPoints Integer,
-
+    appVersion String,
 }
 
 entity EntryPoint {

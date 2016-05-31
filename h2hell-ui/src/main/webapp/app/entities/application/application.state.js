@@ -77,7 +77,7 @@
                                 urlApp: null,
                                 description: null,
                                 appType: null,
-                                analysis: null,
+                                isAnalysed: null,
                                 id: null
                             };
                         }

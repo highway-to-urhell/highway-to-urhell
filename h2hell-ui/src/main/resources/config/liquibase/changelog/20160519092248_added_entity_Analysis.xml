@@ -29,11 +29,11 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="app_version" type="varchar(255)">
+            <column name="number_entry_points" type="integer">
                 <constraints nullable="true" />
             </column>
             
-            <column name="number_entry_points" type="integer">
+            <column name="app_version" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             

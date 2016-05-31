@@ -55,7 +55,7 @@
     },
     {
       "fieldId": 7,
-      "fieldName": "analysis",
+      "fieldName": "isAnalysed",
       "fieldType": "Boolean"
     }
   ],

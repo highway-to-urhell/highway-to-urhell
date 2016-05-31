@@ -69,8 +69,8 @@
         </div>
 
         <div class="form-group">
-            <label translate="h2HellUiApp.entryPoint.application" for="field_application">Application</label>
-            <select class="form-control" id="field_application" name="application" ng-model="vm.entryPoint.application" ng-options="analysis as analysis.name for analysis in vm.analyses track by analysis.id">
+            <label translate="h2HellUiApp.entryPoint.analysis" for="field_analysis">Analysis</label>
+            <select class="form-control" id="field_analysis" name="analysis" ng-model="vm.entryPoint.analysis" ng-options="analysis as analysis.appVersion for analysis in vm.analyses track by analysis.id">
                 <option value=""></option>
             </select>
         </div>

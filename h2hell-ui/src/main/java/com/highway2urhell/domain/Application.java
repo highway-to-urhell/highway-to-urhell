@@ -5,12 +5,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Application.
@@ -46,8 +46,8 @@ public class Application implements Serializable {
     @Column(name = "app_type")
     private String appType;
 
-    @Column(name = "analysis")
-    private Boolean analysis;
+    @Column(name = "is_analysed")
+    private Boolean isAnalysed;
 
     @OneToMany(mappedBy = "application")
     @JsonIgnore
@@ -115,12 +115,12 @@ public class Application implements Serializable {
         this.appType = appType;
     }
 
-    public Boolean isAnalysis() {
-        return analysis;
+    public Boolean isIsAnalysed() {
+        return isAnalysed;
     }
 
-    public void setAnalysis(Boolean analysis) {
-        this.analysis = analysis;
+    public void setIsAnalysed(Boolean isAnalysed) {
+        this.isAnalysed = isAnalysed;
     }
 
     public Set<Analysis> getAnalyses() {
@@ -169,7 +169,7 @@ public class Application implements Serializable {
             ", urlApp='" + urlApp + "'" +
             ", description='" + description + "'" +
             ", appType='" + appType + "'" +
-            ", analysis='" + analysis + "'" +
+            ", isAnalysed='" + isAnalysed + "'" +
             '}';
     }
 }

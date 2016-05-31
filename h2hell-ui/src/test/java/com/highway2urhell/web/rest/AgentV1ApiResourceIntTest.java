@@ -167,7 +167,7 @@ public class AgentV1ApiResourceIntTest {
         restApplicationMockMvc.perform(post("/ThunderEntry/initThunderApp")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(msg)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isOk());
 
         // Validate the Application in the database
         List<EntryPoint> entryPoints = entryPointRepository.findAll();

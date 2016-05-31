@@ -73,8 +73,8 @@
                             return {
                                 dateCreation: null,
                                 pathSource: null,
-                                appVersion: null,
                                 numberEntryPoints: null,
+                                appVersion: null,
                                 id: null
                             };
                         }

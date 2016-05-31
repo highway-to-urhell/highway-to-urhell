@@ -75,14 +75,12 @@ public class AgentV1ApiService {
         if (listEntryPathData != null && !listEntryPathData.isEmpty()) {
             for (EntryPathData entry : listEntryPathData) {
                 // in V1 api we have one analysis by token
-                createOrUpdateThunderStat(entry, app.getAnalyses().toArray(new Analysis[1])[0]);
+                createOrUpdateThunderStat(entry, app, app.getAnalyses().toArray(new Analysis[1])[0]);
             }
         }
     }
 
-
-    @Transactional
-    public void createOrUpdateThunderStat(EntryPathData entry,
+    public void createOrUpdateThunderStat(EntryPathData entry, Application app,
                                           Analysis analysis) {
         String className=entry.getClassName();
         String methodName=entry.getMethodName();
@@ -91,11 +89,11 @@ public class AgentV1ApiService {
         Boolean audit = entry.getAudit();
         String pathClassMethodName = className + "." + methodName;
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(
-            pathClassMethodName, analysis.getApplication().getToken());
+            pathClassMethodName, app.getToken());
         if (ep == null) {
             ep = new EntryPoint();
             ep.setPathClassMethodName(pathClassMethodName);
-            ep.setApplication(analysis);
+            ep.setAnalysis(analysis);
             ep.setCount(0L);
             ep.setHttpmethod(httpmethod);
             ep.setUri(uri);

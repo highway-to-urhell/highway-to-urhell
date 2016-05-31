@@ -67,7 +67,7 @@ class AnalysisGatlingTest extends Simulation {
             .exec(http("Create new analysis")
             .post("/api/analyses")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "dateCreation":"2020-01-01T00:00:00.000Z", "pathSource":"SAMPLE_TEXT", "appVersion":"SAMPLE_TEXT", "numberEntryPoints":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "dateCreation":"2020-01-01T00:00:00.000Z", "pathSource":"SAMPLE_TEXT", "numberEntryPoints":"0", "appVersion":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_analysis_url"))).exitHereIfFailed
             .pause(10)

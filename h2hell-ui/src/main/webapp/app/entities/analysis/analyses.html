@@ -21,8 +21,8 @@
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="h2HellUiApp.analysis.dateCreation">Date Creation</span></th>
                     <th><span translate="h2HellUiApp.analysis.pathSource">Path Source</span></th>
-                    <th><span translate="h2HellUiApp.analysis.appVersion">App Version</span></th>
                     <th><span translate="h2HellUiApp.analysis.numberEntryPoints">Number Entry Points</span></th>
+                    <th><span translate="h2HellUiApp.analysis.appVersion">App Version</span></th>
                     <th><span translate="h2HellUiApp.analysis.application">Application</span></th>
                     <th></th>
                 </tr>
@@ -32,8 +32,8 @@
                     <td><a ui-sref="analysis-detail({id:analysis.id})">{{analysis.id}}</a></td>
                     <td>{{analysis.dateCreation | date:'medium'}}</td>
                     <td>{{analysis.pathSource}}</td>
-                    <td>{{analysis.appVersion}}</td>
                     <td>{{analysis.numberEntryPoints}}</td>
+                    <td>{{analysis.appVersion}}</td>
                     <td>
                         <a ui-sref="application-detail({id:analysis.application.id})">{{analysis.application.name}}</a>
                     </td>

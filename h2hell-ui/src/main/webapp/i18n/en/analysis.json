@@ -18,8 +18,8 @@
             },
             "dateCreation": "Date Creation",
             "pathSource": "Path Source",
-            "appVersion": "App Version",
             "numberEntryPoints": "Number Entry Points",
+            "appVersion": "App Version",
             "events": "Events",
             "entryPoint": "Entry Point",
             "application": "Application"

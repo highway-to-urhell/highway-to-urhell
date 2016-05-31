@@ -9,10 +9,10 @@
     },
     {
       "relationshipId": 2,
-      "relationshipName": "application",
+      "relationshipName": "analysis",
       "otherEntityName": "analysis",
       "relationshipType": "many-to-one",
-      "otherEntityField": "name"
+      "otherEntityField": "appVersion"
     }
   ],
   "fields": [

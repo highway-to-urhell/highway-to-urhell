@@ -13,7 +13,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ApplicationRepository extends JpaRepository<Application,Long> {
 
-    @Query("select application from Application application left join fetch application.analysis where application.token =:token")
+    @Query("select application from Application application left join fetch application.analyses where application.token =:token")
     List<Application> findByTokenWithEagerRelationships(@Param("token") String token);
 
 }

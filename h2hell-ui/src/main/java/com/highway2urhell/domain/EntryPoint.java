@@ -5,11 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A EntryPoint.
@@ -56,7 +56,7 @@ public class EntryPoint implements Serializable {
     private Set<EntryPointParameters> logs = new HashSet<>();
 
     @ManyToOne
-    private Analysis application;
+    private Analysis analysis;
 
     public Long getId() {
         return id;
@@ -138,12 +138,12 @@ public class EntryPoint implements Serializable {
         this.logs = entryPointParameters;
     }
 
-    public Analysis getApplication() {
-        return application;
+    public Analysis getAnalysis() {
+        return analysis;
     }
 
-    public void setApplication(Analysis analysis) {
-        this.application = analysis;
+    public void setAnalysis(Analysis analysis) {
+        this.analysis = analysis;
     }
 
     @Override

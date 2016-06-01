@@ -5,9 +5,9 @@
         .module('h2HellUiApp')
         .controller('EntryPointParametersDetailController', EntryPointParametersDetailController);
 
-    EntryPointParametersDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'EntryPointParameters', 'MetricsTimer', 'EntryPoint'];
+    EntryPointParametersDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'EntryPointParameters', 'EntryPoint'];
 
-    function EntryPointParametersDetailController($scope, $rootScope, $stateParams, DataUtils, entity, EntryPointParameters, MetricsTimer, EntryPoint) {
+    function EntryPointParametersDetailController($scope, $rootScope, $stateParams, DataUtils, entity, EntryPointParameters, EntryPoint) {
         var vm = this;
         vm.entryPointParameters = entity;
         

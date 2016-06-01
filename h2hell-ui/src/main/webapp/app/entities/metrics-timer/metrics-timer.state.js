@@ -91,6 +91,9 @@
                     resolve: {
                         entity: function () {
                             return {
+                                dateIncoming: null,
+                                parameters: null,
+                                parametersContentType: null,
                                 timeExec: null,
                                 cpuLoadSystem: null,
                                 cpuLoadProcess: null,

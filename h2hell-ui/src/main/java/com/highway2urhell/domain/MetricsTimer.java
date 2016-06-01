@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -21,6 +22,16 @@ public class MetricsTimer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "date_incoming")
+    private ZonedDateTime dateIncoming;
+
+    @Lob
+    @Column(name = "parameters")
+    private byte[] parameters;
+
+    @Column(name = "parameters_content_type")
+    private String parametersContentType;
+
     @Column(name = "time_exec")
     private Integer timeExec;
 
@@ -31,7 +42,7 @@ public class MetricsTimer implements Serializable {
     private Double cpuLoadProcess;
 
     @ManyToOne
-    private EntryPointParameters log;
+    private EntryPoint entryPoint;
 
     public Long getId() {
         return id;
@@ -39,6 +50,30 @@ public class MetricsTimer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ZonedDateTime getDateIncoming() {
+        return dateIncoming;
+    }
+
+    public void setDateIncoming(ZonedDateTime dateIncoming) {
+        this.dateIncoming = dateIncoming;
+    }
+
+    public byte[] getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(byte[] parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getParametersContentType() {
+        return parametersContentType;
+    }
+
+    public void setParametersContentType(String parametersContentType) {
+        this.parametersContentType = parametersContentType;
     }
 
     public Integer getTimeExec() {
@@ -65,12 +100,12 @@ public class MetricsTimer implements Serializable {
         this.cpuLoadProcess = cpuLoadProcess;
     }
 
-    public EntryPointParameters getLog() {
-        return log;
+    public EntryPoint getEntryPoint() {
+        return entryPoint;
     }
 
-    public void setLog(EntryPointParameters entryPointParameters) {
-        this.log = entryPointParameters;
+    public void setEntryPoint(EntryPoint entryPoint) {
+        this.entryPoint = entryPoint;
     }
 
     @Override
@@ -97,6 +132,9 @@ public class MetricsTimer implements Serializable {
     public String toString() {
         return "MetricsTimer{" +
             "id=" + id +
+            ", dateIncoming='" + dateIncoming + "'" +
+            ", parameters='" + parameters + "'" +
+            ", parametersContentType='" + parametersContentType + "'" +
             ", timeExec='" + timeExec + "'" +
             ", cpuLoadSystem='" + cpuLoadSystem + "'" +
             ", cpuLoadProcess='" + cpuLoadProcess + "'" +

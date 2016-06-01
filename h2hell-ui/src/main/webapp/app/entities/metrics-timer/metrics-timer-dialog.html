@@ -14,6 +14,38 @@
                     ng-model="vm.metricsTimer.id" readonly />
         </div>
         <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.metricsTimer.dateIncoming" for="field_dateIncoming">Date Incoming</label>
+                <div class="input-group">
+                    <input id="field_dateIncoming" type="text" class="form-control" name="dateIncoming" datetime-picker="{{dateformat}}" ng-model="vm.metricsTimer.dateIncoming" is-open="vm.datePickerOpenStatus.dateIncoming"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateIncoming')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setParameters($file, vm.metricsTimer)">
+            <label class="control-label" translate="h2HellUiApp.metricsTimer.parameters" for="field_parameters">Parameters</label>
+            <div>
+                <div ng-if="vm.metricsTimer.parameters" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.metricsTimer.parametersContentType, vm.metricsTimer.parameters)" translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.metricsTimer.parametersContentType}}, {{vm.byteSize(vm.metricsTimer.parameters)}}</span>
+                    <button ng-click="vm.metricsTimer.parameters=null;vm.metricsTimer.parametersContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setParameters($file, vm.metricsTimer)" translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="parameters" id="field_parameters"
+                    ng-model="vm.metricsTimer.parameters"
+                     />
+            <input type="hidden" class="form-control" name="parametersContentType" id="field_parametersContentType"
+                    ng-model="vm.metricsTimer.parametersContentType" />
+        </div>
+        <div class="form-group">
             <label class="control-label" translate="h2HellUiApp.metricsTimer.timeExec" for="field_timeExec">Time Exec</label>
             <input type="number" class="form-control" name="timeExec" id="field_timeExec"
                     ng-model="vm.metricsTimer.timeExec"
@@ -33,8 +65,8 @@
         </div>
 
         <div class="form-group">
-            <label translate="h2HellUiApp.metricsTimer.log" for="field_log">Log</label>
-            <select class="form-control" id="field_log" name="log" ng-model="vm.metricsTimer.log" ng-options="entryPointParameters as entryPointParameters.id for entryPointParameters in vm.entrypointparameters track by entryPointParameters.id">
+            <label translate="h2HellUiApp.metricsTimer.entryPoint" for="field_entryPoint">Entry Point</label>
+            <select class="form-control" id="field_entryPoint" name="entryPoint" ng-model="vm.metricsTimer.entryPoint" ng-options="entryPoint as entryPoint.id for entryPoint in vm.entrypoints track by entryPoint.id">
                 <option value=""></option>
             </select>
         </div>

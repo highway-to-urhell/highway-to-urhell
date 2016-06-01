@@ -2,13 +2,20 @@
   "relationships": [
     {
       "relationshipId": 1,
+      "relationshipName": "metrics",
+      "otherEntityName": "metricsTimer",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "entryPoint"
+    },
+    {
+      "relationshipId": 2,
       "relationshipName": "logs",
       "otherEntityName": "entryPointParameters",
       "relationshipType": "one-to-many",
       "otherEntityRelationshipName": "entryPoint"
     },
     {
-      "relationshipId": 2,
+      "relationshipId": 3,
       "relationshipName": "analysis",
       "otherEntityName": "analysis",
       "relationshipType": "many-to-one",

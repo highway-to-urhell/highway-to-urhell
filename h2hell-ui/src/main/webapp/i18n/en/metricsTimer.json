@@ -16,10 +16,12 @@
             "detail": {
                 "title": "Metrics Timer"
             },
+            "dateIncoming": "Date Incoming",
+            "parameters": "Parameters",
             "timeExec": "Time Exec",
             "cpuLoadSystem": "Cpu Load System",
             "cpuLoadProcess": "Cpu Load Process",
-            "log": "Log"
+            "entryPoint": "Entry Point"
         }
     }
 }

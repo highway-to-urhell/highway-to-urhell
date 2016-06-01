@@ -1,14 +1,11 @@
 package com.highway2urhell.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -34,11 +31,6 @@ public class EntryPointParameters implements Serializable {
 
     @Column(name = "parameters_content_type")
     private String parametersContentType;
-
-    @OneToMany(mappedBy = "log")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<MetricsTimer> metrics = new HashSet<>();
 
     @ManyToOne
     private EntryPoint entryPoint;
@@ -73,14 +65,6 @@ public class EntryPointParameters implements Serializable {
 
     public void setParametersContentType(String parametersContentType) {
         this.parametersContentType = parametersContentType;
-    }
-
-    public Set<MetricsTimer> getMetrics() {
-        return metrics;
-    }
-
-    public void setMetrics(Set<MetricsTimer> metricsTimers) {
-        this.metrics = metricsTimers;
     }
 
     public EntryPoint getEntryPoint() {

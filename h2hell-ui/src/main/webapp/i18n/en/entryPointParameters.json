@@ -18,7 +18,6 @@
             },
             "dateIncoming": "Date Incoming",
             "parameters": "Parameters",
-            "metrics": "Metrics",
             "entryPoint": "Entry Point"
         }
     }

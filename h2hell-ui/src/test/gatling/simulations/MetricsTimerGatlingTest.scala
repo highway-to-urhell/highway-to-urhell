@@ -67,7 +67,7 @@ class MetricsTimerGatlingTest extends Simulation {
             .exec(http("Create new metricsTimer")
             .post("/api/metrics-timers")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "timeExec":"0", "cpuLoadSystem":null, "cpuLoadProcess":null}""")).asJSON
+            .body(StringBody("""{"id":null, "dateIncoming":"2020-01-01T00:00:00.000Z", "parameters":null, "timeExec":"0", "cpuLoadSystem":null, "cpuLoadProcess":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_metricsTimer_url"))).exitHereIfFailed
             .pause(10)

@@ -11,6 +11,8 @@ entity Event {
 }
 
 entity MetricsTimer {
+    dateIncoming ZonedDateTime,
+    parameters AnyBlob
     timeExec Integer,
     cpuLoadSystem Double,
 	cpuLoadProcess Double
@@ -84,7 +86,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	EntryPointParameters{metrics} to MetricsTimer{log}
+	EntryPoint{metrics} to MetricsTimer{entryPoint}
 }
 
 relationship OneToMany {

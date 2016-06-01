@@ -2,8 +2,8 @@
   "relationships": [
     {
       "relationshipId": 1,
-      "relationshipName": "log",
-      "otherEntityName": "entryPointParameters",
+      "relationshipName": "entryPoint",
+      "otherEntityName": "entryPoint",
       "relationshipType": "many-to-one",
       "otherEntityField": "id"
     }
@@ -11,16 +11,27 @@
   "fields": [
     {
       "fieldId": 1,
+      "fieldName": "dateIncoming",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "parameters",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldId": 3,
       "fieldName": "timeExec",
       "fieldType": "Integer"
     },
     {
-      "fieldId": 2,
+      "fieldId": 4,
       "fieldName": "cpuLoadSystem",
       "fieldType": "Double"
     },
     {
-      "fieldId": 3,
+      "fieldId": 5,
       "fieldName": "cpuLoadProcess",
       "fieldType": "Double"
     }

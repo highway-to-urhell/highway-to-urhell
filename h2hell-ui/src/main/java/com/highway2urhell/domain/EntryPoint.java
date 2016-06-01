@@ -53,6 +53,11 @@ public class EntryPoint implements Serializable {
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<MetricsTimer> metrics = new HashSet<>();
+
+    @OneToMany(mappedBy = "entryPoint")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EntryPointParameters> logs = new HashSet<>();
 
     @ManyToOne
@@ -128,6 +133,14 @@ public class EntryPoint implements Serializable {
 
     public void setCheckLaunch(Boolean checkLaunch) {
         this.checkLaunch = checkLaunch;
+    }
+
+    public Set<MetricsTimer> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(Set<MetricsTimer> metricsTimers) {
+        this.metrics = metricsTimers;
     }
 
     public Set<EntryPointParameters> getLogs() {

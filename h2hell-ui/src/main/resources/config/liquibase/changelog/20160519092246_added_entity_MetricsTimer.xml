@@ -21,6 +21,17 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="date_incoming" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="parameters" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="parameters_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="time_exec" type="integer">
                 <constraints nullable="true" />
             </column>
@@ -33,12 +44,13 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="log_id" type="bigint">
+            <column name="entry_point_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="metrics_timer" columnName="date_incoming" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

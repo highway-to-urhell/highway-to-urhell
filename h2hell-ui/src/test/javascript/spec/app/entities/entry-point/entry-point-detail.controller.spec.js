@@ -4,7 +4,7 @@ describe('Controller Tests', function() {
 
     describe('EntryPoint Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEntryPoint, MockEntryPointParameters, MockAnalysis;
+        var MockEntity, MockEntryPoint, MockMetricsTimer, MockEntryPointParameters, MockAnalysis;
         var createController;
 
         beforeEach(inject(function($injector) {
@@ -12,6 +12,7 @@ describe('Controller Tests', function() {
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
             MockEntryPoint = jasmine.createSpy('MockEntryPoint');
+            MockMetricsTimer = jasmine.createSpy('MockMetricsTimer');
             MockEntryPointParameters = jasmine.createSpy('MockEntryPointParameters');
             MockAnalysis = jasmine.createSpy('MockAnalysis');
             
@@ -21,6 +22,7 @@ describe('Controller Tests', function() {
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
                 'EntryPoint': MockEntryPoint,
+                'MetricsTimer': MockMetricsTimer,
                 'EntryPointParameters': MockEntryPointParameters,
                 'Analysis': MockAnalysis
             };

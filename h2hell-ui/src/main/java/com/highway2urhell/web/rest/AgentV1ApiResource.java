@@ -4,6 +4,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.service.AgentV1ApiService;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
+import com.highway2urhell.web.rest.dto.v1api.MessageBreaker;
+import com.highway2urhell.web.rest.dto.v1api.MessageMetrics;
 import com.highway2urhell.web.rest.dto.v1api.MessageThunderApp;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 
 @RestController
@@ -55,6 +58,22 @@ public class AgentV1ApiResource {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/addBreaker",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> addBreaker(@Valid @RequestBody List<MessageBreaker> listBreaker) throws URISyntaxException {
+        agentV1ApiService.addListBreaker(listBreaker);
+        return ResponseEntity.ok().build();
+    }
 
+    @RequestMapping(value = "/addPerformance",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> addPerformance(@Valid @RequestBody List<MessageMetrics> listPerf) throws URISyntaxException {
+        agentV1ApiService.addListPerformance(listPerf);
+        return ResponseEntity.ok().build();
+    }
 
 }

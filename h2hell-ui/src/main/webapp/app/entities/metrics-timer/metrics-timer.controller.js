@@ -5,15 +5,17 @@
         .module('h2HellUiApp')
         .controller('MetricsTimerController', MetricsTimerController);
 
-    MetricsTimerController.$inject = ['$scope', '$state', 'MetricsTimer', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    MetricsTimerController.$inject = ['$scope', '$state', 'DataUtils', 'MetricsTimer', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function MetricsTimerController ($scope, $state, MetricsTimer, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function MetricsTimerController ($scope, $state, DataUtils, MetricsTimer, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
         vm.loadAll = loadAll;
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
         vm.loadAll();
 
         function loadAll () {

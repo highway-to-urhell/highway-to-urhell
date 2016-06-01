@@ -4,6 +4,17 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="h2HellUiApp.metricsTimer.dateIncoming">Date Incoming</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.dateIncoming | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.metricsTimer.parameters">Parameters</span></dt>
+        <dd>
+            <div ng-if="vm.metricsTimer.parameters">
+                <a ng-click="vm.openFile(vm.metricsTimer.parametersContentType, vm.metricsTimer.parameters)" translate="entity.action.open">open</a>
+                {{vm.metricsTimer.parametersContentType}}, {{vm.byteSize(vm.metricsTimer.parameters)}}
+            </div>
+        </dd>
         <dt><span translate="h2HellUiApp.metricsTimer.timeExec">Time Exec</span></dt>
         <dd>
             <span>{{vm.metricsTimer.timeExec}}</span>
@@ -16,9 +27,9 @@
         <dd>
             <span>{{vm.metricsTimer.cpuLoadProcess}}</span>
         </dd>
-        <dt><span translate="h2HellUiApp.metricsTimer.log">Log</span></dt>
+        <dt><span translate="h2HellUiApp.metricsTimer.entryPoint">Entry Point</span></dt>
         <dd>
-            <a ui-sref="entry-point-parameters-detail({id:vm.metricsTimer.log.id})">{{vm.metricsTimer.log.id}}</a>
+            <a ui-sref="entry-point-detail({id:vm.metricsTimer.entryPoint.id})">{{vm.metricsTimer.entryPoint.id}}</a>
         </dd>
     </dl>
 

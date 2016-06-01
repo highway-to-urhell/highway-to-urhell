@@ -1,14 +1,14 @@
 package com.highway2urhell.service;
 
-import com.highway2urhell.domain.Analysis;
-import com.highway2urhell.domain.Application;
-import com.highway2urhell.domain.EntryPoint;
-import com.highway2urhell.repository.AnalysisRepository;
-import com.highway2urhell.repository.ApplicationRepository;
-import com.highway2urhell.repository.EntryPointRepository;
+import com.highway2urhell.domain.*;
+import com.highway2urhell.repository.*;
 import com.highway2urhell.web.rest.dto.v1api.EntryPathData;
 import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
+import com.highway2urhell.web.rest.dto.v1api.MessageBreaker;
+import com.highway2urhell.web.rest.dto.v1api.MessageMetrics;
+import com.highway2urhell.web.rest.errors.V1ApiDateIncomingException;
 import com.highway2urhell.web.rest.errors.V1ApiNotExistThunderAppException;
+import com.highway2urhell.web.rest.errors.V1ApiPathNameException;
 import com.highway2urhell.web.rest.errors.V1ApiTokenException;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
@@ -17,9 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+
+import static org.hibernate.jpa.internal.QueryImpl.LOG;
 
 /**
  * Service class for managing agent v1 api.
@@ -39,6 +43,12 @@ public class AgentV1ApiService {
 
     @Inject
     private EntryPointRepository entryPointRepository;
+
+    @Inject
+    private EntryPointParametersRepository entryPointParametersRepository;
+
+    @Inject
+    private MetricsTimerRepository metricsTimerRepository;
 
     public Analysis createAnalysis(H2hConfigDTO configDTO) {
         Application app = new Application();
@@ -89,7 +99,7 @@ public class AgentV1ApiService {
         Boolean audit = entry.getAudit();
         String pathClassMethodName = className + "." + methodName;
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(
-            pathClassMethodName, app.getToken());
+            pathClassMethodName, analysis.getId());
         if (ep == null) {
             ep = new EntryPoint();
             ep.setPathClassMethodName(pathClassMethodName);
@@ -121,5 +131,89 @@ public class AgentV1ApiService {
             throw new V1ApiNotExistThunderAppException();
         }
         return apps.get(0);
+    }
+
+
+
+    public void addListBreaker(List<MessageBreaker> listBreaker) {
+        if (listBreaker != null && !listBreaker.isEmpty()) {
+            for (MessageBreaker msg : listBreaker) {
+                log.info(
+                    "Call addBreaker with pathClassMethodName {} token {} and dateIncoming {}",
+                    msg.getPathClassMethodName(), msg.getToken(),
+                    msg.getDateIncoming());
+                addBreaker(msg.getPathClassMethodName(), msg.getToken(),
+                    msg.getDateIncoming(),msg.getParameters());
+            }
+        }
+    }
+
+    private void addBreaker(String pathClassMethodName, String token,
+                            String dateIncoming,String parameters) {
+        validate(pathClassMethodName, token, dateIncoming);
+        Application app = findAppByToken(token);
+        createBreakerLog(app, pathClassMethodName, dateIncoming,parameters);
+    }
+
+
+    private void validate(String pathClassMethodName, String token,
+                          String dateIncoming) {
+        if (pathClassMethodName == null) {
+            throw new V1ApiPathNameException();
+        }
+        if (token == null) {
+            throw new V1ApiTokenException();
+        }
+        if (dateIncoming == null) {
+            throw new V1ApiDateIncomingException();
+        }
+
+    }
+
+    public void createBreakerLog(Application app, String pathClassMethodName,
+                                 String dateIncoming,String parameters) {
+        Analysis analysis = app.getAnalyses().toArray(new Analysis[1])[0];
+        EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(pathClassMethodName, analysis.getId());
+
+        EntryPointParameters epp = new EntryPointParameters();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
+        try {
+            epp.setDateIncoming(sdf.parse(dateIncoming).toInstant().atZone(ZoneId.systemDefault()));
+        } catch (ParseException e) {
+            log.error("unable to parse incoming date",e);
+        }
+        epp.setParameters(parameters.getBytes());
+        epp.setEntryPoint(ep);
+        entryPointParametersRepository.save(epp);
+    }
+
+
+
+    public void addListPerformance(List<MessageMetrics> listPerf) {
+        LOG.error("size listPerf !! "+listPerf.size());
+        if (listPerf != null && !listPerf.isEmpty()) {
+            for (MessageMetrics msg : listPerf) {
+                log.info(
+                    "add indicator Performance for pathClassMethodName {} time {} token {} and dateIncoming {}",
+                    msg.getPathClassMethodName(), msg.getTimeExec(),
+                    msg.getToken(), msg.getDateIncoming());
+                createMetricsTimer(msg);
+            }
+        }
+    }
+
+    public void createMetricsTimer(MessageMetrics mm) {
+        Application app = findAppByToken(mm.getToken());
+        Analysis analysis = app.getAnalyses().toArray(new Analysis[1])[0];
+        EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(mm.getPathClassMethodName(), analysis.getId());
+
+        MetricsTimer mt = new MetricsTimer();
+        mt.setTimeExec(Integer.valueOf(mm.getTimeExec()));
+        mt.setCpuLoadProcess(mm.getCpuLoadProcess());
+        mt.setCpuLoadSystem(mm.getCpuLoadSystem());
+        mt.setDateIncoming(mt.getDateIncoming());
+        mt.setParameters(mm.getParameters().getBytes());
+        mt.setEntryPoint(ep);
+        metricsTimerRepository.save(mt);
     }
 }

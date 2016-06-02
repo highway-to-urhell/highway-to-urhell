@@ -71,7 +71,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'MetricsTimer', function($stateParams, MetricsTimer) {
-                    return MetricsTimer.get({id : $stateParams.id});
+                    return MetricsTimer.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -123,7 +123,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['MetricsTimer', function(MetricsTimer) {
-                            return MetricsTimer.get({id : $stateParams.id});
+                            return MetricsTimer.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -147,7 +147,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['MetricsTimer', function(MetricsTimer) {
-                            return MetricsTimer.get({id : $stateParams.id});
+                            return MetricsTimer.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

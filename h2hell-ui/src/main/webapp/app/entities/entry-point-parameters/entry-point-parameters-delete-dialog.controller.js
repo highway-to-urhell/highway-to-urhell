@@ -9,15 +9,20 @@
 
     function EntryPointParametersDeleteController($uibModalInstance, entity, EntryPointParameters) {
         var vm = this;
+
         vm.entryPointParameters = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             EntryPointParameters.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

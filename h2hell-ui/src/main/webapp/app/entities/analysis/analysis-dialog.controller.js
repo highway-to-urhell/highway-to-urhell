@@ -9,7 +9,12 @@
 
     function AnalysisDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Analysis, Event, EntryPoint, Application) {
         var vm = this;
+
         vm.analysis = entity;
+        vm.clear = clear;
+        vm.datePickerOpenStatus = {};
+        vm.openCalendar = openCalendar;
+        vm.save = save;
         vm.events = Event.query();
         vm.entrypoints = EntryPoint.query();
         vm.applications = Application.query();
@@ -18,34 +23,33 @@
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('h2HellUiApp:analysisUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.analysis.id !== null) {
                 Analysis.update(vm.analysis, onSaveSuccess, onSaveError);
             } else {
                 Analysis.save(vm.analysis, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('h2HellUiApp:analysisUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
 
-        vm.datePickerOpenStatus = {};
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
         vm.datePickerOpenStatus.dateCreation = false;
 
-        vm.openCalendar = function(date) {
+        function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;
-        };
+        }
     }
 })();

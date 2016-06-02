@@ -9,16 +9,17 @@
 
     function EventController ($scope, $state, DataUtils, Event) {
         var vm = this;
+        
         vm.events = [];
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
-        vm.loadAll = function() {
+
+        loadAll();
+
+        function loadAll() {
             Event.query(function(result) {
                 vm.events = result;
             });
-        };
-
-        vm.loadAll();
-        
+        }
     }
 })();

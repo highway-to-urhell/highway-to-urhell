@@ -9,15 +9,20 @@
 
     function MetricsTimerDeleteController($uibModalInstance, entity, MetricsTimer) {
         var vm = this;
+
         vm.metricsTimer = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             MetricsTimer.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

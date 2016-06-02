@@ -1,6 +1,7 @@
 package com.highway2urhell;
 
 import com.highway2urhell.config.Constants;
+import com.highway2urhell.config.DefaultProfileUtil;
 import com.highway2urhell.config.JHipsterProperties;
 
 import org.slf4j.Logger;
@@ -19,8 +20,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
@@ -41,19 +40,15 @@ public class H2HellUiApp {
      */
     @PostConstruct
     public void initApplication() {
-        if (env.getActiveProfiles().length == 0) {
-            log.warn("No Spring profile configured, running with default profile: {}", Constants.SPRING_PROFILE_DEVELOPMENT);
-        } else {
-            log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
-            Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-            if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
-                log.error("You have misconfigured your application! It should not run " +
-                    "with both the 'dev' and 'prod' profiles at the same time.");
-            }
-            if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_CLOUD)) {
-                log.error("You have misconfigured your application! It should not" +
-                    "run with both the 'dev' and 'cloud' profiles at the same time.");
-            }
+        log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
+        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
+        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
+            log.error("You have misconfigured your application! It should not run " +
+                "with both the 'dev' and 'prod' profiles at the same time.");
+        }
+        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_CLOUD)) {
+            log.error("You have misconfigured your application! It should not" +
+                "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
     }
 
@@ -65,7 +60,7 @@ public class H2HellUiApp {
      */
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(H2HellUiApp.class);
-        addDefaultProfile(app);
+        DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
@@ -78,17 +73,4 @@ public class H2HellUiApp {
 
     }
 
-    /**
-     * set a default to use when no profile is configured.
-     */
-    protected static void addDefaultProfile(SpringApplication app) {
-        Map<String, Object> defProperties =  new HashMap<>();
-        /*
-        * The default profile to use when no other profiles are defined
-        * This cannot be set in the `application.yml` file.
-        * See https://github.com/spring-projects/spring-boot/issues/1219
-        */
-        defProperties.put("spring.profiles.default", Constants.SPRING_PROFILE_DEVELOPMENT);
-        app.setDefaultProperties(defProperties);
-    }
 }

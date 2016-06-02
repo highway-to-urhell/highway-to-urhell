@@ -53,7 +53,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'UserPermission', function($stateParams, UserPermission) {
-                    return UserPermission.get({id : $stateParams.id});
+                    return UserPermission.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -100,7 +100,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['UserPermission', function(UserPermission) {
-                            return UserPermission.get({id : $stateParams.id});
+                            return UserPermission.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -124,7 +124,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['UserPermission', function(UserPermission) {
-                            return UserPermission.get({id : $stateParams.id});
+                            return UserPermission.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

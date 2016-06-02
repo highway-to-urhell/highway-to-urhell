@@ -2,7 +2,7 @@ version: '2'
 services:
     h2hellui-mysql:
         container_name: h2hellui-mysql
-        image: mysql:5.7.11
+        image: mysql:5.7.12
         # volumes:
         #     - ~/volumes/jhipster/h2hellUi/mysql/:/var/lib/mysql/
         environment:

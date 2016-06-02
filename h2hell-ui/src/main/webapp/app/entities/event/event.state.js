@@ -53,7 +53,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Event', function($stateParams, Event) {
-                    return Event.get({id : $stateParams.id});
+                    return Event.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -103,7 +103,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Event', function(Event) {
-                            return Event.get({id : $stateParams.id});
+                            return Event.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -127,7 +127,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Event', function(Event) {
-                            return Event.get({id : $stateParams.id});
+                            return Event.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

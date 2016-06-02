@@ -9,11 +9,17 @@
 
     function EntryPointController ($scope, $state, EntryPoint, ParseLinks, AlertService) {
         var vm = this;
+        
         vm.entryPoints = [];
-        vm.predicate = 'id';
-        vm.reverse = true;
+        vm.loadPage = loadPage;
         vm.page = 0;
-        vm.loadAll = function() {
+        vm.predicate = 'id';
+        vm.reset = reset;
+        vm.reverse = true;
+
+        loadAll();
+
+        function loadAll () {
             EntryPoint.query({
                 page: vm.page,
                 size: 20,
@@ -36,18 +42,17 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-        };
-        vm.reset = function() {
+        }
+
+        function reset () {
             vm.page = 0;
             vm.entryPoints = [];
-            vm.loadAll();
-        };
-        vm.loadPage = function(page) {
+            loadAll();
+        }
+
+        function loadPage(page) {
             vm.page = page;
-            vm.loadAll();
-        };
-
-        vm.loadAll();
-
+            loadAll();
+        }
     }
 })();

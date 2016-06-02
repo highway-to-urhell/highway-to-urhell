@@ -9,11 +9,17 @@
 
     function ApplicationController ($scope, $state, Application, ParseLinks, AlertService) {
         var vm = this;
+        
         vm.applications = [];
-        vm.predicate = 'id';
-        vm.reverse = true;
+        vm.loadPage = loadPage;
         vm.page = 0;
-        vm.loadAll = function() {
+        vm.predicate = 'id';
+        vm.reset = reset;
+        vm.reverse = true;
+
+        loadAll();
+
+        function loadAll () {
             Application.query({
                 page: vm.page,
                 size: 20,
@@ -36,18 +42,17 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-        };
-        vm.reset = function() {
+        }
+
+        function reset () {
             vm.page = 0;
             vm.applications = [];
-            vm.loadAll();
-        };
-        vm.loadPage = function(page) {
+            loadAll();
+        }
+
+        function loadPage(page) {
             vm.page = page;
-            vm.loadAll();
-        };
-
-        vm.loadAll();
-
+            loadAll();
+        }
     }
 })();

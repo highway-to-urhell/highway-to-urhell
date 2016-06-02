@@ -9,12 +9,12 @@
 
     function UserPermissionDetailController($scope, $rootScope, $stateParams, entity, UserPermission, Application, Team) {
         var vm = this;
+
         vm.userPermission = entity;
-        
+
         var unsubscribe = $rootScope.$on('h2HellUiApp:userPermissionUpdate', function(event, result) {
             vm.userPermission = result;
         });
         $scope.$on('$destroy', unsubscribe);
-
     }
 })();

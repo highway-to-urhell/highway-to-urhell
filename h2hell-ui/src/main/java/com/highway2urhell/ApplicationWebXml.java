@@ -1,5 +1,6 @@
 package com.highway2urhell;
 
+import com.highway2urhell.config.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
@@ -14,7 +15,7 @@ public class ApplicationWebXml extends SpringBootServletInitializer {
         /**
          * set a default to use when no profile is configured.
          */
-        H2HellUiApp.addDefaultProfile(application.application());
+        DefaultProfileUtil.addDefaultProfile(application.application());
         return application.sources(H2HellUiApp.class);
     }
 }

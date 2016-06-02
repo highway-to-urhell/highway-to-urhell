@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Team', function($stateParams, Team) {
-                    return Team.get({id : $stateParams.id});
+                    return Team.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -98,7 +98,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Team', function(Team) {
-                            return Team.get({id : $stateParams.id});
+                            return Team.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -122,7 +122,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Team', function(Team) {
-                            return Team.get({id : $stateParams.id});
+                            return Team.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

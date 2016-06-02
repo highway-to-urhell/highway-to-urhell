@@ -9,15 +9,20 @@
 
     function UserPermissionDeleteController($uibModalInstance, entity, UserPermission) {
         var vm = this;
+
         vm.userPermission = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             UserPermission.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

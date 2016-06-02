@@ -9,14 +9,15 @@
 
     function MetricsTimerController ($scope, $state, DataUtils, MetricsTimer, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-        vm.loadAll = loadAll;
+        
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
-        vm.loadAll();
+
+        loadAll();
 
         function loadAll () {
             MetricsTimer.query({
@@ -55,6 +56,5 @@
                 search: vm.currentSearch
             });
         }
-
     }
 })();

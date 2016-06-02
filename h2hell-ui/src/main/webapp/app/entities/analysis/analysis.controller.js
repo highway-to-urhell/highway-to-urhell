@@ -9,14 +9,15 @@
 
     function AnalysisController ($scope, $state, Analysis) {
         var vm = this;
+        
         vm.analyses = [];
-        vm.loadAll = function() {
+
+        loadAll();
+
+        function loadAll() {
             Analysis.query(function(result) {
                 vm.analyses = result;
             });
-        };
-
-        vm.loadAll();
-        
+        }
     }
 })();

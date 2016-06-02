@@ -25,7 +25,7 @@
             "averageTime": "Average Time",
             "checkLaunch": "Check Launch",
             "metrics": "Metrics",
-            "logs": "Logs",
+            "params": "Params",
             "analysis": "Analysis"
         }
     }

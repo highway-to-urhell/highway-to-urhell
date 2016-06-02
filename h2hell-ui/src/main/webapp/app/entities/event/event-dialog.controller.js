@@ -9,35 +9,41 @@
 
     function EventDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Event, Analysis) {
         var vm = this;
+
         vm.event = entity;
+        vm.clear = clear;
+        vm.byteSize = DataUtils.byteSize;
+        vm.openFile = DataUtils.openFile;
+        vm.save = save;
         vm.analyses = Analysis.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        var onSaveSuccess = function (result) {
-            $scope.$emit('h2HellUiApp:eventUpdate', result);
-            $uibModalInstance.close(result);
-            vm.isSaving = false;
-        };
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
 
-        var onSaveError = function () {
-            vm.isSaving = false;
-        };
-
-        vm.save = function () {
+        function save () {
             vm.isSaving = true;
             if (vm.event.id !== null) {
                 Event.update(vm.event, onSaveSuccess, onSaveError);
             } else {
                 Event.save(vm.event, onSaveSuccess, onSaveError);
             }
-        };
+        }
 
-        vm.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
+        function onSaveSuccess (result) {
+            $scope.$emit('h2HellUiApp:eventUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
 
         vm.setData = function ($file, event) {
             if ($file) {
@@ -50,7 +56,5 @@
             }
         };
 
-        vm.openFile = DataUtils.openFile;
-        vm.byteSize = DataUtils.byteSize;
     }
 })();

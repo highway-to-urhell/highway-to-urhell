@@ -71,7 +71,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'EntryPointParameters', function($stateParams, EntryPointParameters) {
-                    return EntryPointParameters.get({id : $stateParams.id});
+                    return EntryPointParameters.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -120,7 +120,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['EntryPointParameters', function(EntryPointParameters) {
-                            return EntryPointParameters.get({id : $stateParams.id});
+                            return EntryPointParameters.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -144,7 +144,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['EntryPointParameters', function(EntryPointParameters) {
-                            return EntryPointParameters.get({id : $stateParams.id});
+                            return EntryPointParameters.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

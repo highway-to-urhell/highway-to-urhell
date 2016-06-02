@@ -51,7 +51,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Analysis', function($stateParams, Analysis) {
-                    return Analysis.get({id : $stateParams.id});
+                    return Analysis.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -101,7 +101,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Analysis', function(Analysis) {
-                            return Analysis.get({id : $stateParams.id});
+                            return Analysis.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -125,7 +125,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Analysis', function(Analysis) {
-                            return Analysis.get({id : $stateParams.id});
+                            return Analysis.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

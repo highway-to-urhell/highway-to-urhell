@@ -141,7 +141,7 @@ public class AgentV1ApiResourceIntTest {
         mb.setDateIncoming(sdf.format(new Date()));
         listBreaker.add(mb);
 
-        listPerformance = new ArrayList<MessageMetrics>();
+        listPerformance = new ArrayList<>();
         MessageMetrics mm = new MessageMetrics();
         mm.setToken(DEFAULT_TOKEN);
         mm.setPathClassMethodName(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
@@ -163,7 +163,7 @@ public class AgentV1ApiResourceIntTest {
         addPerformance();
     }
 
-    public void createApplication() throws Exception {
+    private void createApplication() throws Exception {
         int databaseApplicationSizeBeforeCreate = (int) applicationRepository.count();
         int databaseAnalysisSizeBeforeCreate = (int) analysisRepository.count();
 
@@ -192,7 +192,7 @@ public class AgentV1ApiResourceIntTest {
         assertThat(testAnalysis.getPathSource()).isEqualTo(DEFAULT_PATH_SOURCE);
     }
 
-    public void initThunderApp() throws Exception {
+    private void initThunderApp() throws Exception {
         int databaseEntryPointSizeBeforeCreate = (int) entryPointRepository.count();
 
         restApplicationMockMvc.perform(post("/ThunderEntry/initThunderApp")
@@ -207,7 +207,7 @@ public class AgentV1ApiResourceIntTest {
         assertThat(entryPoint.getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
-    public void addBreakers() throws Exception {
+    private void addBreakers() throws Exception {
         int databaseEntryPointParametersSizeBeforeCreate = (int) entryPointParametersRepository.count();
 
         restApplicationMockMvc.perform(post("/ThunderEntry/addBreaker")
@@ -238,7 +238,7 @@ public class AgentV1ApiResourceIntTest {
         assertThat(metricsTimes.getCpuLoadProcess()).isEqualTo(DEFAULT_CPU_LOAD_PROCESS);
         assertThat(metricsTimes.getCpuLoadSystem()).isEqualTo(DEFAULT_CPU_LOAD_SYSTEM);
         assertThat(metricsTimes.getTimeExec()).isEqualTo(DEFAULT_TIME_EXEC);
-
+        assertThat(metricsTimes.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
 }

@@ -2,7 +2,7 @@
   "relationships": [
     {
       "relationshipId": 1,
-      "relationshipName": "analysis",
+      "relationshipName": "analyses",
       "otherEntityName": "analysis",
       "relationshipType": "one-to-many",
       "otherEntityRelationshipName": "application"
@@ -55,7 +55,7 @@
     },
     {
       "fieldId": 7,
-      "fieldName": "isAnalysed",
+      "fieldName": "analysed",
       "fieldType": "Boolean"
     }
   ],

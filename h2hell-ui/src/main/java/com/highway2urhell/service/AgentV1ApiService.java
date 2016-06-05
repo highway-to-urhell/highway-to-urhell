@@ -81,11 +81,11 @@ public class AgentV1ApiService {
     }
 
     public void initThunderAppAndStat(String token, List<EntryPathData> listEntryPathData) {
-        Application app = validateToken(token);
+        Analysis analysis = validateToken(token);
         if (listEntryPathData != null && !listEntryPathData.isEmpty()) {
             for (EntryPathData entry : listEntryPathData) {
                 // in V1 api we have one analysis by token
-                createOrUpdateThunderStat(entry, app, app.getAnalyses().toArray(new Analysis[1])[0]);
+                createOrUpdateThunderStat(entry, analysis.getApplication(), analysis);
             }
         }
     }
@@ -115,22 +115,22 @@ public class AgentV1ApiService {
 
     }
 
-    public Application findAppByToken(String token) {
+    public Analysis findAppByToken(String token) {
         return validateToken(token) ;
     }
 
-    private Application validateToken(String token) {
+    private Analysis validateToken(String token) {
         if (token == null) {
             throw new V1ApiTokenException();
         }
-        List<Application> apps = applicationRepository.findByTokenWithEagerRelationships(token);
-        if (apps == null || apps.size() == 0) {
+        List<Analysis> analyses = analysisRepository.findByTokenWithEagerRelationships(token);
+        if (analyses == null || analyses.size() == 0) {
             throw new V1ApiNotExistThunderAppException();
         }
-        if (apps.size() > 1) {
+        if (analyses.size() > 1) {
             throw new V1ApiNotExistThunderAppException();
         }
-        return apps.get(0);
+        return analyses.get(0);
     }
 
 
@@ -151,8 +151,8 @@ public class AgentV1ApiService {
     private void addBreaker(String pathClassMethodName, String token,
                             String dateIncoming,String parameters) {
         validate(pathClassMethodName, token, dateIncoming);
-        Application app = findAppByToken(token);
-        createBreakerLog(app, pathClassMethodName, dateIncoming,parameters);
+        Analysis analysis = findAppByToken(token);
+        createBreakerLog(analysis, pathClassMethodName, dateIncoming,parameters);
     }
 
 
@@ -170,9 +170,8 @@ public class AgentV1ApiService {
 
     }
 
-    public void createBreakerLog(Application app, String pathClassMethodName,
+    public void createBreakerLog(Analysis analysis, String pathClassMethodName,
                                  String dateIncoming,String parameters) {
-        Analysis analysis = app.getAnalyses().toArray(new Analysis[1])[0];
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(pathClassMethodName, analysis.getId());
 
         EntryPointParameters epp = new EntryPointParameters();
@@ -203,8 +202,7 @@ public class AgentV1ApiService {
     }
 
     public void createMetricsTimer(MessageMetrics mm) {
-        Application app = findAppByToken(mm.getToken());
-        Analysis analysis = app.getAnalyses().toArray(new Analysis[1])[0];
+        Analysis analysis = findAppByToken(mm.getToken());
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(mm.getPathClassMethodName(), analysis.getId());
 
         MetricsTimer mt = new MetricsTimer();

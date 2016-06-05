@@ -45,7 +45,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="is_analysed" type="bit">
+            <column name="analysed" type="bit">
                 <constraints nullable="true" />
             </column>
             

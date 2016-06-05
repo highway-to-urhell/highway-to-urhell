@@ -9,7 +9,7 @@
     },
     {
       "relationshipId": 2,
-      "relationshipName": "params",
+      "relationshipName": "logs",
       "otherEntityName": "entryPointParameters",
       "relationshipType": "one-to-many",
       "otherEntityRelationshipName": "entryPoint"

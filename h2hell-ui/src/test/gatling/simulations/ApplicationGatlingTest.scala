@@ -67,7 +67,7 @@ class ApplicationGatlingTest extends Simulation {
             .exec(http("Create new application")
             .post("/api/applications")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "token":"SAMPLE_TEXT", "dateCreation":"2020-01-01T00:00:00.000Z", "urlApp":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "appType":"SAMPLE_TEXT", "isAnalysed":null}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "token":"SAMPLE_TEXT", "dateCreation":"2020-01-01T00:00:00.000Z", "urlApp":"SAMPLE_TEXT", "description":"SAMPLE_TEXT", "appType":"SAMPLE_TEXT", "analysed":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_application_url"))).exitHereIfFailed
             .pause(10)

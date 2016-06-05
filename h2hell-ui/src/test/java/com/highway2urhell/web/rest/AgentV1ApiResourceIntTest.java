@@ -1,17 +1,10 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
-import com.highway2urhell.domain.Analysis;
-import com.highway2urhell.domain.Application;
-import com.highway2urhell.domain.EntryPoint;
-import com.highway2urhell.repository.AnalysisRepository;
-import com.highway2urhell.repository.ApplicationRepository;
-import com.highway2urhell.repository.EntryPointRepository;
+import com.highway2urhell.domain.*;
+import com.highway2urhell.repository.*;
 import com.highway2urhell.service.AgentV1ApiService;
-import com.highway2urhell.web.rest.dto.v1api.EntryPathData;
-import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
-import com.highway2urhell.web.rest.dto.v1api.MessageThunderApp;
-import com.highway2urhell.web.rest.dto.v1api.TypePath;
+import com.highway2urhell.web.rest.dto.v1api.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -66,6 +61,12 @@ public class AgentV1ApiResourceIntTest {
     private static final TypePath DEFAULT_TYPE_PATH = TypePath.STATIC;
     private static final String DEFAULT_HTTPMETHOD = "AAAAA";
 
+    private static final String DEFAULT_PARAMETERS = "toto, tata, titi";
+
+    private static final Integer DEFAULT_TIME_EXEC = 150;
+    private static final Double DEFAULT_CPU_LOAD_SYSTEM = 12D;
+    private static final Double DEFAULT_CPU_LOAD_PROCESS = 5D;
+
     @Inject
     private AgentV1ApiService agentV1ApiService;
 
@@ -79,6 +80,12 @@ public class AgentV1ApiResourceIntTest {
     private EntryPointRepository entryPointRepository;
 
     @Inject
+    private EntryPointParametersRepository entryPointParametersRepository;
+
+    @Inject
+    private MetricsTimerRepository metricsTimerRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -88,6 +95,8 @@ public class AgentV1ApiResourceIntTest {
 
     private H2hConfigDTO configDTO;
     private MessageThunderApp msg;
+    private List<MessageBreaker> listBreaker;
+    private List<MessageMetrics> listPerformance;
 
     @PostConstruct
     public void setup() {
@@ -123,6 +132,26 @@ public class AgentV1ApiResourceIntTest {
         listEntryPathData.add(entryPathData);
         msg.setListentryPathData(listEntryPathData);
 
+        listBreaker = new ArrayList<>();
+        MessageBreaker mb = new MessageBreaker();
+        mb.setToken(DEFAULT_TOKEN);
+        mb.setParameters(DEFAULT_PARAMETERS);
+        mb.setPathClassMethodName(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
+        mb.setDateIncoming(sdf.format(new Date()));
+        listBreaker.add(mb);
+
+        listPerformance = new ArrayList<MessageMetrics>();
+        MessageMetrics mm = new MessageMetrics();
+        mm.setToken(DEFAULT_TOKEN);
+        mm.setPathClassMethodName(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+        mm.setDateIncoming(sdf.format(new Date()));
+        mm.setParameters(DEFAULT_PARAMETERS);
+        mm.setCpuLoadProcess(DEFAULT_CPU_LOAD_PROCESS);
+        mm.setCpuLoadSystem(DEFAULT_CPU_LOAD_SYSTEM);
+        mm.setTimeExec(DEFAULT_TIME_EXEC);
+        listPerformance.add(mm);
+
     }
 
     @Test
@@ -130,6 +159,8 @@ public class AgentV1ApiResourceIntTest {
     public void makeAStandardScenarii() throws Exception {
         createApplication();
         initThunderApp();
+        addBreakers();
+        addPerformance();
     }
 
     public void createApplication() throws Exception {
@@ -174,6 +205,40 @@ public class AgentV1ApiResourceIntTest {
         assertThat(entryPoints).hasSize(databaseEntryPointSizeBeforeCreate + 1);
         EntryPoint entryPoint = entryPoints.get(entryPoints.size() - 1);
         assertThat(entryPoint.getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+    }
+
+    public void addBreakers() throws Exception {
+        int databaseEntryPointParametersSizeBeforeCreate = (int) entryPointParametersRepository.count();
+
+        restApplicationMockMvc.perform(post("/ThunderEntry/addBreaker")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(listBreaker)))
+            .andExpect(status().isOk());
+
+        // Validate the Application in the database
+        List<EntryPointParameters> entryPointsParameters = entryPointParametersRepository.findAll();
+        assertThat(entryPointsParameters).hasSize(databaseEntryPointParametersSizeBeforeCreate + 1);
+        EntryPointParameters entryPointParameter = entryPointsParameters.get(entryPointsParameters.size() - 1);
+        assertThat(entryPointParameter.getParameters()).isEqualTo(DEFAULT_PARAMETERS.getBytes());
+        assertThat(entryPointParameter.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+    }
+
+    private void addPerformance() throws Exception {
+        int databaseMetricsTimersSizeBeforeCreate = (int) metricsTimerRepository.count();
+
+        restApplicationMockMvc.perform(post("/ThunderEntry/addPerformance")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(listPerformance)))
+            .andExpect(status().isOk());
+
+        // Validate the Application in the database
+        List<MetricsTimer> metricsTimers = metricsTimerRepository.findAll();
+        assertThat(metricsTimers).hasSize(databaseMetricsTimersSizeBeforeCreate + 1);
+        MetricsTimer metricsTimes = metricsTimers.get(metricsTimers.size() - 1);
+        assertThat(metricsTimes.getCpuLoadProcess()).isEqualTo(DEFAULT_CPU_LOAD_PROCESS);
+        assertThat(metricsTimes.getCpuLoadSystem()).isEqualTo(DEFAULT_CPU_LOAD_SYSTEM);
+        assertThat(metricsTimes.getTimeExec()).isEqualTo(DEFAULT_TIME_EXEC);
+
     }
 
 }

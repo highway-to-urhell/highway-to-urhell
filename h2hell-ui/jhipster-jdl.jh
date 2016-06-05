@@ -25,7 +25,7 @@ entity Application {
 	urlApp String,
 	description String,
 	appType String,
-	isAnalysed Boolean,
+	analysed Boolean,
 }
 
 entity Analysis {
@@ -78,7 +78,7 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-	Application{analysis} to Analysis{application(name)}
+	Application{analyses} to Analysis{application(name)}
 }
 
 relationship OneToMany {

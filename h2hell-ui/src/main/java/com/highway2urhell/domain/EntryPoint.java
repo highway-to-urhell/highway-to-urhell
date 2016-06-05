@@ -5,11 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A EntryPoint.
@@ -58,7 +58,7 @@ public class EntryPoint implements Serializable {
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<EntryPointParameters> params = new HashSet<>();
+    private Set<EntryPointParameters> logs = new HashSet<>();
 
     @ManyToOne
     private Analysis analysis;
@@ -143,12 +143,12 @@ public class EntryPoint implements Serializable {
         this.metrics = metricsTimers;
     }
 
-    public Set<EntryPointParameters> getParams() {
-        return params;
+    public Set<EntryPointParameters> getLogs() {
+        return logs;
     }
 
-    public void setParams(Set<EntryPointParameters> entryPointParameters) {
-        this.params = entryPointParameters;
+    public void setLogs(Set<EntryPointParameters> entryPointParameters) {
+        this.logs = entryPointParameters;
     }
 
     public Analysis getAnalysis() {

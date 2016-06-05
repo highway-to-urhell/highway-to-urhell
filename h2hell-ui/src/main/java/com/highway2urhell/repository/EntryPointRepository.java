@@ -1,10 +1,9 @@
 package com.highway2urhell.repository;
 
 import com.highway2urhell.domain.EntryPoint;
-
-import org.springframework.data.jpa.repository.*;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Spring Data JPA repository for the EntryPoint entity.

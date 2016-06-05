@@ -3,17 +3,15 @@ package com.highway2urhell.web.rest;
 import com.highway2urhell.H2HellUiApp;
 import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.ApplicationRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -24,12 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,8 +61,8 @@ public class ApplicationResourceIntTest {
     private static final String DEFAULT_APP_TYPE = "AAAAA";
     private static final String UPDATED_APP_TYPE = "BBBBB";
 
-    private static final Boolean DEFAULT_IS_ANALYSED = false;
-    private static final Boolean UPDATED_IS_ANALYSED = true;
+    private static final Boolean DEFAULT_ANALYSED = false;
+    private static final Boolean UPDATED_ANALYSED = true;
 
     @Inject
     private ApplicationRepository applicationRepository;
@@ -97,7 +96,7 @@ public class ApplicationResourceIntTest {
         application.setUrlApp(DEFAULT_URL_APP);
         application.setDescription(DEFAULT_DESCRIPTION);
         application.setAppType(DEFAULT_APP_TYPE);
-        application.setIsAnalysed(DEFAULT_IS_ANALYSED);
+        application.setAnalysed(DEFAULT_ANALYSED);
     }
 
     @Test
@@ -122,7 +121,7 @@ public class ApplicationResourceIntTest {
         assertThat(testApplication.getUrlApp()).isEqualTo(DEFAULT_URL_APP);
         assertThat(testApplication.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testApplication.getAppType()).isEqualTo(DEFAULT_APP_TYPE);
-        assertThat(testApplication.isIsAnalysed()).isEqualTo(DEFAULT_IS_ANALYSED);
+        assertThat(testApplication.isAnalysed()).isEqualTo(DEFAULT_ANALYSED);
     }
 
     @Test
@@ -178,7 +177,7 @@ public class ApplicationResourceIntTest {
                 .andExpect(jsonPath("$.[*].urlApp").value(hasItem(DEFAULT_URL_APP.toString())))
                 .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
                 .andExpect(jsonPath("$.[*].appType").value(hasItem(DEFAULT_APP_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].isAnalysed").value(hasItem(DEFAULT_IS_ANALYSED.booleanValue())));
+                .andExpect(jsonPath("$.[*].analysed").value(hasItem(DEFAULT_ANALYSED.booleanValue())));
     }
 
     @Test
@@ -198,7 +197,7 @@ public class ApplicationResourceIntTest {
             .andExpect(jsonPath("$.urlApp").value(DEFAULT_URL_APP.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.appType").value(DEFAULT_APP_TYPE.toString()))
-            .andExpect(jsonPath("$.isAnalysed").value(DEFAULT_IS_ANALYSED.booleanValue()));
+            .andExpect(jsonPath("$.analysed").value(DEFAULT_ANALYSED.booleanValue()));
     }
 
     @Test
@@ -225,7 +224,7 @@ public class ApplicationResourceIntTest {
         updatedApplication.setUrlApp(UPDATED_URL_APP);
         updatedApplication.setDescription(UPDATED_DESCRIPTION);
         updatedApplication.setAppType(UPDATED_APP_TYPE);
-        updatedApplication.setIsAnalysed(UPDATED_IS_ANALYSED);
+        updatedApplication.setAnalysed(UPDATED_ANALYSED);
 
         restApplicationMockMvc.perform(put("/api/applications")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -242,7 +241,7 @@ public class ApplicationResourceIntTest {
         assertThat(testApplication.getUrlApp()).isEqualTo(UPDATED_URL_APP);
         assertThat(testApplication.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testApplication.getAppType()).isEqualTo(UPDATED_APP_TYPE);
-        assertThat(testApplication.isIsAnalysed()).isEqualTo(UPDATED_IS_ANALYSED);
+        assertThat(testApplication.isAnalysed()).isEqualTo(UPDATED_ANALYSED);
     }
 
     @Test

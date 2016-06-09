@@ -28,6 +28,8 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/json3/lib/json3.js',
             'src/main/webapp/bower_components/sockjs-client/dist/sockjs.js',
             'src/main/webapp/bower_components/stomp-websocket/lib/stomp.min.js',
+            'src/main/webapp/bower_components/d3/d3.js',
+            'src/main/webapp/bower_components/nvd3/build/nv.d3.js',
             'src/main/webapp/bower_components/angular/angular.js',
             'src/main/webapp/bower_components/angular-aria/angular-aria.js',
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
@@ -46,6 +48,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js',
             'src/main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
+            'src/main/webapp/bower_components/angular-nvd3/dist/angular-nvd3.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

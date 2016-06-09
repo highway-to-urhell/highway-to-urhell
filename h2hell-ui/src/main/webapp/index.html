@@ -11,6 +11,7 @@
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
     <!-- endinject -->
     <!-- endbuild -->
@@ -51,6 +52,8 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/sockjs-client/dist/sockjs.js"></script>
     <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/nvd3/build/nv.d3.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -69,12 +72,15 @@
     <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
 
     <!-- build:js app/app.js  -->
     <!-- inject:js -->
     <script src="app/app.module.js"></script>
+    <script src="app/stats/stats.state.js"></script>
+    <script src="app/stats/stats.controller.js"></script>
     <script src="app/services/user/user.service.js"></script>
     <script src="app/services/profiles/profile.service.js"></script>
     <script src="app/services/profiles/page-ribbon.directive.js"></script>

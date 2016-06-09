@@ -1,6 +1,6 @@
 {
     "home": {
-        "title": "Bienvenue dans Highway to URL!",
+        "title": "Stats",
         "subtitle": "Ceci est votre page d'accueil",
         "logged": {
             "message": "Vous êtes connecté en tant que \"{{username}}\"."

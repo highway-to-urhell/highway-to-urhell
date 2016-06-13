@@ -1,6 +1,22 @@
 # h2hellUi
 
-This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
+## Use Case
+
+User :
+
+1. register
+2. request token for one app
+3. configure and launch app with agent in continue integration
+4. open console and see:
+..* ratio of entry point / test cover
+..* list of app and entry point
+    
+So we need a maven plugin which produce report to sonarqube ?
+ 
+
+## Gui organization map
+
+
 
 ## Development
 
@@ -76,6 +92,11 @@ To setup this project in Jenkins, use the following configuration:
         ````
 * Post-build Actions
     * Publish JUnit test result report / Test Report XMLs: `build/test-results/*.xml,build/reports/e2e/*.xml`
+
+
+## Reference
+
+This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
 [JHipster]: https://jhipster.github.io/
 [Node.js]: https://nodejs.org/

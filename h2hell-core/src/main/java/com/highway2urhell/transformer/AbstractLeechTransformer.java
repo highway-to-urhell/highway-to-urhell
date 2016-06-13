@@ -1,6 +1,12 @@
 package com.highway2urhell.transformer;
 
 import javassist.*;
+import javassist.bytecode.BadBytecode;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.CodeIterator;
+import javassist.bytecode.Mnemonic;
+import javassist.expr.ExprEditor;
+import javassist.expr.MethodCall;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,12 +76,24 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
     }
 
     private void grabAllMethod(CtClass cc) {
-        for (CtMethod m : cc.getMethods()) {
-            log.error(m.getLongName() + "-" + m.getSignature()+" at line "+m.getMethodInfo().getLineNumber(0));
+        for (CtMethod method : cc.getMethods()) {
+            log.error(method.getLongName() + "-" + method.getSignature() + " at line " + method.getMethodInfo().getLineNumber(0));
+            try {
+                method.instrument(
+                        new ExprEditor() {
+                            public void edit(MethodCall m) throws CannotCompileException {
+                                log.error("method invoke into the method observe "+m.getClassName() + "." + m.getMethodName() + " " + m.getSignature());
+                            }
+                        });
+            } catch (CannotCompileException e) {
+                log.error("Cannot Compil Exception"+e.getMessage());
+            }
+
         }
         for (CtConstructor c : cc.getConstructors()) {
             log.error(c.getLongName() + "-" + c.getSignature()+" at line "+c.getMethodInfo().getLineNumber(0));
         }
+
     }
 
     /**

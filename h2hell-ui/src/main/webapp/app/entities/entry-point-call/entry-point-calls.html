@@ -1,0 +1,69 @@
+<div>
+    <h2 translate="h2HellUiApp.entryPointCall.home.title">Entry Point Calls</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="entry-point-call.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="h2HellUiApp.entryPointCall.home.createLabel">
+                        Create new Entry Point Call
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateIncoming"><span translate="h2HellUiApp.entryPointCall.dateIncoming">Date Incoming</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="parameters"><span translate="h2HellUiApp.entryPointCall.parameters">Parameters</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="entryPoint.pathClassMethodName"><span translate="h2HellUiApp.entryPointCall.entryPoint">Entry Point</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entryPointCall in vm.entryPointCalls track by entryPointCall.id">
+                    <td><a ui-sref="entry-point-call-detail({id:entryPointCall.id})">{{entryPointCall.id}}</a></td>
+                    <td>{{entryPointCall.dateIncoming | date:'medium'}}</td>
+                    <td>
+                        <a ng-if="entryPointCall.parameters" ng-click="vm.openFile(entryPointCall.parametersContentType, entryPointCall.parameters)" translate="entity.action.open">open</a>
+                        <span ng-if="entryPointCall.parameters">{{entryPointCall.parametersContentType}}, {{vm.byteSize(entryPointCall.parameters)}}</span>
+                    </td>
+                    <td>
+                        <a ui-sref="entry-point-detail({id:entryPointCall.entryPoint.id})">{{entryPointCall.entryPoint.pathClassMethodName}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="entry-point-call-detail({id:entryPointCall.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entry-point-call.edit({id:entryPointCall.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entry-point-call.delete({id:entryPointCall.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

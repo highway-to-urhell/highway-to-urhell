@@ -9,13 +9,13 @@
             "entities": {
                 "main": "Entities",
                 "application": "Application",
-                "entryPointParameters": "Entry Point Parameters",
                 "event": "Event",
-                "metricsTimer": "Metrics Timer",
                 "analysis": "Analysis",
                 "entryPoint": "Entry Point",
                 "team": "Team",
                 "userPermission": "User Permission",
+                "entryPointCall": "Entry Point Call",
+                "entryPointPerf": "Entry Point Perf",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -1,0 +1,24 @@
+{
+    "h2HellUiApp": {
+        "entryPointCall" : {
+            "home": {
+                "title": "Entry Point Calls",
+                "createLabel": "Create a new Entry Point Call",
+                "createOrEditLabel": "Create or edit a Entry Point Call",
+                "search": "Search for Entry Point Call"
+            },
+            "created": "A new Entry Point Call is created with identifier {{ param }}",
+            "updated": "A Entry Point Call is updated with identifier {{ param }}",
+            "deleted": "A Entry Point Call is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Entry Point Call {{ id }}?"
+            },
+            "detail": {
+                "title": "Entry Point Call"
+            },
+            "dateIncoming": "Date Incoming",
+            "parameters": "Parameters",
+            "entryPoint": "Entry Point"
+        }
+    }
+}

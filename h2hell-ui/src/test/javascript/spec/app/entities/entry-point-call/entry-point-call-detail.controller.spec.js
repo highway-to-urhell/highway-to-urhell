@@ -2,39 +2,35 @@
 
 describe('Controller Tests', function() {
 
-    describe('EntryPoint Management Detail Controller', function() {
+    describe('EntryPointCall Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEntryPoint, MockEntryPointPerf, MockEntryPointCall, MockAnalysis;
+        var MockEntity, MockEntryPointCall, MockEntryPoint;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
-            MockEntryPoint = jasmine.createSpy('MockEntryPoint');
-            MockEntryPointPerf = jasmine.createSpy('MockEntryPointPerf');
             MockEntryPointCall = jasmine.createSpy('MockEntryPointCall');
-            MockAnalysis = jasmine.createSpy('MockAnalysis');
+            MockEntryPoint = jasmine.createSpy('MockEntryPoint');
             
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
-                'EntryPoint': MockEntryPoint,
-                'EntryPointPerf': MockEntryPointPerf,
                 'EntryPointCall': MockEntryPointCall,
-                'Analysis': MockAnalysis
+                'EntryPoint': MockEntryPoint
             };
             createController = function() {
-                $injector.get('$controller')("EntryPointDetailController", locals);
+                $injector.get('$controller')("EntryPointCallDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'h2HellUiApp:entryPointUpdate';
+                var eventType = 'h2HellUiApp:entryPointCallUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

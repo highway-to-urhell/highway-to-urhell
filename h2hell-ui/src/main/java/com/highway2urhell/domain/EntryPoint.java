@@ -5,11 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * A EntryPoint.
@@ -53,12 +53,12 @@ public class EntryPoint implements Serializable {
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<MetricsTimer> metrics = new HashSet<>();
+    private Set<EntryPointPerf> perfs = new HashSet<>();
 
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<EntryPointParameters> logs = new HashSet<>();
+    private Set<EntryPointCall> calls = new HashSet<>();
 
     @ManyToOne
     private Analysis analysis;
@@ -135,20 +135,20 @@ public class EntryPoint implements Serializable {
         this.checkLaunch = checkLaunch;
     }
 
-    public Set<MetricsTimer> getMetrics() {
-        return metrics;
+    public Set<EntryPointPerf> getPerfs() {
+        return perfs;
     }
 
-    public void setMetrics(Set<MetricsTimer> metricsTimers) {
-        this.metrics = metricsTimers;
+    public void setPerfs(Set<EntryPointPerf> entryPointPerfs) {
+        this.perfs = entryPointPerfs;
     }
 
-    public Set<EntryPointParameters> getLogs() {
-        return logs;
+    public Set<EntryPointCall> getCalls() {
+        return calls;
     }
 
-    public void setLogs(Set<EntryPointParameters> entryPointParameters) {
-        this.logs = entryPointParameters;
+    public void setCalls(Set<EntryPointCall> entryPointCalls) {
+        this.calls = entryPointCalls;
     }
 
     public Analysis getAnalysis() {

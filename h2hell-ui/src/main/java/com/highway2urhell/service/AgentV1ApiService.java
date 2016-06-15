@@ -45,10 +45,10 @@ public class AgentV1ApiService {
     private EntryPointRepository entryPointRepository;
 
     @Inject
-    private EntryPointParametersRepository entryPointParametersRepository;
+    private EntryPointCallRepository entryPointCallRepository;
 
     @Inject
-    private MetricsTimerRepository metricsTimerRepository;
+    private EntryPointPerfRepository entryPointPerfRepository;
 
     public Analysis createAnalysis(H2hConfigDTO configDTO) {
         Application app = new Application();
@@ -174,16 +174,16 @@ public class AgentV1ApiService {
                                  String dateIncoming,String parameters) {
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(pathClassMethodName, analysis.getId());
 
-        EntryPointParameters epp = new EntryPointParameters();
+        EntryPointCall epc = new EntryPointCall();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
         try {
-            epp.setDateIncoming(sdf.parse(dateIncoming).toInstant().atZone(ZoneId.systemDefault()));
+            epc.setDateIncoming(sdf.parse(dateIncoming).toInstant().atZone(ZoneId.systemDefault()));
         } catch (ParseException e) {
             log.error("unable to parse incoming date",e);
         }
-        epp.setParameters(parameters.getBytes());
-        epp.setEntryPoint(ep);
-        entryPointParametersRepository.save(epp);
+        epc.setParameters(parameters.getBytes());
+        epc.setEntryPoint(ep);
+        entryPointCallRepository.save(epc);
     }
 
 
@@ -205,13 +205,13 @@ public class AgentV1ApiService {
         Analysis analysis = findAppByToken(mm.getToken());
         EntryPoint ep = entryPointRepository.findByPathClassMethodNameAndToken(mm.getPathClassMethodName(), analysis.getId());
 
-        MetricsTimer mt = new MetricsTimer();
-        mt.setTimeExec(Integer.valueOf(mm.getTimeExec()));
-        mt.setCpuLoadProcess(mm.getCpuLoadProcess());
-        mt.setCpuLoadSystem(mm.getCpuLoadSystem());
-        mt.setDateIncoming(mt.getDateIncoming());
-        mt.setParameters(mm.getParameters().getBytes());
-        mt.setEntryPoint(ep);
-        metricsTimerRepository.save(mt);
+        EntryPointPerf epp = new EntryPointPerf();
+        epp.setTimeExec(Integer.valueOf(mm.getTimeExec()));
+        epp.setCpuLoadProcess(mm.getCpuLoadProcess());
+        epp.setCpuLoadSystem(mm.getCpuLoadSystem());
+        epp.setDateIncoming(epp.getDateIncoming());
+        epp.setParameters(mm.getParameters().getBytes());
+        epp.setEntryPoint(ep);
+        entryPointPerfRepository.save(epp);
     }
 }

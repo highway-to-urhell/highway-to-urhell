@@ -80,10 +80,10 @@ public class AgentV1ApiResourceIntTest {
     private EntryPointRepository entryPointRepository;
 
     @Inject
-    private EntryPointParametersRepository entryPointParametersRepository;
+    private EntryPointCallRepository entryPointCallRepository;
 
     @Inject
-    private MetricsTimerRepository metricsTimerRepository;
+    private EntryPointPerfRepository entryPointPerfRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -208,7 +208,7 @@ public class AgentV1ApiResourceIntTest {
     }
 
     private void addBreakers() throws Exception {
-        int databaseEntryPointParametersSizeBeforeCreate = (int) entryPointParametersRepository.count();
+        int databaseEntryPointCallSizeBeforeCreate = (int) entryPointCallRepository.count();
 
         restApplicationMockMvc.perform(post("/ThunderEntry/addBreaker")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -216,15 +216,15 @@ public class AgentV1ApiResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Application in the database
-        List<EntryPointParameters> entryPointsParameters = entryPointParametersRepository.findAll();
-        assertThat(entryPointsParameters).hasSize(databaseEntryPointParametersSizeBeforeCreate + 1);
-        EntryPointParameters entryPointParameter = entryPointsParameters.get(entryPointsParameters.size() - 1);
-        assertThat(entryPointParameter.getParameters()).isEqualTo(DEFAULT_PARAMETERS.getBytes());
-        assertThat(entryPointParameter.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+        List<EntryPointCall> entryPointsCalls = entryPointCallRepository.findAll();
+        assertThat(entryPointsCalls).hasSize(databaseEntryPointCallSizeBeforeCreate + 1);
+        EntryPointCall entryPointCall = entryPointsCalls.get(entryPointsCalls.size() - 1);
+        assertThat(entryPointCall.getParameters()).isEqualTo(DEFAULT_PARAMETERS.getBytes());
+        assertThat(entryPointCall.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
     private void addPerformance() throws Exception {
-        int databaseMetricsTimersSizeBeforeCreate = (int) metricsTimerRepository.count();
+        int databaseMetricsTimersSizeBeforeCreate = (int) entryPointPerfRepository.count();
 
         restApplicationMockMvc.perform(post("/ThunderEntry/addPerformance")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -232,13 +232,13 @@ public class AgentV1ApiResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Application in the database
-        List<MetricsTimer> metricsTimers = metricsTimerRepository.findAll();
-        assertThat(metricsTimers).hasSize(databaseMetricsTimersSizeBeforeCreate + 1);
-        MetricsTimer metricsTimes = metricsTimers.get(metricsTimers.size() - 1);
-        assertThat(metricsTimes.getCpuLoadProcess()).isEqualTo(DEFAULT_CPU_LOAD_PROCESS);
-        assertThat(metricsTimes.getCpuLoadSystem()).isEqualTo(DEFAULT_CPU_LOAD_SYSTEM);
-        assertThat(metricsTimes.getTimeExec()).isEqualTo(DEFAULT_TIME_EXEC);
-        assertThat(metricsTimes.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
+        List<EntryPointPerf> entryPointPerfs = entryPointPerfRepository.findAll();
+        assertThat(entryPointPerfs).hasSize(databaseMetricsTimersSizeBeforeCreate + 1);
+        EntryPointPerf entryPointPerf = entryPointPerfs.get(entryPointPerfs.size() - 1);
+        assertThat(entryPointPerf.getCpuLoadProcess()).isEqualTo(DEFAULT_CPU_LOAD_PROCESS);
+        assertThat(entryPointPerf.getCpuLoadSystem()).isEqualTo(DEFAULT_CPU_LOAD_SYSTEM);
+        assertThat(entryPointPerf.getTimeExec()).isEqualTo(DEFAULT_TIME_EXEC);
+        assertThat(entryPointPerf.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
 }

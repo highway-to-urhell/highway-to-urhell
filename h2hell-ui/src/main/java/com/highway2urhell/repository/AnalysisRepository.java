@@ -3,6 +3,7 @@ package com.highway2urhell.repository;
 import com.highway2urhell.domain.Analysis;
 
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

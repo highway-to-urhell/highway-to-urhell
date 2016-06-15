@@ -2,21 +2,24 @@
 
 ## Use Case
 
-User :
-
-1. register
+1. register / login
 2. request token for one app
-3. configure and launch app with agent in continue integration
+3. configure and launch app
+..* installer l agent
+..* add agent in launch app + conf in cloud mode (url)
 4. open console and see:
-..* ratio of entry point / test cover
-..* list of app and entry point
-    
-So we need a maven plugin which produce report to sonarqube ?
+..* list of app and entry points
+5. flag false positive and excluse them from the monitoring
+..* active call monitoring
+..* active perf monitoring
  
 
 ## Gui organization map
 
-
+* app by type + entry point by app (last version)
+..* entry point (flag and not flag) by app version (launch monitoring)
+....* list entry point (flag, launch monitoring)
+..* export
 
 ## Development
 

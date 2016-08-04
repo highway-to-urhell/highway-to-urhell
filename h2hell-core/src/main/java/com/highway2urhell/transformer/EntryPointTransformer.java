@@ -78,7 +78,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
             m.addLocalVariable("listParamsH2H", ss);
             m.insertBefore(generateCmd(m, entry.getClassName(), entry.getMethodName()));
         } catch (Exception e) {
-            System.err.println("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}"+ e);
+            System.err.println("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg "+ e);
         }
     }
 

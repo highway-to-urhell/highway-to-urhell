@@ -1,14 +1,8 @@
 package com.highway2urhell.transformer;
 
 import javassist.*;
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
-import javassist.bytecode.Mnemonic;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -18,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractLeechTransformer implements ClassFileTransformer {
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final String classNameToTransformNormalized;
     private final String classNameToTransform;
 
@@ -48,7 +41,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                             Class<?> classBeingRedefined, ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) throws IllegalClassFormatException {
         if (className.equals(classNameToTransform)) {
-            log.info("Going to Transform {} with {}", classNameToTransform, this.getClass());
+            System.out.println("Going to Transform "+classNameToTransform+ this.getClass());
             try {
                 ClassPool cp = ClassPool.getDefault();
                 cp.insertClassPath(new LoaderClassPath(loader));
@@ -56,9 +49,7 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                     cp.importPackage(importPackage);
                 }
                 CtClass cc = cp.get(classNameToTransformNormalized);
-                if (log.isDebugEnabled()) {
-                    grabAllMethod(cc);
-                }
+                grabAllMethod(cc);
 
                 doTransform(cc);
 
@@ -66,9 +57,9 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
                 cc.detach();
 
             } catch (NotFoundException ex) {
-                log.error("not found ", ex);
+                System.err.println("not found "+ ex);
             } catch (Exception ex) {
-                log.error("Fail to Transform {} with {}", classNameToTransform, this.getClass(), ex);
+                System.err.println("Fail to Transform " +classNameToTransform+"with : "+this.getClass()+ ex);
             }
         }
 
@@ -77,21 +68,21 @@ public abstract class AbstractLeechTransformer implements ClassFileTransformer {
 
     private void grabAllMethod(CtClass cc) {
         for (CtMethod method : cc.getMethods()) {
-            log.error(method.getLongName() + "-" + method.getSignature() + " at line " + method.getMethodInfo().getLineNumber(0));
+            System.err.println(method.getLongName() + "-" + method.getSignature() + " at line " + method.getMethodInfo().getLineNumber(0));
             try {
                 method.instrument(
                         new ExprEditor() {
                             public void edit(MethodCall m) throws CannotCompileException {
-                                log.error("method invoke into the method observe "+m.getClassName() + "." + m.getMethodName() + " " + m.getSignature());
+                                System.err.println("method invoke into the method observe "+m.getClassName() + "." + m.getMethodName() + " " + m.getSignature());
                             }
                         });
             } catch (CannotCompileException e) {
-                log.error("Cannot Compil Exception"+e.getMessage());
+                System.err.println("Cannot Compil Exception"+e.getMessage());
             }
 
         }
         for (CtConstructor c : cc.getConstructors()) {
-            log.error(c.getLongName() + "-" + c.getSignature()+" at line "+c.getMethodInfo().getLineNumber(0));
+            System.err.println(c.getLongName() + "-" + c.getSignature()+" at line "+c.getMethodInfo().getLineNumber(0));
         }
 
     }

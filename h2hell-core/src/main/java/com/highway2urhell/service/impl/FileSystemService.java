@@ -47,7 +47,7 @@ public class FileSystemService extends AbstractLeechService {
             searchStaticFiles(rootPath);
 
         } catch (H2HException e) {
-            LOGGER.error(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class FileSystemService extends AbstractLeechService {
     private void searchAndParseWebXML(String rootPath) {
         File fileRoot = new File(rootPath);
         searchWebXML(fileRoot);
-        LOGGER.info("pathWebXml : " + pathWebXml);
+
         if (pathWebXml != null && !"".equals(pathWebXml)) {
             parseWebXml(pathWebXml);
         }
@@ -97,11 +97,11 @@ public class FileSystemService extends AbstractLeechService {
             extractFilter(document);
             extractListener(document);
         } catch (ParserConfigurationException e) {
-            LOGGER.error("error while parsing web.xml " + pathWebXml, e);
+            System.err.println("error while parsing web.xml " + pathWebXml+":"+ e);
         } catch (SAXException e) {
-            LOGGER.error("error while parsing web.xml " + pathWebXml, e);
+            System.err.println("error while parsing web.xml " + pathWebXml+":"+ e);
         } catch (IOException e) {
-            LOGGER.error("error while parsing web.xml " + pathWebXml, e);
+            System.err.println("error while parsing web.xml " + pathWebXml+":"+ e);
         }
     }
 

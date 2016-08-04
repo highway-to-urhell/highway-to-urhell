@@ -23,7 +23,7 @@ public class SpringServiceMethodService extends AbstractLeechService {
     @Override
     public void receiveData(List<EntryPathData> incoming) {
         List<EntryPathData> res = new ArrayList<EntryPathData>();
-        LOGGER.debug("receive incoming data ON SPRING_METHOD");
+        System.out.println("receive incoming data ON SPRING_METHOD");
         for(EntryPathData e : incoming) {
             if(e.getUri().startsWith("[")){
                 e.setUri(e.getUri().replace("[",""));
@@ -32,6 +32,6 @@ public class SpringServiceMethodService extends AbstractLeechService {
             res.add(e);
         }
         gatherData(res);
-        LOGGER.debug("data gathering complete.SPRING_METHOD Found {} entries", getFrameworkInformations().getListEntryPath().size());
+        System.out.println("data gathering complete.SPRING_METHOD Found entries"+ getFrameworkInformations().getListEntryPath().size());
     }
 }

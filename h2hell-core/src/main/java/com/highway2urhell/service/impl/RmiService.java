@@ -31,7 +31,7 @@ public class RmiService extends AbstractLeechService {
                 }
             }
         } catch (Exception e) {
-            LOGGER.info(" No locate registry " + e);
+            System.err.println(" No locate registry " + e);
         }
     }
 }

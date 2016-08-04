@@ -22,8 +22,8 @@ public class SpringServiceUrlService extends AbstractLeechService {
     @Override
     public void receiveData(List<EntryPathData> incoming) {
         // clearPreviousData();
-        LOGGER.debug("receive incoming data");
+        System.out.println("receive incoming data");
         gatherData(incoming);
-        LOGGER.debug("data gathering complete. SPRING_URL Found {} entries", getFrameworkInformations().getListEntryPath().size());
+        System.out.println("data gathering complete. SPRING_URL Found entries"+ getFrameworkInformations().getListEntryPath().size());
     }
 }

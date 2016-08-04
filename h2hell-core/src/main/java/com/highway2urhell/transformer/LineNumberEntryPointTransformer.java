@@ -6,8 +6,7 @@ import java.security.ProtectionDomain;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import com.highway2urhell.CoreEngine;
 import com.highway2urhell.domain.EntryPathData;
@@ -19,7 +18,6 @@ import javassist.LoaderClassPath;
 
 public class LineNumberEntryPointTransformer implements ClassFileTransformer {
 
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private Map<String, List<EntryPathData>> mapToTransform = null;
     
     public LineNumberEntryPointTransformer(Map<String, List<EntryPathData>> mapTransform) {
@@ -42,17 +40,16 @@ public class LineNumberEntryPointTransformer implements ClassFileTransformer {
                 	getLineNumber(entry, cc);
                 }
             } catch (Exception ex) {
-                LOGGER.error("Fail to Transform " + classNameToTransform, ex);
+                System.err.println("Fail to Transform " + classNameToTransform+ ex);
             }
         }
         return classfileBuffer;
     }
     
     private void getLineNumber(EntryPathData entry, CtClass cc) {
-        LOGGER.info(
-                "Going to read Line Number {} with methodName {} and signature {}",
-                entry.getClassName(), entry.getMethodName(),
-                entry.getSignatureName());
+        System.out.println(
+                "Going to Transform insertCodeWithPerf "+entry.getClassName()+"with methodName "+ entry.getMethodName()+" and signature "+entry.getSignatureName());
+
 
         CtMethod m;
         try {
@@ -62,7 +59,7 @@ public class LineNumberEntryPointTransformer implements ClassFileTransformer {
             // Update the data
             CoreEngine.getInstance().updateLineNumberEntryPoint(entry);
         } catch (Exception e) {
-            LOGGER.error("Error during read line number Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
+            System.err.println("Error during read line number Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg "+e);
         }
     }
 

@@ -19,8 +19,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.highway2urhell.CoreEngine;
@@ -32,7 +30,6 @@ import com.sun.management.OperatingSystemMXBean;
 
 
 public class ThunderExporterService {
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private static ThunderExporterService instance;
     private BlockingQueue<MessageBreaker> queueRemoteBreaker = new LinkedBlockingQueue<MessageBreaker>(10000);
     private BlockingQueue<MessageMetrics> queueRemotePerformance = new LinkedBlockingQueue<MessageMetrics>(10000);
@@ -43,21 +40,21 @@ public class ThunderExporterService {
         schExService.scheduleAtFixedRate(new Runnable() {
 
             public void run() {
-                LOGGER.debug("Drain the queue Remote");
+                System.out.println("Drain the queue Remote");
                 List<MessageBreaker> listBreaker = new ArrayList<MessageBreaker>();
                 int result = queueRemoteBreaker.drainTo(listBreaker, MSG_SIZE);
-                LOGGER.debug("Drain Remote size " + result);
+                System.out.println("Drain Remote size " + result);
                 if (result > 0) {
-                    LOGGER.debug("Send the Data ");
+                    System.out.println("Send the Data ");
                     sendDataHTTP("/addBreaker", listBreaker);
                 }
                 if (CoreEngine.getInstance().getConfig().getPerformance()) {
-                    LOGGER.debug("Drain the queue Performance");
+                    System.out.println("Drain the queue Performance");
                     List<MessageMetrics> listPerformance = new ArrayList<MessageMetrics>();
                     int resultPerf = queueRemotePerformance.drainTo(listPerformance, MSG_SIZE);
-                    LOGGER.debug("Drain Performance size " + resultPerf);
+                    System.out.println("Drain Performance size " + resultPerf);
                     if (resultPerf > 0) {
-                        LOGGER.debug("Send the Data ");
+                        System.out.println("Send the Data ");
                         sendDataHTTP("/addPerformance", listPerformance);
                     }
                 }
@@ -80,15 +77,15 @@ public class ThunderExporterService {
     public void registerAppInThunder() {
         String token = sendDataHTTP("/createThunderApp/", CoreEngine.getInstance().getConfig());
         CoreEngine.getInstance().getConfig().setToken(token);
-        LOGGER.info("application registred with token {} for application {}", token, CoreEngine.getInstance().getConfig().getNameApplication());
+        System.out.println("application registred with token"+token+"for application"+CoreEngine.getInstance().getConfig().getNameApplication());
     }
 
     public void initPathsRemoteApp() {
         TransformerService ts = new TransformerService();
         List<EntryPathData> res = ts.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance().getLeechServiceRegistered());
-        LOGGER.debug("List EntryPathData for init Path");
+        System.out.println("List EntryPathData for init Path");
         for(EntryPathData en : res){
-            LOGGER.debug(en.toString());
+            System.out.println(en.toString());
         }
         MessageThunderApp msg = new MessageThunderApp();
         msg.setListentryPathData(res);
@@ -124,7 +121,7 @@ public class ThunderExporterService {
         Gson gson = new Gson();
         String data = gson.toJson(message);
         String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
-        LOGGER.debug("Send Request to Server with uri {} and data {}",urlServer,data);
+        System.out.println("Send Request to Server with uri"+urlServer+" and data"+data);
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(urlServer);
         if (data != null) {
@@ -141,19 +138,19 @@ public class ThunderExporterService {
                         || statusCode == HttpURLConnection.HTTP_ACCEPTED
                         || statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
                     result = EntityUtils.toString(response.getEntity());
-                    LOGGER.info("Message from H2H server" + result);
+                    System.out.println("Message from H2H server" + result);
                 } else {
-                    LOGGER.error("Failed : HTTP error code : "
+                   System.err.println("Failed : HTTP error code : "
                             + statusCode
                             + " for urlServer " + urlServer + "msg "
                             + EntityUtils.toString(response.getEntity()));
                 }
             } else {
-                LOGGER.error("Failed : Response Null from urlServer : " + urlServer);
+               System.err.println("Failed : Response Null from urlServer : " + urlServer);
             }
 
         } catch (IOException e) {
-            LOGGER.error("Error while sending dataHttp to " + urlServer, e);
+           System.err.println("Error while sending dataHttp to " + urlServer+ " : "+ e);
         }
         return result;
     }

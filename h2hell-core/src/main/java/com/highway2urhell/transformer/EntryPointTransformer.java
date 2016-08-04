@@ -4,8 +4,6 @@ import com.highway2urhell.domain.EntryPathData;
 import javassist.*;
 import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.LocalVariableAttribute;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -16,7 +14,6 @@ import java.util.Map;
 
 public class EntryPointTransformer implements ClassFileTransformer {
 
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private Map<String, List<EntryPathData>> mapToTransform = null;
     private Boolean performance = false;
 
@@ -47,17 +44,15 @@ public class EntryPointTransformer implements ClassFileTransformer {
                 classfileBuffer = cc.toBytecode();
                 cc.detach();
             } catch (Exception ex) {
-                LOGGER.error("Fail to Transform " + classNameToTransform, ex);
+                System.err.println("Fail to Transform " + classNameToTransform+ex);
             }
         }
         return classfileBuffer;
     }
 
     private void insertCodeWithPerf(EntryPathData entry, CtClass cc) {
-        LOGGER.info(
-                "Going to Transform insertCodeWithPerf {} with methodName {} and signature {}",
-                entry.getClassName(), entry.getMethodName(),
-                entry.getSignatureName());
+        System.out.println(
+                "Going to Transform insertCodeWithPerf "+entry.getClassName()+"with methodName "+ entry.getMethodName()+" and signature "+entry.getSignatureName());
 
         CtMethod m;
         try {
@@ -68,15 +63,13 @@ public class EntryPointTransformer implements ClassFileTransformer {
             m.insertBefore(generateCmd(m, entry.getClassName(), entry.getMethodName()) + "startH2H = System.currentTimeMillis();");
             m.insertAfter("final long endH2H = System.nanoTime();" + generateCmdPerf(m, entry.getClassName(), entry.getMethodName()));
         } catch (Exception e) {
-            LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
+            System.err.println("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg "+e);
         }
     }
 
     private void insertCode(EntryPathData entry, CtClass cc) {
-        LOGGER.info(
-                "Going to Transform insertCode {} with methodName {} and signature {}",
-                entry.getClassName(), entry.getMethodName(),
-                entry.getSignatureName());
+        System.out.println(
+                "Going to Transform insertCodeWithPerf "+entry.getClassName()+"with methodName "+ entry.getMethodName()+" and signature "+entry.getSignatureName());
 
         CtMethod m;
         try {
@@ -85,7 +78,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
             m.addLocalVariable("listParamsH2H", ss);
             m.insertBefore(generateCmd(m, entry.getClassName(), entry.getMethodName()));
         } catch (Exception e) {
-            LOGGER.error("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}", e);
+            System.err.println("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg {}"+ e);
         }
     }
 

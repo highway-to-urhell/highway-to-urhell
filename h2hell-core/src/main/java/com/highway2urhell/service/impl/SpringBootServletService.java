@@ -26,13 +26,13 @@ public class SpringBootServletService extends AbstractLeechService {
     @Override
     public void receiveData(List<EntryPathData> incoming) {
         List<EntryPathData> res = new ArrayList<EntryPathData>();
-        LOGGER.debug("receive incoming data ON SPRING_BOOT_SERVLET");
+        System.out.println("receive incoming data ON SPRING_BOOT_SERVLET");
         for(EntryPathData e : incoming) {
             e.setAudit(new Boolean(false));
             res.add(e);
         }
         gatherData(res);
-        LOGGER.debug("data gathering complete. SPRING_BOOT_SERVLET Found {} entries", getFrameworkInformations().getListEntryPath().size());
+        System.out.println("data gathering complete. SPRING_BOOT_SERVLET Found {} entries"+ getFrameworkInformations().getListEntryPath().size());
     }
 
 }

@@ -40,9 +40,9 @@ public class JaxRsService extends AbstractLeechService {
         if (!getFrameworkInformations().getVersion().equals(
                 VersionUtils.NO_FRAMEWORK)) {
             // scan
-            LOGGER.info("Start Scan reflections JAX-RS ! ");
+            System.out.println("Start Scan reflections JAX-RS ! ");
             Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forClassLoader()));
-            LOGGER.info("End Scan reflections JAX-RS ! ");
+            System.out.println("End Scan reflections JAX-RS ! ");
             Set<Class<?>> setPathJAXRS = reflections.getTypesAnnotatedWith(Path.class);
             if (setPathJAXRS != null && !setPathJAXRS.isEmpty()) {
                 // Grab all class extends

@@ -44,7 +44,7 @@ public class ListenerService {
             MessageEvent me = new MessageEvent();
             me.setToken(CoreEngine.getInstance().getConfig().getToken());
             me.setReference(CoreEngine.getInstance().getConfig().getReference());
-            String result = ThunderExporterService.getInstance().sendDataHTTP("/event",me);
+            String result = ThunderExporterService.getInstance().sendDataHTTPOldSchool("/event",me);
             System.out.println("Result on /event "+result);
             Gson gson = new Gson();
             try {

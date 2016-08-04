@@ -32,7 +32,7 @@ public class SpringBootServletService extends AbstractLeechService {
             res.add(e);
         }
         gatherData(res);
-        System.out.println("data gathering complete. SPRING_BOOT_SERVLET Found {} entries"+ getFrameworkInformations().getListEntryPath().size());
+        System.out.println("data gathering complete. SPRING_BOOT_SERVLET Found  entries"+ getFrameworkInformations().getListEntryPath().size());
     }
 
 }

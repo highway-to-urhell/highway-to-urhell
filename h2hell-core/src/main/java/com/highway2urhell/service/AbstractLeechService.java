@@ -34,7 +34,7 @@ public abstract class AbstractLeechService implements LeechService {
 
     public void receiveData(List<EntryPathData> incoming) {
         clearPreviousData();
-        System.out.println("receive incoming data obj {}"+ incoming);
+        System.out.println("receive incoming data obj "+ incoming+ "for framework "+frameworkInformations.getFrameworkName());
         gatherData(incoming);
         System.out.println("data gathering complete. Found entries "+frameworkInformations.getListEntryPath().size());
     }

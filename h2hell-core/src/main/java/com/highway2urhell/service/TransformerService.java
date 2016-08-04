@@ -14,7 +14,7 @@ public class TransformerService {
                                            Set<String> entryClassName) {
         for (String classNameNormalized : entryClassName) {
             String className = classNameNormalized.replaceAll("/", ".");
-           System.err.println("Transform class {}"+ className);
+           System.err.println("Transform class "+ className);
             transformOneClass(inst, className);
         }
 

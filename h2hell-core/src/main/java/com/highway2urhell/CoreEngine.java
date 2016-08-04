@@ -127,12 +127,12 @@ public class CoreEngine {
 	}
 
 	public void updateLineNumberEntryPoint(EntryPathData entry) {
-		System.out.println("Try to update entry {}"+entry);
+		System.out.println("Try to update entry "+entry);
 		for (LeechService leech : leechPluginRegistry.values()) {
 			for (EntryPathData entryPath : leech.getFrameworkInformations().getListEntryPath()) {
 				if(entryPath.getClassName().equals(entry.getClassName()) && entryPath.getMethodName().equals(entry.getMethodName()) && entryPath.getSignatureName().equals(entry.getSignatureName())){
 					entryPath.setLineNumber(entry.getLineNumber());
-					System.out.println("Update complete entry {}"+entry);
+					System.out.println("Update complete entry "+entry);
 				}
 			}
 		}

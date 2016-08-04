@@ -1,25 +1,5 @@
 package com.highway2urhell.service;
 
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-
 import com.google.gson.Gson;
 import com.highway2urhell.CoreEngine;
 import com.highway2urhell.domain.EntryPathData;
@@ -27,6 +7,19 @@ import com.highway2urhell.domain.MessageBreaker;
 import com.highway2urhell.domain.MessageMetrics;
 import com.highway2urhell.domain.MessageThunderApp;
 import com.sun.management.OperatingSystemMXBean;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.management.ManagementFactory;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.*;
 
 
 public class ThunderExporterService {
@@ -46,7 +39,7 @@ public class ThunderExporterService {
                 System.out.println("Drain Remote size " + result);
                 if (result > 0) {
                     System.out.println("Send the Data ");
-                    sendDataHTTP("/addBreaker", listBreaker);
+                    sendDataHTTPOldSchool("/addBreaker", listBreaker);
                 }
                 if (CoreEngine.getInstance().getConfig().getPerformance()) {
                     System.out.println("Drain the queue Performance");
@@ -55,7 +48,7 @@ public class ThunderExporterService {
                     System.out.println("Drain Performance size " + resultPerf);
                     if (resultPerf > 0) {
                         System.out.println("Send the Data ");
-                        sendDataHTTP("/addPerformance", listPerformance);
+                        sendDataHTTPOldSchool("/addPerformance", listPerformance);
                     }
                 }
 
@@ -75,22 +68,22 @@ public class ThunderExporterService {
     }
 
     public void registerAppInThunder() {
-        String token = sendDataHTTP("/createThunderApp/", CoreEngine.getInstance().getConfig());
+        String token = sendDataHTTPOldSchool("/createThunderApp/", CoreEngine.getInstance().getConfig());
         CoreEngine.getInstance().getConfig().setToken(token);
-        System.out.println("application registred with token"+token+"for application"+CoreEngine.getInstance().getConfig().getNameApplication());
+        System.out.println("application registred with token" + token + "for application" + CoreEngine.getInstance().getConfig().getNameApplication());
     }
 
     public void initPathsRemoteApp() {
         TransformerService ts = new TransformerService();
         List<EntryPathData> res = ts.collectBreakerDataFromLeechPlugin(CoreEngine.getInstance().getLeechServiceRegistered());
         System.out.println("List EntryPathData for init Path");
-        for(EntryPathData en : res){
+        for (EntryPathData en : res) {
             System.out.println(en.toString());
         }
         MessageThunderApp msg = new MessageThunderApp();
         msg.setListentryPathData(res);
         msg.setToken(CoreEngine.getInstance().getConfig().getToken());
-        sendDataHTTP("/initThunderApp", msg);
+        sendDataHTTPOldSchool("/initThunderApp", msg);
     }
 
     public void sendRemotePerformance(String fullMethodName, int timeExec, String parameters) {
@@ -117,11 +110,45 @@ public class ThunderExporterService {
         queueRemoteBreaker.add(msg);
     }
 
-    public String sendDataHTTP(String uri, Object message) {
+    public String sendDataHTTPOldSchool(String uri, Object message) {
         Gson gson = new Gson();
         String data = gson.toJson(message);
         String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
-        System.out.println("Send Request to Server with uri"+urlServer+" and data"+data);
+        String response = null;
+        try {
+            URL url = new URL(urlServer);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput( true );
+            conn.setInstanceFollowRedirects( false );
+            conn.setRequestMethod( "POST" );
+            conn.setRequestProperty( "Content-Type", "application/json");
+            conn.setRequestProperty( "charset", "utf-8");
+            conn.setUseCaches( false );
+            byte[] postDataBytes = data.toString().getBytes("UTF-8");
+            conn.setRequestProperty( "Content-Length", String.valueOf(postDataBytes.length));
+            DataOutputStream writer = new DataOutputStream(conn.getOutputStream());
+            writer.write(postDataBytes);
+            writer.flush();
+            //read the response
+            Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            for (int c; (c = in.read()) >= 0;)
+                sb.append((char)c);
+            response = sb.toString();
+            in.close();
+        } catch (Exception e) {
+            System.err.println("Error during the call http for request "+uri+e);
+        }
+        return response;
+
+
+    }
+
+    /*public String sendDataHTTP(String uri, Object message) {
+        Gson gson = new Gson();
+        String data = gson.toJson(message);
+        String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
+        System.out.println("Send Request to Server with uri" + urlServer + " and data" + data);
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost(urlServer);
         if (data != null) {
@@ -140,20 +167,20 @@ public class ThunderExporterService {
                     result = EntityUtils.toString(response.getEntity());
                     System.out.println("Message from H2H server" + result);
                 } else {
-                   System.err.println("Failed : HTTP error code : "
+                    System.err.println("Failed : HTTP error code : "
                             + statusCode
                             + " for urlServer " + urlServer + "msg "
                             + EntityUtils.toString(response.getEntity()));
                 }
             } else {
-               System.err.println("Failed : Response Null from urlServer : " + urlServer);
+                System.err.println("Failed : Response Null from urlServer : " + urlServer);
             }
 
         } catch (IOException e) {
-           System.err.println("Error while sending dataHttp to " + urlServer+ " : "+ e);
+            System.err.println("Error while sending dataHttp to " + urlServer + " : " + e);
         }
         return result;
-    }
+    }*/
 
     private void getCpuInformation(MessageMetrics mb) {
         OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();

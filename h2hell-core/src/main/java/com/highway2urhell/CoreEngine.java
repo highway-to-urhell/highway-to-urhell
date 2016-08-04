@@ -10,8 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.highway2urhell.agent.InstrumentationHolder;
 import com.highway2urhell.domain.EntryPathData;
@@ -33,7 +31,6 @@ public class CoreEngine {
 
 	private Map<String, LeechService> leechPluginRegistry = new HashMap<String, LeechService>();
 	private Set<ReporterService> reporterPluginRegistry = new HashSet<ReporterService>();
-	protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	private final static String H2H_CONFIG = "H2H_CONFIG";
 	private final static String JAVA = "Java";
 	private final static Integer DEFAULT_TIMER = 2000;
@@ -66,7 +63,7 @@ public class CoreEngine {
 		schExService.scheduleAtFixedRate(new Runnable() {
 
 			public void run() {
-				LOGGER.debug("Call the H2H-Web server");
+				System.out.println("Call the H2H-Web server");
 				ListenerService.getInstance().callServerH2H();
 			}
 		}, 5, 10, TimeUnit.SECONDS);
@@ -74,7 +71,7 @@ public class CoreEngine {
 
 	public void enableEntryPointCoverage(FilterEntryPath filter)
 			throws ClassNotFoundException, UnmodifiableClassException {
-		LOGGER.info("enabling entry point coverage "+filter.toString());
+		System.out.println("enabling entry point coverage "+filter.toString());
 		Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
 		if (instrumentation != null) {
 			TransformerService ts = new TransformerService();
@@ -88,13 +85,13 @@ public class CoreEngine {
 					new EntryPointTransformer(mapConvert, CoreEngine.getInstance().getConfig().getPerformance()), true);
 			ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
 		} else {
-			LOGGER.error("Instrumentation fail because internal inst is null");
+			System.err.println("Instrumentation fail because internal inst is null");
 		}
 	}
 
 	private void getLineNumberFromEntryPoint(FilterEntryPath filter)
 			throws ClassNotFoundException, UnmodifiableClassException {
-		LOGGER.info("enabling getLineNumberFromEntryPoint "+filter.toString());
+		System.out.println("enabling getLineNumberFromEntryPoint "+filter.toString());
 		Instrumentation instrumentation = InstrumentationHolder.getInstance().getInst();
 		if (instrumentation != null) {
 			TransformerService ts = new TransformerService();
@@ -103,7 +100,7 @@ public class CoreEngine {
 			instrumentation.addTransformer(new LineNumberEntryPointTransformer(mapConvert));
 			ts.transformAllClassScanByH2h(instrumentation, mapConvert.keySet());
 		} else {
-			LOGGER.error("Instrumentation fail because internal inst is null");
+			System.err.println("Instrumentation fail because internal inst is null");
 		}
 	}
 
@@ -122,20 +119,20 @@ public class CoreEngine {
 				ThunderExporterService.getInstance().initPathsRemoteApp();
 				config.setPathSend(true);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error("Error while launchTransformer ", e);
+				System.err.println("Error while launchTransformer "+ e);
 			} catch (UnmodifiableClassException e) {
-				LOGGER.error("Error while launchTransformer ", e);
+				System.err.println("Error while launchTransformer "+ e);
 			}
 		}
 	}
 
 	public void updateLineNumberEntryPoint(EntryPathData entry) {
-		LOGGER.debug("Try to update entry {}",entry);
+		System.out.println("Try to update entry {}"+entry);
 		for (LeechService leech : leechPluginRegistry.values()) {
 			for (EntryPathData entryPath : leech.getFrameworkInformations().getListEntryPath()) {
 				if(entryPath.getClassName().equals(entry.getClassName()) && entryPath.getMethodName().equals(entry.getMethodName()) && entryPath.getSignatureName().equals(entry.getSignatureName())){
 					entryPath.setLineNumber(entry.getLineNumber());
-					LOGGER.debug("Update complete entry {}",entry);
+					System.out.println("Update complete entry {}"+entry);
 				}
 			}
 		}

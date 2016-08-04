@@ -28,11 +28,11 @@ public class JmsAsyncMessageListener extends AbstractLeechService {
     protected void gatherData(List<EntryPathData> incoming) {
         if (!getFrameworkInformations().getVersion().equals(VersionUtils.NO_FRAMEWORK)) {
             // scan
-            LOGGER.info("Start Scan reflections JMS ! ");
+            System.out.println("Start Scan reflections JMS ! ");
             Reflections reflections = new Reflections(
                     new ConfigurationBuilder().setUrls(ClasspathHelper
                             .forClassLoader()));
-            LOGGER.info("End Scan reflections JMS ! ");
+            System.out.println("End Scan reflections JMS ! ");
             Set<Class<? extends MessageListener>> setPathMessageListener = reflections.getSubTypesOf(MessageListener.class);
             if (setPathMessageListener != null && !setPathMessageListener.isEmpty()) {
                 // Grab all class extends

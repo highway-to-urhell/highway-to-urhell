@@ -4,15 +4,13 @@ import com.highway2urhell.domain.EntryPathData;
 import com.highway2urhell.domain.FrameworkInformations;
 
 import org.objectweb.asm.Type;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.lang.reflect.Method;
 import java.util.List;
 
 public abstract class AbstractLeechService implements LeechService {
 
-    protected final transient Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private FrameworkInformations frameworkInformations = new FrameworkInformations();
     private boolean triggeredAtStartup = false;
 
@@ -36,9 +34,9 @@ public abstract class AbstractLeechService implements LeechService {
 
     public void receiveData(List<EntryPathData> incoming) {
         clearPreviousData();
-        LOGGER.debug("receive incoming data obj {}", incoming);
+        System.out.println("receive incoming data obj {}"+ incoming);
         gatherData(incoming);
-        LOGGER.debug("data gathering complete. Found {} entries", frameworkInformations.getListEntryPath().size());
+        System.out.println("data gathering complete. Found entries "+frameworkInformations.getListEntryPath().size());
     }
 
     private void clearPreviousData() {
@@ -75,7 +73,7 @@ public abstract class AbstractLeechService implements LeechService {
             }
 
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Can't construct classname " + className, e);
+            System.err.println("Can't construct classname " + className+" : "+ e);
         }
 
         return res;

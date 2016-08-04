@@ -2,8 +2,7 @@ package com.highway2urhell.service;
 
 import com.highway2urhell.domain.EntryPathData;
 import com.highway2urhell.domain.FilterEntryPath;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
@@ -11,13 +10,11 @@ import java.util.*;
 
 public class TransformerService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
     public void transformAllClassScanByH2h(Instrumentation inst,
                                            Set<String> entryClassName) {
         for (String classNameNormalized : entryClassName) {
             String className = classNameNormalized.replaceAll("/", ".");
-            LOGGER.error("Transform class {}", className);
+           System.err.println("Transform class {}"+ className);
             transformOneClass(inst, className);
         }
 
@@ -29,9 +26,9 @@ public class TransformerService {
         try {
             inst.retransformClasses(classLoader.loadClass(className));
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Error while transform Class {} msg {}", className, e);
+           System.err.println("Error while transform Class"+className+" msg "+ e);
         } catch (UnmodifiableClassException e) {
-            LOGGER.error("Error while transform Class {} msg {}", className, e);
+            System.err.println("Error while transform Class"+className+" msg "+ e);
         }
     }
 

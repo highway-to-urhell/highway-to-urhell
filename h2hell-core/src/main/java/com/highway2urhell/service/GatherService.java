@@ -11,7 +11,7 @@ import com.highway2urhell.domain.H2hConfig;
 import com.highway2urhell.domain.ThunderData;
 
 public class GatherService {
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     private static GatherService instance;
     private Map<String, ThunderData> mapThunderData;
 
@@ -34,7 +34,7 @@ public class GatherService {
         H2hConfig hc = CoreEngine.getInstance().getConfig();
         switch (hc.getTimer()) {
             case MEMORY:
-                LOGGER.info(" fullMethodName " + fullMethodName + " timeExec " + timeExec);
+                System.out.println(" fullMethodName " + fullMethodName + " timeExec " + timeExec);
                 break;
             case REMOTE:
                 long timerConfig = CoreEngine.getInstance().getConfig().getHigherTime().longValue();
@@ -44,7 +44,7 @@ public class GatherService {
                 }
                 break;
             default:
-                LOGGER.info("No config for Timer");
+                System.out.println("No config for Timer");
         }
     }
 

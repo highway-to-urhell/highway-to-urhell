@@ -61,7 +61,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
             CtClass ss = ClassPool.getDefault().get("java.lang.String");
             m.addLocalVariable("listParamsH2H", ss);
             m.insertBefore(generateCmd(m, entry.getClassName(), entry.getMethodName()) + "startH2H = System.currentTimeMillis();");
-            m.insertAfter("final long endH2H = System.nanoTime();" + generateCmdPerf(m, entry.getClassName(), entry.getMethodName()));
+            m.insertAfter("final long endH2H = System.currentTimeMillis();" + generateCmdPerf(m, entry.getClassName(), entry.getMethodName()));
         } catch (Exception e) {
             System.err.println("Insert Code for className " + entry.getClassName() + "  and methodName " + entry.getMethodName() + "  fails msg "+e);
         }

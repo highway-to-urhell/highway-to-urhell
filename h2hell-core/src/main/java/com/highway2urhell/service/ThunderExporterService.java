@@ -1,6 +1,7 @@
 package com.highway2urhell.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.highway2urhell.CoreEngine;
 import com.highway2urhell.domain.EntryPathData;
 import com.highway2urhell.domain.MessageBreaker;
@@ -111,7 +112,7 @@ public class ThunderExporterService {
     }
 
     public String sendDataHTTPOldSchool(String uri, Object message) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setExclusionStrategies(new StrategyGsonH2H()).create();
         String data = gson.toJson(message);
         String urlServer = CoreEngine.getInstance().getConfig().getUrlH2hWeb() + uri;
         String response = null;

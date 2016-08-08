@@ -101,6 +101,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
         cp.importPackage("com.highway2urhell.domain");
         cp.importPackage("com.highway2urhell.service");
         cp.importPackage("com.google.gson.Gson");
+        cp.importPackage("com.google.gson.GsonBuilder");
         cp.importPackage("com.highway2urhell.service.impl");
     }
 
@@ -112,7 +113,7 @@ public class EntryPointTransformer implements ClassFileTransformer {
             CtClass[] pTypes = m.getParameterTypes();
 
 
-            sbs.append("Gson gson = new Gson();");
+            sbs.append("Gson gson = new GsonBuilder().setExclusionStrategies(new StrategyGsonH2H()).create();");
             for (int i = 0; i < pTypes.length; i++) {
                 sbs.append("    LeechParamMethodData leech" + i + " = new LeechParamMethodData();");
                 sbs.append("    String val" + i + "=\"\";");

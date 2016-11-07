@@ -1,0 +1,74 @@
+<div>
+    <h2 translate="h2HellUiApp.entryPoint.home.title">Entry Points</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="entry-point.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="h2HellUiApp.entryPoint.home.createLabel">
+                        Create new Entry Point
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="pathClassMethodName"><span translate="h2HellUiApp.entryPoint.pathClassMethodName">Path Class Method Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="count"><span translate="h2HellUiApp.entryPoint.count">Count</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="falsePositive"><span translate="h2HellUiApp.entryPoint.falsePositive">False Positive</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="uri"><span translate="h2HellUiApp.entryPoint.uri">Uri</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="httpmethod"><span translate="h2HellUiApp.entryPoint.httpmethod">Httpmethod</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="audit"><span translate="h2HellUiApp.entryPoint.audit">Audit</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="averageTime"><span translate="h2HellUiApp.entryPoint.averageTime">Average Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="checkLaunch"><span translate="h2HellUiApp.entryPoint.checkLaunch">Check Launch</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="analysis.appVersion"><span translate="h2HellUiApp.entryPoint.analysis">Analysis</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="entryPoint in vm.entryPoints track by entryPoint.id">
+                    <td><a ui-sref="entry-point-detail({id:entryPoint.id})">{{entryPoint.id}}</a></td>
+                    <td>{{entryPoint.pathClassMethodName}}</td>
+                    <td>{{entryPoint.count}}</td>
+                    <td>{{entryPoint.falsePositive}}</td>
+                    <td>{{entryPoint.uri}}</td>
+                    <td>{{entryPoint.httpmethod}}</td>
+                    <td>{{entryPoint.audit}}</td>
+                    <td>{{entryPoint.averageTime}}</td>
+                    <td>{{entryPoint.checkLaunch}}</td>
+                    <td>
+                        <a ui-sref="analysis-detail({id:entryPoint.analysis.id})">{{entryPoint.analysis.appVersion}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="entry-point-detail({id:entryPoint.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entry-point.edit({id:entryPoint.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="entry-point.delete({id:entryPoint.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+
+<div>
+    <h2><span translate="h2HellUiApp.entryPoint.detail.title">Entry Point</span> {{vm.entryPoint.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="h2HellUiApp.entryPoint.pathClassMethodName">Path Class Method Name</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.pathClassMethodName}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.count">Count</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.count}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.falsePositive">False Positive</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.falsePositive}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.uri">Uri</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.uri}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.httpmethod">Httpmethod</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.httpmethod}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.audit">Audit</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.audit}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.averageTime">Average Time</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.averageTime}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.checkLaunch">Check Launch</span></dt>
+        <dd>
+            <span>{{vm.entryPoint.checkLaunch}}</span>
+        </dd>
+        <dt><span translate="h2HellUiApp.entryPoint.analysis">Analysis</span></dt>
+        <dd>
+            <a ui-sref="analysis-detail({id:vm.entryPoint.analysis.id})">{{vm.entryPoint.analysis.appVersion}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

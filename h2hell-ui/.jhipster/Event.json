@@ -1,0 +1,34 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "analysis",
+      "otherEntityName": "analysis",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "typeMessageEvent",
+      "fieldType": "TypeMessageEvent",
+      "fieldValues": "INIT_PATH,ENABLE_ENTRY_POINT,SOURCE"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "data",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "consumed",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20160519092245",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no"
+}

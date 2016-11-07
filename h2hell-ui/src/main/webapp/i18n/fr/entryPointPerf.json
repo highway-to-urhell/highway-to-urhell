@@ -1,0 +1,27 @@
+{
+    "h2HellUiApp": {
+        "entryPointPerf" : {
+            "home": {
+                "title": "EntryPointPerfs",
+                "createLabel": "Créer un nouveau Entry Point Perf",
+                "createOrEditLabel": "Créer ou éditer un Entry Point Perf",
+                "search": "Recherche pour Entry Point Perf"
+            },
+            "created": "Un nouveau Entry Point Perf a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Entry Point Perf avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Entry Point Perf avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Entry Point Perf {{ id }} ?"
+            },
+            "detail": {
+                "title": "Entry Point Perf"
+            },
+            "dateIncoming": "Date Incoming",
+            "parameters": "Parameters",
+            "timeExec": "Time Exec",
+            "cpuLoadSystem": "Cpu Load System",
+            "cpuLoadProcess": "Cpu Load Process",
+            "entryPoint": "Entry Point"
+        }
+    }
+}

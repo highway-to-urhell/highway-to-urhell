@@ -1,0 +1,34 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "projects",
+      "otherEntityName": "application",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "name",
+      "ownerSide": true
+    },
+    {
+      "relationshipId": 2,
+      "relationshipName": "team",
+      "otherEntityName": "team",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "name"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "permission",
+      "fieldType": "Permission",
+      "fieldValues": "READ,EXECUTE",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "changelogDate": "20160519092251",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no"
+}

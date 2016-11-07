@@ -1,0 +1,86 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEntryPointLabel" translate="h2HellUiApp.entryPoint.home.createOrEditLabel">Create or edit a Entry Point</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.entryPoint.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.entryPoint.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.pathClassMethodName" for="field_pathClassMethodName">Path Class Method Name</label>
+            <input type="text" class="form-control" name="pathClassMethodName" id="field_pathClassMethodName"
+                    ng-model="vm.entryPoint.pathClassMethodName"
+                    required />
+            <div ng-show="editForm.pathClassMethodName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.pathClassMethodName.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.count" for="field_count">Count</label>
+            <input type="number" class="form-control" name="count" id="field_count"
+                    ng-model="vm.entryPoint.count"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.falsePositive" for="field_falsePositive">False Positive</label>
+            <input type="checkbox" class="form-control" name="falsePositive" id="field_falsePositive"
+                    ng-model="vm.entryPoint.falsePositive"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.uri" for="field_uri">Uri</label>
+            <input type="text" class="form-control" name="uri" id="field_uri"
+                    ng-model="vm.entryPoint.uri"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.httpmethod" for="field_httpmethod">Httpmethod</label>
+            <input type="text" class="form-control" name="httpmethod" id="field_httpmethod"
+                    ng-model="vm.entryPoint.httpmethod"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.audit" for="field_audit">Audit</label>
+            <input type="checkbox" class="form-control" name="audit" id="field_audit"
+                    ng-model="vm.entryPoint.audit"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.averageTime" for="field_averageTime">Average Time</label>
+            <input type="number" class="form-control" name="averageTime" id="field_averageTime"
+                    ng-model="vm.entryPoint.averageTime"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="h2HellUiApp.entryPoint.checkLaunch" for="field_checkLaunch">Check Launch</label>
+            <input type="checkbox" class="form-control" name="checkLaunch" id="field_checkLaunch"
+                    ng-model="vm.entryPoint.checkLaunch"
+                     />
+        </div>
+
+        <div class="form-group">
+            <label translate="h2HellUiApp.entryPoint.analysis" for="field_analysis">Analysis</label>
+            <select class="form-control" id="field_analysis" name="analysis" ng-model="vm.entryPoint.analysis" ng-options="analysis as analysis.appVersion for analysis in vm.analyses track by analysis.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

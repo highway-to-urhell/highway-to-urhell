@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.repository.AnalysisRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,29 +33,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the AnalysisResource REST controller.
  *
  * @see AnalysisResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class AnalysisResourceIntTest {
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
-
 
     private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_DATE_CREATION = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_CREATION_STR = dateTimeFormatter.format(DEFAULT_DATE_CREATION);
+    private static final String DEFAULT_DATE_CREATION_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_CREATION);
+
     private static final String DEFAULT_PATH_SOURCE = "AAAAA";
     private static final String UPDATED_PATH_SOURCE = "BBBBB";
 
     private static final Integer DEFAULT_NUMBER_ENTRY_POINTS = 1;
     private static final Integer UPDATED_NUMBER_ENTRY_POINTS = 2;
+
     private static final String DEFAULT_APP_VERSION = "AAAAA";
     private static final String UPDATED_APP_VERSION = "BBBBB";
 
@@ -67,6 +63,9 @@ public class AnalysisResourceIntTest {
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Inject
+    private EntityManager em;
 
     private MockMvc restAnalysisMockMvc;
 
@@ -82,13 +81,24 @@ public class AnalysisResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        analysis = new Analysis();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Analysis createEntity(EntityManager em) {
+        Analysis analysis = new Analysis();
         analysis.setDateCreation(DEFAULT_DATE_CREATION);
         analysis.setPathSource(DEFAULT_PATH_SOURCE);
         analysis.setNumberEntryPoints(DEFAULT_NUMBER_ENTRY_POINTS);
         analysis.setAppVersion(DEFAULT_APP_VERSION);
+        return analysis;
+    }
+
+    @Before
+    public void initTest() {
+        analysis = createEntity(em);
     }
 
     @Test
@@ -122,7 +132,7 @@ public class AnalysisResourceIntTest {
         // Get all the analyses
         restAnalysisMockMvc.perform(get("/api/analyses?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(analysis.getId().intValue())))
                 .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(DEFAULT_DATE_CREATION_STR)))
                 .andExpect(jsonPath("$.[*].pathSource").value(hasItem(DEFAULT_PATH_SOURCE.toString())))
@@ -139,7 +149,7 @@ public class AnalysisResourceIntTest {
         // Get the analysis
         restAnalysisMockMvc.perform(get("/api/analyses/{id}", analysis.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(analysis.getId().intValue()))
             .andExpect(jsonPath("$.dateCreation").value(DEFAULT_DATE_CREATION_STR))
             .andExpect(jsonPath("$.pathSource").value(DEFAULT_PATH_SOURCE.toString()))
@@ -163,8 +173,7 @@ public class AnalysisResourceIntTest {
         int databaseSizeBeforeUpdate = analysisRepository.findAll().size();
 
         // Update the analysis
-        Analysis updatedAnalysis = new Analysis();
-        updatedAnalysis.setId(analysis.getId());
+        Analysis updatedAnalysis = analysisRepository.findOne(analysis.getId());
         updatedAnalysis.setDateCreation(UPDATED_DATE_CREATION);
         updatedAnalysis.setPathSource(UPDATED_PATH_SOURCE);
         updatedAnalysis.setNumberEntryPoints(UPDATED_NUMBER_ENTRY_POINTS);

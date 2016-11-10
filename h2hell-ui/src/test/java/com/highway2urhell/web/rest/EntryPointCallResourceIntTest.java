@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.EntryPointCall;
 import com.highway2urhell.repository.EntryPointCallRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,6 +23,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,24 +34,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the EntryPointCallResource REST controller.
  *
  * @see EntryPointCallResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class EntryPointCallResourceIntTest {
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
-
 
     private static final ZonedDateTime DEFAULT_DATE_INCOMING = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_DATE_INCOMING = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_INCOMING_STR = dateTimeFormatter.format(DEFAULT_DATE_INCOMING);
+    private static final String DEFAULT_DATE_INCOMING_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_INCOMING);
 
     private static final byte[] DEFAULT_PARAMETERS = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_PARAMETERS = TestUtil.createByteArray(2, "1");
@@ -67,6 +61,9 @@ public class EntryPointCallResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEntryPointCallMockMvc;
 
     private EntryPointCall entryPointCall;
@@ -81,12 +78,23 @@ public class EntryPointCallResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        entryPointCall = new EntryPointCall();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static EntryPointCall createEntity(EntityManager em) {
+        EntryPointCall entryPointCall = new EntryPointCall();
         entryPointCall.setDateIncoming(DEFAULT_DATE_INCOMING);
         entryPointCall.setParameters(DEFAULT_PARAMETERS);
         entryPointCall.setParametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE);
+        return entryPointCall;
+    }
+
+    @Before
+    public void initTest() {
+        entryPointCall = createEntity(em);
     }
 
     @Test
@@ -119,7 +127,7 @@ public class EntryPointCallResourceIntTest {
         // Get all the entryPointCalls
         restEntryPointCallMockMvc.perform(get("/api/entry-point-calls?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(entryPointCall.getId().intValue())))
                 .andExpect(jsonPath("$.[*].dateIncoming").value(hasItem(DEFAULT_DATE_INCOMING_STR)))
                 .andExpect(jsonPath("$.[*].parametersContentType").value(hasItem(DEFAULT_PARAMETERS_CONTENT_TYPE)))
@@ -135,7 +143,7 @@ public class EntryPointCallResourceIntTest {
         // Get the entryPointCall
         restEntryPointCallMockMvc.perform(get("/api/entry-point-calls/{id}", entryPointCall.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(entryPointCall.getId().intValue()))
             .andExpect(jsonPath("$.dateIncoming").value(DEFAULT_DATE_INCOMING_STR))
             .andExpect(jsonPath("$.parametersContentType").value(DEFAULT_PARAMETERS_CONTENT_TYPE))
@@ -158,8 +166,7 @@ public class EntryPointCallResourceIntTest {
         int databaseSizeBeforeUpdate = entryPointCallRepository.findAll().size();
 
         // Update the entryPointCall
-        EntryPointCall updatedEntryPointCall = new EntryPointCall();
-        updatedEntryPointCall.setId(entryPointCall.getId());
+        EntryPointCall updatedEntryPointCall = entryPointCallRepository.findOne(entryPointCall.getId());
         updatedEntryPointCall.setDateIncoming(UPDATED_DATE_INCOMING);
         updatedEntryPointCall.setParameters(UPDATED_PARAMETERS);
         updatedEntryPointCall.setParametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE);

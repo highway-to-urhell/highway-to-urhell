@@ -1,14 +1,14 @@
 
 <div>
-    <h2><span translate="h2HellUiApp.team.detail.title">Team</span> {{vm.team.id}}</h2>
+    <h2><span data-translate="h2HellUiApp.team.detail.title">Team</span> {{vm.team.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span translate="h2HellUiApp.team.name">Name</span></dt>
+        <dt><span data-translate="h2HellUiApp.team.name">Name</span></dt>
         <dd>
             <span>{{vm.team.name}}</span>
         </dd>
-        <dt><span translate="h2HellUiApp.team.members">Members</span></dt>
+        <dt><span data-translate="h2HellUiApp.team.members">Members</span></dt>
         <dd>
             <span ng-repeat="members in vm.team.members">
                 {{members.login}}{{$last ? '' : ', '}}
@@ -17,8 +17,13 @@
     </dl>
 
     <button type="submit"
-            onclick="window.history.back()"
+            ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="team-detail.edit({id:vm.team.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

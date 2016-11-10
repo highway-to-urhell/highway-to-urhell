@@ -22,14 +22,18 @@ describe('EntryPoint e2e test', function () {
 
     it('should load EntryPoints', function () {
         entityMenu.click();
-        element(by.css('[ui-sref="entry-point"]')).click().then(function() {
-            expect(element.all(by.css('h2')).first().getText()).toMatch(/Entry Points/);
+        element.all(by.css('[ui-sref="entry-point"]')).first().click().then(function() {
+            element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.entryPoint.home.title/);
+            });
         });
     });
 
     it('should load create EntryPoint dialog', function () {
         element(by.css('[ui-sref="entry-point.new"]')).click().then(function() {
-            expect(element(by.css('h4.modal-title')).getText()).toMatch(/Create or edit a Entry Point/);
+            element(by.css('h4.modal-title')).getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.entryPoint.home.createOrEditLabel/);
+            });
             element(by.css('button.close')).click();
         });
     });

@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.UserPermission;
 import com.highway2urhell.repository.UserPermissionRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,18 +30,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.highway2urhell.domain.enumeration.Permission;
-
 /**
  * Test class for the UserPermissionResource REST controller.
  *
  * @see UserPermissionResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class UserPermissionResourceIntTest {
-
 
     private static final Permission DEFAULT_PERMISSION = Permission.READ;
     private static final Permission UPDATED_PERMISSION = Permission.EXECUTE;
@@ -54,6 +50,9 @@ public class UserPermissionResourceIntTest {
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Inject
+    private EntityManager em;
 
     private MockMvc restUserPermissionMockMvc;
 
@@ -69,10 +68,21 @@ public class UserPermissionResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static UserPermission createEntity(EntityManager em) {
+        UserPermission userPermission = new UserPermission();
+        userPermission.setPermission(DEFAULT_PERMISSION);
+        return userPermission;
+    }
+
     @Before
     public void initTest() {
-        userPermission = new UserPermission();
-        userPermission.setPermission(DEFAULT_PERMISSION);
+        userPermission = createEntity(em);
     }
 
     @Test
@@ -121,7 +131,7 @@ public class UserPermissionResourceIntTest {
         // Get all the userPermissions
         restUserPermissionMockMvc.perform(get("/api/user-permissions?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(userPermission.getId().intValue())))
                 .andExpect(jsonPath("$.[*].permission").value(hasItem(DEFAULT_PERMISSION.toString())));
     }
@@ -135,7 +145,7 @@ public class UserPermissionResourceIntTest {
         // Get the userPermission
         restUserPermissionMockMvc.perform(get("/api/user-permissions/{id}", userPermission.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userPermission.getId().intValue()))
             .andExpect(jsonPath("$.permission").value(DEFAULT_PERMISSION.toString()));
     }
@@ -156,8 +166,7 @@ public class UserPermissionResourceIntTest {
         int databaseSizeBeforeUpdate = userPermissionRepository.findAll().size();
 
         // Update the userPermission
-        UserPermission updatedUserPermission = new UserPermission();
-        updatedUserPermission.setId(userPermission.getId());
+        UserPermission updatedUserPermission = userPermissionRepository.findOne(userPermission.getId());
         updatedUserPermission.setPermission(UPDATED_PERMISSION);
 
         restUserPermissionMockMvc.perform(put("/api/user-permissions")

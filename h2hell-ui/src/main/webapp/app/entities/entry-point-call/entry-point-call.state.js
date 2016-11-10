@@ -72,8 +72,41 @@
                 }],
                 entity: ['$stateParams', 'EntryPointCall', function($stateParams, EntryPointCall) {
                     return EntryPointCall.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'entry-point-call',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('entry-point-call-detail.edit', {
+            parent: 'entry-point-call-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/entry-point-call/entry-point-call-dialog.html',
+                    controller: 'EntryPointCallDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['EntryPointCall', function(EntryPointCall) {
+                            return EntryPointCall.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('entry-point-call.new', {
             parent: 'entry-point-call',
@@ -99,7 +132,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-call', null, { reload: true });
+                    $state.go('entry-point-call', null, { reload: 'entry-point-call' });
                 }, function() {
                     $state.go('entry-point-call');
                 });
@@ -124,7 +157,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-call', null, { reload: true });
+                    $state.go('entry-point-call', null, { reload: 'entry-point-call' });
                 }, function() {
                     $state.go('^');
                 });
@@ -148,7 +181,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-call', null, { reload: true });
+                    $state.go('entry-point-call', null, { reload: 'entry-point-call' });
                 }, function() {
                     $state.go('^');
                 });

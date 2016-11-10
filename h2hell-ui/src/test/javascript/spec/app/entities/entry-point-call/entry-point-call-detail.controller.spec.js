@@ -4,13 +4,14 @@ describe('Controller Tests', function() {
 
     describe('EntryPointCall Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEntryPointCall, MockEntryPoint;
+        var MockEntity, MockPreviousState, MockEntryPointCall, MockEntryPoint;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockEntryPointCall = jasmine.createSpy('MockEntryPointCall');
             MockEntryPoint = jasmine.createSpy('MockEntryPoint');
             
@@ -18,7 +19,8 @@ describe('Controller Tests', function() {
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'EntryPointCall': MockEntryPointCall,
                 'EntryPoint': MockEntryPoint
             };

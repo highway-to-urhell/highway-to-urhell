@@ -22,14 +22,18 @@ describe('Event e2e test', function () {
 
     it('should load Events', function () {
         entityMenu.click();
-        element(by.css('[ui-sref="event"]')).click().then(function() {
-            expect(element.all(by.css('h2')).first().getText()).toMatch(/Events/);
+        element.all(by.css('[ui-sref="event"]')).first().click().then(function() {
+            element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.event.home.title/);
+            });
         });
     });
 
     it('should load create Event dialog', function () {
         element(by.css('[ui-sref="event.new"]')).click().then(function() {
-            expect(element(by.css('h4.modal-title')).getText()).toMatch(/Create or edit a Event/);
+            element(by.css('h4.modal-title')).getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.event.home.createOrEditLabel/);
+            });
             element(by.css('button.close')).click();
         });
     });

@@ -10,18 +10,18 @@
         
         <addForeignKeyConstraint baseColumnNames="user_permissions_id"
                                  baseTableName="user_permission_projects"
-                                 constraintName="fk_user_permission_projects_application_id"
+                                 constraintName="fk_user_permission_projects_user_permissions_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_permission"/>
         <addForeignKeyConstraint baseColumnNames="projects_id"
                                  baseTableName="user_permission_projects"
-                                 constraintName="fk_user_permission_projects_userpermission_id"
+                                 constraintName="fk_user_permission_projects_projects_id"
                                  referencedColumnNames="id"
                                  referencedTableName="application"/>
         
         <addForeignKeyConstraint baseColumnNames="team_id"
                                  baseTableName="user_permission"
-                                 constraintName="fk_userpermission_team_id"
+                                 constraintName="fk_user_permission_team_id"
                                  referencedColumnNames="id"
                                  referencedTableName="team"/>
 

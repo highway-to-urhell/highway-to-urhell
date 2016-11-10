@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.Event;
 import com.highway2urhell.repository.EventRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,6 +23,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,18 +31,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.highway2urhell.domain.enumeration.TypeMessageEvent;
-
 /**
  * Test class for the EventResource REST controller.
  *
  * @see EventResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class EventResourceIntTest {
-
 
     private static final TypeMessageEvent DEFAULT_TYPE_MESSAGE_EVENT = TypeMessageEvent.INIT_PATH;
     private static final TypeMessageEvent UPDATED_TYPE_MESSAGE_EVENT = TypeMessageEvent.ENABLE_ENTRY_POINT;
@@ -64,6 +60,9 @@ public class EventResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEventMockMvc;
 
     private Event event;
@@ -78,13 +77,24 @@ public class EventResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        event = new Event();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Event createEntity(EntityManager em) {
+        Event event = new Event();
         event.setTypeMessageEvent(DEFAULT_TYPE_MESSAGE_EVENT);
         event.setData(DEFAULT_DATA);
         event.setDataContentType(DEFAULT_DATA_CONTENT_TYPE);
         event.setConsumed(DEFAULT_CONSUMED);
+        return event;
+    }
+
+    @Before
+    public void initTest() {
+        event = createEntity(em);
     }
 
     @Test
@@ -118,7 +128,7 @@ public class EventResourceIntTest {
         // Get all the events
         restEventMockMvc.perform(get("/api/events?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
                 .andExpect(jsonPath("$.[*].typeMessageEvent").value(hasItem(DEFAULT_TYPE_MESSAGE_EVENT.toString())))
                 .andExpect(jsonPath("$.[*].dataContentType").value(hasItem(DEFAULT_DATA_CONTENT_TYPE)))
@@ -135,7 +145,7 @@ public class EventResourceIntTest {
         // Get the event
         restEventMockMvc.perform(get("/api/events/{id}", event.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
             .andExpect(jsonPath("$.typeMessageEvent").value(DEFAULT_TYPE_MESSAGE_EVENT.toString()))
             .andExpect(jsonPath("$.dataContentType").value(DEFAULT_DATA_CONTENT_TYPE))
@@ -159,8 +169,7 @@ public class EventResourceIntTest {
         int databaseSizeBeforeUpdate = eventRepository.findAll().size();
 
         // Update the event
-        Event updatedEvent = new Event();
-        updatedEvent.setId(event.getId());
+        Event updatedEvent = eventRepository.findOne(event.getId());
         updatedEvent.setTypeMessageEvent(UPDATED_TYPE_MESSAGE_EVENT);
         updatedEvent.setData(UPDATED_DATA);
         updatedEvent.setDataContentType(UPDATED_DATA_CONTENT_TYPE);

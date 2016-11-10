@@ -1,12 +1,15 @@
-package com.highway2urhell.web.rest.dto;
+package com.highway2urhell.web.rest.vm;
 
-public class KeyAndPasswordDTO {
+/**
+ * View Model object for storing the user's key and password.
+ */
+public class KeyAndPasswordVM {
 
     private String key;
 
     private String newPassword;
 
-    public KeyAndPasswordDTO() {
+    public KeyAndPasswordVM() {
     }
 
     public String getKey() {

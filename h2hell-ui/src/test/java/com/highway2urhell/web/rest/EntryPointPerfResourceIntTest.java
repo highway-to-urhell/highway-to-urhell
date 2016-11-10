@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.EntryPointPerf;
 import com.highway2urhell.repository.EntryPointPerfRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,6 +23,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,24 +34,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the EntryPointPerfResource REST controller.
  *
  * @see EntryPointPerfResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class EntryPointPerfResourceIntTest {
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
-
 
     private static final ZonedDateTime DEFAULT_DATE_INCOMING = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_DATE_INCOMING = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_INCOMING_STR = dateTimeFormatter.format(DEFAULT_DATE_INCOMING);
+    private static final String DEFAULT_DATE_INCOMING_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_INCOMING);
 
     private static final byte[] DEFAULT_PARAMETERS = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_PARAMETERS = TestUtil.createByteArray(2, "1");
@@ -76,6 +70,9 @@ public class EntryPointPerfResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEntryPointPerfMockMvc;
 
     private EntryPointPerf entryPointPerf;
@@ -90,15 +87,26 @@ public class EntryPointPerfResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        entryPointPerf = new EntryPointPerf();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static EntryPointPerf createEntity(EntityManager em) {
+        EntryPointPerf entryPointPerf = new EntryPointPerf();
         entryPointPerf.setDateIncoming(DEFAULT_DATE_INCOMING);
         entryPointPerf.setParameters(DEFAULT_PARAMETERS);
         entryPointPerf.setParametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE);
         entryPointPerf.setTimeExec(DEFAULT_TIME_EXEC);
         entryPointPerf.setCpuLoadSystem(DEFAULT_CPU_LOAD_SYSTEM);
         entryPointPerf.setCpuLoadProcess(DEFAULT_CPU_LOAD_PROCESS);
+        return entryPointPerf;
+    }
+
+    @Before
+    public void initTest() {
+        entryPointPerf = createEntity(em);
     }
 
     @Test
@@ -134,7 +142,7 @@ public class EntryPointPerfResourceIntTest {
         // Get all the entryPointPerfs
         restEntryPointPerfMockMvc.perform(get("/api/entry-point-perfs?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(entryPointPerf.getId().intValue())))
                 .andExpect(jsonPath("$.[*].dateIncoming").value(hasItem(DEFAULT_DATE_INCOMING_STR)))
                 .andExpect(jsonPath("$.[*].parametersContentType").value(hasItem(DEFAULT_PARAMETERS_CONTENT_TYPE)))
@@ -153,7 +161,7 @@ public class EntryPointPerfResourceIntTest {
         // Get the entryPointPerf
         restEntryPointPerfMockMvc.perform(get("/api/entry-point-perfs/{id}", entryPointPerf.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(entryPointPerf.getId().intValue()))
             .andExpect(jsonPath("$.dateIncoming").value(DEFAULT_DATE_INCOMING_STR))
             .andExpect(jsonPath("$.parametersContentType").value(DEFAULT_PARAMETERS_CONTENT_TYPE))
@@ -179,8 +187,7 @@ public class EntryPointPerfResourceIntTest {
         int databaseSizeBeforeUpdate = entryPointPerfRepository.findAll().size();
 
         // Update the entryPointPerf
-        EntryPointPerf updatedEntryPointPerf = new EntryPointPerf();
-        updatedEntryPointPerf.setId(entryPointPerf.getId());
+        EntryPointPerf updatedEntryPointPerf = entryPointPerfRepository.findOne(entryPointPerf.getId());
         updatedEntryPointPerf.setDateIncoming(UPDATED_DATE_INCOMING);
         updatedEntryPointPerf.setParameters(UPDATED_PARAMETERS);
         updatedEntryPointPerf.setParametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE);

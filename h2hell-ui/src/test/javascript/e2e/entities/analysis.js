@@ -22,14 +22,18 @@ describe('Analysis e2e test', function () {
 
     it('should load Analyses', function () {
         entityMenu.click();
-        element(by.css('[ui-sref="analysis"]')).click().then(function() {
-            expect(element.all(by.css('h2')).first().getText()).toMatch(/Analyses/);
+        element.all(by.css('[ui-sref="analysis"]')).first().click().then(function() {
+            element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.analysis.home.title/);
+            });
         });
     });
 
     it('should load create Analysis dialog', function () {
         element(by.css('[ui-sref="analysis.new"]')).click().then(function() {
-            expect(element(by.css('h4.modal-title')).getText()).toMatch(/Create or edit a Analysis/);
+            element(by.css('h4.modal-title')).getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.analysis.home.createOrEditLabel/);
+            });
             element(by.css('button.close')).click();
         });
     });

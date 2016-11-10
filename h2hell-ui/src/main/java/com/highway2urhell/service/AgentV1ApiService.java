@@ -10,7 +10,7 @@ import com.highway2urhell.web.rest.errors.V1ApiDateIncomingException;
 import com.highway2urhell.web.rest.errors.V1ApiNotExistThunderAppException;
 import com.highway2urhell.web.rest.errors.V1ApiPathNameException;
 import com.highway2urhell.web.rest.errors.V1ApiTokenException;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

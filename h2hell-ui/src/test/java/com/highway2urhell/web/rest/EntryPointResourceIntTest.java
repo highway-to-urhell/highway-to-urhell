@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.EntryPointRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,22 +22,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the EntryPointResource REST controller.
  *
  * @see EntryPointResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class EntryPointResourceIntTest {
 
     private static final String DEFAULT_PATH_CLASS_METHOD_NAME = "AAAAA";
@@ -49,8 +46,10 @@ public class EntryPointResourceIntTest {
 
     private static final Boolean DEFAULT_FALSE_POSITIVE = false;
     private static final Boolean UPDATED_FALSE_POSITIVE = true;
+
     private static final String DEFAULT_URI = "AAAAA";
     private static final String UPDATED_URI = "BBBBB";
+
     private static final String DEFAULT_HTTPMETHOD = "AAAAA";
     private static final String UPDATED_HTTPMETHOD = "BBBBB";
 
@@ -72,6 +71,9 @@ public class EntryPointResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEntryPointMockMvc;
 
     private EntryPoint entryPoint;
@@ -86,9 +88,14 @@ public class EntryPointResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        entryPoint = new EntryPoint();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static EntryPoint createEntity(EntityManager em) {
+        EntryPoint entryPoint = new EntryPoint();
         entryPoint.setPathClassMethodName(DEFAULT_PATH_CLASS_METHOD_NAME);
         entryPoint.setCount(DEFAULT_COUNT);
         entryPoint.setFalsePositive(DEFAULT_FALSE_POSITIVE);
@@ -97,6 +104,12 @@ public class EntryPointResourceIntTest {
         entryPoint.setAudit(DEFAULT_AUDIT);
         entryPoint.setAverageTime(DEFAULT_AVERAGE_TIME);
         entryPoint.setCheckLaunch(DEFAULT_CHECK_LAUNCH);
+        return entryPoint;
+    }
+
+    @Before
+    public void initTest() {
+        entryPoint = createEntity(em);
     }
 
     @Test
@@ -152,7 +165,7 @@ public class EntryPointResourceIntTest {
         // Get all the entryPoints
         restEntryPointMockMvc.perform(get("/api/entry-points?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(entryPoint.getId().intValue())))
                 .andExpect(jsonPath("$.[*].pathClassMethodName").value(hasItem(DEFAULT_PATH_CLASS_METHOD_NAME.toString())))
                 .andExpect(jsonPath("$.[*].count").value(hasItem(DEFAULT_COUNT.intValue())))
@@ -173,7 +186,7 @@ public class EntryPointResourceIntTest {
         // Get the entryPoint
         restEntryPointMockMvc.perform(get("/api/entry-points/{id}", entryPoint.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(entryPoint.getId().intValue()))
             .andExpect(jsonPath("$.pathClassMethodName").value(DEFAULT_PATH_CLASS_METHOD_NAME.toString()))
             .andExpect(jsonPath("$.count").value(DEFAULT_COUNT.intValue()))
@@ -201,8 +214,7 @@ public class EntryPointResourceIntTest {
         int databaseSizeBeforeUpdate = entryPointRepository.findAll().size();
 
         // Update the entryPoint
-        EntryPoint updatedEntryPoint = new EntryPoint();
-        updatedEntryPoint.setId(entryPoint.getId());
+        EntryPoint updatedEntryPoint = entryPointRepository.findOne(entryPoint.getId());
         updatedEntryPoint.setPathClassMethodName(UPDATED_PATH_CLASS_METHOD_NAME);
         updatedEntryPoint.setCount(UPDATED_COUNT);
         updatedEntryPoint.setFalsePositive(UPDATED_FALSE_POSITIVE);

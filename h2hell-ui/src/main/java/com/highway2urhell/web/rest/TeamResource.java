@@ -2,13 +2,13 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Team;
+
 import com.highway2urhell.repository.TeamRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +30,7 @@ public class TeamResource {
         
     @Inject
     private TeamRepository teamRepository;
-    
+
     /**
      * POST  /teams : Create a new team.
      *
@@ -38,9 +38,7 @@ public class TeamResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new team, or with status 400 (Bad Request) if the team has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/teams",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/teams")
     @Timed
     public ResponseEntity<Team> createTeam(@Valid @RequestBody Team team) throws URISyntaxException {
         log.debug("REST request to save Team : {}", team);
@@ -62,9 +60,7 @@ public class TeamResource {
      * or with status 500 (Internal Server Error) if the team couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/teams",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/teams")
     @Timed
     public ResponseEntity<Team> updateTeam(@Valid @RequestBody Team team) throws URISyntaxException {
         log.debug("REST request to update Team : {}", team);
@@ -82,9 +78,7 @@ public class TeamResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of teams in body
      */
-    @RequestMapping(value = "/teams",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/teams")
     @Timed
     public List<Team> getAllTeams() {
         log.debug("REST request to get all Teams");
@@ -98,9 +92,7 @@ public class TeamResource {
      * @param id the id of the team to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the team, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/teams/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/teams/{id}")
     @Timed
     public ResponseEntity<Team> getTeam(@PathVariable Long id) {
         log.debug("REST request to get Team : {}", id);
@@ -118,9 +110,7 @@ public class TeamResource {
      * @param id the id of the team to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/teams/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/teams/{id}")
     @Timed
     public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
         log.debug("REST request to delete Team : {}", id);

@@ -10,12 +10,12 @@
         
         <addForeignKeyConstraint baseColumnNames="teams_id"
                                  baseTableName="team_members"
-                                 constraintName="fk_team_members_user_id"
+                                 constraintName="fk_team_members_teams_id"
                                  referencedColumnNames="id"
                                  referencedTableName="team"/>
         <addForeignKeyConstraint baseColumnNames="members_id"
                                  baseTableName="team_members"
-                                 constraintName="fk_team_members_team_id"
+                                 constraintName="fk_team_members_members_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
         

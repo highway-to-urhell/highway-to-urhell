@@ -22,14 +22,18 @@ describe('UserPermission e2e test', function () {
 
     it('should load UserPermissions', function () {
         entityMenu.click();
-        element(by.css('[ui-sref="user-permission"]')).click().then(function() {
-            expect(element.all(by.css('h2')).first().getText()).toMatch(/User Permissions/);
+        element.all(by.css('[ui-sref="user-permission"]')).first().click().then(function() {
+            element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.userPermission.home.title/);
+            });
         });
     });
 
     it('should load create UserPermission dialog', function () {
         element(by.css('[ui-sref="user-permission.new"]')).click().then(function() {
-            expect(element(by.css('h4.modal-title')).getText()).toMatch(/Create or edit a User Permission/);
+            element(by.css('h4.modal-title')).getAttribute('data-translate').then(function (value) {
+                expect(value).toMatch(/h2HellUiApp.userPermission.home.createOrEditLabel/);
+            });
             element(by.css('button.close')).click();
         });
     });

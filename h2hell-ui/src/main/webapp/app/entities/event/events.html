@@ -1,12 +1,12 @@
 <div>
-    <h2 translate="h2HellUiApp.event.home.title">Events</h2>
+    <h2 data-translate="h2HellUiApp.event.home.title">Events</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="event.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="h2HellUiApp.event.home.createLabel">
+                    <span  data-translate="h2HellUiApp.event.home.createLabel">
                         Create new Event
                     </span>
                 </button>
@@ -18,20 +18,20 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
-                    <th><span translate="h2HellUiApp.event.typeMessageEvent">Type Message Event</span></th>
-                    <th><span translate="h2HellUiApp.event.data">Data</span></th>
-                    <th><span translate="h2HellUiApp.event.consumed">Consumed</span></th>
-                    <th><span translate="h2HellUiApp.event.analysis">Analysis</span></th>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="h2HellUiApp.event.typeMessageEvent">Type Message Event</span></th>
+                    <th><span data-translate="h2HellUiApp.event.data">Data</span></th>
+                    <th><span data-translate="h2HellUiApp.event.consumed">Consumed</span></th>
+                    <th><span data-translate="h2HellUiApp.event.analysis">Analysis</span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="event in vm.events track by event.id">
                     <td><a ui-sref="event-detail({id:event.id})">{{event.id}}</a></td>
-                    <td translate="{{'h2HellUiApp.TypeMessageEvent.' + event.typeMessageEvent}}">{{event.typeMessageEvent}}</td>
+                    <td data-translate="{{'h2HellUiApp.TypeMessageEvent.' + event.typeMessageEvent}}">{{event.typeMessageEvent}}</td>
                     <td>
-                        <a ng-if="event.data" ng-click="vm.openFile(event.dataContentType, event.data)" translate="entity.action.open">open</a>
+                        <a ng-if="event.data" ng-click="vm.openFile(event.dataContentType, event.data)" data-translate="entity.action.open">open</a>
                         <span ng-if="event.data">{{event.dataContentType}}, {{vm.byteSize(event.data)}}</span>
                     </td>
                     <td>{{event.consumed}}</td>
@@ -44,19 +44,19 @@
                                     ui-sref="event-detail({id:event.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="event.edit({id:event.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="event.delete({id:event.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>

@@ -2,6 +2,7 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.EntryPoint;
+
 import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +33,7 @@ public class EntryPointResource {
         
     @Inject
     private EntryPointRepository entryPointRepository;
-    
+
     /**
      * POST  /entry-points : Create a new entryPoint.
      *
@@ -41,9 +41,7 @@ public class EntryPointResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new entryPoint, or with status 400 (Bad Request) if the entryPoint has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-points",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/entry-points")
     @Timed
     public ResponseEntity<EntryPoint> createEntryPoint(@Valid @RequestBody EntryPoint entryPoint) throws URISyntaxException {
         log.debug("REST request to save EntryPoint : {}", entryPoint);
@@ -65,9 +63,7 @@ public class EntryPointResource {
      * or with status 500 (Internal Server Error) if the entryPoint couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-points",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/entry-points")
     @Timed
     public ResponseEntity<EntryPoint> updateEntryPoint(@Valid @RequestBody EntryPoint entryPoint) throws URISyntaxException {
         log.debug("REST request to update EntryPoint : {}", entryPoint);
@@ -87,14 +83,12 @@ public class EntryPointResource {
      * @return the ResponseEntity with status 200 (OK) and the list of entryPoints in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/entry-points",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-points")
     @Timed
     public ResponseEntity<List<EntryPoint>> getAllEntryPoints(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of EntryPoints");
-        Page<EntryPoint> page = entryPointRepository.findAll(pageable); 
+        Page<EntryPoint> page = entryPointRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entry-points");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -105,9 +99,7 @@ public class EntryPointResource {
      * @param id the id of the entryPoint to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the entryPoint, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/entry-points/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-points/{id}")
     @Timed
     public ResponseEntity<EntryPoint> getEntryPoint(@PathVariable Long id) {
         log.debug("REST request to get EntryPoint : {}", id);
@@ -125,9 +117,7 @@ public class EntryPointResource {
      * @param id the id of the entryPoint to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/entry-points/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/entry-points/{id}")
     @Timed
     public ResponseEntity<Void> deleteEntryPoint(@PathVariable Long id) {
         log.debug("REST request to delete EntryPoint : {}", id);

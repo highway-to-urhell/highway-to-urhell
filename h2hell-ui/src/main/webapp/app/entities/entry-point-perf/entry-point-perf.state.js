@@ -72,8 +72,41 @@
                 }],
                 entity: ['$stateParams', 'EntryPointPerf', function($stateParams, EntryPointPerf) {
                     return EntryPointPerf.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'entry-point-perf',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('entry-point-perf-detail.edit', {
+            parent: 'entry-point-perf-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/entry-point-perf/entry-point-perf-dialog.html',
+                    controller: 'EntryPointPerfDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['EntryPointPerf', function(EntryPointPerf) {
+                            return EntryPointPerf.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('entry-point-perf.new', {
             parent: 'entry-point-perf',
@@ -102,7 +135,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-perf', null, { reload: true });
+                    $state.go('entry-point-perf', null, { reload: 'entry-point-perf' });
                 }, function() {
                     $state.go('entry-point-perf');
                 });
@@ -127,7 +160,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-perf', null, { reload: true });
+                    $state.go('entry-point-perf', null, { reload: 'entry-point-perf' });
                 }, function() {
                     $state.go('^');
                 });
@@ -151,7 +184,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('entry-point-perf', null, { reload: true });
+                    $state.go('entry-point-perf', null, { reload: 'entry-point-perf' });
                 }, function() {
                     $state.go('^');
                 });

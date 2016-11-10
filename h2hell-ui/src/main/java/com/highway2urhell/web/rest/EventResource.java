@@ -2,13 +2,13 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Event;
+
 import com.highway2urhell.repository.EventRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class EventResource {
         
     @Inject
     private EventRepository eventRepository;
-    
+
     /**
      * POST  /events : Create a new event.
      *
@@ -37,9 +37,7 @@ public class EventResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new event, or with status 400 (Bad Request) if the event has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/events",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/events")
     @Timed
     public ResponseEntity<Event> createEvent(@RequestBody Event event) throws URISyntaxException {
         log.debug("REST request to save Event : {}", event);
@@ -61,9 +59,7 @@ public class EventResource {
      * or with status 500 (Internal Server Error) if the event couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/events",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/events")
     @Timed
     public ResponseEntity<Event> updateEvent(@RequestBody Event event) throws URISyntaxException {
         log.debug("REST request to update Event : {}", event);
@@ -81,9 +77,7 @@ public class EventResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of events in body
      */
-    @RequestMapping(value = "/events",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/events")
     @Timed
     public List<Event> getAllEvents() {
         log.debug("REST request to get all Events");
@@ -97,9 +91,7 @@ public class EventResource {
      * @param id the id of the event to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the event, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/events/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/events/{id}")
     @Timed
     public ResponseEntity<Event> getEvent(@PathVariable Long id) {
         log.debug("REST request to get Event : {}", id);
@@ -117,9 +109,7 @@ public class EventResource {
      * @param id the id of the event to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/events/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/events/{id}")
     @Timed
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         log.debug("REST request to delete Event : {}", id);

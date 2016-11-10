@@ -36,4 +36,74 @@
     <cache name="com.highway2urhell.domain.User.persistentTokens"
            timeToLiveSeconds="3600">
     </cache>
-    </ehcache>
+    
+    <cache name="com.highway2urhell.domain.Application"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Application.analyses"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Application.userPermissions"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.EntryPointCall"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Event"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.EntryPointPerf"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Analysis"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Analysis.events"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Analysis.entryPoints"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.EntryPoint"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.EntryPoint.perfs"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.EntryPoint.calls"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Team"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Team.members"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.Team.userPermissions"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.UserPermission"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.highway2urhell.domain.UserPermission.projects"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <!-- jhipster-needle-ehcache-add-entry -->
+</ehcache>

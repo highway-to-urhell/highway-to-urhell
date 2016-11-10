@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.ApplicationRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,32 +33,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the ApplicationResource REST controller.
  *
  * @see ApplicationResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class ApplicationResourceIntTest {
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneId.of("Z"));
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
+
     private static final String DEFAULT_TOKEN = "AAAAA";
     private static final String UPDATED_TOKEN = "BBBBB";
 
     private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final ZonedDateTime UPDATED_DATE_CREATION = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_CREATION_STR = dateTimeFormatter.format(DEFAULT_DATE_CREATION);
+    private static final String DEFAULT_DATE_CREATION_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_CREATION);
+
     private static final String DEFAULT_URL_APP = "AAAAA";
     private static final String UPDATED_URL_APP = "BBBBB";
+
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
+
     private static final String DEFAULT_APP_TYPE = "AAAAA";
     private static final String UPDATED_APP_TYPE = "BBBBB";
 
@@ -74,6 +73,9 @@ public class ApplicationResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restApplicationMockMvc;
 
     private Application application;
@@ -88,9 +90,14 @@ public class ApplicationResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        application = new Application();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Application createEntity(EntityManager em) {
+        Application application = new Application();
         application.setName(DEFAULT_NAME);
         application.setToken(DEFAULT_TOKEN);
         application.setDateCreation(DEFAULT_DATE_CREATION);
@@ -98,6 +105,12 @@ public class ApplicationResourceIntTest {
         application.setDescription(DEFAULT_DESCRIPTION);
         application.setAppType(DEFAULT_APP_TYPE);
         application.setAnalysed(DEFAULT_ANALYSED);
+        return application;
+    }
+
+    @Before
+    public void initTest() {
+        application = createEntity(em);
     }
 
     @Test
@@ -170,7 +183,7 @@ public class ApplicationResourceIntTest {
         // Get all the applications
         restApplicationMockMvc.perform(get("/api/applications?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(application.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].token").value(hasItem(DEFAULT_TOKEN.toString())))
@@ -190,7 +203,7 @@ public class ApplicationResourceIntTest {
         // Get the application
         restApplicationMockMvc.perform(get("/api/applications/{id}", application.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(application.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.token").value(DEFAULT_TOKEN.toString()))
@@ -217,8 +230,7 @@ public class ApplicationResourceIntTest {
         int databaseSizeBeforeUpdate = applicationRepository.findAll().size();
 
         // Update the application
-        Application updatedApplication = new Application();
-        updatedApplication.setId(application.getId());
+        Application updatedApplication = applicationRepository.findOne(application.getId());
         updatedApplication.setName(UPDATED_NAME);
         updatedApplication.setToken(UPDATED_TOKEN);
         updatedApplication.setDateCreation(UPDATED_DATE_CREATION);

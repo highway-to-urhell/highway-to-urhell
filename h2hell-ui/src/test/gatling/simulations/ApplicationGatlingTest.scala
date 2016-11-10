@@ -25,7 +25,7 @@ class ApplicationGatlingTest extends Simulation {
         .acceptHeader("*/*")
         .acceptEncodingHeader("gzip, deflate")
         .acceptLanguageHeader("fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3")
-        .connection("keep-alive")
+        .connectionHeader("keep-alive")
         .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:33.0) Gecko/20100101 Firefox/33.0")
 
     val headers_http = Map(
@@ -34,7 +34,7 @@ class ApplicationGatlingTest extends Simulation {
 
     val headers_http_authenticated = Map(
         "Accept" -> """application/json""",
-        "X-CSRF-TOKEN" -> "${csrf_token}"
+        "X-XSRF-TOKEN" -> "${xsrf_token}"
     )
 
     val scn = scenario("Test the Application entity")
@@ -42,7 +42,7 @@ class ApplicationGatlingTest extends Simulation {
         .get("/api/account")
         .headers(headers_http)
         .check(status.is(401))
-        .check(headerRegex("Set-Cookie", "CSRF-TOKEN=(.*); [P,p]ath=/").saveAs("csrf_token"))).exitHereIfFailed
+        .check(headerRegex("Set-Cookie", "XSRF-TOKEN=(.*);[\\s]").saveAs("xsrf_token"))).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
         .post("/api/authentication")
@@ -50,13 +50,13 @@ class ApplicationGatlingTest extends Simulation {
         .formParam("j_username", "admin")
         .formParam("j_password", "admin")
         .formParam("remember-me", "true")
-        .formParam("submit", "Login")).exitHereIfFailed
+        .formParam("submit", "Login")
+        .check(headerRegex("Set-Cookie", "XSRF-TOKEN=(.*);[\\s]").saveAs("xsrf_token"))).exitHereIfFailed
         .pause(1)
         .exec(http("Authenticated request")
         .get("/api/account")
         .headers(headers_http_authenticated)
-        .check(status.is(200))
-        .check(headerRegex("Set-Cookie", "CSRF-TOKEN=(.*); [P,p]ath=/").saveAs("csrf_token")))
+        .check(status.is(200)))
         .pause(10)
         .repeat(2) {
             exec(http("Get all applications")

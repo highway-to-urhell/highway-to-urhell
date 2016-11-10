@@ -2,6 +2,7 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.EntryPointCall;
+
 import com.highway2urhell.repository.EntryPointCallRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +32,7 @@ public class EntryPointCallResource {
         
     @Inject
     private EntryPointCallRepository entryPointCallRepository;
-    
+
     /**
      * POST  /entry-point-calls : Create a new entryPointCall.
      *
@@ -40,9 +40,7 @@ public class EntryPointCallResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new entryPointCall, or with status 400 (Bad Request) if the entryPointCall has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-point-calls",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/entry-point-calls")
     @Timed
     public ResponseEntity<EntryPointCall> createEntryPointCall(@RequestBody EntryPointCall entryPointCall) throws URISyntaxException {
         log.debug("REST request to save EntryPointCall : {}", entryPointCall);
@@ -64,9 +62,7 @@ public class EntryPointCallResource {
      * or with status 500 (Internal Server Error) if the entryPointCall couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-point-calls",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/entry-point-calls")
     @Timed
     public ResponseEntity<EntryPointCall> updateEntryPointCall(@RequestBody EntryPointCall entryPointCall) throws URISyntaxException {
         log.debug("REST request to update EntryPointCall : {}", entryPointCall);
@@ -86,14 +82,12 @@ public class EntryPointCallResource {
      * @return the ResponseEntity with status 200 (OK) and the list of entryPointCalls in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/entry-point-calls",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-point-calls")
     @Timed
     public ResponseEntity<List<EntryPointCall>> getAllEntryPointCalls(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of EntryPointCalls");
-        Page<EntryPointCall> page = entryPointCallRepository.findAll(pageable); 
+        Page<EntryPointCall> page = entryPointCallRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entry-point-calls");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -104,9 +98,7 @@ public class EntryPointCallResource {
      * @param id the id of the entryPointCall to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the entryPointCall, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/entry-point-calls/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-point-calls/{id}")
     @Timed
     public ResponseEntity<EntryPointCall> getEntryPointCall(@PathVariable Long id) {
         log.debug("REST request to get EntryPointCall : {}", id);
@@ -124,9 +116,7 @@ public class EntryPointCallResource {
      * @param id the id of the entryPointCall to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/entry-point-calls/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/entry-point-calls/{id}")
     @Timed
     public ResponseEntity<Void> deleteEntryPointCall(@PathVariable Long id) {
         log.debug("REST request to delete EntryPointCall : {}", id);

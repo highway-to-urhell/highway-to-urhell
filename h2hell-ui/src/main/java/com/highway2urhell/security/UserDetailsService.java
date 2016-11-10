@@ -1,4 +1,5 @@
 package com.highway2urhell.security;
+
 import com.highway2urhell.domain.User;
 import com.highway2urhell.repository.UserRepository;
 import org.slf4j.Logger;

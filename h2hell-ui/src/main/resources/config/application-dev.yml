@@ -12,12 +12,18 @@
 
 
 spring:
+    profiles:
+        active: dev
+        include: swagger
     devtools:
         restart:
             enabled: true
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
     datasource:
+        type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:file:./target/h2db/db/h2hellui;DB_CLOSE_DELAY=-1
         name:
         username: h2hellUi
@@ -28,7 +34,7 @@ spring:
     jpa:
         database-platform: com.highway2urhell.domain.util.FixedH2Dialect
         database: H2
-        show_sql: true
+        show-sql: true
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
@@ -56,7 +62,6 @@ server:
 
 jhipster:
     cache: # Hibernate 2nd level cache, used by CacheConfiguration
-        timeToLiveSeconds: 3600
         ehcache:
             maxBytesLocalHeap: 16M
     security:
@@ -85,5 +90,3 @@ jhipster:
             host: localhost
             port: 5000
             queueSize: 512
-    swagger: # swagger is enabled. It can be disabled by pasing 'no-swagger' profile at run time as well
-        enabled: true

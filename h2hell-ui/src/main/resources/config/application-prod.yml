@@ -18,6 +18,7 @@ spring:
         livereload:
             enabled: false
     datasource:
+        type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/h2hellUi?useUnicode=true&characterEncoding=utf8&useSSL=false
         name:
         username: root
@@ -31,7 +32,7 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
-        show_sql: false
+        show-sql: false
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
@@ -64,7 +65,6 @@ jhipster:
         cache: # Used by the CachingHttpHeadersFilter
             timeToLiveInDays: 1461
     cache: # Hibernate 2nd level cache, used by CacheConfiguration
-        timeToLiveSeconds: 3600
         ehcache:
             maxBytesLocalHeap: 256M
     security:
@@ -93,5 +93,3 @@ jhipster:
             host: localhost
             port: 5000
             queueSize: 512
-    swagger: # swagger is disabled. It can be disabled by pasing 'no-swagger' profile at run time as well
-        enabled: false

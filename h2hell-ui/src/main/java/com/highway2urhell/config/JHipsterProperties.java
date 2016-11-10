@@ -1,10 +1,8 @@
 package com.highway2urhell.config;
 
 import javax.validation.constraints.NotNull;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
-
 
 /**
  * Properties specific to JHipster.
@@ -126,18 +124,7 @@ public class JHipsterProperties {
     }
 
     public static class Cache {
-
-        private int timeToLiveSeconds = 3600;
-
         private final Ehcache ehcache = new Ehcache();
-
-        public int getTimeToLiveSeconds() {
-            return timeToLiveSeconds;
-        }
-
-        public void setTimeToLiveSeconds(int timeToLiveSeconds) {
-            this.timeToLiveSeconds = timeToLiveSeconds;
-        }
 
         public Ehcache getEhcache() {
             return ehcache;
@@ -213,8 +200,6 @@ public class JHipsterProperties {
 
         private String licenseUrl;
 
-        private Boolean enabled;
-
         public String getTitle() {
             return title;
         }
@@ -286,14 +271,6 @@ public class JHipsterProperties {
         public void setLicenseUrl(String licenseUrl) {
             this.licenseUrl = licenseUrl;
         }
-
-        public Boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(Boolean enabled) {
-            this.enabled = enabled;
-        }
     }
 
     public static class Metrics {
@@ -321,7 +298,6 @@ public class JHipsterProperties {
         public Logs getLogs() {
             return logs;
         }
-
 
         public static class Jmx {
 
@@ -472,7 +448,6 @@ public class JHipsterProperties {
 
             public void setQueueSize(int queueSize) { this.queueSize = queueSize; }
         }
-
     }
 
     public static class Ribbon {
@@ -482,10 +457,9 @@ public class JHipsterProperties {
         public String[] getDisplayOnActiveProfiles() {
             return displayOnActiveProfiles;
         }
-        
+
         public void setDisplayOnActiveProfiles(String[] displayOnActiveProfiles) {
             this.displayOnActiveProfiles = displayOnActiveProfiles;
         }
-    }  
-
+    }
 }

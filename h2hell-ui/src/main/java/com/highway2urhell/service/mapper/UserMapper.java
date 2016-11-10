@@ -1,8 +1,8 @@
-package com.highway2urhell.web.rest.mapper;
+package com.highway2urhell.service.mapper;
 
 import com.highway2urhell.domain.Authority;
 import com.highway2urhell.domain.User;
-import com.highway2urhell.web.rest.dto.UserDTO;
+import com.highway2urhell.service.dto.UserDTO;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface UserMapper {
     UserDTO userToUserDTO(User user);
 
     List<UserDTO> usersToUserDTOs(List<User> users);
-    
+
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)

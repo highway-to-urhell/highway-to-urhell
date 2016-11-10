@@ -3,7 +3,7 @@ package com.highway2urhell.service;
 import com.highway2urhell.config.JHipsterProperties;
 import com.highway2urhell.domain.User;
 
-import org.apache.commons.lang.CharEncoding;
+import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
-
 
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ import java.util.Locale;
 public class MailService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
-    
+
     private static final String USER = "user";
     private static final String BASE_URL = "baseUrl";
 
@@ -62,7 +61,7 @@ public class MailService {
             javaMailSender.send(mimeMessage);
             log.debug("Sent e-mail to User '{}'", to);
         } catch (Exception e) {
-            log.warn("E-mail could not be sent to user '{}', exception is: {}", to, e.getMessage());
+            log.warn("E-mail could not be sent to user '{}'", to, e);
         }
     }
 
@@ -101,5 +100,4 @@ public class MailService {
         String subject = messageSource.getMessage("email.reset.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
-    
 }

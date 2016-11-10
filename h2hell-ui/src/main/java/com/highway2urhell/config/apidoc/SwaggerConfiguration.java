@@ -28,8 +28,8 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2
-@Profile("!" + Constants.SPRING_PROFILE_NO_SWAGGER)
-@ConditionalOnProperty(prefix="jhipster.swagger", name="enabled")
+@Import(springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration.class)
+@Profile(Constants.SPRING_PROFILE_SWAGGER)
 public class SwaggerConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
@@ -65,7 +65,6 @@ public class SwaggerConfiguration {
             .apiInfo(apiInfo)
             .forCodeGeneration(true)
             .genericModelSubstitutes(ResponseEntity.class)
-            .ignoredParameterTypes(Pageable.class)
             .ignoredParameterTypes(java.sql.Date.class)
             .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
             .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)

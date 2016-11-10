@@ -4,36 +4,36 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myEventLabel" translate="h2HellUiApp.event.home.createOrEditLabel">Create or edit a Event</h4>
+        <h4 class="modal-title" id="myEventLabel" data-translate="h2HellUiApp.event.home.createOrEditLabel">Create or edit a Event</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.event.id">
-            <label for="id" translate="global.field.id">ID</label>
+            <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.event.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="h2HellUiApp.event.typeMessageEvent" for="field_typeMessageEvent">Type Message Event</label>
+            <label class="control-label" data-translate="h2HellUiApp.event.typeMessageEvent" for="field_typeMessageEvent">Type Message Event</label>
             <select class="form-control" name="typeMessageEvent" ng-model="vm.event.typeMessageEvent" id="field_typeMessageEvent">
-                <option value="INIT_PATH" translate="h2HellUiApp.TypeMessageEvent.INIT_PATH">INIT_PATH</option>
-                <option value="ENABLE_ENTRY_POINT" translate="h2HellUiApp.TypeMessageEvent.ENABLE_ENTRY_POINT">ENABLE_ENTRY_POINT</option>
-                <option value="SOURCE" translate="h2HellUiApp.TypeMessageEvent.SOURCE">SOURCE</option>
+                <option value="INIT_PATH" data-translate="h2HellUiApp.TypeMessageEvent.INIT_PATH">INIT_PATH</option>
+                <option value="ENABLE_ENTRY_POINT" data-translate="h2HellUiApp.TypeMessageEvent.ENABLE_ENTRY_POINT">ENABLE_ENTRY_POINT</option>
+                <option value="SOURCE" data-translate="h2HellUiApp.TypeMessageEvent.SOURCE">SOURCE</option>
             </select>
         </div>
         <div class="form-group" ngf-drop ngf-change="vm.setData($file, vm.event)">
-            <label class="control-label" translate="h2HellUiApp.event.data" for="field_data">Data</label>
+            <label class="control-label" data-translate="h2HellUiApp.event.data" for="field_data">Data</label>
             <div>
                 <div ng-if="vm.event.data" class="help-block clearfix">
-                    <a class="pull-left" ng-click="vm.openFile(vm.event.dataContentType, vm.event.data)" translate="entity.action.open">open</a><br>
+                    <a class="pull-left" ng-click="vm.openFile(vm.event.dataContentType, vm.event.data)" data-translate="entity.action.open">open</a><br>
                     <span class="pull-left">{{vm.event.dataContentType}}, {{vm.byteSize(vm.event.data)}}</span>
-                    <button ng-click="vm.event.data=null;vm.event.dataContentType=null;"
+                    <button type="button" ng-click="vm.event.data=null;vm.event.dataContentType=null;"
                             class="btn btn-default btn-xs pull-right">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
-                <button type="file" ngf-select class="btn btn-default btn-block"
-                        ngf-change="vm.setData($file, vm.event)" translate="entity.action.addblob">
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setData($file, vm.event)" data-translate="entity.action.addblob">
                     Add blob
                 </button>
             </div>
@@ -44,14 +44,14 @@
                     ng-model="vm.event.dataContentType" />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="h2HellUiApp.event.consumed" for="field_consumed">Consumed</label>
+            <label class="control-label" data-translate="h2HellUiApp.event.consumed" for="field_consumed">Consumed</label>
             <input type="checkbox" class="form-control" name="consumed" id="field_consumed"
                     ng-model="vm.event.consumed"
                      />
         </div>
 
         <div class="form-group">
-            <label translate="h2HellUiApp.event.analysis" for="field_analysis">Analysis</label>
+            <label data-translate="h2HellUiApp.event.analysis" for="field_analysis">Analysis</label>
             <select class="form-control" id="field_analysis" name="analysis" ng-model="vm.event.analysis" ng-options="analysis as analysis.id for analysis in vm.analyses track by analysis.id">
                 <option value=""></option>
             </select>
@@ -59,10 +59,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

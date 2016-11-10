@@ -26,32 +26,44 @@ describe('administration', function () {
 
     it('should load user management', function () {
         element(by.css('[ui-sref="user-management"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Users/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/userManagement.home.title/);
+        });
     });
 
     it('should load metrics', function () {
         element(by.css('[ui-sref="jhi-metrics"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Application Metrics/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/metrics.title/);
+        });
     });
 
     it('should load health', function () {
         element(by.css('[ui-sref="jhi-health"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Health Checks/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/health.title/);
+        });
     });
 
     it('should load configuration', function () {
         element(by.css('[ui-sref="jhi-configuration"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Configuration/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/configuration.title/);
+        });
     });
 
     it('should load audits', function () {
         element(by.css('[ui-sref="audits"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Audits/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/audits.title/);
+        });
     });
 
     it('should load logs', function () {
         element(by.css('[ui-sref="logs"]')).click();
-        expect(element.all(by.css('h2')).first().getText()).toMatch(/Logs/);
+        element.all(by.css('h2')).first().getAttribute('data-translate').then(function (value) {
+            expect(value).toMatch(/logs.title/);
+        });
     });
 
     afterAll(function () {

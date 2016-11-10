@@ -54,8 +54,41 @@
                 }],
                 entity: ['$stateParams', 'UserPermission', function($stateParams, UserPermission) {
                     return UserPermission.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'user-permission',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('user-permission-detail.edit', {
+            parent: 'user-permission-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/user-permission/user-permission-dialog.html',
+                    controller: 'UserPermissionDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['UserPermission', function(UserPermission) {
+                            return UserPermission.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('user-permission.new', {
             parent: 'user-permission',
@@ -79,7 +112,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('user-permission', null, { reload: true });
+                    $state.go('user-permission', null, { reload: 'user-permission' });
                 }, function() {
                     $state.go('user-permission');
                 });
@@ -104,7 +137,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('user-permission', null, { reload: true });
+                    $state.go('user-permission', null, { reload: 'user-permission' });
                 }, function() {
                     $state.go('^');
                 });
@@ -128,7 +161,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('user-permission', null, { reload: true });
+                    $state.go('user-permission', null, { reload: 'user-permission' });
                 }, function() {
                     $state.go('^');
                 });

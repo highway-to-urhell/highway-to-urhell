@@ -2,6 +2,7 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Application;
+
 import com.highway2urhell.repository.ApplicationRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +33,7 @@ public class ApplicationResource {
         
     @Inject
     private ApplicationRepository applicationRepository;
-    
+
     /**
      * POST  /applications : Create a new application.
      *
@@ -41,9 +41,7 @@ public class ApplicationResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new application, or with status 400 (Bad Request) if the application has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/applications",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/applications")
     @Timed
     public ResponseEntity<Application> createApplication(@Valid @RequestBody Application application) throws URISyntaxException {
         log.debug("REST request to save Application : {}", application);
@@ -65,9 +63,7 @@ public class ApplicationResource {
      * or with status 500 (Internal Server Error) if the application couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/applications",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/applications")
     @Timed
     public ResponseEntity<Application> updateApplication(@Valid @RequestBody Application application) throws URISyntaxException {
         log.debug("REST request to update Application : {}", application);
@@ -87,14 +83,12 @@ public class ApplicationResource {
      * @return the ResponseEntity with status 200 (OK) and the list of applications in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/applications",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/applications")
     @Timed
     public ResponseEntity<List<Application>> getAllApplications(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Applications");
-        Page<Application> page = applicationRepository.findAll(pageable); 
+        Page<Application> page = applicationRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/applications");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -105,9 +99,7 @@ public class ApplicationResource {
      * @param id the id of the application to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the application, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/applications/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/applications/{id}")
     @Timed
     public ResponseEntity<Application> getApplication(@PathVariable Long id) {
         log.debug("REST request to get Application : {}", id);
@@ -125,9 +117,7 @@ public class ApplicationResource {
      * @param id the id of the application to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/applications/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/applications/{id}")
     @Timed
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
         log.debug("REST request to delete Application : {}", id);

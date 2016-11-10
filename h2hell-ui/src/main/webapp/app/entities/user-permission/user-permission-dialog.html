@@ -4,35 +4,35 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myUserPermissionLabel" translate="h2HellUiApp.userPermission.home.createOrEditLabel">Create or edit a User Permission</h4>
+        <h4 class="modal-title" id="myUserPermissionLabel" data-translate="h2HellUiApp.userPermission.home.createOrEditLabel">Create or edit a User Permission</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.userPermission.id">
-            <label for="id" translate="global.field.id">ID</label>
+            <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.userPermission.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="h2HellUiApp.userPermission.permission" for="field_permission">Permission</label>
+            <label class="control-label" data-translate="h2HellUiApp.userPermission.permission" for="field_permission">Permission</label>
             <select class="form-control" name="permission" ng-model="vm.userPermission.permission" id="field_permission" required>
-                <option value="READ" translate="h2HellUiApp.Permission.READ">READ</option>
-                <option value="EXECUTE" translate="h2HellUiApp.Permission.EXECUTE">EXECUTE</option>
+                <option value="READ" data-translate="h2HellUiApp.Permission.READ">READ</option>
+                <option value="EXECUTE" data-translate="h2HellUiApp.Permission.EXECUTE">EXECUTE</option>
             </select>
             <div ng-show="editForm.permission.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.permission.$error.required" translate="entity.validation.required">
+                    ng-show="editForm.permission.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
         </div>
 
         <div class="form-group">
-            <label translate="h2HellUiApp.userPermission.projects" for="field_projects">Projects</label>
+            <label data-translate="h2HellUiApp.userPermission.projects" for="field_projects">Projects</label>
             <select class="form-control" id="field_projects" multiple name="projects" ng-model="vm.userPermission.projects" ng-options="application as application.name for application in vm.applications track by application.id"></select>
         </div>
         <div class="form-group">
-            <label translate="h2HellUiApp.userPermission.team" for="field_team">Team</label>
+            <label data-translate="h2HellUiApp.userPermission.team" for="field_team">Team</label>
             <select class="form-control" id="field_team" name="team" ng-model="vm.userPermission.team" ng-options="team as team.name for team in vm.teams track by team.id">
                 <option value=""></option>
             </select>
@@ -40,10 +40,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

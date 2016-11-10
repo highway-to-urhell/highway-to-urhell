@@ -5,12 +5,13 @@
         .module('h2HellUiApp')
         .controller('EventDetailController', EventDetailController);
 
-    EventDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'Event', 'Analysis'];
+    EventDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Event', 'Analysis'];
 
-    function EventDetailController($scope, $rootScope, $stateParams, DataUtils, entity, Event, Analysis) {
+    function EventDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Event, Analysis) {
         var vm = this;
 
         vm.event = entity;
+        vm.previousState = previousState.name;
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
 

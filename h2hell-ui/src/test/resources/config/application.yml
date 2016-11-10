@@ -10,10 +10,14 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+
 spring:
     application:
         name: h2hellUi
+    jackson:
+        serialization.write_dates_as_timestamps: false
     datasource:
+        type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:h2hellUi;DB_CLOSE_DELAY=-1
         name:
         username:
@@ -22,10 +26,11 @@ spring:
         database-platform: com.highway2urhell.domain.util.FixedH2Dialect
         database: H2
         open-in-view: false
-        show_sql: true
+        show-sql: true
         hibernate:
             ddl-auto: none
-            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+            naming:
+                strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
         properties:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
@@ -75,4 +80,3 @@ jhipster:
         contactEmail:
         license:
         licenseUrl:
-        enabled: false

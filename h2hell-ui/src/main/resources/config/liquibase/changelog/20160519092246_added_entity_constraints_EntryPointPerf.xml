@@ -10,7 +10,7 @@
         
         <addForeignKeyConstraint baseColumnNames="entry_point_id"
                                  baseTableName="entry_point_perf"
-                                 constraintName="fk_entrypointperf_entrypoint_id"
+                                 constraintName="fk_entry_point_perf_entry_point_id"
                                  referencedColumnNames="id"
                                  referencedTableName="entry_point"/>
 

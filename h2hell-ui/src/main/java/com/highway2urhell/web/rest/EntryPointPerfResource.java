@@ -2,6 +2,7 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.EntryPointPerf;
+
 import com.highway2urhell.repository.EntryPointPerfRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +32,7 @@ public class EntryPointPerfResource {
         
     @Inject
     private EntryPointPerfRepository entryPointPerfRepository;
-    
+
     /**
      * POST  /entry-point-perfs : Create a new entryPointPerf.
      *
@@ -40,9 +40,7 @@ public class EntryPointPerfResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new entryPointPerf, or with status 400 (Bad Request) if the entryPointPerf has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-point-perfs",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/entry-point-perfs")
     @Timed
     public ResponseEntity<EntryPointPerf> createEntryPointPerf(@RequestBody EntryPointPerf entryPointPerf) throws URISyntaxException {
         log.debug("REST request to save EntryPointPerf : {}", entryPointPerf);
@@ -64,9 +62,7 @@ public class EntryPointPerfResource {
      * or with status 500 (Internal Server Error) if the entryPointPerf couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/entry-point-perfs",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/entry-point-perfs")
     @Timed
     public ResponseEntity<EntryPointPerf> updateEntryPointPerf(@RequestBody EntryPointPerf entryPointPerf) throws URISyntaxException {
         log.debug("REST request to update EntryPointPerf : {}", entryPointPerf);
@@ -86,14 +82,12 @@ public class EntryPointPerfResource {
      * @return the ResponseEntity with status 200 (OK) and the list of entryPointPerfs in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/entry-point-perfs",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-point-perfs")
     @Timed
     public ResponseEntity<List<EntryPointPerf>> getAllEntryPointPerfs(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of EntryPointPerfs");
-        Page<EntryPointPerf> page = entryPointPerfRepository.findAll(pageable); 
+        Page<EntryPointPerf> page = entryPointPerfRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entry-point-perfs");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -104,9 +98,7 @@ public class EntryPointPerfResource {
      * @param id the id of the entryPointPerf to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the entryPointPerf, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/entry-point-perfs/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/entry-point-perfs/{id}")
     @Timed
     public ResponseEntity<EntryPointPerf> getEntryPointPerf(@PathVariable Long id) {
         log.debug("REST request to get EntryPointPerf : {}", id);
@@ -124,9 +116,7 @@ public class EntryPointPerfResource {
      * @param id the id of the entryPointPerf to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/entry-point-perfs/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/entry-point-perfs/{id}")
     @Timed
     public ResponseEntity<Void> deleteEntryPointPerf(@PathVariable Long id) {
         log.debug("REST request to delete EntryPointPerf : {}", id);

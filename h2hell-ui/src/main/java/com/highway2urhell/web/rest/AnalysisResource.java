@@ -2,13 +2,13 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
+
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class AnalysisResource {
         
     @Inject
     private AnalysisRepository analysisRepository;
-    
+
     /**
      * POST  /analyses : Create a new analysis.
      *
@@ -37,9 +37,7 @@ public class AnalysisResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new analysis, or with status 400 (Bad Request) if the analysis has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/analyses",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/analyses")
     @Timed
     public ResponseEntity<Analysis> createAnalysis(@RequestBody Analysis analysis) throws URISyntaxException {
         log.debug("REST request to save Analysis : {}", analysis);
@@ -61,9 +59,7 @@ public class AnalysisResource {
      * or with status 500 (Internal Server Error) if the analysis couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/analyses",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/analyses")
     @Timed
     public ResponseEntity<Analysis> updateAnalysis(@RequestBody Analysis analysis) throws URISyntaxException {
         log.debug("REST request to update Analysis : {}", analysis);
@@ -81,9 +77,7 @@ public class AnalysisResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of analyses in body
      */
-    @RequestMapping(value = "/analyses",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/analyses")
     @Timed
     public List<Analysis> getAllAnalyses() {
         log.debug("REST request to get all Analyses");
@@ -97,9 +91,7 @@ public class AnalysisResource {
      * @param id the id of the analysis to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the analysis, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/analyses/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/analyses/{id}")
     @Timed
     public ResponseEntity<Analysis> getAnalysis(@PathVariable Long id) {
         log.debug("REST request to get Analysis : {}", id);
@@ -117,9 +109,7 @@ public class AnalysisResource {
      * @param id the id of the analysis to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/analyses/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/analyses/{id}")
     @Timed
     public ResponseEntity<Void> deleteAnalysis(@PathVariable Long id) {
         log.debug("REST request to delete Analysis : {}", id);

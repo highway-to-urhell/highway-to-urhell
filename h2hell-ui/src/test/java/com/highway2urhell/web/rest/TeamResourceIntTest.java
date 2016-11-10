@@ -1,6 +1,7 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
+
 import com.highway2urhell.domain.Team;
 import com.highway2urhell.repository.TeamRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,22 +22,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the TeamResource REST controller.
  *
  * @see TeamResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = H2HellUiApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = H2HellUiApp.class)
 public class TeamResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
@@ -52,6 +49,9 @@ public class TeamResourceIntTest {
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Inject
+    private EntityManager em;
 
     private MockMvc restTeamMockMvc;
 
@@ -67,10 +67,21 @@ public class TeamResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Team createEntity(EntityManager em) {
+        Team team = new Team();
+        team.setName(DEFAULT_NAME);
+        return team;
+    }
+
     @Before
     public void initTest() {
-        team = new Team();
-        team.setName(DEFAULT_NAME);
+        team = createEntity(em);
     }
 
     @Test
@@ -119,7 +130,7 @@ public class TeamResourceIntTest {
         // Get all the teams
         restTeamMockMvc.perform(get("/api/teams?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(team.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
@@ -133,7 +144,7 @@ public class TeamResourceIntTest {
         // Get the team
         restTeamMockMvc.perform(get("/api/teams/{id}", team.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(team.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
@@ -154,8 +165,7 @@ public class TeamResourceIntTest {
         int databaseSizeBeforeUpdate = teamRepository.findAll().size();
 
         // Update the team
-        Team updatedTeam = new Team();
-        updatedTeam.setId(team.getId());
+        Team updatedTeam = teamRepository.findOne(team.getId());
         updatedTeam.setName(UPDATED_NAME);
 
         restTeamMockMvc.perform(put("/api/teams")

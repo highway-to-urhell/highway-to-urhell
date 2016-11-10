@@ -52,8 +52,41 @@
                 }],
                 entity: ['$stateParams', 'Analysis', function($stateParams, Analysis) {
                     return Analysis.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'analysis',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('analysis-detail.edit', {
+            parent: 'analysis-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/analysis/analysis-dialog.html',
+                    controller: 'AnalysisDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Analysis', function(Analysis) {
+                            return Analysis.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('analysis.new', {
             parent: 'analysis',
@@ -80,7 +113,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('analysis', null, { reload: true });
+                    $state.go('analysis', null, { reload: 'analysis' });
                 }, function() {
                     $state.go('analysis');
                 });
@@ -105,7 +138,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('analysis', null, { reload: true });
+                    $state.go('analysis', null, { reload: 'analysis' });
                 }, function() {
                     $state.go('^');
                 });
@@ -129,7 +162,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('analysis', null, { reload: true });
+                    $state.go('analysis', null, { reload: 'analysis' });
                 }, function() {
                     $state.go('^');
                 });

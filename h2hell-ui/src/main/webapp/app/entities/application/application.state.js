@@ -52,8 +52,41 @@
                 }],
                 entity: ['$stateParams', 'Application', function($stateParams, Application) {
                     return Application.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'application',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('application-detail.edit', {
+            parent: 'application-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/application/application-dialog.html',
+                    controller: 'ApplicationDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Application', function(Application) {
+                            return Application.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('application.new', {
             parent: 'application',
@@ -83,7 +116,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('application', null, { reload: true });
+                    $state.go('application', null, { reload: 'application' });
                 }, function() {
                     $state.go('application');
                 });
@@ -108,7 +141,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('application', null, { reload: true });
+                    $state.go('application', null, { reload: 'application' });
                 }, function() {
                     $state.go('^');
                 });
@@ -132,7 +165,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('application', null, { reload: true });
+                    $state.go('application', null, { reload: 'application' });
                 }, function() {
                     $state.go('^');
                 });

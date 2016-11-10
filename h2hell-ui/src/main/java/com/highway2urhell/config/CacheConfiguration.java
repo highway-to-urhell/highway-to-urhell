@@ -50,7 +50,10 @@ public class CacheConfiguration {
         log.debug("Registering Ehcache Metrics gauges");
         Stream.of(cacheManager.getCacheNames()).forEach(name -> {
             net.sf.ehcache.Cache cache = cacheManager.getCache(name);
-            cacheManager.replaceCacheWithDecoratedCache(cache, InstrumentedEhcache.instrument(metricRegistry, cache));
+            if(cache != null)
+                cacheManager.replaceCacheWithDecoratedCache(cache, InstrumentedEhcache.instrument(metricRegistry, cache));
+            else
+                log.warn("No cache for "+name+" but defined in cacheManager list");
         });
         EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
         ehCacheManager.setCacheManager(cacheManager);

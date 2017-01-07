@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.10.0",
+    "jhipsterVersion": "3.12.1",
     "baseName": "h2hellUi",
     "packageName": "com.highway2urhell",
     "packageFolder": "com/highway2urhell",

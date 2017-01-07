@@ -32,7 +32,7 @@
             }
         })
         .state('entry-point-detail', {
-            parent: 'entity',
+            parent: 'entry-point',
             url: '/entry-point/{id}',
             data: {
                 authorities: ['ROLE_USER'],

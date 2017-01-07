@@ -1,32 +1,39 @@
 package com.highway2urhell.web.rest;
 
 import com.highway2urhell.config.DefaultProfileUtil;
-import com.highway2urhell.config.JHipsterProperties;
+
+import io.github.jhipster.config.JHipsterProperties;
+
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Resource to return information about the currently running Spring profiles.
+ */
 @RestController
 @RequestMapping("/api")
 public class ProfileInfoResource {
 
-    @Inject
-    Environment env;
+    private final Environment env;
 
-    @Inject
-    private JHipsterProperties jHipsterProperties;
+    private final JHipsterProperties jHipsterProperties;
+
+    public ProfileInfoResource(Environment env, JHipsterProperties jHipsterProperties) {
+        this.env = env;
+        this.jHipsterProperties = jHipsterProperties;
+    }
 
     @GetMapping("/profile-info")
     public ProfileInfoResponse getActiveProfiles() {
-        return new ProfileInfoResponse(DefaultProfileUtil.getActiveProfiles(env), getRibbonEnv());
+        String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(env);
+        return new ProfileInfoResponse(activeProfiles, getRibbonEnv(activeProfiles));
     }
 
-    private String getRibbonEnv() {
-        String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(env);
+    private String getRibbonEnv(String[] activeProfiles) {
         String[] displayOnActiveProfiles = jHipsterProperties.getRibbon().getDisplayOnActiveProfiles();
 
         if (displayOnActiveProfiles == null) {

@@ -23,7 +23,7 @@ public class UserPermission implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -82,7 +82,7 @@ public class UserPermission implements Serializable {
             return false;
         }
         UserPermission userPermission = (UserPermission) o;
-        if(userPermission.id == null || id == null) {
+        if (userPermission.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, userPermission.id);

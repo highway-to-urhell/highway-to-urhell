@@ -5,6 +5,8 @@ import com.highway2urhell.domain.UserPermission;
 
 import com.highway2urhell.repository.UserPermissionRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,8 +29,11 @@ public class UserPermissionResource {
 
     private final Logger log = LoggerFactory.getLogger(UserPermissionResource.class);
         
-    @Inject
-    private UserPermissionRepository userPermissionRepository;
+    private final UserPermissionRepository userPermissionRepository;
+
+    public UserPermissionResource(UserPermissionRepository userPermissionRepository) {
+        this.userPermissionRepository = userPermissionRepository;
+    }
 
     /**
      * POST  /user-permissions : Create a new userPermission.
@@ -97,11 +101,7 @@ public class UserPermissionResource {
     public ResponseEntity<UserPermission> getUserPermission(@PathVariable Long id) {
         log.debug("REST request to get UserPermission : {}", id);
         UserPermission userPermission = userPermissionRepository.findOneWithEagerRelationships(id);
-        return Optional.ofNullable(userPermission)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userPermission));
     }
 
     /**

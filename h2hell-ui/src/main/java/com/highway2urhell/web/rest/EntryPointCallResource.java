@@ -6,6 +6,9 @@ import com.highway2urhell.domain.EntryPointCall;
 import com.highway2urhell.repository.EntryPointCallRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -30,8 +32,11 @@ public class EntryPointCallResource {
 
     private final Logger log = LoggerFactory.getLogger(EntryPointCallResource.class);
         
-    @Inject
-    private EntryPointCallRepository entryPointCallRepository;
+    private final EntryPointCallRepository entryPointCallRepository;
+
+    public EntryPointCallResource(EntryPointCallRepository entryPointCallRepository) {
+        this.entryPointCallRepository = entryPointCallRepository;
+    }
 
     /**
      * POST  /entry-point-calls : Create a new entryPointCall.
@@ -84,7 +89,7 @@ public class EntryPointCallResource {
      */
     @GetMapping("/entry-point-calls")
     @Timed
-    public ResponseEntity<List<EntryPointCall>> getAllEntryPointCalls(Pageable pageable)
+    public ResponseEntity<List<EntryPointCall>> getAllEntryPointCalls(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of EntryPointCalls");
         Page<EntryPointCall> page = entryPointCallRepository.findAll(pageable);
@@ -103,11 +108,7 @@ public class EntryPointCallResource {
     public ResponseEntity<EntryPointCall> getEntryPointCall(@PathVariable Long id) {
         log.debug("REST request to get EntryPointCall : {}", id);
         EntryPointCall entryPointCall = entryPointCallRepository.findOne(id);
-        return Optional.ofNullable(entryPointCall)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(entryPointCall));
     }
 
     /**

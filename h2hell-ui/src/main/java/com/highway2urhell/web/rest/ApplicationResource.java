@@ -6,6 +6,9 @@ import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.ApplicationRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,8 +33,11 @@ public class ApplicationResource {
 
     private final Logger log = LoggerFactory.getLogger(ApplicationResource.class);
         
-    @Inject
-    private ApplicationRepository applicationRepository;
+    private final ApplicationRepository applicationRepository;
+
+    public ApplicationResource(ApplicationRepository applicationRepository) {
+        this.applicationRepository = applicationRepository;
+    }
 
     /**
      * POST  /applications : Create a new application.
@@ -85,7 +90,7 @@ public class ApplicationResource {
      */
     @GetMapping("/applications")
     @Timed
-    public ResponseEntity<List<Application>> getAllApplications(Pageable pageable)
+    public ResponseEntity<List<Application>> getAllApplications(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Applications");
         Page<Application> page = applicationRepository.findAll(pageable);
@@ -104,11 +109,7 @@ public class ApplicationResource {
     public ResponseEntity<Application> getApplication(@PathVariable Long id) {
         log.debug("REST request to get Application : {}", id);
         Application application = applicationRepository.findOne(id);
-        return Optional.ofNullable(application)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(application));
     }
 
     /**

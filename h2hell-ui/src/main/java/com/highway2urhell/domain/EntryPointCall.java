@@ -19,7 +19,7 @@ public class EntryPointCall implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "date_incoming")
@@ -84,7 +84,7 @@ public class EntryPointCall implements Serializable {
             return false;
         }
         EntryPointCall entryPointCall = (EntryPointCall) o;
-        if(entryPointCall.id == null || id == null) {
+        if (entryPointCall.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, entryPointCall.id);

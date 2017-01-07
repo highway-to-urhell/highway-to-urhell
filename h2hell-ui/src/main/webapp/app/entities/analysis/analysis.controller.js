@@ -9,7 +9,7 @@
 
     function AnalysisController ($scope, $state, Analysis) {
         var vm = this;
-        
+
         vm.analyses = [];
 
         loadAll();
@@ -17,6 +17,7 @@
         function loadAll() {
             Analysis.query(function(result) {
                 vm.analyses = result;
+                vm.searchQuery = null;
             });
         }
     }

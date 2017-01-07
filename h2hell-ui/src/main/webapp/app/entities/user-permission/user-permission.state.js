@@ -33,7 +33,7 @@
             }
         })
         .state('user-permission-detail', {
-            parent: 'entity',
+            parent: 'user-permission',
             url: '/user-permission/{id}',
             data: {
                 authorities: ['ROLE_USER'],

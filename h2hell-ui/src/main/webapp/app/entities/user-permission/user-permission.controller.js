@@ -9,7 +9,7 @@
 
     function UserPermissionController ($scope, $state, UserPermission) {
         var vm = this;
-        
+
         vm.userPermissions = [];
 
         loadAll();
@@ -17,6 +17,7 @@
         function loadAll() {
             UserPermission.query(function(result) {
                 vm.userPermissions = result;
+                vm.searchQuery = null;
             });
         }
     }

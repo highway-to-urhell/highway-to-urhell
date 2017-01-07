@@ -52,7 +52,7 @@
             }
         })
         .state('entry-point-call-detail', {
-            parent: 'entity',
+            parent: 'entry-point-call',
             url: '/entry-point-call/{id}',
             data: {
                 authorities: ['ROLE_USER'],

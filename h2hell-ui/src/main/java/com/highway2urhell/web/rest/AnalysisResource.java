@@ -5,6 +5,8 @@ import com.highway2urhell.domain.Analysis;
 
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -27,8 +28,11 @@ public class AnalysisResource {
 
     private final Logger log = LoggerFactory.getLogger(AnalysisResource.class);
         
-    @Inject
-    private AnalysisRepository analysisRepository;
+    private final AnalysisRepository analysisRepository;
+
+    public AnalysisResource(AnalysisRepository analysisRepository) {
+        this.analysisRepository = analysisRepository;
+    }
 
     /**
      * POST  /analyses : Create a new analysis.
@@ -96,11 +100,7 @@ public class AnalysisResource {
     public ResponseEntity<Analysis> getAnalysis(@PathVariable Long id) {
         log.debug("REST request to get Analysis : {}", id);
         Analysis analysis = analysisRepository.findOne(id);
-        return Optional.ofNullable(analysis)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(analysis));
     }
 
     /**

@@ -17,7 +17,7 @@
             <label class="control-label" data-translate="h2HellUiApp.application.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
                     ng-model="vm.application.name"
-                    required />
+                    required/>
             <div ng-show="editForm.name.$invalid">
                 <p class="help-block"
                     ng-show="editForm.name.$error.required" data-translate="entity.validation.required">
@@ -29,7 +29,7 @@
             <label class="control-label" data-translate="h2HellUiApp.application.token" for="field_token">Token</label>
             <input type="text" class="form-control" name="token" id="field_token"
                     ng-model="vm.application.token"
-                    required />
+                    required/>
             <div ng-show="editForm.token.$invalid">
                 <p class="help-block"
                     ng-show="editForm.token.$error.required" data-translate="entity.validation.required">
@@ -41,7 +41,7 @@
             <label class="control-label" data-translate="h2HellUiApp.application.dateCreation" for="field_dateCreation">Date Creation</label>
                 <div class="input-group">
                     <input id="field_dateCreation" type="text" class="form-control" name="dateCreation" datetime-picker="{{dateformat}}" ng-model="vm.application.dateCreation" is-open="vm.datePickerOpenStatus.dateCreation"
-                      />
+                    />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateCreation')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -51,25 +51,25 @@
             <label class="control-label" data-translate="h2HellUiApp.application.urlApp" for="field_urlApp">Url App</label>
             <input type="text" class="form-control" name="urlApp" id="field_urlApp"
                     ng-model="vm.application.urlApp"
-                     />
+                    />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="h2HellUiApp.application.description" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
                     ng-model="vm.application.description"
-                     />
+                    />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="h2HellUiApp.application.appType" for="field_appType">App Type</label>
             <input type="text" class="form-control" name="appType" id="field_appType"
                     ng-model="vm.application.appType"
-                     />
+                    />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="h2HellUiApp.application.analysed" for="field_analysed">Analysed</label>
             <input type="checkbox" class="form-control" name="analysed" id="field_analysed"
                     ng-model="vm.application.analysed"
-                     />
+                    />
         </div>
 
     </div>

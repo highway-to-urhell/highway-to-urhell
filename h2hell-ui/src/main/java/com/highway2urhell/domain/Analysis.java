@@ -22,7 +22,7 @@ public class Analysis implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "date_creation")
@@ -123,7 +123,7 @@ public class Analysis implements Serializable {
             return false;
         }
         Analysis analysis = (Analysis) o;
-        if(analysis.id == null || id == null) {
+        if (analysis.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, analysis.id);

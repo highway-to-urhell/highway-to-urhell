@@ -8,28 +8,27 @@ import com.highway2urhell.repository.AnalysisRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
 import java.time.ZoneId;
 import java.util.List;
 
+import static com.highway2urhell.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,40 +41,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = H2HellUiApp.class)
 public class AnalysisResourceIntTest {
 
-    private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_CREATION = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_CREATION_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_CREATION);
 
-    private static final String DEFAULT_PATH_SOURCE = "AAAAA";
-    private static final String UPDATED_PATH_SOURCE = "BBBBB";
+    private static final String DEFAULT_PATH_SOURCE = "AAAAAAAAAA";
+    private static final String UPDATED_PATH_SOURCE = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_NUMBER_ENTRY_POINTS = 1;
     private static final Integer UPDATED_NUMBER_ENTRY_POINTS = 2;
 
-    private static final String DEFAULT_APP_VERSION = "AAAAA";
-    private static final String UPDATED_APP_VERSION = "BBBBB";
+    private static final String DEFAULT_APP_VERSION = "AAAAAAAAAA";
+    private static final String UPDATED_APP_VERSION = "BBBBBBBBBB";
 
-    @Inject
+    @Autowired
     private AnalysisRepository analysisRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
+    @Autowired
     private EntityManager em;
 
     private MockMvc restAnalysisMockMvc;
 
     private Analysis analysis;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        AnalysisResource analysisResource = new AnalysisResource();
-        ReflectionTestUtils.setField(analysisResource, "analysisRepository", analysisRepository);
+            AnalysisResource analysisResource = new AnalysisResource(analysisRepository);
         this.restAnalysisMockMvc = MockMvcBuilders.standaloneSetup(analysisResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -109,14 +106,14 @@ public class AnalysisResourceIntTest {
         // Create the Analysis
 
         restAnalysisMockMvc.perform(post("/api/analyses")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(analysis)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(analysis)))
+            .andExpect(status().isCreated());
 
         // Validate the Analysis in the database
-        List<Analysis> analyses = analysisRepository.findAll();
-        assertThat(analyses).hasSize(databaseSizeBeforeCreate + 1);
-        Analysis testAnalysis = analyses.get(analyses.size() - 1);
+        List<Analysis> analysisList = analysisRepository.findAll();
+        assertThat(analysisList).hasSize(databaseSizeBeforeCreate + 1);
+        Analysis testAnalysis = analysisList.get(analysisList.size() - 1);
         assertThat(testAnalysis.getDateCreation()).isEqualTo(DEFAULT_DATE_CREATION);
         assertThat(testAnalysis.getPathSource()).isEqualTo(DEFAULT_PATH_SOURCE);
         assertThat(testAnalysis.getNumberEntryPoints()).isEqualTo(DEFAULT_NUMBER_ENTRY_POINTS);
@@ -125,19 +122,39 @@ public class AnalysisResourceIntTest {
 
     @Test
     @Transactional
+    public void createAnalysisWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = analysisRepository.findAll().size();
+
+        // Create the Analysis with an existing ID
+        Analysis existingAnalysis = new Analysis();
+        existingAnalysis.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restAnalysisMockMvc.perform(post("/api/analyses")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(existingAnalysis)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Alice in the database
+        List<Analysis> analysisList = analysisRepository.findAll();
+        assertThat(analysisList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
     public void getAllAnalyses() throws Exception {
         // Initialize the database
         analysisRepository.saveAndFlush(analysis);
 
-        // Get all the analyses
+        // Get all the analysisList
         restAnalysisMockMvc.perform(get("/api/analyses?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(analysis.getId().intValue())))
-                .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(DEFAULT_DATE_CREATION_STR)))
-                .andExpect(jsonPath("$.[*].pathSource").value(hasItem(DEFAULT_PATH_SOURCE.toString())))
-                .andExpect(jsonPath("$.[*].numberEntryPoints").value(hasItem(DEFAULT_NUMBER_ENTRY_POINTS)))
-                .andExpect(jsonPath("$.[*].appVersion").value(hasItem(DEFAULT_APP_VERSION.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(analysis.getId().intValue())))
+            .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(sameInstant(DEFAULT_DATE_CREATION))))
+            .andExpect(jsonPath("$.[*].pathSource").value(hasItem(DEFAULT_PATH_SOURCE.toString())))
+            .andExpect(jsonPath("$.[*].numberEntryPoints").value(hasItem(DEFAULT_NUMBER_ENTRY_POINTS)))
+            .andExpect(jsonPath("$.[*].appVersion").value(hasItem(DEFAULT_APP_VERSION.toString())));
     }
 
     @Test
@@ -151,7 +168,7 @@ public class AnalysisResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(analysis.getId().intValue()))
-            .andExpect(jsonPath("$.dateCreation").value(DEFAULT_DATE_CREATION_STR))
+            .andExpect(jsonPath("$.dateCreation").value(sameInstant(DEFAULT_DATE_CREATION)))
             .andExpect(jsonPath("$.pathSource").value(DEFAULT_PATH_SOURCE.toString()))
             .andExpect(jsonPath("$.numberEntryPoints").value(DEFAULT_NUMBER_ENTRY_POINTS))
             .andExpect(jsonPath("$.appVersion").value(DEFAULT_APP_VERSION.toString()));
@@ -162,7 +179,7 @@ public class AnalysisResourceIntTest {
     public void getNonExistingAnalysis() throws Exception {
         // Get the analysis
         restAnalysisMockMvc.perform(get("/api/analyses/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -180,18 +197,36 @@ public class AnalysisResourceIntTest {
         updatedAnalysis.setAppVersion(UPDATED_APP_VERSION);
 
         restAnalysisMockMvc.perform(put("/api/analyses")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedAnalysis)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedAnalysis)))
+            .andExpect(status().isOk());
 
         // Validate the Analysis in the database
-        List<Analysis> analyses = analysisRepository.findAll();
-        assertThat(analyses).hasSize(databaseSizeBeforeUpdate);
-        Analysis testAnalysis = analyses.get(analyses.size() - 1);
+        List<Analysis> analysisList = analysisRepository.findAll();
+        assertThat(analysisList).hasSize(databaseSizeBeforeUpdate);
+        Analysis testAnalysis = analysisList.get(analysisList.size() - 1);
         assertThat(testAnalysis.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
         assertThat(testAnalysis.getPathSource()).isEqualTo(UPDATED_PATH_SOURCE);
         assertThat(testAnalysis.getNumberEntryPoints()).isEqualTo(UPDATED_NUMBER_ENTRY_POINTS);
         assertThat(testAnalysis.getAppVersion()).isEqualTo(UPDATED_APP_VERSION);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingAnalysis() throws Exception {
+        int databaseSizeBeforeUpdate = analysisRepository.findAll().size();
+
+        // Create the Analysis
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restAnalysisMockMvc.perform(put("/api/analyses")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(analysis)))
+            .andExpect(status().isCreated());
+
+        // Validate the Analysis in the database
+        List<Analysis> analysisList = analysisRepository.findAll();
+        assertThat(analysisList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -203,11 +238,11 @@ public class AnalysisResourceIntTest {
 
         // Get the analysis
         restAnalysisMockMvc.perform(delete("/api/analyses/{id}", analysis.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Analysis> analyses = analysisRepository.findAll();
-        assertThat(analyses).hasSize(databaseSizeBeforeDelete - 1);
+        List<Analysis> analysisList = analysisRepository.findAll();
+        assertThat(analysisList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

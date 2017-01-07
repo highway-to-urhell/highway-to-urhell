@@ -8,24 +8,22 @@ import com.highway2urhell.repository.UserPermissionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,27 +40,26 @@ public class UserPermissionResourceIntTest {
     private static final Permission DEFAULT_PERMISSION = Permission.READ;
     private static final Permission UPDATED_PERMISSION = Permission.EXECUTE;
 
-    @Inject
+    @Autowired
     private UserPermissionRepository userPermissionRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
+    @Autowired
     private EntityManager em;
 
     private MockMvc restUserPermissionMockMvc;
 
     private UserPermission userPermission;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        UserPermissionResource userPermissionResource = new UserPermissionResource();
-        ReflectionTestUtils.setField(userPermissionResource, "userPermissionRepository", userPermissionRepository);
+            UserPermissionResource userPermissionResource = new UserPermissionResource(userPermissionRepository);
         this.restUserPermissionMockMvc = MockMvcBuilders.standaloneSetup(userPermissionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -93,15 +90,35 @@ public class UserPermissionResourceIntTest {
         // Create the UserPermission
 
         restUserPermissionMockMvc.perform(post("/api/user-permissions")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userPermission)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(userPermission)))
+            .andExpect(status().isCreated());
 
         // Validate the UserPermission in the database
-        List<UserPermission> userPermissions = userPermissionRepository.findAll();
-        assertThat(userPermissions).hasSize(databaseSizeBeforeCreate + 1);
-        UserPermission testUserPermission = userPermissions.get(userPermissions.size() - 1);
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeCreate + 1);
+        UserPermission testUserPermission = userPermissionList.get(userPermissionList.size() - 1);
         assertThat(testUserPermission.getPermission()).isEqualTo(DEFAULT_PERMISSION);
+    }
+
+    @Test
+    @Transactional
+    public void createUserPermissionWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = userPermissionRepository.findAll().size();
+
+        // Create the UserPermission with an existing ID
+        UserPermission existingUserPermission = new UserPermission();
+        existingUserPermission.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restUserPermissionMockMvc.perform(post("/api/user-permissions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(existingUserPermission)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Alice in the database
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -114,12 +131,12 @@ public class UserPermissionResourceIntTest {
         // Create the UserPermission, which fails.
 
         restUserPermissionMockMvc.perform(post("/api/user-permissions")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userPermission)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(userPermission)))
+            .andExpect(status().isBadRequest());
 
-        List<UserPermission> userPermissions = userPermissionRepository.findAll();
-        assertThat(userPermissions).hasSize(databaseSizeBeforeTest);
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -128,12 +145,12 @@ public class UserPermissionResourceIntTest {
         // Initialize the database
         userPermissionRepository.saveAndFlush(userPermission);
 
-        // Get all the userPermissions
+        // Get all the userPermissionList
         restUserPermissionMockMvc.perform(get("/api/user-permissions?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(userPermission.getId().intValue())))
-                .andExpect(jsonPath("$.[*].permission").value(hasItem(DEFAULT_PERMISSION.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(userPermission.getId().intValue())))
+            .andExpect(jsonPath("$.[*].permission").value(hasItem(DEFAULT_PERMISSION.toString())));
     }
 
     @Test
@@ -155,7 +172,7 @@ public class UserPermissionResourceIntTest {
     public void getNonExistingUserPermission() throws Exception {
         // Get the userPermission
         restUserPermissionMockMvc.perform(get("/api/user-permissions/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -170,15 +187,33 @@ public class UserPermissionResourceIntTest {
         updatedUserPermission.setPermission(UPDATED_PERMISSION);
 
         restUserPermissionMockMvc.perform(put("/api/user-permissions")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedUserPermission)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedUserPermission)))
+            .andExpect(status().isOk());
 
         // Validate the UserPermission in the database
-        List<UserPermission> userPermissions = userPermissionRepository.findAll();
-        assertThat(userPermissions).hasSize(databaseSizeBeforeUpdate);
-        UserPermission testUserPermission = userPermissions.get(userPermissions.size() - 1);
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeUpdate);
+        UserPermission testUserPermission = userPermissionList.get(userPermissionList.size() - 1);
         assertThat(testUserPermission.getPermission()).isEqualTo(UPDATED_PERMISSION);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingUserPermission() throws Exception {
+        int databaseSizeBeforeUpdate = userPermissionRepository.findAll().size();
+
+        // Create the UserPermission
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restUserPermissionMockMvc.perform(put("/api/user-permissions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(userPermission)))
+            .andExpect(status().isCreated());
+
+        // Validate the UserPermission in the database
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -190,11 +225,11 @@ public class UserPermissionResourceIntTest {
 
         // Get the userPermission
         restUserPermissionMockMvc.perform(delete("/api/user-permissions/{id}", userPermission.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<UserPermission> userPermissions = userPermissionRepository.findAll();
-        assertThat(userPermissions).hasSize(databaseSizeBeforeDelete - 1);
+        List<UserPermission> userPermissionList = userPermissionRepository.findAll();
+        assertThat(userPermissionList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

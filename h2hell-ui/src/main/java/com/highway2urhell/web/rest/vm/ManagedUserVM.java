@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.highway2urhell.domain.User;
 import com.highway2urhell.service.dto.UserDTO;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**

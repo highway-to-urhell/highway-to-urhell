@@ -8,25 +8,23 @@ import com.highway2urhell.repository.EventRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -51,27 +49,26 @@ public class EventResourceIntTest {
     private static final Boolean DEFAULT_CONSUMED = false;
     private static final Boolean UPDATED_CONSUMED = true;
 
-    @Inject
+    @Autowired
     private EventRepository eventRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
+    @Autowired
     private EntityManager em;
 
     private MockMvc restEventMockMvc;
 
     private Event event;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        EventResource eventResource = new EventResource();
-        ReflectionTestUtils.setField(eventResource, "eventRepository", eventRepository);
+            EventResource eventResource = new EventResource(eventRepository);
         this.restEventMockMvc = MockMvcBuilders.standaloneSetup(eventResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -105,14 +102,14 @@ public class EventResourceIntTest {
         // Create the Event
 
         restEventMockMvc.perform(post("/api/events")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(event)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(event)))
+            .andExpect(status().isCreated());
 
         // Validate the Event in the database
-        List<Event> events = eventRepository.findAll();
-        assertThat(events).hasSize(databaseSizeBeforeCreate + 1);
-        Event testEvent = events.get(events.size() - 1);
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeCreate + 1);
+        Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTypeMessageEvent()).isEqualTo(DEFAULT_TYPE_MESSAGE_EVENT);
         assertThat(testEvent.getData()).isEqualTo(DEFAULT_DATA);
         assertThat(testEvent.getDataContentType()).isEqualTo(DEFAULT_DATA_CONTENT_TYPE);
@@ -121,19 +118,39 @@ public class EventResourceIntTest {
 
     @Test
     @Transactional
+    public void createEventWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = eventRepository.findAll().size();
+
+        // Create the Event with an existing ID
+        Event existingEvent = new Event();
+        existingEvent.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restEventMockMvc.perform(post("/api/events")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(existingEvent)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Alice in the database
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
     public void getAllEvents() throws Exception {
         // Initialize the database
         eventRepository.saveAndFlush(event);
 
-        // Get all the events
+        // Get all the eventList
         restEventMockMvc.perform(get("/api/events?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
-                .andExpect(jsonPath("$.[*].typeMessageEvent").value(hasItem(DEFAULT_TYPE_MESSAGE_EVENT.toString())))
-                .andExpect(jsonPath("$.[*].dataContentType").value(hasItem(DEFAULT_DATA_CONTENT_TYPE)))
-                .andExpect(jsonPath("$.[*].data").value(hasItem(Base64Utils.encodeToString(DEFAULT_DATA))))
-                .andExpect(jsonPath("$.[*].consumed").value(hasItem(DEFAULT_CONSUMED.booleanValue())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
+            .andExpect(jsonPath("$.[*].typeMessageEvent").value(hasItem(DEFAULT_TYPE_MESSAGE_EVENT.toString())))
+            .andExpect(jsonPath("$.[*].dataContentType").value(hasItem(DEFAULT_DATA_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].data").value(hasItem(Base64Utils.encodeToString(DEFAULT_DATA))))
+            .andExpect(jsonPath("$.[*].consumed").value(hasItem(DEFAULT_CONSUMED.booleanValue())));
     }
 
     @Test
@@ -158,7 +175,7 @@ public class EventResourceIntTest {
     public void getNonExistingEvent() throws Exception {
         // Get the event
         restEventMockMvc.perform(get("/api/events/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -176,18 +193,36 @@ public class EventResourceIntTest {
         updatedEvent.setConsumed(UPDATED_CONSUMED);
 
         restEventMockMvc.perform(put("/api/events")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedEvent)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedEvent)))
+            .andExpect(status().isOk());
 
         // Validate the Event in the database
-        List<Event> events = eventRepository.findAll();
-        assertThat(events).hasSize(databaseSizeBeforeUpdate);
-        Event testEvent = events.get(events.size() - 1);
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeUpdate);
+        Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTypeMessageEvent()).isEqualTo(UPDATED_TYPE_MESSAGE_EVENT);
         assertThat(testEvent.getData()).isEqualTo(UPDATED_DATA);
         assertThat(testEvent.getDataContentType()).isEqualTo(UPDATED_DATA_CONTENT_TYPE);
         assertThat(testEvent.isConsumed()).isEqualTo(UPDATED_CONSUMED);
+    }
+
+    @Test
+    @Transactional
+    public void updateNonExistingEvent() throws Exception {
+        int databaseSizeBeforeUpdate = eventRepository.findAll().size();
+
+        // Create the Event
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restEventMockMvc.perform(put("/api/events")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(event)))
+            .andExpect(status().isCreated());
+
+        // Validate the Event in the database
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
@@ -199,11 +234,11 @@ public class EventResourceIntTest {
 
         // Get the event
         restEventMockMvc.perform(delete("/api/events/{id}", event.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Event> events = eventRepository.findAll();
-        assertThat(events).hasSize(databaseSizeBeforeDelete - 1);
+        List<Event> eventList = eventRepository.findAll();
+        assertThat(eventList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

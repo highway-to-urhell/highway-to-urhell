@@ -3,7 +3,7 @@
     <h2><span data-translate="h2HellUiApp.team.detail.title">Team</span> {{vm.team.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
+    <dl class="row jh-entity-details">
         <dt><span data-translate="h2HellUiApp.team.name">Name</span></dt>
         <dd>
             <span>{{vm.team.name}}</span>
@@ -24,6 +24,6 @@
 
     <button type="button" ui-sref="team-detail.edit({id:vm.team.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

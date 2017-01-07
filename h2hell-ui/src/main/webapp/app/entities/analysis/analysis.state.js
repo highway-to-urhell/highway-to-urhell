@@ -32,7 +32,7 @@
             }
         })
         .state('analysis-detail', {
-            parent: 'entity',
+            parent: 'analysis',
             url: '/analysis/{id}',
             data: {
                 authorities: ['ROLE_USER'],

@@ -5,11 +5,11 @@
         .module('h2HellUiApp')
         .controller('EntryPointPerfController', EntryPointPerfController);
 
-    EntryPointPerfController.$inject = ['$scope', '$state', 'DataUtils', 'EntryPointPerf', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    EntryPointPerfController.$inject = ['$scope', '$state', 'DataUtils', 'EntryPointPerf', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams'];
 
-    function EntryPointPerfController ($scope, $state, DataUtils, EntryPointPerf, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function EntryPointPerfController ($scope, $state, DataUtils, EntryPointPerf, ParseLinks, AlertService, paginationConstants, pagingParams) {
         var vm = this;
-        
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -45,12 +45,12 @@
             }
         }
 
-        function loadPage (page) {
+        function loadPage(page) {
             vm.page = page;
             vm.transition();
         }
 
-        function transition () {
+        function transition() {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),

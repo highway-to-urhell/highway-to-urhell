@@ -31,6 +31,8 @@
       "fr"
     ],
     "messageBroker": false,
-    "serviceDiscoveryType": false
+    "serviceDiscoveryType": false,
+    "clientPackageManager": "yarn",
+    "clientFramework": "angular1"
   }
 }

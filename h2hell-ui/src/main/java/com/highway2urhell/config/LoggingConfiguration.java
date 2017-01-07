@@ -1,5 +1,7 @@
 package com.highway2urhell.config;
 
+import io.github.jhipster.config.JHipsterProperties;
+
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -11,9 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 @Configuration
 public class LoggingConfiguration {
@@ -28,12 +27,10 @@ public class LoggingConfiguration {
     @Value("${server.port}")
     private String serverPort;
 
+    private final JHipsterProperties jHipsterProperties;
 
-    @Inject
-    private JHipsterProperties jHipsterProperties;
-
-    @PostConstruct
-    private void init() {
+    public LoggingConfiguration(JHipsterProperties jHipsterProperties) {
+        this.jHipsterProperties = jHipsterProperties;
         if (jHipsterProperties.getLogging().getLogstash().isEnabled()) {
             addLogstashAppender(context);
 

@@ -8,28 +8,27 @@ import com.highway2urhell.repository.ApplicationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneOffset;
 import java.time.ZoneId;
 import java.util.List;
 
+import static com.highway2urhell.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,49 +41,47 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = H2HellUiApp.class)
 public class ApplicationResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAA";
-    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TOKEN = "AAAAA";
-    private static final String UPDATED_TOKEN = "BBBBB";
+    private static final String DEFAULT_TOKEN = "AAAAAAAAAA";
+    private static final String UPDATED_TOKEN = "BBBBBBBBBB";
 
-    private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_DATE_CREATION = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_CREATION = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final String DEFAULT_DATE_CREATION_STR = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(DEFAULT_DATE_CREATION);
 
-    private static final String DEFAULT_URL_APP = "AAAAA";
-    private static final String UPDATED_URL_APP = "BBBBB";
+    private static final String DEFAULT_URL_APP = "AAAAAAAAAA";
+    private static final String UPDATED_URL_APP = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DESCRIPTION = "AAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_APP_TYPE = "AAAAA";
-    private static final String UPDATED_APP_TYPE = "BBBBB";
+    private static final String DEFAULT_APP_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_APP_TYPE = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_ANALYSED = false;
     private static final Boolean UPDATED_ANALYSED = true;
 
-    @Inject
+    @Autowired
     private ApplicationRepository applicationRepository;
 
-    @Inject
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Inject
+    @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
+    @Autowired
     private EntityManager em;
 
     private MockMvc restApplicationMockMvc;
 
     private Application application;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ApplicationResource applicationResource = new ApplicationResource();
-        ReflectionTestUtils.setField(applicationResource, "applicationRepository", applicationRepository);
+            ApplicationResource applicationResource = new ApplicationResource(applicationRepository);
         this.restApplicationMockMvc = MockMvcBuilders.standaloneSetup(applicationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -121,14 +118,14 @@ public class ApplicationResourceIntTest {
         // Create the Application
 
         restApplicationMockMvc.perform(post("/api/applications")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(application)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(application)))
+            .andExpect(status().isCreated());
 
         // Validate the Application in the database
-        List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeCreate + 1);
-        Application testApplication = applications.get(applications.size() - 1);
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeCreate + 1);
+        Application testApplication = applicationList.get(applicationList.size() - 1);
         assertThat(testApplication.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testApplication.getToken()).isEqualTo(DEFAULT_TOKEN);
         assertThat(testApplication.getDateCreation()).isEqualTo(DEFAULT_DATE_CREATION);
@@ -136,6 +133,26 @@ public class ApplicationResourceIntTest {
         assertThat(testApplication.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testApplication.getAppType()).isEqualTo(DEFAULT_APP_TYPE);
         assertThat(testApplication.isAnalysed()).isEqualTo(DEFAULT_ANALYSED);
+    }
+
+    @Test
+    @Transactional
+    public void createApplicationWithExistingId() throws Exception {
+        int databaseSizeBeforeCreate = applicationRepository.findAll().size();
+
+        // Create the Application with an existing ID
+        Application existingApplication = new Application();
+        existingApplication.setId(1L);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restApplicationMockMvc.perform(post("/api/applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(existingApplication)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Alice in the database
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
@@ -148,12 +165,12 @@ public class ApplicationResourceIntTest {
         // Create the Application, which fails.
 
         restApplicationMockMvc.perform(post("/api/applications")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(application)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(application)))
+            .andExpect(status().isBadRequest());
 
-        List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeTest);
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -166,12 +183,12 @@ public class ApplicationResourceIntTest {
         // Create the Application, which fails.
 
         restApplicationMockMvc.perform(post("/api/applications")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(application)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(application)))
+            .andExpect(status().isBadRequest());
 
-        List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeTest);
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -180,18 +197,18 @@ public class ApplicationResourceIntTest {
         // Initialize the database
         applicationRepository.saveAndFlush(application);
 
-        // Get all the applications
+        // Get all the applicationList
         restApplicationMockMvc.perform(get("/api/applications?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(application.getId().intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-                .andExpect(jsonPath("$.[*].token").value(hasItem(DEFAULT_TOKEN.toString())))
-                .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(DEFAULT_DATE_CREATION_STR)))
-                .andExpect(jsonPath("$.[*].urlApp").value(hasItem(DEFAULT_URL_APP.toString())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].appType").value(hasItem(DEFAULT_APP_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].analysed").value(hasItem(DEFAULT_ANALYSED.booleanValue())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(application.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].token").value(hasItem(DEFAULT_TOKEN.toString())))
+            .andExpect(jsonPath("$.[*].dateCreation").value(hasItem(sameInstant(DEFAULT_DATE_CREATION))))
+            .andExpect(jsonPath("$.[*].urlApp").value(hasItem(DEFAULT_URL_APP.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].appType").value(hasItem(DEFAULT_APP_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].analysed").value(hasItem(DEFAULT_ANALYSED.booleanValue())));
     }
 
     @Test
@@ -207,7 +224,7 @@ public class ApplicationResourceIntTest {
             .andExpect(jsonPath("$.id").value(application.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.token").value(DEFAULT_TOKEN.toString()))
-            .andExpect(jsonPath("$.dateCreation").value(DEFAULT_DATE_CREATION_STR))
+            .andExpect(jsonPath("$.dateCreation").value(sameInstant(DEFAULT_DATE_CREATION)))
             .andExpect(jsonPath("$.urlApp").value(DEFAULT_URL_APP.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.appType").value(DEFAULT_APP_TYPE.toString()))
@@ -219,7 +236,7 @@ public class ApplicationResourceIntTest {
     public void getNonExistingApplication() throws Exception {
         // Get the application
         restApplicationMockMvc.perform(get("/api/applications/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -240,14 +257,14 @@ public class ApplicationResourceIntTest {
         updatedApplication.setAnalysed(UPDATED_ANALYSED);
 
         restApplicationMockMvc.perform(put("/api/applications")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(updatedApplication)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(updatedApplication)))
+            .andExpect(status().isOk());
 
         // Validate the Application in the database
-        List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeUpdate);
-        Application testApplication = applications.get(applications.size() - 1);
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeUpdate);
+        Application testApplication = applicationList.get(applicationList.size() - 1);
         assertThat(testApplication.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testApplication.getToken()).isEqualTo(UPDATED_TOKEN);
         assertThat(testApplication.getDateCreation()).isEqualTo(UPDATED_DATE_CREATION);
@@ -259,6 +276,24 @@ public class ApplicationResourceIntTest {
 
     @Test
     @Transactional
+    public void updateNonExistingApplication() throws Exception {
+        int databaseSizeBeforeUpdate = applicationRepository.findAll().size();
+
+        // Create the Application
+
+        // If the entity doesn't have an ID, it will be created instead of just being updated
+        restApplicationMockMvc.perform(put("/api/applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(application)))
+            .andExpect(status().isCreated());
+
+        // Validate the Application in the database
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeUpdate + 1);
+    }
+
+    @Test
+    @Transactional
     public void deleteApplication() throws Exception {
         // Initialize the database
         applicationRepository.saveAndFlush(application);
@@ -266,11 +301,11 @@ public class ApplicationResourceIntTest {
 
         // Get the application
         restApplicationMockMvc.perform(delete("/api/applications/{id}", application.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Application> applications = applicationRepository.findAll();
-        assertThat(applications).hasSize(databaseSizeBeforeDelete - 1);
+        List<Application> applicationList = applicationRepository.findAll();
+        assertThat(applicationList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

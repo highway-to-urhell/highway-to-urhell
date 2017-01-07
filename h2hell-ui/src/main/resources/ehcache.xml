@@ -1,109 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
-         name="CM1"
-         updateCheck="false"
-         maxBytesLocalHeap="16M">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns='http://www.ehcache.org/v3'
+         xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
 
-    <!--
-      This is a default configuration, it is re-configured by the CacheConfiguration Spring Bean, using the
-      properties from the resources/config/*.yml files.
-    -->
+    <cache-template name="simple">
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+        <heap>100</heap>
+    </cache-template>
 
-    <diskStore path="java.io.tmpdir"/>
+    <cache alias="com.highway2urhell.domain.User" uses-template="simple"/>
 
-    <defaultCache
-            eternal="false"
-            overflowToDisk="false"
-            />
+    <cache alias="com.highway2urhell.domain.Authority" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.User"
-           timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.User.authorities" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Authority"
-           timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.PersistentToken" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.User.authorities"
-           timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.User.persistentTokens" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.PersistentToken"
-           timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Application" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.User.persistentTokens"
-           timeToLiveSeconds="3600">
-    </cache>
-    
-    <cache name="com.highway2urhell.domain.Application"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Application.analyses" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Application.analyses"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Application.userPermissions" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Application.userPermissions"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.EntryPointCall" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.EntryPointCall"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Event" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Event"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.EntryPointPerf" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.EntryPointPerf"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Analysis" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Analysis"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Analysis.events" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Analysis.events"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Analysis.entryPoints" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Analysis.entryPoints"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.EntryPoint" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.EntryPoint"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.EntryPoint.perfs" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.EntryPoint.perfs"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.EntryPoint.calls" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.EntryPoint.calls"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Team" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Team"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Team.members" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Team.members"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.Team.userPermissions" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.Team.userPermissions"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.UserPermission" uses-template="simple"/>
 
-    <cache name="com.highway2urhell.domain.UserPermission"
-        timeToLiveSeconds="3600">
-    </cache>
-
-    <cache name="com.highway2urhell.domain.UserPermission.projects"
-        timeToLiveSeconds="3600">
-    </cache>
+    <cache alias="com.highway2urhell.domain.UserPermission.projects" uses-template="simple"/>
 
     <!-- jhipster-needle-ehcache-add-entry -->
-</ehcache>
+</config>

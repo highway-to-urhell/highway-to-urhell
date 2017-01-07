@@ -5,13 +5,14 @@
         .module('h2HellUiApp')
         .controller('EntryPointController', EntryPointController);
 
-    EntryPointController.$inject = ['$scope', '$state', 'EntryPoint', 'ParseLinks', 'AlertService'];
+    EntryPointController.$inject = ['$scope', '$state', 'EntryPoint', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
-    function EntryPointController ($scope, $state, EntryPoint, ParseLinks, AlertService) {
+    function EntryPointController ($scope, $state, EntryPoint, ParseLinks, AlertService, paginationConstants) {
         var vm = this;
-        
+
         vm.entryPoints = [];
         vm.loadPage = loadPage;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
@@ -25,7 +26,7 @@
         function loadAll () {
             EntryPoint.query({
                 page: vm.page,
-                size: 20,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {

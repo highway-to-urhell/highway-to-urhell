@@ -5,6 +5,8 @@ import com.highway2urhell.domain.Team;
 
 import com.highway2urhell.repository.TeamRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,8 +29,11 @@ public class TeamResource {
 
     private final Logger log = LoggerFactory.getLogger(TeamResource.class);
         
-    @Inject
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
+
+    public TeamResource(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
 
     /**
      * POST  /teams : Create a new team.
@@ -97,11 +101,7 @@ public class TeamResource {
     public ResponseEntity<Team> getTeam(@PathVariable Long id) {
         log.debug("REST request to get Team : {}", id);
         Team team = teamRepository.findOneWithEagerRelationships(id);
-        return Optional.ofNullable(team)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(team));
     }
 
     /**

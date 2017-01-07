@@ -6,6 +6,9 @@ import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
+
+import io.swagger.annotations.ApiParam;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,8 +33,11 @@ public class EntryPointResource {
 
     private final Logger log = LoggerFactory.getLogger(EntryPointResource.class);
         
-    @Inject
-    private EntryPointRepository entryPointRepository;
+    private final EntryPointRepository entryPointRepository;
+
+    public EntryPointResource(EntryPointRepository entryPointRepository) {
+        this.entryPointRepository = entryPointRepository;
+    }
 
     /**
      * POST  /entry-points : Create a new entryPoint.
@@ -85,7 +90,7 @@ public class EntryPointResource {
      */
     @GetMapping("/entry-points")
     @Timed
-    public ResponseEntity<List<EntryPoint>> getAllEntryPoints(Pageable pageable)
+    public ResponseEntity<List<EntryPoint>> getAllEntryPoints(@ApiParam Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of EntryPoints");
         Page<EntryPoint> page = entryPointRepository.findAll(pageable);
@@ -104,11 +109,7 @@ public class EntryPointResource {
     public ResponseEntity<EntryPoint> getEntryPoint(@PathVariable Long id) {
         log.debug("REST request to get EntryPoint : {}", id);
         EntryPoint entryPoint = entryPointRepository.findOne(id);
-        return Optional.ofNullable(entryPoint)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(entryPoint));
     }
 
     /**

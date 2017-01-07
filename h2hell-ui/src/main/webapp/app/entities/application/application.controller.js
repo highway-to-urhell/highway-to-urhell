@@ -5,13 +5,14 @@
         .module('h2HellUiApp')
         .controller('ApplicationController', ApplicationController);
 
-    ApplicationController.$inject = ['$scope', '$state', 'Application', 'ParseLinks', 'AlertService'];
+    ApplicationController.$inject = ['$scope', '$state', 'Application', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
-    function ApplicationController ($scope, $state, Application, ParseLinks, AlertService) {
+    function ApplicationController ($scope, $state, Application, ParseLinks, AlertService, paginationConstants) {
         var vm = this;
-        
+
         vm.applications = [];
         vm.loadPage = loadPage;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
@@ -25,7 +26,7 @@
         function loadAll () {
             Application.query({
                 page: vm.page,
-                size: 20,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {

@@ -5,11 +5,11 @@
         .module('h2HellUiApp')
         .controller('EntryPointCallController', EntryPointCallController);
 
-    EntryPointCallController.$inject = ['$scope', '$state', 'DataUtils', 'EntryPointCall', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    EntryPointCallController.$inject = ['$scope', '$state', 'DataUtils', 'EntryPointCall', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams'];
 
-    function EntryPointCallController ($scope, $state, DataUtils, EntryPointCall, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function EntryPointCallController ($scope, $state, DataUtils, EntryPointCall, ParseLinks, AlertService, paginationConstants, pagingParams) {
         var vm = this;
-        
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
@@ -45,12 +45,12 @@
             }
         }
 
-        function loadPage (page) {
+        function loadPage(page) {
             vm.page = page;
             vm.transition();
         }
 
-        function transition () {
+        function transition() {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),

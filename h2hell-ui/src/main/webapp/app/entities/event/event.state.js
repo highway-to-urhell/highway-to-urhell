@@ -33,7 +33,7 @@
             }
         })
         .state('event-detail', {
-            parent: 'entity',
+            parent: 'event',
             url: '/event/{id}',
             data: {
                 authorities: ['ROLE_USER'],

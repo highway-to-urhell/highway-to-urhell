@@ -9,7 +9,7 @@
 
     function EventController ($scope, $state, DataUtils, Event) {
         var vm = this;
-        
+
         vm.events = [];
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
@@ -19,6 +19,7 @@
         function loadAll() {
             Event.query(function(result) {
                 vm.events = result;
+                vm.searchQuery = null;
             });
         }
     }

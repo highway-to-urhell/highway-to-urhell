@@ -20,7 +20,7 @@ public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -97,7 +97,7 @@ public class Event implements Serializable {
             return false;
         }
         Event event = (Event) o;
-        if(event.id == null || id == null) {
+        if (event.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, event.id);

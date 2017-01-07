@@ -32,7 +32,7 @@
             }
         })
         .state('team-detail', {
-            parent: 'entity',
+            parent: 'team',
             url: '/team/{id}',
             data: {
                 authorities: ['ROLE_USER'],

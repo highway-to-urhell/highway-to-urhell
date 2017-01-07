@@ -3,7 +3,9 @@ package com.highway2urhell.security;
 import com.highway2urhell.domain.PersistentToken;
 import com.highway2urhell.repository.PersistentTokenRepository;
 import com.highway2urhell.repository.UserRepository;
-import com.highway2urhell.config.JHipsterProperties;
+
+import io.github.jhipster.config.JHipsterProperties;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -15,7 +17,6 @@ import org.springframework.security.web.authentication.rememberme.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.SecureRandom;
@@ -60,20 +61,20 @@ public class CustomPersistentRememberMeServices extends
 
     private static final int DEFAULT_TOKEN_LENGTH = 16;
 
-    private SecureRandom random;
+    private final SecureRandom random;
 
-    @Inject
-    private PersistentTokenRepository persistentTokenRepository;
+    private final PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Inject
-    public CustomPersistentRememberMeServices(JHipsterProperties jHipsterProperties, org.springframework.security.core.userdetails
-        .UserDetailsService userDetailsService) {
+    public CustomPersistentRememberMeServices(JHipsterProperties jHipsterProperties,
+            org.springframework.security.core.userdetails.UserDetailsService userDetailsService,
+            PersistentTokenRepository persistentTokenRepository, UserRepository userRepository) {
 
         super(jHipsterProperties.getSecurity().getRememberMe().getKey(), userDetailsService);
-        random = new SecureRandom();
+        this.random = new SecureRandom();
+        this.persistentTokenRepository = persistentTokenRepository;
+        this.userRepository = userRepository;
     }
 
     @Override

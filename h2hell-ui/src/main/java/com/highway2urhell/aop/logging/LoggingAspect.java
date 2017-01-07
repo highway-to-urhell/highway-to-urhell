@@ -1,6 +1,6 @@
 package com.highway2urhell.aop.logging;
 
-import com.highway2urhell.config.Constants;
+import io.github.jhipster.config.JHipsterConstants;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,27 +12,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 
-import javax.inject.Inject;
 import java.util.Arrays;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
+ *
+ * By default, it only runs with the "dev" profile.
  */
 @Aspect
 public class LoggingAspect {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Inject
-    private Environment env;
+    private final Environment env;
 
-    @Pointcut("within(com.highway2urhell.repository..*) || within(com.highway2urhell.service..*) || within(com.highway2urhell.web.rest..*)")
-    public void loggingPointcut() {
+    public LoggingAspect(Environment env) {
+        this.env = env;
     }
 
+    /**
+     * Pointcut that matches all repositories, services and Web REST endpoints.
+     */
+    @Pointcut("within(com.highway2urhell.repository..*) || within(com.highway2urhell.service..*) || within(com.highway2urhell.web.rest..*)")
+    public void loggingPointcut() {
+        // Method is empty as this is just a Poincut, the implementations are in the advices.
+    }
+
+    /**
+     * Advice that logs methods throwing exceptions.
+     */
     @AfterThrowing(pointcut = "loggingPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        if (env.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)) {
+        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null? e.getCause() : "NULL", e.getMessage(), e);
 
@@ -42,6 +53,9 @@ public class LoggingAspect {
         }
     }
 
+    /**
+     * Advice that logs when a method is entered and exited.
+     */
     @Around("loggingPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         if (log.isDebugEnabled()) {

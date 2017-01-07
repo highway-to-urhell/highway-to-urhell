@@ -4,7 +4,7 @@
     angular
         .module('h2HellUiApp')
         .filter('characters', characters);
-        
+
     function characters () {
         return charactersFilter;
 

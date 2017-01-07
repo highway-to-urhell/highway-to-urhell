@@ -52,7 +52,7 @@
             }
         })
         .state('entry-point-perf-detail', {
-            parent: 'entity',
+            parent: 'entry-point-perf',
             url: '/entry-point-perf/{id}',
             data: {
                 authorities: ['ROLE_USER'],

@@ -3,7 +3,7 @@
     <h2><span data-translate="h2HellUiApp.entryPoint.detail.title">Entry Point</span> {{vm.entryPoint.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
+    <dl class="row jh-entity-details">
         <dt><span data-translate="h2HellUiApp.entryPoint.pathClassMethodName">Path Class Method Name</span></dt>
         <dd>
             <span>{{vm.entryPoint.pathClassMethodName}}</span>
@@ -50,6 +50,6 @@
 
     <button type="button" ui-sref="entry-point-detail.edit({id:vm.entryPoint.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

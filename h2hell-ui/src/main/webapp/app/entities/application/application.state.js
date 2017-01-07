@@ -32,7 +32,7 @@
             }
         })
         .state('application-detail', {
-            parent: 'entity',
+            parent: 'application',
             url: '/application/{id}',
             data: {
                 authorities: ['ROLE_USER'],

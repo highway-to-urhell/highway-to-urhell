@@ -1,0 +1,32 @@
+{
+    "h2HellUiApp": {
+        "entryPoint" : {
+            "home": {
+                "title": "Entry Points",
+                "createLabel": "Create a new Entry Point",
+                "createOrEditLabel": "Create or edit a Entry Point",
+                "search": "Search for Entry Point"
+            },
+            "created": "A new Entry Point is created with identifier {{ param }}",
+            "updated": "A Entry Point is updated with identifier {{ param }}",
+            "deleted": "A Entry Point is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Entry Point {{ id }}?"
+            },
+            "detail": {
+                "title": "Entry Point"
+            },
+            "pathClassMethodName": "Path Class Method Name",
+            "count": "Count",
+            "falsePositive": "False Positive",
+            "uri": "Uri",
+            "httpmethod": "Httpmethod",
+            "audit": "Audit",
+            "averageTime": "Average Time",
+            "checkLaunch": "Check Launch",
+            "perfs": "Perfs",
+            "calls": "Calls",
+            "analysis": "Analysis"
+        }
+    }
+}

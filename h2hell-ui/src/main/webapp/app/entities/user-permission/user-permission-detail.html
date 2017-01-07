@@ -1,0 +1,33 @@
+
+<div>
+    <h2><span data-translate="h2HellUiApp.userPermission.detail.title">User Permission</span> {{vm.userPermission.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span data-translate="h2HellUiApp.userPermission.permission">Permission</span></dt>
+        <dd>
+            <span data-translate="{{'h2HellUiApp.Permission.' + vm.userPermission.permission}}">{{vm.userPermission.permission}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.userPermission.projects">Projects</span></dt>
+        <dd>
+            <span ng-repeat="projects in vm.userPermission.projects">
+                <a ui-sref="application-detail({id: projects.id})">{{projects.name}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.userPermission.team">Team</span></dt>
+        <dd>
+            <a ui-sref="team-detail({id:vm.userPermission.team.id})">{{vm.userPermission.team.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="user-permission-detail.edit({id:vm.userPermission.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

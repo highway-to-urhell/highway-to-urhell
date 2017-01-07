@@ -1,0 +1,9 @@
+{
+    "h2HellUiApp": {
+        "Permission" : {
+            "null": "",
+            "READ": "READ",
+            "EXECUTE": "EXECUTE"
+        }
+    }
+}

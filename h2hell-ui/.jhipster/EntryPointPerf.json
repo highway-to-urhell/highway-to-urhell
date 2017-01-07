@@ -1,0 +1,43 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipName": "entryPoint",
+      "otherEntityName": "entryPoint",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "dateIncoming",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "parameters",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "timeExec",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "cpuLoadSystem",
+      "fieldType": "Double"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "cpuLoadProcess",
+      "fieldType": "Double"
+    }
+  ],
+  "changelogDate": "20160519092246",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "no"
+}

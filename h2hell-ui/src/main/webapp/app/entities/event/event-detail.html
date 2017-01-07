@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span data-translate="h2HellUiApp.event.detail.title">Event</span> {{vm.event.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span data-translate="h2HellUiApp.event.typeMessageEvent">Type Message Event</span></dt>
+        <dd>
+            <span data-translate="{{'h2HellUiApp.TypeMessageEvent.' + vm.event.typeMessageEvent}}">{{vm.event.typeMessageEvent}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.event.data">Data</span></dt>
+        <dd>
+            <div ng-if="vm.event.data">
+                <a ng-click="vm.openFile(vm.event.dataContentType, vm.event.data)" data-translate="entity.action.open">open</a>
+                {{vm.event.dataContentType}}, {{vm.byteSize(vm.event.data)}}
+            </div>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.event.consumed">Consumed</span></dt>
+        <dd>
+            <span>{{vm.event.consumed}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.event.analysis">Analysis</span></dt>
+        <dd>
+            <a ui-sref="analysis-detail({id:vm.event.analysis.id})">{{vm.event.analysis.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="event-detail.edit({id:vm.event.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

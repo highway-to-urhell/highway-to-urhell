@@ -1,0 +1,14 @@
+version: '2'
+services:
+    h2hellui-mysql:
+        container_name: h2hellui-mysql
+        image: mysql:5.7.13
+        # volumes:
+        #     - ~/volumes/jhipster/h2hellUi/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=h2hellui
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl

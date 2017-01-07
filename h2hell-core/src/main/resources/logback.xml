@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+	
+	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%d{ISO8601}] [%-5level] [%C{3}.%M] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="File"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>h2h.log</file>
+		<encoder>
+			<pattern>[%d{ISO8601}] [%-5level] [%C{3}.%M] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="LOG4J" level="INFO" />
+	<logger name="SLF4J" level="WARN" />
+	<logger name="JCL" level="INFO" />
+
+	<logger name="com.highway2urhell" level="DEBUG" />
+
+	<root level="INFO">
+		<appender-ref ref="Console" />
+		<appender-ref ref="File" />
+	</root>
+
+</configuration>

@@ -1,0 +1,10 @@
+{
+    "h2HellUiApp": {
+        "TypeMessageEvent" : {
+            "null": "",
+            "INIT_PATH": "INIT_PATH",
+            "ENABLE_ENTRY_POINT": "ENABLE_ENTRY_POINT",
+            "SOURCE": "SOURCE"
+        }
+    }
+}

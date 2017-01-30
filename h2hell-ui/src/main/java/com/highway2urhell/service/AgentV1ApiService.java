@@ -34,7 +34,6 @@ public class AgentV1ApiService {
 
     private final Logger log = LoggerFactory.getLogger(AgentV1ApiService.class);
 
-
     @Inject
     private ApplicationRepository applicationRepository;
 

@@ -1,6 +1,6 @@
 <div ng-cloak>
 
-    <div class="row">
+    <div class="row" ng-if="vm.isAuthenticated()===true">
         <div class="col-lg-3 col-md-3">
             <div class="panel  panel-white">
                 <div class="panel-body">
@@ -25,7 +25,7 @@
         </div>
 
     </div>
-    <div class="row">
+    <div class="row" ng-if="vm.isAuthenticated()==true">
         <div class="col-lg-8 col-md-8">
             <canvas id="apps_stat" class="chart chart-bar"
                     chart-data="vm.entity.stats.data" chart-labels="vm.entity.stats.labels" chart-series="vm.entity.stats.series">
@@ -38,6 +38,10 @@
         </div>
     </div>
 
-
+    <div class="row" ng-if="vm.isAuthenticated()!==true">
+        <div class="alert alert-danger" role="alert">
+            <p>Please Sign In</p>
+        </div>
+    </div>
 
 </div>

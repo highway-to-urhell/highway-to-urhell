@@ -20,6 +20,30 @@
                         <span class="hidden-sm" data-translate="global.menu.home">Home</span>
                     </a>
                 </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="vizualisation" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="hidden-sm" data-translate="global.menu.vizualization">Vizualisation</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-screenshot"></span>
+                        <span class="hidden-sm" data-translate="global.menu.performance">Performance</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        <span class="hidden-sm" data-translate="global.menu.reallivesecurity">RealLiveSecurity</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-plane"></span>
+                        <span class="hidden-sm" data-translate="global.menu.waf">WAF</span>
+                    </a>
+                </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
                 <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">

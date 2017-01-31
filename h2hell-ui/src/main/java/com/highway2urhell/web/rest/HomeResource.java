@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Application;
 
 import com.highway2urhell.repository.ApplicationRepository;
+import com.highway2urhell.security.AuthoritiesConstants;
 import com.highway2urhell.service.HomeService;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -43,6 +45,7 @@ public class HomeResource {
      */
     @GetMapping("/home")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<HomeVM> getHome() {
         log.debug("REST request to get Home");
         HomeVM homeVM = homeService.find();

@@ -25,9 +25,6 @@
                 mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
                     $translatePartialLoader.addPart('home');
                     return $translate.refresh();
-                }],
-                entity: ['Home', function(Home) {
-                    return Home.get();
                 }]
             }
         });

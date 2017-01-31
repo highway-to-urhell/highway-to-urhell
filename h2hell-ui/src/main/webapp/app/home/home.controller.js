@@ -5,9 +5,9 @@
         .module('h2HellUiApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'entity'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Home'];
 
-    function HomeController ($scope, Principal, LoginService, $state, entity) {
+    function HomeController ($scope, Principal, LoginService, $state, Home) {
         var vm = this;
 
         vm.account = null;
@@ -15,7 +15,7 @@
         vm.login = LoginService.open;
         vm.register = register;
 
-        vm.entity = entity;
+
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -27,6 +27,7 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+                vm.entity = Home.get();
             });
         }
         function register () {

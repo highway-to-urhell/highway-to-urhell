@@ -25,7 +25,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/ThunderEntry")
+@RequestMapping("/api/ThunderEntry")
 public class AgentV1ApiResource {
 
     private static final Logger LOG = LoggerFactory

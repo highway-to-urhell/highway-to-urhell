@@ -32,8 +32,8 @@ public class Team implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "team_members",
-               joinColumns = @JoinColumn(name="teams_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="ID"))
+               joinColumns = @JoinColumn(name="teams_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="id"))
     private Set<User> members = new HashSet<>();
 
     @OneToMany(mappedBy = "team")

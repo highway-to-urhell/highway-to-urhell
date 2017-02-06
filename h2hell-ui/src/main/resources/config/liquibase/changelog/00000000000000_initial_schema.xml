@@ -28,6 +28,7 @@
             <column name="email" type="varchar(100)">
                 <constraints unique="true" nullable="true"/>
             </column>
+            <column name="image_url" type="varchar(256)"/>
             <column name="activated" type="boolean" valueBoolean="false">
                 <constraints nullable="false" />
             </column>
@@ -75,12 +76,11 @@
         <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
 
         <createTable tableName="jhi_persistent_token">
-            <!-- Maximum line length of Base64 output is 76 -->
-            <column name="series" type="varchar(76)">
+            <column name="series" type="varchar(20)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_id" type="bigint"/>
-            <column name="token_value" type="varchar(76)">
+            <column name="token_value" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
             <column name="token_date" type="date"/>

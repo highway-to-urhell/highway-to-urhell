@@ -263,4 +263,9 @@ public class EntryPointPerfResourceIntTest {
         List<EntryPointPerf> entryPointPerfList = entryPointPerfRepository.findAll();
         assertThat(entryPointPerfList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(EntryPointPerf.class);
+    }
 }

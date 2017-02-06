@@ -5,12 +5,9 @@ import com.highway2urhell.domain.Analysis;
 
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +24,8 @@ import java.util.Optional;
 public class AnalysisResource {
 
     private final Logger log = LoggerFactory.getLogger(AnalysisResource.class);
+
+    private static final String ENTITY_NAME = "analysis";
         
     private final AnalysisRepository analysisRepository;
 
@@ -46,11 +45,11 @@ public class AnalysisResource {
     public ResponseEntity<Analysis> createAnalysis(@RequestBody Analysis analysis) throws URISyntaxException {
         log.debug("REST request to save Analysis : {}", analysis);
         if (analysis.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("analysis", "idexists", "A new analysis cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new analysis cannot already have an ID")).body(null);
         }
         Analysis result = analysisRepository.save(analysis);
         return ResponseEntity.created(new URI("/api/analyses/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("analysis", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -72,7 +71,7 @@ public class AnalysisResource {
         }
         Analysis result = analysisRepository.save(analysis);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("analysis", analysis.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, analysis.getId().toString()))
             .body(result);
     }
 
@@ -114,7 +113,7 @@ public class AnalysisResource {
     public ResponseEntity<Void> deleteAnalysis(@PathVariable Long id) {
         log.debug("REST request to delete Analysis : {}", id);
         analysisRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("analysis", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

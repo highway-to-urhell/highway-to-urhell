@@ -6,7 +6,6 @@ import com.highway2urhell.domain.EntryPointPerf;
 import com.highway2urhell.repository.EntryPointPerfRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
-
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -31,6 +30,8 @@ import java.util.Optional;
 public class EntryPointPerfResource {
 
     private final Logger log = LoggerFactory.getLogger(EntryPointPerfResource.class);
+
+    private static final String ENTITY_NAME = "entryPointPerf";
         
     private final EntryPointPerfRepository entryPointPerfRepository;
 
@@ -50,11 +51,11 @@ public class EntryPointPerfResource {
     public ResponseEntity<EntryPointPerf> createEntryPointPerf(@RequestBody EntryPointPerf entryPointPerf) throws URISyntaxException {
         log.debug("REST request to save EntryPointPerf : {}", entryPointPerf);
         if (entryPointPerf.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("entryPointPerf", "idexists", "A new entryPointPerf cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new entryPointPerf cannot already have an ID")).body(null);
         }
         EntryPointPerf result = entryPointPerfRepository.save(entryPointPerf);
         return ResponseEntity.created(new URI("/api/entry-point-perfs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("entryPointPerf", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -76,7 +77,7 @@ public class EntryPointPerfResource {
         }
         EntryPointPerf result = entryPointPerfRepository.save(entryPointPerf);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("entryPointPerf", entryPointPerf.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, entryPointPerf.getId().toString()))
             .body(result);
     }
 
@@ -122,7 +123,7 @@ public class EntryPointPerfResource {
     public ResponseEntity<Void> deleteEntryPointPerf(@PathVariable Long id) {
         log.debug("REST request to delete EntryPointPerf : {}", id);
         entryPointPerfRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("entryPointPerf", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

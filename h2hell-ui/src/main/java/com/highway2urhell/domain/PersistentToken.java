@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * Persistent tokens are used by Spring Security to automatically log in users.
  *
- * @see com.highway2urhell.security.CustomPersistentRememberMeServices
+ * @see com.highway2urhell.security.PersistentTokenRememberMeServices
  */
 @Entity
 @Table(name = "jhi_persistent_token")

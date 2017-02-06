@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.12.1",
+    "jhipsterVersion": "4.0.1",
     "baseName": "h2hellUi",
     "packageName": "com.highway2urhell",
     "packageFolder": "com/highway2urhell",
@@ -13,11 +13,14 @@
     "devDatabaseType": "h2Disk",
     "prodDatabaseType": "mysql",
     "searchEngine": false,
+    "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "e0d1f08bfd09708515bd76f01501a969ecaf5f96",
+    "rememberMeKey": "b7295fd65ed41fe117ec0703c3adc8d92ca89b13",
     "useSass": false,
+    "clientPackageManager": "yarn",
     "applicationType": "monolith",
+    "clientFramework": "angular1",
     "testFrameworks": [
       "gatling",
       "cucumber",
@@ -29,10 +32,6 @@
     "languages": [
       "en",
       "fr"
-    ],
-    "messageBroker": false,
-    "serviceDiscoveryType": false,
-    "clientPackageManager": "yarn",
-    "clientFramework": "angular1"
+    ]
   }
 }

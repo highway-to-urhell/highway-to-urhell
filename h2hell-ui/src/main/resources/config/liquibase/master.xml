@@ -5,20 +5,20 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092031_added_entity_Application.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092244_added_entity_EntryPointCall.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092245_added_entity_Event.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092246_added_entity_EntryPointPerf.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092248_added_entity_Analysis.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092031_added_entity_Application.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092249_added_entity_EntryPoint.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092244_added_entity_EntryPointCall.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092246_added_entity_EntryPointPerf.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092245_added_entity_Event.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092250_added_entity_Team.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092251_added_entity_UserPermission.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="classpath:config/liquibase/changelog/20160519092244_added_entity_constraints_EntryPointCall.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092245_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160519092246_added_entity_constraints_EntryPointPerf.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092248_added_entity_constraints_Analysis.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092249_added_entity_constraints_EntryPoint.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092244_added_entity_constraints_EntryPointCall.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092246_added_entity_constraints_EntryPointPerf.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160519092245_added_entity_constraints_Event.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092250_added_entity_constraints_Team.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160519092251_added_entity_constraints_UserPermission.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->

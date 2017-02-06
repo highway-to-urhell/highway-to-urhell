@@ -6,7 +6,6 @@ import com.highway2urhell.domain.EntryPointCall;
 import com.highway2urhell.repository.EntryPointCallRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
-
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -31,6 +30,8 @@ import java.util.Optional;
 public class EntryPointCallResource {
 
     private final Logger log = LoggerFactory.getLogger(EntryPointCallResource.class);
+
+    private static final String ENTITY_NAME = "entryPointCall";
         
     private final EntryPointCallRepository entryPointCallRepository;
 
@@ -50,11 +51,11 @@ public class EntryPointCallResource {
     public ResponseEntity<EntryPointCall> createEntryPointCall(@RequestBody EntryPointCall entryPointCall) throws URISyntaxException {
         log.debug("REST request to save EntryPointCall : {}", entryPointCall);
         if (entryPointCall.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("entryPointCall", "idexists", "A new entryPointCall cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new entryPointCall cannot already have an ID")).body(null);
         }
         EntryPointCall result = entryPointCallRepository.save(entryPointCall);
         return ResponseEntity.created(new URI("/api/entry-point-calls/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("entryPointCall", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -76,7 +77,7 @@ public class EntryPointCallResource {
         }
         EntryPointCall result = entryPointCallRepository.save(entryPointCall);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("entryPointCall", entryPointCall.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, entryPointCall.getId().toString()))
             .body(result);
     }
 
@@ -122,7 +123,7 @@ public class EntryPointCallResource {
     public ResponseEntity<Void> deleteEntryPointCall(@PathVariable Long id) {
         log.debug("REST request to delete EntryPointCall : {}", id);
         entryPointCallRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("entryPointCall", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

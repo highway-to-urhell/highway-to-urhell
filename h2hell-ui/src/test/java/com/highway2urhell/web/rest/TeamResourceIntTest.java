@@ -231,4 +231,9 @@ public class TeamResourceIntTest {
         List<Team> teamList = teamRepository.findAll();
         assertThat(teamList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Team.class);
+    }
 }

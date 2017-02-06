@@ -294,4 +294,9 @@ public class EntryPointResourceIntTest {
         List<EntryPoint> entryPointList = entryPointRepository.findAll();
         assertThat(entryPointList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(EntryPoint.class);
+    }
 }

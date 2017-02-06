@@ -5,12 +5,9 @@ import com.highway2urhell.domain.Team;
 
 import com.highway2urhell.repository.TeamRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +25,8 @@ import java.util.Optional;
 public class TeamResource {
 
     private final Logger log = LoggerFactory.getLogger(TeamResource.class);
+
+    private static final String ENTITY_NAME = "team";
         
     private final TeamRepository teamRepository;
 
@@ -47,11 +46,11 @@ public class TeamResource {
     public ResponseEntity<Team> createTeam(@Valid @RequestBody Team team) throws URISyntaxException {
         log.debug("REST request to save Team : {}", team);
         if (team.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("team", "idexists", "A new team cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new team cannot already have an ID")).body(null);
         }
         Team result = teamRepository.save(team);
         return ResponseEntity.created(new URI("/api/teams/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("team", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -73,7 +72,7 @@ public class TeamResource {
         }
         Team result = teamRepository.save(team);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("team", team.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, team.getId().toString()))
             .body(result);
     }
 
@@ -115,7 +114,7 @@ public class TeamResource {
     public ResponseEntity<Void> deleteTeam(@PathVariable Long id) {
         log.debug("REST request to delete Team : {}", id);
         teamRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("team", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

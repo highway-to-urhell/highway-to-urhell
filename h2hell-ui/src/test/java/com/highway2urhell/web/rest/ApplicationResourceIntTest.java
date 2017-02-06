@@ -308,4 +308,9 @@ public class ApplicationResourceIntTest {
         List<Application> applicationList = applicationRepository.findAll();
         assertThat(applicationList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Application.class);
+    }
 }

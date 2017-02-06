@@ -8,7 +8,8 @@ import com.highway2urhell.repository.UserRepository;
 import com.highway2urhell.security.AuthoritiesConstants;
 import com.highway2urhell.security.SecurityUtils;
 import com.highway2urhell.service.util.RandomUtil;
-import com.highway2urhell.web.rest.vm.ManagedUserVM;
+import com.highway2urhell.service.dto.UserDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -85,7 +86,7 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
-        String langKey) {
+        String imageUrl, String langKey) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
@@ -97,6 +98,7 @@ public class UserService {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
+        newUser.setImageUrl(imageUrl);
         newUser.setLangKey(langKey);
         // new user is not active
         newUser.setActivated(false);
@@ -109,20 +111,21 @@ public class UserService {
         return newUser;
     }
 
-    public User createUser(ManagedUserVM managedUserVM) {
+    public User createUser(UserDTO userDTO) {
         User user = new User();
-        user.setLogin(managedUserVM.getLogin());
-        user.setFirstName(managedUserVM.getFirstName());
-        user.setLastName(managedUserVM.getLastName());
-        user.setEmail(managedUserVM.getEmail());
-        if (managedUserVM.getLangKey() == null) {
+        user.setLogin(userDTO.getLogin());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setImageUrl(userDTO.getImageUrl());
+        if (userDTO.getLangKey() == null) {
             user.setLangKey("en"); // default language
         } else {
-            user.setLangKey(managedUserVM.getLangKey());
+            user.setLangKey(userDTO.getLangKey());
         }
-        if (managedUserVM.getAuthorities() != null) {
+        if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = new HashSet<>();
-            managedUserVM.getAuthorities().forEach(
+            userDTO.getAuthorities().forEach(
                 authority -> authorities.add(authorityRepository.findOne(authority))
             );
             user.setAuthorities(authorities);
@@ -137,6 +140,9 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Update basic information (first name, last name, email, language) for the current user.
+     */
     public void updateUser(String firstName, String lastName, String email, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             user.setFirstName(firstName);
@@ -148,28 +154,28 @@ public class UserService {
     }
 
     /**
-     * Method to update a user, and return the modified user object, if the update was successful.
+     * Update all information for a specific user, and return the modified user.
      */
-    public Optional<ManagedUserVM> updateUser(ManagedUserVM userUpdate) {
-
+    public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
-            .findOne(userUpdate.getId()))
+            .findOne(userDTO.getId()))
             .map(user -> {
-                user.setLogin(userUpdate.getLogin());
-                user.setFirstName(userUpdate.getFirstName());
-                user.setLastName(userUpdate.getLastName());
-                user.setEmail(userUpdate.getEmail());
-                user.setActivated(userUpdate.isActivated());
-                user.setLangKey(userUpdate.getLangKey());
+                user.setLogin(userDTO.getLogin());
+                user.setFirstName(userDTO.getFirstName());
+                user.setLastName(userDTO.getLastName());
+                user.setEmail(userDTO.getEmail());
+                user.setImageUrl(userDTO.getImageUrl());
+                user.setActivated(userDTO.isActivated());
+                user.setLangKey(userDTO.getLangKey());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
-                userUpdate.getAuthorities().stream()
+                userDTO.getAuthorities().stream()
                     .map(authorityRepository::findOne)
                     .forEach(managedAuthorities::add);
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
-            .map(ManagedUserVM::new);
+            .map(UserDTO::new);
     }
 
     public void deleteUser(String login) {
@@ -188,8 +194,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)    
-    public Page<ManagedUserVM> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(ManagedUserVM::new);
+    public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)

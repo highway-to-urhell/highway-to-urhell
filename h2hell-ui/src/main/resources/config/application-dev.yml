@@ -27,7 +27,6 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:file:./target/h2db/db/h2hellui;DB_CLOSE_DELAY=-1
-        name:
         username: h2hellUi
         password:
     h2:
@@ -71,13 +70,13 @@ server:
 # ===================================================================
 
 jhipster:
-    cache: # Hibernate 2nd level cache, used by CacheConfiguration
-        ehcache:
+    cache: # Cache configuration
+        ehcache: # Hibernate 2nd level cache
             max-bytes-local-heap: 16M
     security:
         remember-me:
             # security key (this key should be unique for your application, and kept secret)
-            key: e0d1f08bfd09708515bd76f01501a969ecaf5f96
+            key: b7295fd65ed41fe117ec0703c3adc8d92ca89b13
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: h2hellUi@localhost
         base-url: http://127.0.0.1:8080

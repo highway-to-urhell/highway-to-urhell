@@ -5,12 +5,9 @@ import com.highway2urhell.domain.Event;
 
 import com.highway2urhell.repository.EventRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +24,8 @@ import java.util.Optional;
 public class EventResource {
 
     private final Logger log = LoggerFactory.getLogger(EventResource.class);
+
+    private static final String ENTITY_NAME = "event";
         
     private final EventRepository eventRepository;
 
@@ -46,11 +45,11 @@ public class EventResource {
     public ResponseEntity<Event> createEvent(@RequestBody Event event) throws URISyntaxException {
         log.debug("REST request to save Event : {}", event);
         if (event.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("event", "idexists", "A new event cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new event cannot already have an ID")).body(null);
         }
         Event result = eventRepository.save(event);
         return ResponseEntity.created(new URI("/api/events/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("event", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -72,7 +71,7 @@ public class EventResource {
         }
         Event result = eventRepository.save(event);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("event", event.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, event.getId().toString()))
             .body(result);
     }
 
@@ -114,7 +113,7 @@ public class EventResource {
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         log.debug("REST request to delete Event : {}", id);
         eventRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("event", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

@@ -232,4 +232,9 @@ public class UserPermissionResourceIntTest {
         List<UserPermission> userPermissionList = userPermissionRepository.findAll();
         assertThat(userPermissionList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(UserPermission.class);
+    }
 }

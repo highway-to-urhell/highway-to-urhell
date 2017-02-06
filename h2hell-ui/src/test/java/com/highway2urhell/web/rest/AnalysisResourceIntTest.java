@@ -245,4 +245,9 @@ public class AnalysisResourceIntTest {
         List<Analysis> analysisList = analysisRepository.findAll();
         assertThat(analysisList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(Analysis.class);
+    }
 }

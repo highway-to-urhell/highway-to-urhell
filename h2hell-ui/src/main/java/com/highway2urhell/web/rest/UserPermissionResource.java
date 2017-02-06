@@ -5,12 +5,9 @@ import com.highway2urhell.domain.UserPermission;
 
 import com.highway2urhell.repository.UserPermissionRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +25,8 @@ import java.util.Optional;
 public class UserPermissionResource {
 
     private final Logger log = LoggerFactory.getLogger(UserPermissionResource.class);
+
+    private static final String ENTITY_NAME = "userPermission";
         
     private final UserPermissionRepository userPermissionRepository;
 
@@ -47,11 +46,11 @@ public class UserPermissionResource {
     public ResponseEntity<UserPermission> createUserPermission(@Valid @RequestBody UserPermission userPermission) throws URISyntaxException {
         log.debug("REST request to save UserPermission : {}", userPermission);
         if (userPermission.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userPermission", "idexists", "A new userPermission cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new userPermission cannot already have an ID")).body(null);
         }
         UserPermission result = userPermissionRepository.save(userPermission);
         return ResponseEntity.created(new URI("/api/user-permissions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("userPermission", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -73,7 +72,7 @@ public class UserPermissionResource {
         }
         UserPermission result = userPermissionRepository.save(userPermission);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("userPermission", userPermission.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userPermission.getId().toString()))
             .body(result);
     }
 
@@ -115,7 +114,7 @@ public class UserPermissionResource {
     public ResponseEntity<Void> deleteUserPermission(@PathVariable Long id) {
         log.debug("REST request to delete UserPermission : {}", id);
         userPermissionRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("userPermission", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

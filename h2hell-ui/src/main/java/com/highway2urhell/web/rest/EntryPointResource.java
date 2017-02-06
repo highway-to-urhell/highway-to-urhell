@@ -6,7 +6,6 @@ import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
-
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -32,6 +31,8 @@ import java.util.Optional;
 public class EntryPointResource {
 
     private final Logger log = LoggerFactory.getLogger(EntryPointResource.class);
+
+    private static final String ENTITY_NAME = "entryPoint";
         
     private final EntryPointRepository entryPointRepository;
 
@@ -51,11 +52,11 @@ public class EntryPointResource {
     public ResponseEntity<EntryPoint> createEntryPoint(@Valid @RequestBody EntryPoint entryPoint) throws URISyntaxException {
         log.debug("REST request to save EntryPoint : {}", entryPoint);
         if (entryPoint.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("entryPoint", "idexists", "A new entryPoint cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new entryPoint cannot already have an ID")).body(null);
         }
         EntryPoint result = entryPointRepository.save(entryPoint);
         return ResponseEntity.created(new URI("/api/entry-points/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("entryPoint", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -77,7 +78,7 @@ public class EntryPointResource {
         }
         EntryPoint result = entryPointRepository.save(entryPoint);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("entryPoint", entryPoint.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, entryPoint.getId().toString()))
             .body(result);
     }
 
@@ -123,7 +124,7 @@ public class EntryPointResource {
     public ResponseEntity<Void> deleteEntryPoint(@PathVariable Long id) {
         log.debug("REST request to delete EntryPoint : {}", id);
         entryPointRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("entryPoint", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

@@ -6,7 +6,6 @@ import com.highway2urhell.domain.Application;
 import com.highway2urhell.repository.ApplicationRepository;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.util.PaginationUtil;
-
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -32,6 +31,8 @@ import java.util.Optional;
 public class ApplicationResource {
 
     private final Logger log = LoggerFactory.getLogger(ApplicationResource.class);
+
+    private static final String ENTITY_NAME = "application";
         
     private final ApplicationRepository applicationRepository;
 
@@ -51,11 +52,11 @@ public class ApplicationResource {
     public ResponseEntity<Application> createApplication(@Valid @RequestBody Application application) throws URISyntaxException {
         log.debug("REST request to save Application : {}", application);
         if (application.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("application", "idexists", "A new application cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new application cannot already have an ID")).body(null);
         }
         Application result = applicationRepository.save(application);
         return ResponseEntity.created(new URI("/api/applications/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("application", result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -77,7 +78,7 @@ public class ApplicationResource {
         }
         Application result = applicationRepository.save(application);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("application", application.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, application.getId().toString()))
             .body(result);
     }
 
@@ -123,7 +124,7 @@ public class ApplicationResource {
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
         log.debug("REST request to delete Application : {}", id);
         applicationRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("application", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
 }

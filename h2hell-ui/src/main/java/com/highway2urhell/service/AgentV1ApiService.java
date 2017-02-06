@@ -23,8 +23,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.hibernate.jpa.internal.QueryImpl.LOG;
-
 /**
  * Service class for managing agent v1 api.
  */
@@ -188,7 +186,7 @@ public class AgentV1ApiService {
 
 
     public void addListPerformance(List<MessageMetrics> listPerf) {
-        LOG.error("size listPerf !! "+listPerf.size());
+        log.error("size listPerf !! "+listPerf.size());
         if (listPerf != null && !listPerf.isEmpty()) {
             for (MessageMetrics msg : listPerf) {
                 log.info(

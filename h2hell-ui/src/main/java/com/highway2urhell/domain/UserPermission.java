@@ -34,8 +34,8 @@ public class UserPermission implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "user_permission_projects",
-               joinColumns = @JoinColumn(name="user_permissions_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="projects_id", referencedColumnName="ID"))
+               joinColumns = @JoinColumn(name="user_permissions_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="projects_id", referencedColumnName="id"))
     private Set<Application> projects = new HashSet<>();
 
     @ManyToOne

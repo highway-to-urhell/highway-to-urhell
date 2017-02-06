@@ -11,12 +11,12 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
-                "application": "Application",
-                "entryPointCall": "Entry Point Call",
-                "event": "Event",
-                "entryPointPerf": "Entry Point Perf",
                 "analysis": "Analysis",
+                "application": "Application",
                 "entryPoint": "Entry Point",
+                "entryPointCall": "Entry Point Call",
+                "entryPointPerf": "Entry Point Perf",
+                "event": "Event",
                 "team": "Team",
                 "userPermission": "User Permission",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"

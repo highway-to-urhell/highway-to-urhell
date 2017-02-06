@@ -236,4 +236,9 @@ public class EntryPointCallResourceIntTest {
         List<EntryPointCall> entryPointCallList = entryPointCallRepository.findAll();
         assertThat(entryPointCallList).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(EntryPointCall.class);
+    }
 }

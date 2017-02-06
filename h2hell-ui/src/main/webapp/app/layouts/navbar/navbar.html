@@ -57,9 +57,21 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
+                                <a ui-sref="analysis" ng-click="vm.collapseNavbar()">
+                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    <span data-translate="global.menu.entities.analysis">Analysis</span>
+                                </a>
+                            </li>
+                        <li ui-sref-active="active">
                                 <a ui-sref="application" ng-click="vm.collapseNavbar()">
                                     <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                     <span data-translate="global.menu.entities.application">Application</span>
+                                </a>
+                            </li>
+                        <li ui-sref-active="active">
+                                <a ui-sref="entry-point" ng-click="vm.collapseNavbar()">
+                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    <span data-translate="global.menu.entities.entryPoint">Entry Point</span>
                                 </a>
                             </li>
                         <li ui-sref-active="active">
@@ -69,27 +81,15 @@
                                 </a>
                             </li>
                         <li ui-sref-active="active">
-                                <a ui-sref="event" ng-click="vm.collapseNavbar()">
-                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                    <span data-translate="global.menu.entities.event">Event</span>
-                                </a>
-                            </li>
-                        <li ui-sref-active="active">
                                 <a ui-sref="entry-point-perf" ng-click="vm.collapseNavbar()">
                                     <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                     <span data-translate="global.menu.entities.entryPointPerf">Entry Point Perf</span>
                                 </a>
                             </li>
                         <li ui-sref-active="active">
-                                <a ui-sref="analysis" ng-click="vm.collapseNavbar()">
+                                <a ui-sref="event" ng-click="vm.collapseNavbar()">
                                     <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                    <span data-translate="global.menu.entities.analysis">Analysis</span>
-                                </a>
-                            </li>
-                        <li ui-sref-active="active">
-                                <a ui-sref="entry-point" ng-click="vm.collapseNavbar()">
-                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                    <span data-translate="global.menu.entities.entryPoint">Entry Point</span>
+                                    <span data-translate="global.menu.entities.event">Event</span>
                                 </a>
                             </li>
                         <li ui-sref-active="active">

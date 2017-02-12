@@ -3,10 +3,7 @@ package com.highway2urhell.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.service.AgentV1ApiService;
-import com.highway2urhell.web.rest.dto.v1api.H2hConfigDTO;
-import com.highway2urhell.web.rest.dto.v1api.MessageBreaker;
-import com.highway2urhell.web.rest.dto.v1api.MessageMetrics;
-import com.highway2urhell.web.rest.dto.v1api.MessageThunderApp;
+import com.highway2urhell.web.rest.dto.v1api.*;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +31,7 @@ public class AgentV1ApiResource {
     @Inject
     private AgentV1ApiService agentV1ApiService;
 
-    @RequestMapping(value = "/createThunderApp",
+    @RequestMapping(value = "/createThunderApp/",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -73,6 +70,15 @@ public class AgentV1ApiResource {
     @Timed
     public ResponseEntity<Void> addPerformance(@Valid @RequestBody List<MessageMetrics> listPerf) throws URISyntaxException {
         agentV1ApiService.addListPerformance(listPerf);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/event",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> event(@Valid @RequestBody MessageEvent me) throws URISyntaxException {
+        //agentV1ApiService.addListPerformance(listPerf);
         return ResponseEntity.ok().build();
     }
 

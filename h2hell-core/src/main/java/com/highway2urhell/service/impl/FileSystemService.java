@@ -35,11 +35,11 @@ public class FileSystemService extends AbstractLeechService {
         String rootPath = System.getProperty("H2H_PATH");
         try {
             if (rootPath == null) {
-                throw new H2HException("Unknow Variable Path H2h. Please Set pathH2h to location application deployment.");
+                throw new H2HException("Unknow Variable Path H2h. Please Set H2H_PATH to location application deployment.");
             }
             if ("".equals(rootPath)) {
                 throw new H2HException(
-                        "Variable Path H2h is empty. Please Set pathH2h to location application deployment.");
+                        "Variable Path H2h is empty. Please Set H2H_PATH to location application deployment.");
             }
             // Step 1 search Web.XML
             searchAndParseWebXML(rootPath);

@@ -204,11 +204,12 @@ public class CoreEngine {
 		// Hardcoded la valeur de la plateforme --> le jour ou la plateforme
 		// fonctionnera ... one day ... one day ..
 		// Actuellement on hardcode le local
-		config.setUrlH2hWeb("http://localhost:8090/core/api/ThunderEntry");
+		config.setUrlH2hWeb("http://localhost:8090/api/ThunderEntry");
 		// TODO
 		// Recuperer le token comme parametre le jour ou la plate fonctionnera
 		// ... one day ... one day ..
 		config.setToken(null);
+		System.out.println("Use default config : "+config.getUrlH2hWeb());
 	}
 
 	private void parseConfig(String pathFile) {
@@ -252,9 +253,11 @@ public class CoreEngine {
 				// default value
 				config.setHigherTime(DEFAULT_TIMER);
 			}
-
+			System.out.println("Use parsed config : "+config.getUrlH2hWeb());
 		} catch (IOException ex) {
+			System.err.println("Error while reading H2hConfigFile " + pathFile + " : "+ ex.getMessage());
 			throw new RuntimeException("Error while reading H2hConfigFile " + pathFile, ex);
+
 		} finally {
 			if (input != null) {
 				try {
@@ -264,6 +267,7 @@ public class CoreEngine {
 				}
 			}
 		}
+
 	}
 
 	public H2hConfig getConfig() {

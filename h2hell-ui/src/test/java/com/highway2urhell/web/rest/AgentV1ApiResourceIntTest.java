@@ -169,7 +169,7 @@ public class AgentV1ApiResourceIntTest {
 
         // Create the Application
 
-        restApplicationMockMvc.perform(post("/ThunderEntry/createThunderApp")
+        restApplicationMockMvc.perform(post("/api/ThunderEntry/createThunderApp/")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(configDTO)))
                 .andExpect(status().isCreated());
@@ -195,7 +195,7 @@ public class AgentV1ApiResourceIntTest {
     private void initThunderApp() throws Exception {
         int databaseEntryPointSizeBeforeCreate = (int) entryPointRepository.count();
 
-        restApplicationMockMvc.perform(post("/ThunderEntry/initThunderApp")
+        restApplicationMockMvc.perform(post("/api/ThunderEntry/initThunderApp")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(msg)))
             .andExpect(status().isOk());
@@ -210,7 +210,7 @@ public class AgentV1ApiResourceIntTest {
     private void addBreakers() throws Exception {
         int databaseEntryPointCallSizeBeforeCreate = (int) entryPointCallRepository.count();
 
-        restApplicationMockMvc.perform(post("/ThunderEntry/addBreaker")
+        restApplicationMockMvc.perform(post("/api/ThunderEntry/addBreaker")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(listBreaker)))
             .andExpect(status().isOk());
@@ -226,7 +226,7 @@ public class AgentV1ApiResourceIntTest {
     private void addPerformance() throws Exception {
         int databaseMetricsTimersSizeBeforeCreate = (int) entryPointPerfRepository.count();
 
-        restApplicationMockMvc.perform(post("/ThunderEntry/addPerformance")
+        restApplicationMockMvc.perform(post("/api/ThunderEntry/addPerformance")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(listPerformance)))
             .andExpect(status().isOk());

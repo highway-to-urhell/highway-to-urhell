@@ -17,7 +17,7 @@ public class PortService extends AbstractLeechService {
 
     public PortService() {
         super(FRAMEWORK_NAME);
-        setTriggerAtStartup(true);
+        setTriggerAtStartup(false);
     }
 
     @Override

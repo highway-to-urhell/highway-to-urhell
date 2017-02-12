@@ -6,7 +6,6 @@ import com.highway2urhell.transformer.AbstractLeechTransformer;
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;

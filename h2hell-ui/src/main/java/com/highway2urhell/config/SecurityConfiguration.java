@@ -98,7 +98,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
-            .antMatchers("/h2-console/**");
+            .antMatchers("/h2-console/**")
+            .antMatchers("/api/ThunderEntry")
+            .antMatchers("/api/ThunderEntry/createThunderApp/")
+            .antMatchers("/api/ThunderEntry/initThunderApp")
+            .antMatchers("/api/ThunderEntry/addBreaker")
+            .antMatchers("/api/ThunderEntry/addPerformance")
+            .antMatchers("/api/ThunderEntry/event")
+        ;
     }
 
     @Override
@@ -137,6 +144,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/ThunderEntry").permitAll()
+            .antMatchers("/api/ThunderEntry/createThunderApp/").permitAll()
+            .antMatchers("/api/ThunderEntry/initThunderApp").permitAll()
+            .antMatchers("/api/ThunderEntry/addBreaker").permitAll()
+            .antMatchers("/api/ThunderEntry/addPerformance").permitAll()
+            .antMatchers("/api/ThunderEntry/event").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset_password/init").permitAll()
             .antMatchers("/api/account/reset_password/finish").permitAll()

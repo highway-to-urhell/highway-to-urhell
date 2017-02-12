@@ -2,9 +2,11 @@ package com.highway2urhell.web.rest;
 
 import com.highway2urhell.H2HellUiApp;
 import com.highway2urhell.domain.*;
+import com.highway2urhell.domain.enumeration.*;
 import com.highway2urhell.repository.*;
 import com.highway2urhell.service.AgentV1ApiService;
 import com.highway2urhell.web.rest.dto.v1api.*;
+import com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +47,7 @@ public class AgentV1ApiResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String DEFAULT_TOKEN = "AAAAA";
+    private static final String DEFAULT_REFERENCE = "AAAAA";
 
     private static final String DEFAULT_URL_APP = "AAAAA";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
@@ -86,6 +89,9 @@ public class AgentV1ApiResourceIntTest {
     private EntryPointPerfRepository entryPointPerfRepository;
 
     @Inject
+    private EventRepository eventRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -97,6 +103,7 @@ public class AgentV1ApiResourceIntTest {
     private MessageThunderApp msg;
     private List<MessageBreaker> listBreaker;
     private List<MessageMetrics> listPerformance;
+    private MessageEvent event;
 
     @PostConstruct
     public void setup() {
@@ -152,6 +159,10 @@ public class AgentV1ApiResourceIntTest {
         mm.setTimeExec(DEFAULT_TIME_EXEC);
         listPerformance.add(mm);
 
+        event = new MessageEvent();
+        event.setToken(DEFAULT_TOKEN);
+        event.setReference(DEFAULT_REFERENCE);
+        event.setTypeMessageEvent(TypeMessageEvent.ENABLE_ENTRY_POINT);
     }
 
     @Test
@@ -161,6 +172,7 @@ public class AgentV1ApiResourceIntTest {
         initThunderApp();
         addBreakers();
         addPerformance();
+        addEvent();
     }
 
     private void createApplication() throws Exception {
@@ -241,4 +253,19 @@ public class AgentV1ApiResourceIntTest {
         assertThat(entryPointPerf.getEntryPoint().getPathClassMethodName()).isEqualTo(DEFAULT_CLASS_NAME + "." + DEFAULT_METHODE_NAME);
     }
 
+    private void addEvent() throws Exception {
+        int databaseEventSizeBeforeCreate = (int) eventRepository.count();
+
+        restApplicationMockMvc.perform(post("/api/ThunderEntry/event")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(event)))
+            .andExpect(status().isOk());
+
+        // Validate the Application in the database
+        List<Event> events = eventRepository.findAll();
+        assertThat(events).hasSize(databaseEventSizeBeforeCreate + 1);
+        Event event = events.get(events.size() - 1);
+        assertThat(event.getTypeMessageEvent()).isEqualTo(com.highway2urhell.domain.enumeration.TypeMessageEvent.ENABLE_ENTRY_POINT);
+
+    }
 }

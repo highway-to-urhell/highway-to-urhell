@@ -78,7 +78,7 @@ public class AgentV1ApiResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> event(@Valid @RequestBody MessageEvent me) throws URISyntaxException {
-        //agentV1ApiService.addListPerformance(listPerf);
+        agentV1ApiService.addEvent(me);
         return ResponseEntity.ok().build();
     }
 

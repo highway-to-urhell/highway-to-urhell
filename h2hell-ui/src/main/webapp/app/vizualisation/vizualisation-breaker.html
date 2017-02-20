@@ -1,0 +1,90 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <div class="panel  panel-white">
+                <div class="panel-body">
+                    <div style="font-size: 18px">
+                        <span class="fa fa-sellsy"></span> Total entry point:
+                    </div>
+                    <span style="font-size: 32px">{{ms.totalStat}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <div class="panel  panel-white">
+                <div class="panel-body">
+                    <div style="font-size: 18px">
+                        <span class="fa fa-sellsy"></span> Not tested:
+                    </div>
+
+                    <span style="font-size: 32px">{{ms.totalNoTest}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <div class="panel  panel-white">
+                <div class="panel-body">
+                    <div style="font-size: 18px">
+                        <span class="fa fa-sellsy"></span> False positive:
+                    </div>
+                    <span style="font-size: 32px">{{ms.totalFalsePositive}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <div>
+                <a class="btn" href="" onclick="window.open('/core/api/BreakerLog/sendCsv/{{ms.token}}')"
+                   style="font-size:18px">
+                    <i class="fa fa-fire"></i> Export CSV</a>
+                <br/>
+                <a class="btn" href="" onclick="window.open('/core/api/BreakerLog/sendJson/{{ms.token}}')"
+                   style="font-size:18px">
+                    <i class="fa fa-fire"></i> Export JSON</a>
+                <br/>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-show="breakerlist.length > 0">
+        <div class="input-group">
+            <span class="input-group-addon ">Filter</span> <input id="filter"
+                                                                  type="text" class="form-control"
+                                                                  placeholder="Type here...">
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="text-align: center; width: 250px;">Method input</th>
+                <th style="text-align: center;">Token</th>
+                <th style="text-align: center; width: 180px;">Date</th>
+                <th style="text-align: center;">Parameters</th>
+            </tr>
+            </thead>
+            <tbody class="searchable">
+            <tr ng-repeat="breaker in breakerlist">
+                <td style="text-align: center;">{{breaker.pathClassMethodName}}</td>
+                <td style="text-align: center;">{{breaker.token}}</td>
+                <td style="text-align: center;">{{breaker.dateIncoming}}</td>
+                <td>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Class</th>
+                            <th style="text-align: center;">Value</th>
+                        </tr>
+                        <tr ng-repeat="pm in breaker.parameters">
+                            <td style="text-align: center; width: 250px;">{{pm.nameParameter}}</td>
+                            <td style="text-align: center;">{{pm.nameClass}}</td>
+                            <td style="text-align: center; width: 300px;">{{pm.data}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

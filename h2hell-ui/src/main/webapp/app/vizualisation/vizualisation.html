@@ -1,0 +1,44 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-lg-4 col-md-4" ng-repeat="analyse in vm.analysis">
+            <div class="panel  panel-white">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{analyse.application.name}} v{{analyse.appVersion}}</h4>
+                    <div class="panel-control">
+                        <a href="javascript:void(0);" data-toggle="tooltip"
+                           data-placement="top" title="" class="panel-reload"
+                           data-original-title="Reload"><i class="icon-reload"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div style="font-size: 18px">
+                        <span class="glyphicon glyphicon-cloud-upload"></span> Detected entry points:
+                    </div>
+
+
+                    <a ng-show="analyse.numberEntryPoints > 0"  href="#/thunderstat/{{analyse.application.token}}" style="font-size: 48px">{{app.numberEntryPoints}}</a>
+                    <span ng-show="analyse.numberEntryPoints == 0"  style="font-size: 48px">0</span>
+
+                    <div>
+                        <a ui-sref="#" class=" glyphicon glyphicon-globe" ng-click="$window.open('{{analyse.application.urlApp}}')">app</a>
+                        |
+                        <a ui-sref="/vizualisation-path/{{analyse.application.token}}" class="glyphicon glyphicon-stats">Paths</a>
+                        |
+                        <a ui-sref="/vizualisation-breaker/{{analyse.application.token}}" class="glyphicon glyphicon-search" >Details path</a>
+                        <!-- 					<a href="#"> -->
+                        <!-- 						<span class="fa fa-file-text"></span> Logs -->
+                        <!-- 					</a> | -->
+                        <!-- 					<a href="#"> -->
+                        <!-- 						<span class="fa fa fa-cogs"></span> Configure -->
+                        <!-- 					</a> | -->
+                        <!-- 					<a href="#"> -->
+                        <!-- 						<span class="fa fa-trash"></span> Forget -->
+                        <!-- 					</a> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

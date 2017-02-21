@@ -2,5 +2,9 @@
     "vizualisation": {
         "title": "Visualisation",
         "subtitle": "Lance et explore les analyses"
+    },
+    "vizualisation-path": {
+        "title": "Visualisation Path",
+        "subtitle": "Explore les analyse"
     }
 }

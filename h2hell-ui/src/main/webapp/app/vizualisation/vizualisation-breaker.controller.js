@@ -3,11 +3,11 @@
 
     angular
         .module('h2HellUiApp')
-        .controller('VizualisationBreakerController', VizualisationController);
+        .controller('VizualisationBreakerController', VizualisationBreakerController);
 
-    VizualisationController.$inject = ['$scope', '$state', 'analysis'];
+    VizualisationBreakerController.$inject = ['$scope', '$state', 'analysis'];
 
-    function VizualisationController ($scope, $state, analysis) {
+    function VizualisationBreakerController ($scope, $state, analysis) {
         var vm = this;
         vm.analysis = analysis;
     }

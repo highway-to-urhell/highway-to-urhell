@@ -2,5 +2,9 @@
     "vizualisation": {
         "title": "Vizualisation",
         "subtitle": "Launch and Explore analysis"
+    },
+    "vizualisation-path": {
+        "title": "Visualisation Path",
+        "subtitle": "Explore analysis"
     }
 }

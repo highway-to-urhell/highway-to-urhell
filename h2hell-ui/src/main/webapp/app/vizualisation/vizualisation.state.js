@@ -34,9 +34,10 @@
         })
         .state('vizualisation-path', {
             parent: 'vizualisation',
-            url: '/vizualisation-path/{id}',
+            url: '/vizualisation/path/{id}',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_USER'],
+                pageTitle: 'h2HellUiApp.vizualisation-path.title'
             },
             views: {
                 'content@': {
@@ -50,13 +51,17 @@
                     $translatePartialLoader.addPart('vizualisation');
                     return $translate.refresh();
                 }],
+                analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
+                    return Vizualisation.query().$promise;
+                }],
             }
         })
         .state('vizualisation-breaker', {
             parent: 'vizualisation',
-            url: '/vizualisation-breaker/{id}',
+            url: '/vizualisation/breaker/{id}',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_USER'],
+                pageTitle: 'h2HellUiApp.vizualisation-breaker.title'
             },
             views: {
                 'content@': {
@@ -69,6 +74,9 @@
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
                     $translatePartialLoader.addPart('vizualisation');
                     return $translate.refresh();
+                }],
+                analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
+                    return Vizualisation.query().$promise;
                 }],
             }
         });

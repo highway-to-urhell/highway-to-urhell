@@ -22,9 +22,9 @@
                     <div>
                         <a ui-sref="#" class=" glyphicon glyphicon-globe" ng-click="$window.open('{{analyse.application.urlApp}}')">app</a>
                         |
-                        <a ui-sref="/vizualisation-path/{{analyse.application.token}}" class="glyphicon glyphicon-stats">Paths</a>
+                        <a ui-sref="vizualisation-path({id:analyse.application.token})" class="glyphicon glyphicon-stats">Paths</a>
                         |
-                        <a ui-sref="/vizualisation-breaker/{{analyse.application.token}}" class="glyphicon glyphicon-search" >Details path</a>
+                        <a ui-sref="vizualisation-breaker({id:analyse.application.token})" class="glyphicon glyphicon-search" >Details path</a>
                         <!-- 					<a href="#"> -->
                         <!-- 						<span class="fa fa-file-text"></span> Logs -->
                         <!-- 					</a> | -->

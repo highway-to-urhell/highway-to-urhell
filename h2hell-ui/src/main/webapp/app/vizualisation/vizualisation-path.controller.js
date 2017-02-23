@@ -5,10 +5,23 @@
         .module('h2HellUiApp')
         .controller('VizualisationPathController', VizualisationPathController);
 
-    VizualisationPathController.$inject = ['$scope', '$state', 'analysis'];
+    VizualisationPathController.$inject = ['$scope', '$state', 'entity'];
 
-    function VizualisationPathController ($scope, $state, analysis) {
+    function VizualisationPathController ($scope, $state, entity) {
         var vm = this;
-        vm.analysis = analysis;
+        vm.entrypoints = entity.entrypoints;
+        vm.messageConfig = undefined;
+        vm.totalStat = 10;
+        vm.totalNoTest = 10;
+        vm.totalFalsePositive = 10;
+        vm.token = "TOKENNNN";
+
+        function updatePaths() {
+
+        }
+
+        function findAllPaths() {
+
+        }
     }
 })();

@@ -1,0 +1,61 @@
+
+<div id="main-wrapper">
+    <div class="alert alert-danger"
+         style="width: 800px; margin-left: 0px; margin-top: 10px;"
+         ng-show="vm.messageConfig !=null">{{vm.messageConfig}}  <br/> <a ui-sref="vizualisation-path({id:analyse.application.token})" class="fa fa-eye" >See the endPoint</a></div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <div>
+                <a class="btn" href="" ng-click="vm.launchAnalysis(vm.token)"  style="font-size:18px">
+                    <i class="fa fa-eye"></i> Launch analysis </a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped"
+           ng-show="vm.entrypoints.length > 0">
+        <thead>
+        <tr>
+            <th style="text-align: center;">A</th>
+            <th style="text-align: center;">Method input</th>
+            <th style="text-align: center;">Name App</th>
+            <th style="text-align: center;">Uri</th>
+            <th style="text-align: center;">Http Method</th>
+            <th style="text-align: center;">Count</th>
+        </tr>
+        </thead>
+        <tbody class="searchable">
+        <tr ng-repeat="stat in vm.entrypoints"
+            ng-style="set_color(stat.falsePositive,stat.count)">
+            <td style="text-align: center;"><input type="checkbox" ng-model="stat.checkLaunch" ng-true-value="true" ng-false-value="false"  ng-disabled="!stat.drawAnalysis"></td>
+            <td style="text-align: center;">{{stat.pathClassMethodName}}</td>
+            <td style="text-align: center;">{{stat.thunderApp.nameApp}}</td>
+            <td style="text-align: center;">{{stat.uri}}</td>
+            <td style="text-align: center;">{{stat.httpmethod}}</td>
+            <td style="text-align: center;">{{stat.count}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        (function ($) {
+
+            $('#filter').keyup(function () {
+
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+
+            })
+
+        }(jQuery));
+
+    });
+</script>

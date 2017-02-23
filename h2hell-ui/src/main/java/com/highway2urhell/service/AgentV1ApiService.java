@@ -121,7 +121,7 @@ public class AgentV1ApiService {
         if (token == null) {
             throw new V1ApiTokenException();
         }
-        List<Analysis> analyses = analysisRepository.findByTokenWithEagerRelationships(token);
+        List<Analysis> analyses = analysisRepository.findAllByTokenWithApplication(token);
         if (analyses == null || analyses.size() == 0) {
             throw new V1ApiNotExistThunderAppException();
         }

@@ -14,9 +14,8 @@ import java.util.List;
 public interface AnalysisRepository extends JpaRepository<Analysis,Long> {
 
     @Query("select distinct analysis from Analysis analysis left join fetch analysis.application where analysis.application.token =:token")
-    List<Analysis> findByTokenWithEagerRelationships(@Param("token") String token);
+    List<Analysis> findAllByTokenWithApplication(@Param("token") String token);
 
     @Query("select distinct analysis from Analysis analysis left join fetch analysis.application")
-    List<Analysis> findWithEagerRelationships();
-
+    List<Analysis> findAllWithApplication();
 }

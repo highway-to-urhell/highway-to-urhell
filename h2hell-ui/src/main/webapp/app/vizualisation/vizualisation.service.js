@@ -3,19 +3,21 @@
 
     angular
         .module('h2HellUiApp')
-        .factory('Vizualisation', Home);
+        .factory('Vizualisation', Vizualisation);
 
-    Home.$inject = ['$resource'];
+    Vizualisation.$inject = ['$resource'];
 
-    function Home ($resource) {
-        var service = $resource('api/vizualisation', {}, {
+    function Vizualisation ($resource) {
+        var service = $resource('api/vizualisation/:id', {}, {
             'query': {method: 'GET', isArray: true},
-            'get': {
-                method: 'GET',
-                transformResponse: function (data) {
-                    data = angular.fromJson(data);
-                    return data;
-                }
+            'getPath': {
+                method: 'GET'
+            },
+            'getBreaker': {
+                method: 'GET'
+            },
+            'getAnalysis': {
+                method: 'GET'
             }
         });
 

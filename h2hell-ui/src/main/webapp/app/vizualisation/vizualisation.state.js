@@ -51,8 +51,8 @@
                     $translatePartialLoader.addPart('vizualisation');
                     return $translate.refresh();
                 }],
-                analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
-                    return Vizualisation.query().$promise;
+                entity: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
+                    return Vizualisation.getPath({id : $stateParams.id}).$promise;
                 }],
             }
         })
@@ -76,7 +76,31 @@
                     return $translate.refresh();
                 }],
                 analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
-                    return Vizualisation.query().$promise;
+                    return Vizualisation.getBreaker().$promise;
+                }],
+            }
+        })
+        .state('vizualisation-analysis', {
+            parent: 'vizualisation',
+            url: '/vizualisation/analysis/{id}',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'h2HellUiApp.vizualisation-analysis.title'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/vizualisation/vizualisation-analysis.html',
+                    controller: 'VizualisationAnalysisController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+                    $translatePartialLoader.addPart('vizualisation');
+                    return $translate.refresh();
+                }],
+                analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
+                    return Vizualisation.getAnalysis({id : $stateParams.id}).$promise;
                 }],
             }
         });

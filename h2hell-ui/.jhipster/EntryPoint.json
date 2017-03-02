@@ -1,74 +1,69 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "perfs",
-      "otherEntityName": "entryPointPerf",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "entryPoint"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "calls",
-      "otherEntityName": "entryPointCall",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "entryPoint"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipName": "analysis",
-      "otherEntityName": "analysis",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "appVersion"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "pathClassMethodName",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "count",
-      "fieldType": "Long"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "falsePositive",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "uri",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 5,
-      "fieldName": "httpmethod",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 6,
-      "fieldName": "audit",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldId": 7,
-      "fieldName": "averageTime",
-      "fieldType": "Long"
-    },
-    {
-      "fieldId": 8,
-      "fieldName": "checkLaunch",
-      "fieldType": "Boolean"
-    }
-  ],
-  "changelogDate": "20160519092249",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "metrics",
+            "otherEntityName": "metricsTimer",
+            "otherEntityRelationshipName": "entryPoint"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "logs",
+            "otherEntityName": "entryPointParameters",
+            "otherEntityRelationshipName": "entryPoint"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "analysis",
+            "otherEntityName": "analysis",
+            "otherEntityField": "appVersion"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "pathClassMethodName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "count",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "falsePositive",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "uri",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "httpmethod",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "audit",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "averageTime",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "checkLaunch",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "drawAnalysis",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20160519092249",
+    "entityTableName": "entry_point",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no"
 }

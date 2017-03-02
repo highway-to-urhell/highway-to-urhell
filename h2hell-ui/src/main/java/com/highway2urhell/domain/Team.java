@@ -29,17 +29,17 @@ public class Team implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "team")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<UserPermission> userPermissions = new HashSet<>();
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "team_members",
                joinColumns = @JoinColumn(name="teams_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="id"))
     private Set<User> members = new HashSet<>();
-
-    @OneToMany(mappedBy = "team")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UserPermission> userPermissions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -53,24 +53,61 @@ public class Team implements Serializable {
         return name;
     }
 
+    public Team name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Set<User> users) {
-        this.members = users;
     }
 
     public Set<UserPermission> getUserPermissions() {
         return userPermissions;
     }
 
+    public Team userPermissions(Set<UserPermission> userPermissions) {
+        this.userPermissions = userPermissions;
+        return this;
+    }
+
+    public Team addUserPermissions(UserPermission userPermission) {
+        this.userPermissions.add(userPermission);
+        userPermission.setTeam(this);
+        return this;
+    }
+
+    public Team removeUserPermissions(UserPermission userPermission) {
+        this.userPermissions.remove(userPermission);
+        userPermission.setTeam(null);
+        return this;
+    }
+
     public void setUserPermissions(Set<UserPermission> userPermissions) {
         this.userPermissions = userPermissions;
+    }
+
+    public Set<User> getMembers() {
+        return members;
+    }
+
+    public Team members(Set<User> users) {
+        this.members = users;
+        return this;
+    }
+
+    public Team addMembers(User user) {
+        this.members.add(user);
+        return this;
+    }
+
+    public Team removeMembers(User user) {
+        this.members.remove(user);
+        return this;
+    }
+
+    public void setMembers(Set<User> users) {
+        this.members = users;
     }
 
     @Override

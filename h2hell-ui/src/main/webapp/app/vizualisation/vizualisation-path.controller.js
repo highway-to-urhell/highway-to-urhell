@@ -17,11 +17,11 @@
         vm.token = "TOKENNNN";
 
         function updatePaths() {
-
+            Vizualisation.updatePaths({id : $stateParams.id});
         }
 
         function findAllPaths() {
-
+            Vizualisation.findAllPaths({id : $stateParams.id});
         }
     }
 })();

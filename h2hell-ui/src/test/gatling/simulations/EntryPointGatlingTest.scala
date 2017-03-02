@@ -67,7 +67,7 @@ class EntryPointGatlingTest extends Simulation {
             .exec(http("Create new entryPoint")
             .post("/api/entry-points")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "pathClassMethodName":"SAMPLE_TEXT", "count":null, "falsePositive":null, "uri":"SAMPLE_TEXT", "httpmethod":"SAMPLE_TEXT", "audit":null, "averageTime":null, "checkLaunch":null}""")).asJSON
+            .body(StringBody("""{"id":null, "pathClassMethodName":"SAMPLE_TEXT", "count":null, "falsePositive":null, "uri":"SAMPLE_TEXT", "httpmethod":"SAMPLE_TEXT", "audit":null, "averageTime":null, "checkLaunch":null, "drawAnalysis":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_entryPoint_url"))).exitHereIfFailed
             .pause(10)

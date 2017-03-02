@@ -2,10 +2,12 @@ package com.highway2urhell.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
+import com.highway2urhell.domain.Application;
 import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.service.VizualisationService;
+import com.highway2urhell.web.rest.vm.MessageStat;
 import com.highway2urhell.web.rest.vm.VizualisationPathVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +69,28 @@ public class VizualisationResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/vizualisation/findAllPaths/{id}")
+    @Timed
+    public ResponseEntity<Void> findAllPaths(@PathVariable("id") String id) {
+        log.info("Call findAllPaths ");
+        vizualisationService.findAllPaths(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/vizualisation/findStatByTokenAndFilter/{id}")
+    @Timed
+    public ResponseEntity<MessageStat> findStatByTokenAndFilter(@PathVariable("id") String id) {
+        log.info("Call findStatByTokenAndFilter ");
+        MessageStat ms = vizualisationService.analysisStat(id);
+        //filter
+        vizualisationService.filterFramework(ms.getListThunderStat());
+        //TODO dirty clean this
+        Application app = vizualisationService.findApplicationByToken(id);
+        ms.setAnalysis(app.isAnalysed());
+        ms.setAppName(app.getName());
+        return ResponseEntity.ok().body(ms);
     }
 
 }

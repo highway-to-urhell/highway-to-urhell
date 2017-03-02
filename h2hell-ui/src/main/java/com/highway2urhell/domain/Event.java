@@ -52,12 +52,22 @@ public class Event implements Serializable {
         return typeMessageEvent;
     }
 
+    public Event typeMessageEvent(TypeMessageEvent typeMessageEvent) {
+        this.typeMessageEvent = typeMessageEvent;
+        return this;
+    }
+
     public void setTypeMessageEvent(TypeMessageEvent typeMessageEvent) {
         this.typeMessageEvent = typeMessageEvent;
     }
 
     public byte[] getData() {
         return data;
+    }
+
+    public Event data(byte[] data) {
+        this.data = data;
+        return this;
     }
 
     public void setData(byte[] data) {
@@ -68,6 +78,11 @@ public class Event implements Serializable {
         return dataContentType;
     }
 
+    public Event dataContentType(String dataContentType) {
+        this.dataContentType = dataContentType;
+        return this;
+    }
+
     public void setDataContentType(String dataContentType) {
         this.dataContentType = dataContentType;
     }
@@ -76,12 +91,22 @@ public class Event implements Serializable {
         return consumed;
     }
 
+    public Event consumed(Boolean consumed) {
+        this.consumed = consumed;
+        return this;
+    }
+
     public void setConsumed(Boolean consumed) {
         this.consumed = consumed;
     }
 
     public Analysis getAnalysis() {
         return analysis;
+    }
+
+    public Event analysis(Analysis analysis) {
+        this.analysis = analysis;
+        return this;
     }
 
     public void setAnalysis(Analysis analysis) {

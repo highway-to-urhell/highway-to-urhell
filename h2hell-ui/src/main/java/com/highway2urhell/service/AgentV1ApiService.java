@@ -2,7 +2,6 @@ package com.highway2urhell.service;
 
 import com.highway2urhell.domain.*;
 import com.highway2urhell.repository.*;
-import com.highway2urhell.service.mapper.TypeMessageEventMapper;
 import com.highway2urhell.web.rest.dto.v1api.*;
 import com.highway2urhell.web.rest.errors.V1ApiDateIncomingException;
 import com.highway2urhell.web.rest.errors.V1ApiNotExistThunderAppException;
@@ -19,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -213,16 +213,8 @@ public class AgentV1ApiService {
         entryPointPerfRepository.save(epp);
     }
 
-    public void addEvent(MessageEvent me) {
-        Event event = new Event();
-        if(me.getTypeMessageEvent() != null) {
-            event.setTypeMessageEvent(TypeMessageEventMapper.domainToDto(me.getTypeMessageEvent()));
-        }
-        Analysis analysis = findAppByToken(me.getToken());
-        event.setAnalysis(analysis);
-        if(me.getData() != null) {
-            event.setData(me.getData().getBytes());
-        }
-        eventRepository.save(event);
+    public List<MessageEvent> findEvents(MessageEvent me) {
+        List<MessageEvent> events = eventRepository.findByTokenAndReference(me.getToken());
+        return events;
     }
 }

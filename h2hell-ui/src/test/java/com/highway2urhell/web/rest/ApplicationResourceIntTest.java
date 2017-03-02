@@ -94,14 +94,14 @@ public class ApplicationResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Application createEntity(EntityManager em) {
-        Application application = new Application();
-        application.setName(DEFAULT_NAME);
-        application.setToken(DEFAULT_TOKEN);
-        application.setDateCreation(DEFAULT_DATE_CREATION);
-        application.setUrlApp(DEFAULT_URL_APP);
-        application.setDescription(DEFAULT_DESCRIPTION);
-        application.setAppType(DEFAULT_APP_TYPE);
-        application.setAnalysed(DEFAULT_ANALYSED);
+        Application application = new Application()
+                .name(DEFAULT_NAME)
+                .token(DEFAULT_TOKEN)
+                .dateCreation(DEFAULT_DATE_CREATION)
+                .urlApp(DEFAULT_URL_APP)
+                .description(DEFAULT_DESCRIPTION)
+                .appType(DEFAULT_APP_TYPE)
+                .analysed(DEFAULT_ANALYSED);
         return application;
     }
 
@@ -248,13 +248,14 @@ public class ApplicationResourceIntTest {
 
         // Update the application
         Application updatedApplication = applicationRepository.findOne(application.getId());
-        updatedApplication.setName(UPDATED_NAME);
-        updatedApplication.setToken(UPDATED_TOKEN);
-        updatedApplication.setDateCreation(UPDATED_DATE_CREATION);
-        updatedApplication.setUrlApp(UPDATED_URL_APP);
-        updatedApplication.setDescription(UPDATED_DESCRIPTION);
-        updatedApplication.setAppType(UPDATED_APP_TYPE);
-        updatedApplication.setAnalysed(UPDATED_ANALYSED);
+        updatedApplication
+                .name(UPDATED_NAME)
+                .token(UPDATED_TOKEN)
+                .dateCreation(UPDATED_DATE_CREATION)
+                .urlApp(UPDATED_URL_APP)
+                .description(UPDATED_DESCRIPTION)
+                .appType(UPDATED_APP_TYPE)
+                .analysed(UPDATED_ANALYSED);
 
         restApplicationMockMvc.perform(put("/api/applications")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

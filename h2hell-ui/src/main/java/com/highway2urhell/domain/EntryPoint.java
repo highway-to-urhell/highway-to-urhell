@@ -50,15 +50,18 @@ public class EntryPoint implements Serializable {
     @Column(name = "check_launch")
     private Boolean checkLaunch;
 
-    @OneToMany(mappedBy = "entryPoint")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<EntryPointPerf> perfs = new HashSet<>();
+    @Column(name = "draw_analysis")
+    private Boolean drawAnalysis;
 
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<EntryPointCall> calls = new HashSet<>();
+    private Set<MetricsTimer> metrics = new HashSet<>();
+
+    @OneToMany(mappedBy = "entryPoint")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<EntryPointParameters> logs = new HashSet<>();
 
     @ManyToOne
     private Analysis analysis;
@@ -75,12 +78,22 @@ public class EntryPoint implements Serializable {
         return pathClassMethodName;
     }
 
+    public EntryPoint pathClassMethodName(String pathClassMethodName) {
+        this.pathClassMethodName = pathClassMethodName;
+        return this;
+    }
+
     public void setPathClassMethodName(String pathClassMethodName) {
         this.pathClassMethodName = pathClassMethodName;
     }
 
     public Long getCount() {
         return count;
+    }
+
+    public EntryPoint count(Long count) {
+        this.count = count;
+        return this;
     }
 
     public void setCount(Long count) {
@@ -91,12 +104,22 @@ public class EntryPoint implements Serializable {
         return falsePositive;
     }
 
+    public EntryPoint falsePositive(Boolean falsePositive) {
+        this.falsePositive = falsePositive;
+        return this;
+    }
+
     public void setFalsePositive(Boolean falsePositive) {
         this.falsePositive = falsePositive;
     }
 
     public String getUri() {
         return uri;
+    }
+
+    public EntryPoint uri(String uri) {
+        this.uri = uri;
+        return this;
     }
 
     public void setUri(String uri) {
@@ -107,12 +130,22 @@ public class EntryPoint implements Serializable {
         return httpmethod;
     }
 
+    public EntryPoint httpmethod(String httpmethod) {
+        this.httpmethod = httpmethod;
+        return this;
+    }
+
     public void setHttpmethod(String httpmethod) {
         this.httpmethod = httpmethod;
     }
 
     public Boolean isAudit() {
         return audit;
+    }
+
+    public EntryPoint audit(Boolean audit) {
+        this.audit = audit;
+        return this;
     }
 
     public void setAudit(Boolean audit) {
@@ -123,6 +156,11 @@ public class EntryPoint implements Serializable {
         return averageTime;
     }
 
+    public EntryPoint averageTime(Long averageTime) {
+        this.averageTime = averageTime;
+        return this;
+    }
+
     public void setAverageTime(Long averageTime) {
         this.averageTime = averageTime;
     }
@@ -131,28 +169,85 @@ public class EntryPoint implements Serializable {
         return checkLaunch;
     }
 
+    public EntryPoint checkLaunch(Boolean checkLaunch) {
+        this.checkLaunch = checkLaunch;
+        return this;
+    }
+
     public void setCheckLaunch(Boolean checkLaunch) {
         this.checkLaunch = checkLaunch;
     }
 
-    public Set<EntryPointPerf> getPerfs() {
-        return perfs;
+    public Boolean isDrawAnalysis() {
+        return drawAnalysis;
     }
 
-    public void setPerfs(Set<EntryPointPerf> entryPointPerfs) {
-        this.perfs = entryPointPerfs;
+    public EntryPoint drawAnalysis(Boolean drawAnalysis) {
+        this.drawAnalysis = drawAnalysis;
+        return this;
     }
 
-    public Set<EntryPointCall> getCalls() {
-        return calls;
+    public void setDrawAnalysis(Boolean drawAnalysis) {
+        this.drawAnalysis = drawAnalysis;
     }
 
-    public void setCalls(Set<EntryPointCall> entryPointCalls) {
-        this.calls = entryPointCalls;
+    public Set<MetricsTimer> getMetrics() {
+        return metrics;
+    }
+
+    public EntryPoint metrics(Set<MetricsTimer> metricsTimers) {
+        this.metrics = metricsTimers;
+        return this;
+    }
+
+    public EntryPoint addMetrics(MetricsTimer metricsTimer) {
+        this.metrics.add(metricsTimer);
+        metricsTimer.setEntryPoint(this);
+        return this;
+    }
+
+    public EntryPoint removeMetrics(MetricsTimer metricsTimer) {
+        this.metrics.remove(metricsTimer);
+        metricsTimer.setEntryPoint(null);
+        return this;
+    }
+
+    public void setMetrics(Set<MetricsTimer> metricsTimers) {
+        this.metrics = metricsTimers;
+    }
+
+    public Set<EntryPointParameters> getLogs() {
+        return logs;
+    }
+
+    public EntryPoint logs(Set<EntryPointParameters> entryPointParameters) {
+        this.logs = entryPointParameters;
+        return this;
+    }
+
+    public EntryPoint addLogs(EntryPointParameters entryPointParameters) {
+        this.logs.add(entryPointParameters);
+        entryPointParameters.setEntryPoint(this);
+        return this;
+    }
+
+    public EntryPoint removeLogs(EntryPointParameters entryPointParameters) {
+        this.logs.remove(entryPointParameters);
+        entryPointParameters.setEntryPoint(null);
+        return this;
+    }
+
+    public void setLogs(Set<EntryPointParameters> entryPointParameters) {
+        this.logs = entryPointParameters;
     }
 
     public Analysis getAnalysis() {
         return analysis;
+    }
+
+    public EntryPoint analysis(Analysis analysis) {
+        this.analysis = analysis;
+        return this;
     }
 
     public void setAnalysis(Analysis analysis) {
@@ -191,6 +286,7 @@ public class EntryPoint implements Serializable {
             ", audit='" + audit + "'" +
             ", averageTime='" + averageTime + "'" +
             ", checkLaunch='" + checkLaunch + "'" +
+            ", drawAnalysis='" + drawAnalysis + "'" +
             '}';
     }
 }

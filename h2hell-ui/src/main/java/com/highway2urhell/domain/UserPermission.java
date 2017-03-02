@@ -53,6 +53,11 @@ public class UserPermission implements Serializable {
         return permission;
     }
 
+    public UserPermission permission(Permission permission) {
+        this.permission = permission;
+        return this;
+    }
+
     public void setPermission(Permission permission) {
         this.permission = permission;
     }
@@ -61,12 +66,34 @@ public class UserPermission implements Serializable {
         return projects;
     }
 
+    public UserPermission projects(Set<Application> applications) {
+        this.projects = applications;
+        return this;
+    }
+
+    public UserPermission addProjects(Application application) {
+        this.projects.add(application);
+        application.getUserPermissions().add(this);
+        return this;
+    }
+
+    public UserPermission removeProjects(Application application) {
+        this.projects.remove(application);
+        application.getUserPermissions().remove(this);
+        return this;
+    }
+
     public void setProjects(Set<Application> applications) {
         this.projects = applications;
     }
 
     public Team getTeam() {
         return team;
+    }
+
+    public UserPermission team(Team team) {
+        this.team = team;
+        return this;
     }
 
     public void setTeam(Team team) {

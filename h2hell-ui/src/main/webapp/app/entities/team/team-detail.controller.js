@@ -5,9 +5,9 @@
         .module('h2HellUiApp')
         .controller('TeamDetailController', TeamDetailController);
 
-    TeamDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Team', 'User', 'UserPermission'];
+    TeamDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Team', 'UserPermission', 'User'];
 
-    function TeamDetailController($scope, $rootScope, $stateParams, previousState, entity, Team, User, UserPermission) {
+    function TeamDetailController($scope, $rootScope, $stateParams, previousState, entity, Team, UserPermission, User) {
         var vm = this;
 
         vm.team = entity;

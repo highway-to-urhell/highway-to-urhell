@@ -19,6 +19,8 @@
                 "event": "Event",
                 "team": "Team",
                 "userPermission": "User Permission",
+                "entryPointParameters": "Entry Point Parameters",
+                "metricsTimer": "Metrics Timer",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

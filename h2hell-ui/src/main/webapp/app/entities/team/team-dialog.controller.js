@@ -5,16 +5,16 @@
         .module('h2HellUiApp')
         .controller('TeamDialogController', TeamDialogController);
 
-    TeamDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Team', 'User', 'UserPermission'];
+    TeamDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Team', 'UserPermission', 'User'];
 
-    function TeamDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Team, User, UserPermission) {
+    function TeamDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Team, UserPermission, User) {
         var vm = this;
 
         vm.team = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.users = User.query();
         vm.userpermissions = UserPermission.query();
+        vm.users = User.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

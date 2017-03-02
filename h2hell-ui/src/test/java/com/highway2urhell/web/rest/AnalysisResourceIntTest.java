@@ -85,11 +85,11 @@ public class AnalysisResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Analysis createEntity(EntityManager em) {
-        Analysis analysis = new Analysis();
-        analysis.setDateCreation(DEFAULT_DATE_CREATION);
-        analysis.setPathSource(DEFAULT_PATH_SOURCE);
-        analysis.setNumberEntryPoints(DEFAULT_NUMBER_ENTRY_POINTS);
-        analysis.setAppVersion(DEFAULT_APP_VERSION);
+        Analysis analysis = new Analysis()
+                .dateCreation(DEFAULT_DATE_CREATION)
+                .pathSource(DEFAULT_PATH_SOURCE)
+                .numberEntryPoints(DEFAULT_NUMBER_ENTRY_POINTS)
+                .appVersion(DEFAULT_APP_VERSION);
         return analysis;
     }
 
@@ -191,10 +191,11 @@ public class AnalysisResourceIntTest {
 
         // Update the analysis
         Analysis updatedAnalysis = analysisRepository.findOne(analysis.getId());
-        updatedAnalysis.setDateCreation(UPDATED_DATE_CREATION);
-        updatedAnalysis.setPathSource(UPDATED_PATH_SOURCE);
-        updatedAnalysis.setNumberEntryPoints(UPDATED_NUMBER_ENTRY_POINTS);
-        updatedAnalysis.setAppVersion(UPDATED_APP_VERSION);
+        updatedAnalysis
+                .dateCreation(UPDATED_DATE_CREATION)
+                .pathSource(UPDATED_PATH_SOURCE)
+                .numberEntryPoints(UPDATED_NUMBER_ENTRY_POINTS)
+                .appVersion(UPDATED_APP_VERSION);
 
         restAnalysisMockMvc.perform(put("/api/analyses")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

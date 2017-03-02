@@ -112,6 +112,7 @@
                                 audit: null,
                                 averageTime: null,
                                 checkLaunch: null,
+                                drawAnalysis: null,
                                 id: null
                             };
                         }

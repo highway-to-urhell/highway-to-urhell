@@ -17,8 +17,8 @@
                 "title": "Team"
             },
             "name": "Name",
-            "members": "Members",
-            "userPermissions": "User Permissions"
+            "userPermissions": "User Permissions",
+            "members": "Members"
         }
     }
 }

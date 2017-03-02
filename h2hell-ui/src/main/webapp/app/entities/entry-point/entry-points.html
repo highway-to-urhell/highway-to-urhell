@@ -27,6 +27,7 @@
                     <th jh-sort-by="audit"><span data-translate="h2HellUiApp.entryPoint.audit">Audit</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="averageTime"><span data-translate="h2HellUiApp.entryPoint.averageTime">Average Time</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="checkLaunch"><span data-translate="h2HellUiApp.entryPoint.checkLaunch">Check Launch</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="drawAnalysis"><span data-translate="h2HellUiApp.entryPoint.drawAnalysis">Draw Analysis</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="analysis.appVersion"><span data-translate="h2HellUiApp.entryPoint.analysis">Analysis</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -42,6 +43,7 @@
                     <td>{{entryPoint.audit}}</td>
                     <td>{{entryPoint.averageTime}}</td>
                     <td>{{entryPoint.checkLaunch}}</td>
+                    <td>{{entryPoint.drawAnalysis}}</td>
                     <td>
                         <a ui-sref="analysis-detail({id:entryPoint.analysis.id})">{{entryPoint.analysis.appVersion}}</a>
                     </td>

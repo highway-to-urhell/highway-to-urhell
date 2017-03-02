@@ -71,12 +71,22 @@ public class Application implements Serializable {
         return name;
     }
 
+    public Application name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public Application token(String token) {
+        this.token = token;
+        return this;
     }
 
     public void setToken(String token) {
@@ -87,12 +97,22 @@ public class Application implements Serializable {
         return dateCreation;
     }
 
+    public Application dateCreation(ZonedDateTime dateCreation) {
+        this.dateCreation = dateCreation;
+        return this;
+    }
+
     public void setDateCreation(ZonedDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 
     public String getUrlApp() {
         return urlApp;
+    }
+
+    public Application urlApp(String urlApp) {
+        this.urlApp = urlApp;
+        return this;
     }
 
     public void setUrlApp(String urlApp) {
@@ -103,12 +123,22 @@ public class Application implements Serializable {
         return description;
     }
 
+    public Application description(String description) {
+        this.description = description;
+        return this;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public String getAppType() {
         return appType;
+    }
+
+    public Application appType(String appType) {
+        this.appType = appType;
+        return this;
     }
 
     public void setAppType(String appType) {
@@ -119,6 +149,11 @@ public class Application implements Serializable {
         return analysed;
     }
 
+    public Application analysed(Boolean analysed) {
+        this.analysed = analysed;
+        return this;
+    }
+
     public void setAnalysed(Boolean analysed) {
         this.analysed = analysed;
     }
@@ -127,12 +162,46 @@ public class Application implements Serializable {
         return analyses;
     }
 
+    public Application analyses(Set<Analysis> analyses) {
+        this.analyses = analyses;
+        return this;
+    }
+
+    public Application addAnalyses(Analysis analysis) {
+        this.analyses.add(analysis);
+        analysis.setApplication(this);
+        return this;
+    }
+
+    public Application removeAnalyses(Analysis analysis) {
+        this.analyses.remove(analysis);
+        analysis.setApplication(null);
+        return this;
+    }
+
     public void setAnalyses(Set<Analysis> analyses) {
         this.analyses = analyses;
     }
 
     public Set<UserPermission> getUserPermissions() {
         return userPermissions;
+    }
+
+    public Application userPermissions(Set<UserPermission> userPermissions) {
+        this.userPermissions = userPermissions;
+        return this;
+    }
+
+    public Application addUserPermissions(UserPermission userPermission) {
+        this.userPermissions.add(userPermission);
+        userPermission.getProjects().add(this);
+        return this;
+    }
+
+    public Application removeUserPermissions(UserPermission userPermission) {
+        this.userPermissions.remove(userPermission);
+        userPermission.getProjects().remove(this);
+        return this;
     }
 
     public void setUserPermissions(Set<UserPermission> userPermissions) {

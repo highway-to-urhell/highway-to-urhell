@@ -18,7 +18,14 @@
             },
             'getAnalysis': {
                 method: 'GET'
-            }
+            },
+            'updatePaths': {
+                method: 'GET'
+            },
+            'findAllPaths': {
+                method: 'GET',
+                url: 'api/vizualisation/findAllPaths/:id'
+            },
         });
 
         return service;

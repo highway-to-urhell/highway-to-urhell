@@ -5,16 +5,16 @@
         .module('h2HellUiApp')
         .controller('EntryPointDialogController', EntryPointDialogController);
 
-    EntryPointDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'EntryPoint', 'EntryPointPerf', 'EntryPointCall', 'Analysis'];
+    EntryPointDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'EntryPoint', 'MetricsTimer', 'EntryPointParameters', 'Analysis'];
 
-    function EntryPointDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, EntryPoint, EntryPointPerf, EntryPointCall, Analysis) {
+    function EntryPointDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, EntryPoint, MetricsTimer, EntryPointParameters, Analysis) {
         var vm = this;
 
         vm.entryPoint = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.entrypointperfs = EntryPointPerf.query();
-        vm.entrypointcalls = EntryPointCall.query();
+        vm.metricstimers = MetricsTimer.query();
+        vm.entrypointparameters = EntryPointParameters.query();
         vm.analyses = Analysis.query();
 
         $timeout(function (){

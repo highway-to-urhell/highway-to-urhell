@@ -62,12 +62,22 @@ public class Analysis implements Serializable {
         return dateCreation;
     }
 
+    public Analysis dateCreation(ZonedDateTime dateCreation) {
+        this.dateCreation = dateCreation;
+        return this;
+    }
+
     public void setDateCreation(ZonedDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 
     public String getPathSource() {
         return pathSource;
+    }
+
+    public Analysis pathSource(String pathSource) {
+        this.pathSource = pathSource;
+        return this;
     }
 
     public void setPathSource(String pathSource) {
@@ -78,12 +88,22 @@ public class Analysis implements Serializable {
         return numberEntryPoints;
     }
 
+    public Analysis numberEntryPoints(Integer numberEntryPoints) {
+        this.numberEntryPoints = numberEntryPoints;
+        return this;
+    }
+
     public void setNumberEntryPoints(Integer numberEntryPoints) {
         this.numberEntryPoints = numberEntryPoints;
     }
 
     public String getAppVersion() {
         return appVersion;
+    }
+
+    public Analysis appVersion(String appVersion) {
+        this.appVersion = appVersion;
+        return this;
     }
 
     public void setAppVersion(String appVersion) {
@@ -94,6 +114,23 @@ public class Analysis implements Serializable {
         return events;
     }
 
+    public Analysis events(Set<Event> events) {
+        this.events = events;
+        return this;
+    }
+
+    public Analysis addEvents(Event event) {
+        this.events.add(event);
+        event.setAnalysis(this);
+        return this;
+    }
+
+    public Analysis removeEvents(Event event) {
+        this.events.remove(event);
+        event.setAnalysis(null);
+        return this;
+    }
+
     public void setEvents(Set<Event> events) {
         this.events = events;
     }
@@ -102,12 +139,34 @@ public class Analysis implements Serializable {
         return entryPoints;
     }
 
+    public Analysis entryPoints(Set<EntryPoint> entryPoints) {
+        this.entryPoints = entryPoints;
+        return this;
+    }
+
+    public Analysis addEntryPoint(EntryPoint entryPoint) {
+        this.entryPoints.add(entryPoint);
+        entryPoint.setAnalysis(this);
+        return this;
+    }
+
+    public Analysis removeEntryPoint(EntryPoint entryPoint) {
+        this.entryPoints.remove(entryPoint);
+        entryPoint.setAnalysis(null);
+        return this;
+    }
+
     public void setEntryPoints(Set<EntryPoint> entryPoints) {
         this.entryPoints = entryPoints;
     }
 
     public Application getApplication() {
         return application;
+    }
+
+    public Analysis application(Application application) {
+        this.application = application;
+        return this;
     }
 
     public void setApplication(Application application) {

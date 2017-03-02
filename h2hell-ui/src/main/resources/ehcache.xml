@@ -54,5 +54,13 @@
 
     <cache alias="com.highway2urhell.domain.UserPermission.projects" uses-template="simple"/>
 
+    <cache alias="com.highway2urhell.domain.EntryPoint.metrics" uses-template="simple"/>
+
+    <cache alias="com.highway2urhell.domain.EntryPoint.logs" uses-template="simple"/>
+
+    <cache alias="com.highway2urhell.domain.EntryPointParameters" uses-template="simple"/>
+
+    <cache alias="com.highway2urhell.domain.MetricsTimer" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

@@ -72,8 +72,8 @@ public class UserPermissionResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static UserPermission createEntity(EntityManager em) {
-        UserPermission userPermission = new UserPermission();
-        userPermission.setPermission(DEFAULT_PERMISSION);
+        UserPermission userPermission = new UserPermission()
+                .permission(DEFAULT_PERMISSION);
         return userPermission;
     }
 
@@ -184,7 +184,8 @@ public class UserPermissionResourceIntTest {
 
         // Update the userPermission
         UserPermission updatedUserPermission = userPermissionRepository.findOne(userPermission.getId());
-        updatedUserPermission.setPermission(UPDATED_PERMISSION);
+        updatedUserPermission
+                .permission(UPDATED_PERMISSION);
 
         restUserPermissionMockMvc.perform(put("/api/user-permissions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

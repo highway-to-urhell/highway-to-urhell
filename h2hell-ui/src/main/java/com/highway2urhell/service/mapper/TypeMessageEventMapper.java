@@ -6,7 +6,7 @@ import com.highway2urhell.domain.enumeration.TypeMessageEvent;
  * Created by guillaumedufour on 12/02/2017.
  */
 public class TypeMessageEventMapper {
-    public static TypeMessageEvent domainToDto(com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent dto) {
+    public static TypeMessageEvent dtoToDomain(com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent dto) {
         switch (dto) {
             case ENABLE_ENTRY_POINT:
                 return TypeMessageEvent.ENABLE_ENTRY_POINT;
@@ -19,7 +19,7 @@ public class TypeMessageEventMapper {
         }
     }
 
-    public static com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent dtoToDomain(TypeMessageEvent domain) {
+    public static com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent domainToDto(TypeMessageEvent domain) {
         switch (domain) {
             case ENABLE_ENTRY_POINT:
                 return com.highway2urhell.web.rest.dto.v1api.TypeMessageEvent.ENABLE_ENTRY_POINT;

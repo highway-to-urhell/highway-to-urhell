@@ -60,6 +60,9 @@ public class EntryPointResourceIntTest {
     private static final Boolean DEFAULT_CHECK_LAUNCH = false;
     private static final Boolean UPDATED_CHECK_LAUNCH = true;
 
+    private static final Boolean DEFAULT_DRAW_ANALYSIS = false;
+    private static final Boolean UPDATED_DRAW_ANALYSIS = true;
+
     @Autowired
     private EntryPointRepository entryPointRepository;
 
@@ -92,15 +95,16 @@ public class EntryPointResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static EntryPoint createEntity(EntityManager em) {
-        EntryPoint entryPoint = new EntryPoint();
-        entryPoint.setPathClassMethodName(DEFAULT_PATH_CLASS_METHOD_NAME);
-        entryPoint.setCount(DEFAULT_COUNT);
-        entryPoint.setFalsePositive(DEFAULT_FALSE_POSITIVE);
-        entryPoint.setUri(DEFAULT_URI);
-        entryPoint.setHttpmethod(DEFAULT_HTTPMETHOD);
-        entryPoint.setAudit(DEFAULT_AUDIT);
-        entryPoint.setAverageTime(DEFAULT_AVERAGE_TIME);
-        entryPoint.setCheckLaunch(DEFAULT_CHECK_LAUNCH);
+        EntryPoint entryPoint = new EntryPoint()
+                .pathClassMethodName(DEFAULT_PATH_CLASS_METHOD_NAME)
+                .count(DEFAULT_COUNT)
+                .falsePositive(DEFAULT_FALSE_POSITIVE)
+                .uri(DEFAULT_URI)
+                .httpmethod(DEFAULT_HTTPMETHOD)
+                .audit(DEFAULT_AUDIT)
+                .averageTime(DEFAULT_AVERAGE_TIME)
+                .checkLaunch(DEFAULT_CHECK_LAUNCH)
+                .drawAnalysis(DEFAULT_DRAW_ANALYSIS);
         return entryPoint;
     }
 
@@ -133,6 +137,7 @@ public class EntryPointResourceIntTest {
         assertThat(testEntryPoint.isAudit()).isEqualTo(DEFAULT_AUDIT);
         assertThat(testEntryPoint.getAverageTime()).isEqualTo(DEFAULT_AVERAGE_TIME);
         assertThat(testEntryPoint.isCheckLaunch()).isEqualTo(DEFAULT_CHECK_LAUNCH);
+        assertThat(testEntryPoint.isDrawAnalysis()).isEqualTo(DEFAULT_DRAW_ANALYSIS);
     }
 
     @Test
@@ -191,7 +196,8 @@ public class EntryPointResourceIntTest {
             .andExpect(jsonPath("$.[*].httpmethod").value(hasItem(DEFAULT_HTTPMETHOD.toString())))
             .andExpect(jsonPath("$.[*].audit").value(hasItem(DEFAULT_AUDIT.booleanValue())))
             .andExpect(jsonPath("$.[*].averageTime").value(hasItem(DEFAULT_AVERAGE_TIME.intValue())))
-            .andExpect(jsonPath("$.[*].checkLaunch").value(hasItem(DEFAULT_CHECK_LAUNCH.booleanValue())));
+            .andExpect(jsonPath("$.[*].checkLaunch").value(hasItem(DEFAULT_CHECK_LAUNCH.booleanValue())))
+            .andExpect(jsonPath("$.[*].drawAnalysis").value(hasItem(DEFAULT_DRAW_ANALYSIS.booleanValue())));
     }
 
     @Test
@@ -212,7 +218,8 @@ public class EntryPointResourceIntTest {
             .andExpect(jsonPath("$.httpmethod").value(DEFAULT_HTTPMETHOD.toString()))
             .andExpect(jsonPath("$.audit").value(DEFAULT_AUDIT.booleanValue()))
             .andExpect(jsonPath("$.averageTime").value(DEFAULT_AVERAGE_TIME.intValue()))
-            .andExpect(jsonPath("$.checkLaunch").value(DEFAULT_CHECK_LAUNCH.booleanValue()));
+            .andExpect(jsonPath("$.checkLaunch").value(DEFAULT_CHECK_LAUNCH.booleanValue()))
+            .andExpect(jsonPath("$.drawAnalysis").value(DEFAULT_DRAW_ANALYSIS.booleanValue()));
     }
 
     @Test
@@ -232,14 +239,16 @@ public class EntryPointResourceIntTest {
 
         // Update the entryPoint
         EntryPoint updatedEntryPoint = entryPointRepository.findOne(entryPoint.getId());
-        updatedEntryPoint.setPathClassMethodName(UPDATED_PATH_CLASS_METHOD_NAME);
-        updatedEntryPoint.setCount(UPDATED_COUNT);
-        updatedEntryPoint.setFalsePositive(UPDATED_FALSE_POSITIVE);
-        updatedEntryPoint.setUri(UPDATED_URI);
-        updatedEntryPoint.setHttpmethod(UPDATED_HTTPMETHOD);
-        updatedEntryPoint.setAudit(UPDATED_AUDIT);
-        updatedEntryPoint.setAverageTime(UPDATED_AVERAGE_TIME);
-        updatedEntryPoint.setCheckLaunch(UPDATED_CHECK_LAUNCH);
+        updatedEntryPoint
+                .pathClassMethodName(UPDATED_PATH_CLASS_METHOD_NAME)
+                .count(UPDATED_COUNT)
+                .falsePositive(UPDATED_FALSE_POSITIVE)
+                .uri(UPDATED_URI)
+                .httpmethod(UPDATED_HTTPMETHOD)
+                .audit(UPDATED_AUDIT)
+                .averageTime(UPDATED_AVERAGE_TIME)
+                .checkLaunch(UPDATED_CHECK_LAUNCH)
+                .drawAnalysis(UPDATED_DRAW_ANALYSIS);
 
         restEntryPointMockMvc.perform(put("/api/entry-points")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -258,6 +267,7 @@ public class EntryPointResourceIntTest {
         assertThat(testEntryPoint.isAudit()).isEqualTo(UPDATED_AUDIT);
         assertThat(testEntryPoint.getAverageTime()).isEqualTo(UPDATED_AVERAGE_TIME);
         assertThat(testEntryPoint.isCheckLaunch()).isEqualTo(UPDATED_CHECK_LAUNCH);
+        assertThat(testEntryPoint.isDrawAnalysis()).isEqualTo(UPDATED_DRAW_ANALYSIS);
     }
 
     @Test

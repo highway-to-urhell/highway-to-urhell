@@ -71,8 +71,8 @@ public class TeamResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Team createEntity(EntityManager em) {
-        Team team = new Team();
-        team.setName(DEFAULT_NAME);
+        Team team = new Team()
+                .name(DEFAULT_NAME);
         return team;
     }
 
@@ -183,7 +183,8 @@ public class TeamResourceIntTest {
 
         // Update the team
         Team updatedTeam = teamRepository.findOne(team.getId());
-        updatedTeam.setName(UPDATED_NAME);
+        updatedTeam
+                .name(UPDATED_NAME);
 
         restTeamMockMvc.perform(put("/api/teams")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

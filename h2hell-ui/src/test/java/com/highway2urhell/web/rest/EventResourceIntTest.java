@@ -81,11 +81,11 @@ public class EventResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Event createEntity(EntityManager em) {
-        Event event = new Event();
-        event.setTypeMessageEvent(DEFAULT_TYPE_MESSAGE_EVENT);
-        event.setData(DEFAULT_DATA);
-        event.setDataContentType(DEFAULT_DATA_CONTENT_TYPE);
-        event.setConsumed(DEFAULT_CONSUMED);
+        Event event = new Event()
+                .typeMessageEvent(DEFAULT_TYPE_MESSAGE_EVENT)
+                .data(DEFAULT_DATA)
+                .dataContentType(DEFAULT_DATA_CONTENT_TYPE)
+                .consumed(DEFAULT_CONSUMED);
         return event;
     }
 
@@ -187,10 +187,11 @@ public class EventResourceIntTest {
 
         // Update the event
         Event updatedEvent = eventRepository.findOne(event.getId());
-        updatedEvent.setTypeMessageEvent(UPDATED_TYPE_MESSAGE_EVENT);
-        updatedEvent.setData(UPDATED_DATA);
-        updatedEvent.setDataContentType(UPDATED_DATA_CONTENT_TYPE);
-        updatedEvent.setConsumed(UPDATED_CONSUMED);
+        updatedEvent
+                .typeMessageEvent(UPDATED_TYPE_MESSAGE_EVENT)
+                .data(UPDATED_DATA)
+                .dataContentType(UPDATED_DATA_CONTENT_TYPE)
+                .consumed(UPDATED_CONSUMED);
 
         restEventMockMvc.perform(put("/api/events")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

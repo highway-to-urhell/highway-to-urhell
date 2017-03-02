@@ -56,6 +56,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="draw_analysis" type="bit">
+                <constraints nullable="true" />
+            </column>
+
             <column name="analysis_id" type="bigint">
                 <constraints nullable="true" />
             </column>

@@ -1,5 +1,8 @@
 package com.highway2urhell.web.rest.dto.v1api;
 
+import com.highway2urhell.domain.Event;
+import com.highway2urhell.service.mapper.TypeMessageEventMapper;
+
 /**
  * Created by guillaumedufour on 12/02/2017.
  */
@@ -10,6 +13,16 @@ public class MessageEvent {
     private String reference;
     private TypeMessageEvent typeMessageEvent;
     private String data;
+
+    public MessageEvent() {
+        //Empty one
+    }
+
+    public MessageEvent(Event event) {
+        this.id = String.valueOf(event.getId());
+        this.token = event.getAnalysis().getApplication().getToken();
+        this.typeMessageEvent = TypeMessageEventMapper.domainToDto(event.getTypeMessageEvent());
+    }
 
     public String getReference() {
         return reference;

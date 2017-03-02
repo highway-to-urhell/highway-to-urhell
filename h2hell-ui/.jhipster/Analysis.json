@@ -1,51 +1,46 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "events",
-      "otherEntityName": "event",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "analysis"
-    },
-    {
-      "relationshipId": 2,
-      "relationshipName": "entryPoint",
-      "otherEntityName": "entryPoint",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "analysis"
-    },
-    {
-      "relationshipId": 3,
-      "relationshipName": "application",
-      "otherEntityName": "application",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "name"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "dateCreation",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "pathSource",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "numberEntryPoints",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "appVersion",
-      "fieldType": "String"
-    }
-  ],
-  "changelogDate": "20160519092248",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "events",
+            "otherEntityName": "event",
+            "otherEntityRelationshipName": "analysis"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "entryPoint",
+            "otherEntityName": "entryPoint",
+            "otherEntityRelationshipName": "analysis"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "application",
+            "otherEntityName": "application",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dateCreation",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "pathSource",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numberEntryPoints",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "appVersion",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160519092248",
+    "entityTableName": "analysis",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
 }

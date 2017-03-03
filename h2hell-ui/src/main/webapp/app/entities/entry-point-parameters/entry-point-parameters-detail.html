@@ -1,0 +1,34 @@
+
+<div>
+    <h2><span data-translate="h2HellUiApp.entryPointParameters.detail.title">Entry Point Parameters</span> {{vm.entryPointParameters.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span data-translate="h2HellUiApp.entryPointParameters.dateIncoming">Date Incoming</span></dt>
+        <dd>
+            <span>{{vm.entryPointParameters.dateIncoming | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.entryPointParameters.parameters">Parameters</span></dt>
+        <dd>
+            <div ng-if="vm.entryPointParameters.parameters">
+                <a ng-click="vm.openFile(vm.entryPointParameters.parametersContentType, vm.entryPointParameters.parameters)" data-translate="entity.action.open">open</a>
+                {{vm.entryPointParameters.parametersContentType}}, {{vm.byteSize(vm.entryPointParameters.parameters)}}
+            </div>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.entryPointParameters.entryPoint">Entry Point</span></dt>
+        <dd>
+            <a ui-sref="entry-point-detail({id:vm.entryPointParameters.entryPoint.id})">{{vm.entryPointParameters.entryPoint.pathClassMethodName}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="entry-point-parameters-detail.edit({id:vm.entryPointParameters.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

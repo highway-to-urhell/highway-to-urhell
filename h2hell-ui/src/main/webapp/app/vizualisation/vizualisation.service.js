@@ -14,13 +14,16 @@
                 method: 'GET'
             },
             'getBreaker': {
-                method: 'GET'
+                method: 'GET',
+                url: 'api/vizualisation/findAllPaths/:id'
             },
             'getAnalysis': {
-                method: 'GET'
+                method: 'GET',
+                url: 'api/vizualisation/findAllPaths/:id'
             },
             'updatePaths': {
-                method: 'GET'
+                method: 'GET',
+                url: 'api/vizualisation/findAllPaths/:id'
             },
             'findAllPaths': {
                 method: 'GET',

@@ -1,0 +1,82 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myMetricsTimerLabel" data-translate="h2HellUiApp.metricsTimer.home.createOrEditLabel">Create or edit a Metrics Timer</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.metricsTimer.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.metricsTimer.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="h2HellUiApp.metricsTimer.dateIncoming" for="field_dateIncoming">Date Incoming</label>
+                <div class="input-group">
+                    <input id="field_dateIncoming" type="text" class="form-control" name="dateIncoming" datetime-picker="{{dateformat}}" ng-model="vm.metricsTimer.dateIncoming" is-open="vm.datePickerOpenStatus.dateIncoming"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateIncoming')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setParameters($file, vm.metricsTimer)">
+            <label class="control-label" data-translate="h2HellUiApp.metricsTimer.parameters" for="field_parameters">Parameters</label>
+            <div>
+                <div ng-if="vm.metricsTimer.parameters" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.metricsTimer.parametersContentType, vm.metricsTimer.parameters)" data-translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.metricsTimer.parametersContentType}}, {{vm.byteSize(vm.metricsTimer.parameters)}}</span>
+                    <button type="button" ng-click="vm.metricsTimer.parameters=null;vm.metricsTimer.parametersContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setParameters($file, vm.metricsTimer)" data-translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="parameters" id="field_parameters"
+                    ng-model="vm.metricsTimer.parameters"
+                    />
+            <input type="hidden" class="form-control" name="parametersContentType" id="field_parametersContentType"
+                    ng-model="vm.metricsTimer.parametersContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="h2HellUiApp.metricsTimer.timeExec" for="field_timeExec">Time Exec</label>
+            <input type="number" class="form-control" name="timeExec" id="field_timeExec"
+                    ng-model="vm.metricsTimer.timeExec"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="h2HellUiApp.metricsTimer.cpuLoadSystem" for="field_cpuLoadSystem">Cpu Load System</label>
+            <input type="number" class="form-control" name="cpuLoadSystem" id="field_cpuLoadSystem"
+                    ng-model="vm.metricsTimer.cpuLoadSystem"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="h2HellUiApp.metricsTimer.cpuLoadProcess" for="field_cpuLoadProcess">Cpu Load Process</label>
+            <input type="number" class="form-control" name="cpuLoadProcess" id="field_cpuLoadProcess"
+                    ng-model="vm.metricsTimer.cpuLoadProcess"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="h2HellUiApp.metricsTimer.entryPoint" for="field_entryPoint">Entry Point</label>
+            <select class="form-control" id="field_entryPoint" name="entryPoint" ng-model="vm.metricsTimer.entryPoint" ng-options="entryPoint as entryPoint.id for entryPoint in vm.entrypoints track by entryPoint.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

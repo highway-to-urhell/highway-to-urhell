@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "entryPoint",
+            "otherEntityName": "entryPoint",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dateIncoming",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "parameters",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "timeExec",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "cpuLoadSystem",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "cpuLoadProcess",
+            "fieldType": "Double"
+        }
+    ],
+    "changelogDate": "20170302211903",
+    "entityTableName": "metrics_timer",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no"
+}

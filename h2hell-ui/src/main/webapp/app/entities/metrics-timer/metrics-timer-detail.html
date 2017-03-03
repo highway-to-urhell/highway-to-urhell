@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span data-translate="h2HellUiApp.metricsTimer.detail.title">Metrics Timer</span> {{vm.metricsTimer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row jh-entity-details">
+        <dt><span data-translate="h2HellUiApp.metricsTimer.dateIncoming">Date Incoming</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.dateIncoming | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.metricsTimer.parameters">Parameters</span></dt>
+        <dd>
+            <div ng-if="vm.metricsTimer.parameters">
+                <a ng-click="vm.openFile(vm.metricsTimer.parametersContentType, vm.metricsTimer.parameters)" data-translate="entity.action.open">open</a>
+                {{vm.metricsTimer.parametersContentType}}, {{vm.byteSize(vm.metricsTimer.parameters)}}
+            </div>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.metricsTimer.timeExec">Time Exec</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.timeExec}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.metricsTimer.cpuLoadSystem">Cpu Load System</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.cpuLoadSystem}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.metricsTimer.cpuLoadProcess">Cpu Load Process</span></dt>
+        <dd>
+            <span>{{vm.metricsTimer.cpuLoadProcess}}</span>
+        </dd>
+        <dt><span data-translate="h2HellUiApp.metricsTimer.entryPoint">Entry Point</span></dt>
+        <dd>
+            <a ui-sref="entry-point-detail({id:vm.metricsTimer.entryPoint.id})">{{vm.metricsTimer.entryPoint.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="metrics-timer-detail.edit({id:vm.metricsTimer.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,24 @@
+{
+    "h2HellUiApp": {
+        "entryPointParameters" : {
+            "home": {
+                "title": "EntryPointParameters",
+                "createLabel": "Créer un nouveau Entry Point Parameters",
+                "createOrEditLabel": "Créer ou éditer un Entry Point Parameters",
+                "search": "Recherche pour Entry Point Parameters"
+            },
+            "created": "Un nouveau Entry Point Parameters a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Entry Point Parameters avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Entry Point Parameters avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Entry Point Parameters {{ id }} ?"
+            },
+            "detail": {
+                "title": "Entry Point Parameters"
+            },
+            "dateIncoming": "Date Incoming",
+            "parameters": "Parameters",
+            "entryPoint": "Entry Point"
+        }
+    }
+}

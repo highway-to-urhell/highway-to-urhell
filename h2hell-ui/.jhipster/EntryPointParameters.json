@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "entryPoint",
+            "otherEntityName": "entryPoint",
+            "otherEntityField": "pathClassMethodName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dateIncoming",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "parameters",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "changelogDate": "20170302211903",
+    "entityTableName": "entry_point_parameters",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no"
+}

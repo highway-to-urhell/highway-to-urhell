@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface AnalysisRepository extends JpaRepository<Analysis,Long> {
 
-    @Query("select distinct analysis from Analysis analysis left join fetch analysis.application where analysis.application.token =:token")
+    @Query("select distinct analysis from Analysis analysis left join fetch analysis.application app where app.token =:token")
     List<Analysis> findAllByTokenWithApplication(@Param("token") String token);
 
-    @Query("select distinct analysis from Analysis analysis left join fetch analysis.application where analysis.application.token =:token and analysis.appVersion =:version")
+    @Query("select distinct analysis from Analysis analysis left join fetch analysis.application app where app.token =:token and analysis.appVersion =:version")
     Analysis findOneByTokenAndVersionWithApplication(@Param("token") String token, @Param("version") String version);
 
     @Query("select distinct analysis from Analysis analysis left join fetch analysis.application")

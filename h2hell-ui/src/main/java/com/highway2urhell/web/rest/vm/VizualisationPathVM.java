@@ -9,7 +9,47 @@ import java.util.List;
  */
 public class VizualisationPathVM {
 
+    private String appName;
     private List<EntryPoint> entrypoints;
+
+    private  String messageConfig;
+    private int totalStat;
+    private int totalNoTest;
+    private int totalFalsePositive;
+    private boolean analysed;
+
+
+    public String getMessageConfig() {
+        return messageConfig;
+    }
+
+    public void setMessageConfig(String messageConfig) {
+        this.messageConfig = messageConfig;
+    }
+
+    public int getTotalStat() {
+        return totalStat;
+    }
+
+    public void setTotalStat(int totalStat) {
+        this.totalStat = totalStat;
+    }
+
+    public int getTotalNoTest() {
+        return totalNoTest;
+    }
+
+    public void setTotalNoTest(int totalNoTest) {
+        this.totalNoTest = totalNoTest;
+    }
+
+    public int getTotalFalsePositive() {
+        return totalFalsePositive;
+    }
+
+    public void setTotalFalsePositive(int totalFalsePositive) {
+        this.totalFalsePositive = totalFalsePositive;
+    }
 
     public List<EntryPoint> getEntrypoints() {
         return entrypoints;
@@ -23,6 +63,23 @@ public class VizualisationPathVM {
     public String toString() {
         return "HomeVM{" +
             "entrypoints=" + entrypoints +
+            "totalStat=" + totalStat +
+            "totalNoTest=" + totalNoTest +
+            "totalFalsePositive=" + totalFalsePositive +
+            "messageConfig='" + entrypoints + "'" +
             '}';
     }
+
+    public void setAnalysed(Boolean analysed) {
+        this.analysed = analysed;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+
 }

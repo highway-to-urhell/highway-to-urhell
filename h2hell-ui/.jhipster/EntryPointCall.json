@@ -1,28 +1,27 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "entryPoint",
-      "otherEntityName": "entryPoint",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "pathClassMethodName"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "dateIncoming",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "parameters",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "any"
-    }
-  ],
-  "changelogDate": "20160519092244",
-  "dto": "no",
-  "pagination": "pagination",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "entryPoint",
+            "otherEntityName": "entryPoint",
+            "otherEntityField": "pathClassMethodName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dateIncoming",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "parameters",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "changelogDate": "20160519092244",
+    "entityTableName": "entry_point_call",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no"
 }

@@ -91,13 +91,13 @@ public class EntryPointPerfResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static EntryPointPerf createEntity(EntityManager em) {
-        EntryPointPerf entryPointPerf = new EntryPointPerf();
-        entryPointPerf.setDateIncoming(DEFAULT_DATE_INCOMING);
-        entryPointPerf.setParameters(DEFAULT_PARAMETERS);
-        entryPointPerf.setParametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE);
-        entryPointPerf.setTimeExec(DEFAULT_TIME_EXEC);
-        entryPointPerf.setCpuLoadSystem(DEFAULT_CPU_LOAD_SYSTEM);
-        entryPointPerf.setCpuLoadProcess(DEFAULT_CPU_LOAD_PROCESS);
+        EntryPointPerf entryPointPerf = new EntryPointPerf()
+                .dateIncoming(DEFAULT_DATE_INCOMING)
+                .parameters(DEFAULT_PARAMETERS)
+                .parametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE)
+                .timeExec(DEFAULT_TIME_EXEC)
+                .cpuLoadSystem(DEFAULT_CPU_LOAD_SYSTEM)
+                .cpuLoadProcess(DEFAULT_CPU_LOAD_PROCESS);
         return entryPointPerf;
     }
 
@@ -205,12 +205,13 @@ public class EntryPointPerfResourceIntTest {
 
         // Update the entryPointPerf
         EntryPointPerf updatedEntryPointPerf = entryPointPerfRepository.findOne(entryPointPerf.getId());
-        updatedEntryPointPerf.setDateIncoming(UPDATED_DATE_INCOMING);
-        updatedEntryPointPerf.setParameters(UPDATED_PARAMETERS);
-        updatedEntryPointPerf.setParametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE);
-        updatedEntryPointPerf.setTimeExec(UPDATED_TIME_EXEC);
-        updatedEntryPointPerf.setCpuLoadSystem(UPDATED_CPU_LOAD_SYSTEM);
-        updatedEntryPointPerf.setCpuLoadProcess(UPDATED_CPU_LOAD_PROCESS);
+        updatedEntryPointPerf
+                .dateIncoming(UPDATED_DATE_INCOMING)
+                .parameters(UPDATED_PARAMETERS)
+                .parametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE)
+                .timeExec(UPDATED_TIME_EXEC)
+                .cpuLoadSystem(UPDATED_CPU_LOAD_SYSTEM)
+                .cpuLoadProcess(UPDATED_CPU_LOAD_PROCESS);
 
         restEntryPointPerfMockMvc.perform(put("/api/entry-point-perfs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

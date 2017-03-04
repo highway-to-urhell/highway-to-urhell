@@ -49,6 +49,7 @@ public class AgentV1ApiService {
     private EventRepository eventRepository;
 
     public Analysis createAnalysis(H2hConfigDTO configDTO) {
+
         Application app = new Application();
         app.setName(configDTO.getNameApplication());
         app.setUrlApp(configDTO.getUrlApplication());

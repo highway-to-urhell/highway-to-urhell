@@ -3,17 +3,17 @@ package com.highway2urhell.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.domain.Application;
-import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.AnalysisRepository;
-import com.highway2urhell.repository.EntryPointRepository;
 import com.highway2urhell.service.VizualisationService;
-import com.highway2urhell.web.rest.vm.MessageStat;
 import com.highway2urhell.web.rest.vm.VizualisationPathVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -81,16 +81,16 @@ public class VizualisationResource {
 
     @GetMapping("/vizualisation/findStatByTokenAndFilter/{id}")
     @Timed
-    public ResponseEntity<MessageStat> findStatByTokenAndFilter(@PathVariable("id") String id) {
+    public ResponseEntity<VizualisationPathVM> findStatByTokenAndFilter(@PathVariable("id") String id) {
         log.info("Call findStatByTokenAndFilter ");
-        MessageStat ms = vizualisationService.analysisStat(id);
+        VizualisationPathVM vp = vizualisationService.analysisStat(id);
         //filter
-        vizualisationService.filterFramework(ms.getListThunderStat());
+        vizualisationService.filterFramework(vp.getEntrypoints());
         //TODO dirty clean this
         Application app = vizualisationService.findApplicationByToken(id);
-        ms.setAnalysis(app.isAnalysed());
-        ms.setAppName(app.getName());
-        return ResponseEntity.ok().body(ms);
+        vp.setAnalysed(app.isAnalysed());
+        vp.setAppName(app.getName());
+        return ResponseEntity.ok().body(vp);
     }
 
 }

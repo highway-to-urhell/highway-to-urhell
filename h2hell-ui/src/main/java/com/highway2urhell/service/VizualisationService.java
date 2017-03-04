@@ -7,7 +7,6 @@ import com.highway2urhell.domain.Event;
 import com.highway2urhell.domain.enumeration.TypeMessageEvent;
 import com.highway2urhell.repository.*;
 import com.highway2urhell.web.rest.errors.V1ApiNotExistThunderAppException;
-import com.highway2urhell.web.rest.vm.MessageStat;
 import com.highway2urhell.web.rest.vm.VizualisationPathVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -62,9 +60,24 @@ public class VizualisationService {
     @Inject
     private EventRepository eventRepository;
 
+    @Transactional(readOnly = true)
     public VizualisationPathVM findPath(String token) {
         VizualisationPathVM vizualisationPathVM = new VizualisationPathVM();
-        vizualisationPathVM.setEntrypoints(entryPointRepository.findAllByTokenWithApplicationAndEntrypoint(token));
+        List<EntryPoint> entrypoints = entryPointRepository.findAllByTokenWithApplicationAndEntrypoint(token);
+        vizualisationPathVM.setEntrypoints(entrypoints);
+        vizualisationPathVM.setTotalStat(entrypoints.size());
+        int falsePositive = 0;
+        int totalNoTest = 0;
+        for(EntryPoint ep : entrypoints){
+            if(ep.isFalsePositive() != null && ep.isFalsePositive()){
+                falsePositive++;
+            }
+            if(ep.getCount() == null || ep.getCount()==0){
+                totalNoTest++;
+            }
+        }
+        vizualisationPathVM.setTotalFalsePositive(falsePositive);
+        vizualisationPathVM.setTotalNoTest(totalNoTest);
         return vizualisationPathVM;
     }
 
@@ -80,35 +93,19 @@ public class VizualisationService {
         eventRepository.save(ev);
     }
 
-    public MessageStat analysisStat(String token){
-        MessageStat ms = new MessageStat();
+    public VizualisationPathVM analysisStat(String token){
         log.info("analysis for token {}",token);
-        List<EntryPoint> listThunderStat = entryPointRepository.findAllByTokenWithApplicationAndEntrypoint(token);
-        log.info("SIZE stat for token {}",listThunderStat.size());
-        for (EntryPoint ep : listThunderStat) {
+        VizualisationPathVM vizualisationPathVM = findPath(token);
+        for (EntryPoint ep : vizualisationPathVM.getEntrypoints()) {
             Long count = entryPointCallRepository.findByPathClassMethodNameAndToken(
                 ep.getPathClassMethodName(), ep.getAnalysis().getApplication().getToken());
             Long averageTime = entryPointPerfRepository.findAverageFromPathClassMethodNameAndToken(ep.getPathClassMethodName(), ep.getAnalysis().getApplication().getToken());
             ep.setCount(count);
             ep.setAverageTime(averageTime);
+            entryPointRepository.save(ep);
         }
-        Collections.sort(listThunderStat, (o1, o2) -> Long.compare(o1.getCount(), o2.getCount()));
-        ms.setListThunderStat(listThunderStat);
-        ms.setTotalStat(listThunderStat.size());
-        Integer falsePositive = 0;
-        Integer totalNoTest = 0;
-        for(EntryPoint ts : listThunderStat){
-            if(ts.isFalsePositive()){
-                falsePositive++;
-            }
-            if(ts.getCount()==0){
-                totalNoTest++;
-            }
-        }
-        ms.setTotalFalsePositive(falsePositive);
-        ms.setTotalNoTest(totalNoTest);
-        ms.setToken(token);
-        return ms;
+        Collections.sort(vizualisationPathVM.getEntrypoints(), (o1, o2) -> Long.compare(o1.getCount(), o2.getCount()));
+        return vizualisationPathVM;
     }
 
     public void filterFramework(List<EntryPoint> listTS) {
@@ -137,6 +134,7 @@ public class VizualisationService {
         return false;
     }
 
+    @Transactional(readOnly = true)
     public Application findApplicationByToken(String token) {
         return applicationRepository.findByToken(token);
     }

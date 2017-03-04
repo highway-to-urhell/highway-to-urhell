@@ -25,8 +25,8 @@
             "averageTime": "Average Time",
             "checkLaunch": "Check Launch",
             "drawAnalysis": "Draw Analysis",
-            "metrics": "Metrics",
-            "logs": "Logs",
+            "perfs": "Perfs",
+            "calls": "Calls",
             "analysis": "Analysis"
         }
     }

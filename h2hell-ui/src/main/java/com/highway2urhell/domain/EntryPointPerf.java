@@ -56,12 +56,22 @@ public class EntryPointPerf implements Serializable {
         return dateIncoming;
     }
 
+    public EntryPointPerf dateIncoming(ZonedDateTime dateIncoming) {
+        this.dateIncoming = dateIncoming;
+        return this;
+    }
+
     public void setDateIncoming(ZonedDateTime dateIncoming) {
         this.dateIncoming = dateIncoming;
     }
 
     public byte[] getParameters() {
         return parameters;
+    }
+
+    public EntryPointPerf parameters(byte[] parameters) {
+        this.parameters = parameters;
+        return this;
     }
 
     public void setParameters(byte[] parameters) {
@@ -72,12 +82,22 @@ public class EntryPointPerf implements Serializable {
         return parametersContentType;
     }
 
+    public EntryPointPerf parametersContentType(String parametersContentType) {
+        this.parametersContentType = parametersContentType;
+        return this;
+    }
+
     public void setParametersContentType(String parametersContentType) {
         this.parametersContentType = parametersContentType;
     }
 
     public Integer getTimeExec() {
         return timeExec;
+    }
+
+    public EntryPointPerf timeExec(Integer timeExec) {
+        this.timeExec = timeExec;
+        return this;
     }
 
     public void setTimeExec(Integer timeExec) {
@@ -88,6 +108,11 @@ public class EntryPointPerf implements Serializable {
         return cpuLoadSystem;
     }
 
+    public EntryPointPerf cpuLoadSystem(Double cpuLoadSystem) {
+        this.cpuLoadSystem = cpuLoadSystem;
+        return this;
+    }
+
     public void setCpuLoadSystem(Double cpuLoadSystem) {
         this.cpuLoadSystem = cpuLoadSystem;
     }
@@ -96,12 +121,22 @@ public class EntryPointPerf implements Serializable {
         return cpuLoadProcess;
     }
 
+    public EntryPointPerf cpuLoadProcess(Double cpuLoadProcess) {
+        this.cpuLoadProcess = cpuLoadProcess;
+        return this;
+    }
+
     public void setCpuLoadProcess(Double cpuLoadProcess) {
         this.cpuLoadProcess = cpuLoadProcess;
     }
 
     public EntryPoint getEntryPoint() {
         return entryPoint;
+    }
+
+    public EntryPointPerf entryPoint(EntryPoint entryPoint) {
+        this.entryPoint = entryPoint;
+        return this;
     }
 
     public void setEntryPoint(EntryPoint entryPoint) {

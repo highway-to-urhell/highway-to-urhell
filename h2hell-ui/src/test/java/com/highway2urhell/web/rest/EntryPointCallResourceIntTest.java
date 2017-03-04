@@ -82,10 +82,10 @@ public class EntryPointCallResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static EntryPointCall createEntity(EntityManager em) {
-        EntryPointCall entryPointCall = new EntryPointCall();
-        entryPointCall.setDateIncoming(DEFAULT_DATE_INCOMING);
-        entryPointCall.setParameters(DEFAULT_PARAMETERS);
-        entryPointCall.setParametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE);
+        EntryPointCall entryPointCall = new EntryPointCall()
+                .dateIncoming(DEFAULT_DATE_INCOMING)
+                .parameters(DEFAULT_PARAMETERS)
+                .parametersContentType(DEFAULT_PARAMETERS_CONTENT_TYPE);
         return entryPointCall;
     }
 
@@ -184,9 +184,10 @@ public class EntryPointCallResourceIntTest {
 
         // Update the entryPointCall
         EntryPointCall updatedEntryPointCall = entryPointCallRepository.findOne(entryPointCall.getId());
-        updatedEntryPointCall.setDateIncoming(UPDATED_DATE_INCOMING);
-        updatedEntryPointCall.setParameters(UPDATED_PARAMETERS);
-        updatedEntryPointCall.setParametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE);
+        updatedEntryPointCall
+                .dateIncoming(UPDATED_DATE_INCOMING)
+                .parameters(UPDATED_PARAMETERS)
+                .parametersContentType(UPDATED_PARAMETERS_CONTENT_TYPE);
 
         restEntryPointCallMockMvc.perform(put("/api/entry-point-calls")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)

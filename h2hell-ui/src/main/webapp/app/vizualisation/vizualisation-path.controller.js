@@ -10,11 +10,11 @@
     function VizualisationPathController ($scope, $state, entity, Vizualisation, $stateParams) {
         var vm = this;
         vm.entrypoints = entity.entrypoints;
-        vm.messageConfig = undefined;
-        vm.totalStat = 10;
-        vm.totalNoTest = 10;
-        vm.totalFalsePositive = 10;
-        vm.token = "TOKENNNN";
+        vm.messageConfig = entity.messageConfig;
+        vm.totalStat = entity.totalStat;
+        vm.totalNoTest = entity.totalNoTest;
+        vm.totalFalsePositive = entity.totalFalsePositive;
+        vm.token = $stateParams.id;
         vm.Vizualisation = Vizualisation;
         vm.updatePaths = updatePaths;
         vm.findAllPaths = findAllPaths;

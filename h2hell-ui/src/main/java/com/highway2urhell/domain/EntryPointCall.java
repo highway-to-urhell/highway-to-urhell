@@ -47,12 +47,22 @@ public class EntryPointCall implements Serializable {
         return dateIncoming;
     }
 
+    public EntryPointCall dateIncoming(ZonedDateTime dateIncoming) {
+        this.dateIncoming = dateIncoming;
+        return this;
+    }
+
     public void setDateIncoming(ZonedDateTime dateIncoming) {
         this.dateIncoming = dateIncoming;
     }
 
     public byte[] getParameters() {
         return parameters;
+    }
+
+    public EntryPointCall parameters(byte[] parameters) {
+        this.parameters = parameters;
+        return this;
     }
 
     public void setParameters(byte[] parameters) {
@@ -63,12 +73,22 @@ public class EntryPointCall implements Serializable {
         return parametersContentType;
     }
 
+    public EntryPointCall parametersContentType(String parametersContentType) {
+        this.parametersContentType = parametersContentType;
+        return this;
+    }
+
     public void setParametersContentType(String parametersContentType) {
         this.parametersContentType = parametersContentType;
     }
 
     public EntryPoint getEntryPoint() {
         return entryPoint;
+    }
+
+    public EntryPointCall entryPoint(EntryPoint entryPoint) {
+        this.entryPoint = entryPoint;
+        return this;
     }
 
     public void setEntryPoint(EntryPoint entryPoint) {

@@ -1,5 +1,5 @@
 
-entity EntryPointParameters {
+entity EntryPointCall {
 	dateIncoming ZonedDateTime,
     parameters AnyBlob
 }
@@ -10,9 +10,9 @@ entity Event {
     consumed Boolean
 }
 
-entity MetricsTimer {
+entity EntryPointPerf {
     dateIncoming ZonedDateTime,
-    parameters AnyBlob
+    parameters AnyBlob,
     timeExec Integer,
     cpuLoadSystem Double,
 	cpuLoadProcess Double
@@ -87,7 +87,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	EntryPoint{metrics} to MetricsTimer{entryPoint}
+	EntryPoint{perfs} to EntryPointPerf{entryPoint}
 }
 
 relationship OneToMany {
@@ -95,8 +95,8 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	EntryPoint{logs} to EntryPointParameters{entryPoint(pathClassMethodName)}
+	EntryPoint{calls} to EntryPointCall{entryPoint(pathClassMethodName)}
 }
 
-paginate EntryPointParameters, MetricsTimer with pagination
+paginate EntryPointCall, EntryPointPerf with pagination
 paginate Application, EntryPoint with infinite-scroll

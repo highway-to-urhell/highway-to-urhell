@@ -56,12 +56,12 @@ public class EntryPoint implements Serializable {
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<MetricsTimer> metrics = new HashSet<>();
+    private Set<EntryPointPerf> perfs = new HashSet<>();
 
     @OneToMany(mappedBy = "entryPoint")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<EntryPointParameters> logs = new HashSet<>();
+    private Set<EntryPointCall> calls = new HashSet<>();
 
     @ManyToOne
     private Analysis analysis;
@@ -191,54 +191,54 @@ public class EntryPoint implements Serializable {
         this.drawAnalysis = drawAnalysis;
     }
 
-    public Set<MetricsTimer> getMetrics() {
-        return metrics;
+    public Set<EntryPointPerf> getPerfs() {
+        return perfs;
     }
 
-    public EntryPoint metrics(Set<MetricsTimer> metricsTimers) {
-        this.metrics = metricsTimers;
+    public EntryPoint perfs(Set<EntryPointPerf> entryPointPerfs) {
+        this.perfs = entryPointPerfs;
         return this;
     }
 
-    public EntryPoint addMetrics(MetricsTimer metricsTimer) {
-        this.metrics.add(metricsTimer);
-        metricsTimer.setEntryPoint(this);
+    public EntryPoint addPerfs(EntryPointPerf entryPointPerf) {
+        this.perfs.add(entryPointPerf);
+        entryPointPerf.setEntryPoint(this);
         return this;
     }
 
-    public EntryPoint removeMetrics(MetricsTimer metricsTimer) {
-        this.metrics.remove(metricsTimer);
-        metricsTimer.setEntryPoint(null);
+    public EntryPoint removePerfs(EntryPointPerf entryPointPerf) {
+        this.perfs.remove(entryPointPerf);
+        entryPointPerf.setEntryPoint(null);
         return this;
     }
 
-    public void setMetrics(Set<MetricsTimer> metricsTimers) {
-        this.metrics = metricsTimers;
+    public void setPerfs(Set<EntryPointPerf> entryPointPerfs) {
+        this.perfs = entryPointPerfs;
     }
 
-    public Set<EntryPointParameters> getLogs() {
-        return logs;
+    public Set<EntryPointCall> getCalls() {
+        return calls;
     }
 
-    public EntryPoint logs(Set<EntryPointParameters> entryPointParameters) {
-        this.logs = entryPointParameters;
+    public EntryPoint calls(Set<EntryPointCall> entryPointCalls) {
+        this.calls = entryPointCalls;
         return this;
     }
 
-    public EntryPoint addLogs(EntryPointParameters entryPointParameters) {
-        this.logs.add(entryPointParameters);
-        entryPointParameters.setEntryPoint(this);
+    public EntryPoint addCalls(EntryPointCall entryPointCall) {
+        this.calls.add(entryPointCall);
+        entryPointCall.setEntryPoint(this);
         return this;
     }
 
-    public EntryPoint removeLogs(EntryPointParameters entryPointParameters) {
-        this.logs.remove(entryPointParameters);
-        entryPointParameters.setEntryPoint(null);
+    public EntryPoint removeCalls(EntryPointCall entryPointCall) {
+        this.calls.remove(entryPointCall);
+        entryPointCall.setEntryPoint(null);
         return this;
     }
 
-    public void setLogs(Set<EntryPointParameters> entryPointParameters) {
-        this.logs = entryPointParameters;
+    public void setCalls(Set<EntryPointCall> entryPointCalls) {
+        this.calls = entryPointCalls;
     }
 
     public Analysis getAnalysis() {

@@ -1,43 +1,39 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipName": "entryPoint",
-      "otherEntityName": "entryPoint",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "id"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "dateIncoming",
-      "fieldType": "ZonedDateTime"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "parameters",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "any"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "timeExec",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "cpuLoadSystem",
-      "fieldType": "Double"
-    },
-    {
-      "fieldId": 5,
-      "fieldName": "cpuLoadProcess",
-      "fieldType": "Double"
-    }
-  ],
-  "changelogDate": "20160519092246",
-  "dto": "no",
-  "pagination": "pagination",
-  "service": "no"
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "entryPoint",
+            "otherEntityName": "entryPoint",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "dateIncoming",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "parameters",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "timeExec",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "cpuLoadSystem",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "cpuLoadProcess",
+            "fieldType": "Double"
+        }
+    ],
+    "changelogDate": "20160519092246",
+    "entityTableName": "entry_point_perf",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no"
 }

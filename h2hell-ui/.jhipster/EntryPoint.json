@@ -3,14 +3,14 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "metrics",
-            "otherEntityName": "metricsTimer",
+            "relationshipName": "perfs",
+            "otherEntityName": "entryPointPerf",
             "otherEntityRelationshipName": "entryPoint"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "logs",
-            "otherEntityName": "entryPointParameters",
+            "relationshipName": "calls",
+            "otherEntityName": "entryPointCall",
             "otherEntityRelationshipName": "entryPoint"
         },
         {

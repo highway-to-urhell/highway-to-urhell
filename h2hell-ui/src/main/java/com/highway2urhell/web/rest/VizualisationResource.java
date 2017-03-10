@@ -3,18 +3,19 @@ package com.highway2urhell.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.highway2urhell.domain.Analysis;
 import com.highway2urhell.domain.Application;
+import com.highway2urhell.domain.EntryPoint;
 import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.service.VizualisationService;
+import com.highway2urhell.web.rest.util.HeaderUtil;
+import com.highway2urhell.web.rest.vm.FalsePositiveVM;
 import com.highway2urhell.web.rest.vm.VizualisationPathVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
@@ -91,6 +92,15 @@ public class VizualisationResource {
         vp.setAnalysed(app.isAnalysed());
         vp.setAppName(app.getName());
         return ResponseEntity.ok().body(vp);
+    }
+
+    @PostMapping("/vizualisation/updatePathFalsePositive")
+    @Timed
+    public ResponseEntity<EntryPoint> updatePathFalsePositive(@Valid @RequestBody FalsePositiveVM falsePositiveVM) {
+        EntryPoint result = vizualisationService.updatePathFalsePositive(falsePositiveVM.getId(), falsePositiveVM.getStatus());
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createAlert( "vizualisation-path.updated", result.getPathClassMethodName()))
+            .body(result);
     }
 
 }

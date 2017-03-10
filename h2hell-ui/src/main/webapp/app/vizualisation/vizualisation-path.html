@@ -5,7 +5,7 @@
 
     <div class="alert alert-danger"
          style="width: 800px; margin-left: 0px; margin-top: 10px;"
-         ng-show="vm.messageConfig !== undefined">{{vm.messageConfig}}
+         ng-show="vm.messageConfig !== undefined && vm.messageConfig !== '' ">{{vm.messageConfig}}
     </div>
 
 
@@ -77,7 +77,7 @@
         <tr ng-repeat="stat in vm.entrypoints"
             ng-style="set_color(stat.falsePositive,stat.count,stat.drawAnalysis)">
             <td style="text-align: center;"><a
-                href="#/thundersource/{{ms.token}}/{{stat.pathClassMethodName}}"
+                ui-sref="vizualisation-source({id:vm.token,path:stat.pathClassMethodName})"
                 target="_blank">{{stat.pathClassMethodName}}</a></td>
             <td style="text-align: center;">{{stat.uri}}</td>
             <td style="text-align: center;">{{stat.httpmethod}}</td>
@@ -99,12 +99,12 @@
             <td style="text-align: center;">
                 <div ng-show="stat.falsePositive">
                     <a class="fa fa-exclamation-triangle"
-                       ng-click="updateThunderStatFalsePositive(stat.id,true,stat.pathClassMethodName)"> restore as
+                       ng-click="vm.updatePathFalsePositive(stat.id, false, stat)"> restore as
                         positive</a>
                 </div>
                 <div ng-show="!stat.falsePositive">
                     <a class="fa fa-trash-o"
-                       ng-click="updateThunderStatFalsePositive(stat.id,fasle,stat.pathClassMethodName)"> set as false
+                       ng-click="vm.updatePathFalsePositive(stat.id, true, stat)"> set as false
                         positive</a>
                 </div>
             </td>

@@ -22,12 +22,16 @@
                 url: 'api/vizualisation/findAllPaths/:id'
             },
             'updatePaths': {
-                method: 'GET',
+                method: 'POST',
                 url: 'api/vizualisation/findAllPaths/:id'
             },
             'findAllPaths': {
                 method: 'GET',
                 url: 'api/vizualisation/findAllPaths/:id'
+            },
+            'updatePathFalsePositive': {
+                method: 'POST',
+                url: 'api/vizualisation/updatePathFalsePositive/:id/:status'
             },
         });
 

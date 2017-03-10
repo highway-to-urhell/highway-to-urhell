@@ -5,6 +5,7 @@
     },
     "vizualisation-path": {
         "title": "Visualisation Path",
-        "subtitle": "Explore les analyse"
+        "subtitle": "Explore les analyse",
+        "updated": "Le path {{ path }} a été mis à jour"
     }
 }

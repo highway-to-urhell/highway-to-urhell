@@ -140,4 +140,12 @@ public class VizualisationService {
     }
 
 
+    public EntryPoint updatePathFalsePositive(Long id, String status) {
+        EntryPoint entryPoint = entryPointRepository.findOne(id);
+        Boolean res = Boolean.valueOf(status);
+        entryPoint.setFalsePositive(res);
+        entryPointRepository.save(entryPoint);
+        return entryPoint;
+    }
+
 }

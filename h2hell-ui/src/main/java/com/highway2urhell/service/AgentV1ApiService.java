@@ -118,7 +118,7 @@ public class AgentV1ApiService {
         return validateToken(token) ;
     }
 
-    private Analysis validateToken(String token) {
+    public Analysis validateToken(String token) {
         if (token == null) {
             throw new V1ApiTokenException();
         }

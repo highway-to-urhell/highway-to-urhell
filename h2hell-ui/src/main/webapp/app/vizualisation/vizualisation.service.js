@@ -21,6 +21,10 @@
                 method: 'GET',
                 url: 'api/vizualisation/findAllPaths/:id'
             },
+            'getSource': {
+                method: 'GET',
+                url: 'api/vizualisation/findSource/:id/:path'
+            },
             'updatePaths': {
                 method: 'POST',
                 url: 'api/vizualisation/findAllPaths/:id'

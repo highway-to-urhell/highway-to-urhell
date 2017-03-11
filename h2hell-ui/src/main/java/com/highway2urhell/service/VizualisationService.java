@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Service to get home data.
@@ -59,6 +59,9 @@ public class VizualisationService {
 
     @Inject
     private EventRepository eventRepository;
+
+    @Inject
+    private AgentV1ApiService agentV1ApiService;
 
     @Transactional(readOnly = true)
     public VizualisationPathVM findPath(String token) {
@@ -146,6 +149,56 @@ public class VizualisationService {
         entryPoint.setFalsePositive(res);
         entryPointRepository.save(entryPoint);
         return entryPoint;
+    }
+
+    public String findSource(String token, String classAndMethod) {
+        String className = extractClass(classAndMethod);
+        Analysis th  =agentV1ApiService.validateToken(token);
+        if(th == null){
+            return "no Application";
+        }
+        String path = className + getMapTypeConversion().get(th.getApplication().getAppType().toLowerCase());
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = th.getApplication().getUrlApp() + "h2h/?srcPath="+path;
+        String responseEntity = null;
+        log.info("Call app for find source {}", url);
+        try {
+            responseEntity = restTemplate
+                .getForObject(url, String.class);
+
+        } catch (RestClientException r) {
+            log.error("error call {} exception {}", url,r);
+            responseEntity = r.getMessage();
+        }
+        log.info("result call {}", responseEntity);
+        return responseEntity;
+    }
+
+    private String extractClass(String classAndMethod){
+        String[] tabClass = classAndMethod.split("\\.");
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<tabClass.length-1;i++){
+            sb.append("/");
+            sb.append(tabClass[i]);
+        }
+
+        return sb.toString();
+    }
+
+    private static Map<String,String> mapTypeConversion ;
+
+
+    private Map<String, String> getMapTypeConversion() {
+        if(mapTypeConversion == null){
+            synchronized (this) {
+                mapTypeConversion = new HashMap<String,String>();
+                mapTypeConversion.put("java", ".java");
+                mapTypeConversion.put("php", ".php");
+                mapTypeConversion.put("nodejs", ".js");
+            }
+        }
+        return mapTypeConversion;
     }
 
 }

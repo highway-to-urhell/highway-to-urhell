@@ -9,6 +9,9 @@
 
     function VizualisationAnalysisController ($scope, $state, analysis) {
         var vm = this;
-        vm.analysis = analysis;
+        vm.entrypoints = analysis.entrypoints;
+        vm.totalStat = analysis.totalStat;
+        vm.totalNoTest = analysis.totalNoTest;
+        vm.totalFalsePositive = analysis.totalFalsePositive;
     }
 })();

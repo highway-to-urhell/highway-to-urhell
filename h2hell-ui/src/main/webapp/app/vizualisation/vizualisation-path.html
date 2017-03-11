@@ -14,7 +14,7 @@
             <div class="panel  panel-white">
                 <div class="panel-body">
                     <div style="font-size: 18px">
-                        <span class="fa fa-sellsy"></span> Total entry point:
+                        <span class="glyphicon glyphicon-cloud-upload"></span> Total entry point:
                     </div>
                     <span style="font-size: 32px">{{vm.totalStat}}</span>
                 </div>
@@ -24,7 +24,7 @@
             <div class="panel  panel-white">
                 <div class="panel-body">
                     <div style="font-size: 18px">
-                        <span class="fa fa-sellsy"></span> Not tested:
+                        <span class="glyphicon glyphicon-alert"></span> Not tested:
                     </div>
 
                     <span style="font-size: 32px">{{vm.totalNoTest}}</span>
@@ -35,7 +35,7 @@
             <div class="panel  panel-white">
                 <div class="panel-body">
                     <div style="font-size: 18px">
-                        <span class="fa fa-sellsy"></span> False positive:
+                        <span class="glyphicon glyphicon-trash"></span> False positive:
                     </div>
                     <span style="font-size: 32px">{{vm.totalFalsePositive}}</span>
                 </div>
@@ -44,13 +44,13 @@
         <div class="col-lg-3 col-md-3">
             <div>
                 <a class="btn" href="" ng-click="vm.updatePaths()" style="font-size:18px">
-                    <i class="fa fa-refresh"></i> Update</a>
+                    <i class="glyphicon glyphicon-refresh"></i> Update</a>
                 <br/>
                 <a class="btn" href="" ng-click="vm.findAllPaths()" style="font-size:18px">
-                    <i class="fa fa-fire"></i> Find all Paths</a>
+                    <i class="glyphicon glyphicon-fire"></i> Find all Paths</a>
                 <br/>
                 <a class="btn" ui-sref="vizualisation-analysis({id:vm.token})" ng-click="" style="font-size:18px">
-                    <i class="fa fa-fire"></i> Launch analysis</a>
+                    <i class="glyphicon glyphicon-fire"></i> Launch analysis</a>
                 <br/>
 
             </div>
@@ -58,23 +58,53 @@
     </div>
 
     <div class="input-group"><span class="input-group-addon">Filter</span>
-        <input id="filter" type="text" class="form-control" placeholder="Type here...">
+        <input id="filter" type="text" class="form-control" placeholder="Type here..." ng-model="vm.searchFilter">
     </div>
     <table class="table table-bordered table-striped"
            ng-show="vm.entrypoints.length > 0">
         <thead>
         <tr>
-            <th style="text-align: center;">Method input</th>
-            <th style="text-align: center;">Uri</th>
-            <th style="text-align: center;">Http Method</th>
-            <th style="text-align: center;">Count</th>
-            <th style="text-align: center;">Tracked</th>
-            <th style="text-align: center;">False Positive</th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'pathClassMethodName'; vm.sortReverse = !vm.sortReverse">
+                    Method input
+                    <span ng-show="vm.sortType == 'pathClassMethodName' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'pathClassMethodName' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'uri'; vm.sortReverse = !vm.sortReverse">
+                    Uri
+                    <span ng-show="vm.sortType == 'uri' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'uri' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'httpmethod'; vm.sortReverse = !vm.sortReverse">
+                    Http Method
+                    <span ng-show="vm.sortType == 'httpmethod' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'httpmethod' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'count'; vm.sortReverse = !vm.sortReverse">
+                    Count
+                    <span ng-show="vm.sortType == 'count' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'count' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'drawAnalysis'; vm.sortReverse = !vm.sortReverse">
+                    Tracked
+                    <span ng-show="vm.sortType == 'drawAnalysis' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'drawAnalysis' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
+            <th style="text-align: center;">
+                <a ng-click="vm.sortType = 'falsePositive'; vm.sortReverse = !vm.sortReverse">
+                    False Positive
+                    <span ng-show="vm.sortType == 'falsePositive' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'falsePositive' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                </a></th>
             <th style="text-align: center;">Change Status</th>
         </tr>
         </thead>
         <tbody class="searchable">
-        <tr ng-repeat="stat in vm.entrypoints"
+        <tr ng-repeat="stat in vm.entrypoints | orderBy:vm.sortType:vm.sortReverse | filter:vm.searchFilter"
             ng-style="set_color(stat.falsePositive,stat.count,stat.drawAnalysis)">
             <td style="text-align: center;"><a
                 ui-sref="vizualisation-source({id:vm.token,path:stat.pathClassMethodName})"
@@ -98,12 +128,12 @@
             </td>
             <td style="text-align: center;">
                 <div ng-show="stat.falsePositive">
-                    <a class="fa fa-exclamation-triangle"
+                    <a class="glyphicon glyphicon-alert"
                        ng-click="vm.updatePathFalsePositive(stat.id, false, stat)"> restore as
                         positive</a>
                 </div>
                 <div ng-show="!stat.falsePositive">
-                    <a class="fa fa-trash-o"
+                    <a class="glyphicon glyphicon-trash"
                        ng-click="vm.updatePathFalsePositive(stat.id, true, stat)"> set as false
                         positive</a>
                 </div>

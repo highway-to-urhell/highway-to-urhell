@@ -15,6 +15,9 @@
         vm.totalNoTest = entity.totalNoTest;
         vm.totalFalsePositive = entity.totalFalsePositive;
         vm.token = $stateParams.id;
+        vm.searchFilter = '';
+        vm.sortType = 'pathClassMethodName';
+        vm.sortReverse = false;
         vm.Vizualisation = Vizualisation;
         vm.updatePaths = updatePaths;
         vm.findAllPaths = findAllPaths;

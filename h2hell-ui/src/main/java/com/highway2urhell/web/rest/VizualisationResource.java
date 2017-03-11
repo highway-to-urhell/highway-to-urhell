@@ -8,6 +8,7 @@ import com.highway2urhell.repository.AnalysisRepository;
 import com.highway2urhell.service.VizualisationService;
 import com.highway2urhell.web.rest.util.HeaderUtil;
 import com.highway2urhell.web.rest.vm.FalsePositiveVM;
+import com.highway2urhell.web.rest.vm.SourceVM;
 import com.highway2urhell.web.rest.vm.VizualisationPathVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +102,14 @@ public class VizualisationResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createAlert( "vizualisation-path.updated", result.getPathClassMethodName()))
             .body(result);
+    }
+
+    @GetMapping("/vizualisation/findSource/{id}/{path}")
+    @Timed
+    public ResponseEntity<SourceVM> findSource(@PathVariable("id") String id, @PathVariable("path") String path) {
+        log.info("Call findSource ");
+        SourceVM sourceVM = new SourceVM(vizualisationService.findSource(id, path));
+        return ResponseEntity.ok().body(sourceVM);
     }
 
 }

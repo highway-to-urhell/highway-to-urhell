@@ -1,5 +1,4 @@
-
-<div id="main-wrapper">
+<div ng-cloak>
     <div class="alert alert-danger"
          style="width: 800px; margin-left: 0px; margin-top: 10px;"
          ng-show="vm.messageConfig !=null">{{vm.messageConfig}}  <br/> <a ui-sref="vizualisation-path({id:analyse.application.token})" class="fa fa-eye" >See the endPoint</a></div>
@@ -40,22 +39,3 @@
 
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        (function ($) {
-
-            $('#filter').keyup(function () {
-
-                var rex = new RegExp($(this).val(), 'i');
-                $('.searchable tr').hide();
-                $('.searchable tr').filter(function () {
-                    return rex.test($(this).text());
-                }).show();
-
-            })
-
-        }(jQuery));
-
-    });
-</script>

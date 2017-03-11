@@ -34,7 +34,7 @@
         })
         .state('vizualisation-path', {
             parent: 'vizualisation',
-            url: '/vizualisation/path/{id}',
+            url: '/path/{id}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'h2HellUiApp.vizualisation-path.title'
@@ -58,7 +58,7 @@
         })
         .state('vizualisation-breaker', {
             parent: 'vizualisation',
-            url: '/vizualisation/breaker/{id}',
+            url: '/breaker/{id}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'h2HellUiApp.vizualisation-breaker.title'
@@ -82,7 +82,7 @@
         })
         .state('vizualisation-analysis', {
             parent: 'vizualisation',
-            url: '/vizualisation/analysis/{id}',
+            url: '/analysis/{id}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'h2HellUiApp.vizualisation-analysis.title'
@@ -100,7 +100,31 @@
                     return $translate.refresh();
                 }],
                 analysis: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
-                    return Vizualisation.getAnalysis({id : $stateParams.id}).$promise;
+                    return Vizualisation.getPath({id : $stateParams.id}).$promise;
+                }],
+            }
+        })
+        .state('vizualisation-source', {
+            parent: 'vizualisation',
+            url: '/source/{id}/{path}',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'h2HellUiApp.vizualisation-source.title'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/vizualisation/vizualisation-source.html',
+                    controller: 'VizualisationSourceController',
+                    controllerAs: 'vm'
+                }
+            },
+            resolve: {
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
+                    $translatePartialLoader.addPart('vizualisation');
+                    return $translate.refresh();
+                }],
+                source: ['$stateParams', 'Vizualisation', function($stateParams, Vizualisation) {
+                    return Vizualisation.getSource({id : $stateParams.id, path : $stateParams.path}).$promise;
                 }],
             }
         });

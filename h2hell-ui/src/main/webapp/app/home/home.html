@@ -28,12 +28,12 @@
     <div class="row" ng-if="vm.isAuthenticated()==true">
         <div class="col-lg-8 col-md-8">
             <canvas id="apps_stat" class="chart chart-bar"
-                    chart-data="vm.entity.stats.data" chart-labels="vm.entity.stats.labels" chart-series="vm.entity.stats.series">
+                    chart-data="vm.entity.stats.data" chart-labels="vm.entity.stats.labels" chart-series="vm.entity.stats.series" chart-click="vm.goToVizualisation">
             </canvas>
         </div>
         <div class="col-lg-4 col-md-4">
             <canvas id="apps_type" class="chart chart-doughnut"
-                    chart-data="vm.entity.types.data" chart-labels="vm.entity.types.labels">
+                    chart-data="vm.entity.types.data" chart-labels="vm.entity.types.labels" chart-click="vm.goToVizualisation">
             </canvas>
         </div>
     </div>

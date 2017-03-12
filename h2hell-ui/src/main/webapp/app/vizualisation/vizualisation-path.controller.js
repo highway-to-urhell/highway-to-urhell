@@ -10,6 +10,15 @@
     function VizualisationPathController ($scope, $state, entity, Vizualisation, $stateParams) {
         var vm = this;
         vm.entrypoints = entity.entrypoints;
+        angular.forEach(vm.entrypoints, function(ep) {
+            if(!ep.drawAnalysis) {
+                ep.tracked = "Not Analysis";
+            } else if(ep.drawAnalysis && !ep.checkLaunch) {
+                ep.tracked = "Not Tracked";
+            } else {
+                ep.tracked = "Tracked";
+            }
+        });
         vm.messageConfig = undefined;
         vm.totalStat = entity.totalStat;
         vm.totalNoTest = entity.totalNoTest;

@@ -89,10 +89,10 @@
                     <span ng-show="vm.sortType == 'count' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
                 </a></th>
             <th style="text-align: center;">
-                <a ng-click="vm.sortType = 'drawAnalysis'; vm.sortReverse = !vm.sortReverse">
+                <a ng-click="vm.sortType = 'tracked'; vm.sortReverse = !vm.sortReverse">
                     Tracked
-                    <span ng-show="vm.sortType == 'drawAnalysis' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
-                    <span ng-show="vm.sortType == 'drawAnalysis' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                    <span ng-show="vm.sortType == 'tracked' && !sortReverse" class="glyphicon glyphicon-sort-by-attributes"></span>
+                    <span ng-show="vm.sortType == 'tracked' && sortReverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
                 </a></th>
             <th style="text-align: center;">
                 <a ng-click="vm.sortType = 'falsePositive'; vm.sortReverse = !vm.sortReverse">
@@ -112,17 +112,7 @@
             <td style="text-align: center;">{{stat.uri}}</td>
             <td style="text-align: center;">{{stat.httpmethod}}</td>
             <td style="text-align: center;">{{stat.count}}</td>
-            <td style="text-align: center;">
-                <div ng-show="!stat.drawAnalysis">
-                    Not Analysis
-                </div>
-                <div ng-show="stat.drawAnalysis && !stat.checkLaunch">
-                    Not Tracked
-                </div>
-                <div ng-show="stat.drawAnalysis && stat.checkLaunch">
-                    Tracked
-                </div>
-            </td>
+            <td style="text-align: center;">{{stat.tracked}}</td>
             <td style="text-align: center;">
                 <div ng-show="stat.falsePositive">yes</div>
             </td>

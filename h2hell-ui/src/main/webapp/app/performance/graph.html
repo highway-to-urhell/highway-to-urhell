@@ -1,0 +1,28 @@
+
+<div id="main-wrapper">
+    <h2>Streaming performance</h2>
+    (Default refresh 20 seconds)<br/>
+    You must launch the analysis phase before<br/>
+    By default the agent H2H send only the time execution > 2000ms.<br/>
+    You can custom this value by changing in config.properties the key higherTimer.
+</div>
+
+<div>
+    <a class="btn" href="" ng-click="launchAnalysis(th.token)"  style="font-size:18px">
+        <i class="fa fa-eye"></i> Launch analysis</a>
+</div>
+<div class="alert alert-danger"
+     style="width: 800px; margin-left: 0px; margin-top: 10px;"
+     ng-show="messageConfig !=null">{{messageConfig}}</div>
+<div class="panel  panel-white">
+    <div class="panel-body">
+        <label style="width:200px">Minimum response time (ms)</label><input type="text" name="responseTime" ng-model="filterModel.responseTime"/><br/>
+        <label style="width:200px">Number items</label><input type="text" name="nbItems" ng-model="filterModel.nbItems"/>  <br/>
+        <button ng-click="applyFilter()">Apply Filter History</button> <button ng-click="reloadDynamicData()">Reload Real Timer</button>
+        <br/>
+    </div>
+</div>
+<div >
+    <div id="dynamic"></div>
+</div>
+
